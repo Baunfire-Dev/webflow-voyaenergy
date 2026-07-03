@@ -1,0 +1,12 @@
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "header";
+@import "footer";
+@import "global";
+@import-glob "../blocks/*.css";
+
+* {
+	outline: none;
+	box-sizing: border-box;
+}

@@ -1,0 +1,44 @@
+html {
+	&.disable-scrolling,
+	&:has(dialog[open]) {
+		@apply overflow-hidden;
+	}
+}
+
+.hide-scrollbar {
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.splide {
+	.splide__pagination {
+		@apply flex gap-[0.625rem];
+
+		li {
+			@apply flex;
+		}
+	}
+
+	.splide__pagination__page {
+		@apply m-0 size-[0.375rem] rounded-none opacity-100;
+		background: var(--_colors---white-20);
+
+		&.is-active {
+			background: var(--_colors---white);
+			transform: scale(1);
+		}
+	}
+}
+
+.splide,
+.swiper {
+	@apply transition-opacity duration-300 ease-out opacity-0 delay-500;
+
+	&.is-ready {
+		@apply opacity-100;
+	}
+}

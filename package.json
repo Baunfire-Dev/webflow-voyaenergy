@@ -1,0 +1,23 @@
+{
+    "devDependencies": {
+        "autoprefixer": "latest",
+        "esbuild": "^0.25.4",
+        "npm-run-all": "^4.1.5",
+        "postcss": "latest",
+        "postcss-import": "latest",
+        "postcss-import-ext-glob": "latest",
+        "postcss-nested": "latest",
+        "postcss-nesting": "latest",
+        "tailwindcss": "^3.4.17",
+        "fluid-tailwind": "latest"
+    },
+    "scripts": {
+        "dev": "npm-run-all --parallel tw js",
+        "js": "node build/compile-scripts.js --watch",
+        "tw": "npx tailwindcss -i assets/css/theme/tailwind.css -o assets/css/bundles/styles.css --postcss --watch --poll --minify"
+    },
+    "dependencies": {
+        "gsap": "^3.12.5",
+        "lenis": "^1.3.23"
+    }
+}

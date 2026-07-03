@@ -1,0 +1,52 @@
+section.carousel-tiles-icon-content {
+    .twic-swiper-container {
+        .twic-swiper {
+            @apply w-full;
+        }
+        .twic-swiper-footer {
+            .swiper-nav-container {
+                @apply flex gap-[0.375rem];
+
+                .swiper-button-prev,
+                .swiper-button-next {
+                    .swiper-navigation-icon {
+                        @apply hidden;
+                    }
+                    &.swiper-button-disabled {
+                        @apply bg-transparent !opacity-[1];
+                        border: 1px solid var(--_colors---gray-stroke-15);
+                    }
+
+                    @apply !static !flex !items-center !justify-center !m-0 !p-0 !w-[2.5rem] !h-[2.5rem] !rounded-[100%] shrink-0;
+
+                    background-color: var(--_colors---purple);
+                    border: 1px solid var(--_colors---purple);
+                }
+
+                .swiper-button-prev {
+                    svg {
+                        margin-right: 0.125rem;
+                    }
+                }
+                .swiper-button-next {
+                    svg {
+                        margin-left: 0.125rem;
+                    }
+                }
+            }
+            .swiper-pagination {
+                @apply !static flex gap-[0.5rem] !w-auto;
+
+                .swiper-pagination-bullet {
+                    @apply !m-0 !h-[0.25rem] !rounded-[0.25rem];
+                    background-color: var(--_colors---warm-gray) !important;
+                    width: clamp(2.25rem, 2.8169vw + 1.5898rem, 4.125rem);
+
+                    &.swiper-pagination-bullet-active {
+                        background-color: var(--_colors---purple) !important;
+                    }
+                }
+            }
+        }
+    }
+}

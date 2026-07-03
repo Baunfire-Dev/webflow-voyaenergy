@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			:root {
+				--bg: #ffffff;
+				--bg-2: #f7f7f6;
+				--bg-3: #f0efee;
+				--text: #111110;
+				--text-2: #6f6e6a;
+				--text-3: #a1a09c;
+				--border: #e4e3df;
+				--border-2: #d4d3ce;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--bg: #111110;
+					--bg-2: #1a1a18;
+					--bg-3: #222220;
+					--text: #eeede9;
+					--text-2: #9b9a96;
+					--text-3: #6b6a67;
+					--border: #2a2a28;
+					--border-2: #363633;
+				}
+			}
+
+			body {
+				font-family: "Inter", sans-serif;
+				font-size: 16px;
+				background: var(--bg);
+				color: var(--text);
+				line-height: 1.5;
+				min-height: 100vh;
+				padding: 48px 24px 80px;
+			}
+
+			.page {
+				max-width: 580px;
+				margin: 0 auto;
+			}
+
+			h1 {
+				font-size: 18px;
+				font-weight: 500;
+				margin-bottom: 40px;
+			}
+
+			section {
+				margin-bottom: 56px;
+			}
+
+			.section-label {
+				font-size: 12px;
+				font-weight: 500;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--text-3);
+				margin-bottom: 20px;
+			}
+
+			.row {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-bottom: 12px;
+			}
+
+			.field {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+
+			label {
+				font-size: 13px;
+				color: var(--text-2);
+			}
+
+			.input-wrap {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			input[type="number"] {
+				width: 100%;
+				height: 40px;
+				padding: 0 12px;
+				font-family: "Inter", sans-serif;
+				font-size: 15px;
+				color: var(--text);
+				background: var(--bg);
+				border: 1px solid var(--border);
+				border-radius: 6px;
+				outline: none;
+				-moz-appearance: textfield;
+			}
+
+			input[type="number"]::-webkit-inner-spin-button,
+			input[type="number"]::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+			}
+
+			input[type="number"]:focus {
+				border-color: var(--border-2);
+				box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+			}
+
+			input[type="number"].err {
+				border-color: #e5484d;
+			}
+
+			.unit {
+				font-size: 13px;
+				color: var(--text-3);
+				min-width: 28px;
+				flex-shrink: 0;
+			}
+
+			.hint {
+				font-size: 13px;
+				color: var(--text-3);
+				margin-top: 4px;
+			}
+
+			.small-field {
+				max-width: 180px;
+			}
+
+			.output {
+				background: var(--bg-2);
+				border-radius: 8px;
+				padding: 18px;
+				margin-top: 24px;
+			}
+
+			.output-label {
+				font-size: 12px;
+				color: var(--text-3);
+				margin-bottom: 10px;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+
+			.clamp-val {
+				font-family: "Courier New", monospace;
+				font-size: 14px;
+				color: var(--text);
+				word-break: break-all;
+				line-height: 1.7;
+			}
+
+			.copy-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				font-family: "Inter", sans-serif;
+				font-size: 13px;
+				color: var(--text-2);
+				background: none;
+				border: 1px solid var(--border);
+				border-radius: 5px;
+				padding: 6px 12px;
+				cursor: pointer;
+				margin-top: 12px;
+			}
+
+			.copy-btn:hover {
+				border-color: var(--border-2);
+				color: var(--text);
+			}
+			.copy-btn:active {
+				transform: scale(0.98);
+			}
+
+			.stats {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 8px;
+				margin-top: 10px;
+			}
+
+			.stat {
+				background: var(--bg-3);
+				border-radius: 6px;
+				padding: 12px 14px;
+			}
+
+			.stat-val {
+				font-family: "Courier New", monospace;
+				font-size: 14px;
+				font-weight: 500;
+				color: var(--text);
+			}
+
+			.stat-key {
+				font-size: 12px;
+				color: var(--text-3);
+				margin-top: 3px;
+			}
+
+			.tag {
+				display: inline-block;
+				font-size: 12px;
+				padding: 2px 9px;
+				border-radius: 4px;
+				margin-bottom: 14px;
+			}
+
+			.tag.normal {
+				background: #e8f5e9;
+				color: #2e7d32;
+			}
+			.tag.reverse {
+				background: #fff3e0;
+				color: #e65100;
+			}
+
+			@media (prefers-color-scheme: dark) {
+				.tag.normal {
+					background: #1a3320;
+					color: #81c784;
+				}
+				.tag.reverse {
+					background: #2e1a00;
+					color: #ffb74d;
+				}
+			}
+
+			hr {
+				border: none;
+				border-top: 1px solid var(--border);
+				margin: 20px 0;
+			}
+
+			.tabs {
+				display: flex;
+				gap: 4px;
+				margin-bottom: 20px;
+				flex-wrap: wrap;
+			}
+
+			.tab {
+				font-family: "Inter", sans-serif;
+				font-size: 13px;
+				padding: 6px 14px;
+				border: 1px solid var(--border);
+				border-radius: 5px;
+				background: none;
+				color: var(--text-2);
+				cursor: pointer;
+			}
+
+			.tab:hover {
+				border-color: var(--border-2);
+				color: var(--text);
+			}
+			.tab.on {
+				background: var(--bg-2);
+				color: var(--text);
+				border-color: var(--border-2);
+			}
+
+			.conv-row {
+				display: grid;
+				grid-template-columns: 1fr 28px 1fr;
+				gap: 12px;
+				align-items: end;
+			}
+
+			.arrow {
+				font-size: 16px;
+				color: var(--text-3);
+				padding-bottom: 12px;
+				text-align: center;
+			}
+
+			.result-wrap {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding-top: 6px;
+				gap: 8px;
+			}
+
+			.result-big {
+				font-family: "Courier New", monospace;
+				font-size: 22px;
+				font-weight: 500;
+				color: var(--text);
+			}
+
+			.base-row {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				margin-top: 16px;
+				padding-top: 16px;
+				border-top: 1px solid var(--border);
+			}
+
+			.base-row label {
+				white-space: nowrap;
+			}
+			.base-row input {
+				width: 72px;
+				flex-shrink: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<section>
+				<div class="section-label">clamp generator</div>
+
+				<div class="row">
+					<div class="field">
+						<label>max viewport</label>
+						<div class="input-wrap">
+							<input type="number" id="vp-max" value="1440" />
+							<span class="unit">px</span>
+						</div>
+					</div>
+					<div class="field">
+						<label>min viewport</label>
+						<div class="input-wrap">
+							<input type="number" id="vp-min" value="375" />
+							<span class="unit">px</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="field">
+						<label>value at max viewport</label>
+						<div class="input-wrap">
+							<input type="number" id="val-max" value="32" />
+							<span class="unit">px</span>
+						</div>
+					</div>
+					<div class="field">
+						<label>value at min viewport</label>
+						<div class="input-wrap">
+							<input type="number" id="val-min" value="16" />
+							<span class="unit">px</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="field small-field">
+					<label>base font size</label>
+					<div class="input-wrap">
+						<input type="number" id="base" value="16" />
+						<span class="unit">px</span>
+					</div>
+				</div>
+                
+				<div class="output">
+					<div class="output-label">output</div>
+					<div id="tag-wrap"></div>
+					<div class="clamp-val" id="clamp-out">—</div>
+					<button
+						class="copy-btn"
+						onclick="doCopy('clamp-out', this)"
+					>
+						copy
+					</button>
+				</div>
+
+				<div class="stats" id="stats"></div>
+			</section>
+
+			<hr />
+
+			<section>
+				<div class="section-label">unit converter</div>
+
+				<div class="tabs">
+					<button class="tab on" onclick="setTab('px-rem', this)">
+						px → rem
+					</button>
+					<button class="tab" onclick="setTab('rem-px', this)">
+						rem → px
+					</button>
+				</div>
+
+				<div class="conv-row">
+					<div class="field">
+						<label id="c-from-label">value in px</label>
+						<div class="input-wrap">
+							<input
+								type="number"
+								id="c-input"
+								value="16"
+								step="any"
+							/>
+							<span class="unit" id="c-from-unit">px</span>
+						</div>
+					</div>
+					<div class="arrow">→</div>
+					<div class="field">
+						<label id="c-to-label">result in rem</label>
+						<div class="result-wrap">
+							<div class="result-big" id="c-result">1rem</div>
+							<button
+								class="copy-btn"
+								style="margin-top: 0"
+								onclick="doCopy('c-result', this)"
+							>
+								copy
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="base-row">
+					<label>base</label>
+					<input type="number" id="c-base" value="16" />
+					<span class="unit">px</span>
+				</div>
+			</section>
+		</div>
+
+		<script>
+			var tab = "px-rem";
+
+			["vp-max", "vp-min", "val-max", "val-min", "base"].forEach(
+				function (id) {
+					document
+						.getElementById(id)
+						.addEventListener("input", calcClamp);
+				},
+			);
+			document
+				.getElementById("c-input")
+				.addEventListener("input", calcConv);
+			document
+				.getElementById("c-base")
+				.addEventListener("input", calcConv);
+
+			function trim(n, places) {
+				return parseFloat(n.toFixed(places));
+			}
+
+			function calcClamp() {
+				var vpMax = +document.getElementById("vp-max").value;
+				var vpMin = +document.getElementById("vp-min").value;
+				var vMax = +document.getElementById("val-max").value;
+				var vMin = +document.getElementById("val-min").value;
+				var base = +document.getElementById("base").value;
+
+				["vp-max", "vp-min", "val-max", "val-min", "base"].forEach(
+					function (id) {
+						document.getElementById(id).classList.remove("err");
+					},
+				);
+
+				if (!vpMax || !vpMin || !vMax || !vMin || !base) return;
+
+				if (vpMin >= vpMax) {
+					document.getElementById("vp-max").classList.add("err");
+					document.getElementById("vp-min").classList.add("err");
+					document.getElementById("clamp-out").textContent =
+						"max viewport must be greater than min";
+					document.getElementById("stats").innerHTML = "";
+					document.getElementById("tag-wrap").innerHTML = "";
+					return;
+				}
+
+				var rev = vMax < vMin;
+				var cMin = rev ? vMax : vMin;
+				var cMax = rev ? vMin : vMax;
+
+				var slope = (vMax - vMin) / (vpMax - vpMin);
+				var intercept = vMin - slope * vpMin;
+				var slopeVw = trim(slope * 100, 4);
+				var cMinRem = trim(cMin / base, 4);
+				var cMaxRem = trim(cMax / base, 4);
+				var intRem = trim(intercept / base, 4);
+
+				var preferred =
+					intRem >= 0
+						? slopeVw + "vw + " + intRem + "rem"
+						: slopeVw + "vw - " + Math.abs(intRem) + "rem";
+
+				document.getElementById("clamp-out").textContent =
+					"clamp(" +
+					cMinRem +
+					"rem, " +
+					preferred +
+					", " +
+					cMaxRem +
+					"rem)";
+
+				document.getElementById("tag-wrap").innerHTML = rev
+					? '<span class="tag reverse">reverse</span>'
+					: '<span class="tag normal">normal</span>';
+
+				document.getElementById("stats").innerHTML =
+					'<div class="stat"><div class="stat-val">' +
+					cMinRem +
+					'rem</div><div class="stat-key">min (' +
+					cMin +
+					"px)</div></div>" +
+					'<div class="stat"><div class="stat-val">' +
+					slopeVw +
+					'vw</div><div class="stat-key">slope</div></div>' +
+					'<div class="stat"><div class="stat-val">' +
+					cMaxRem +
+					'rem</div><div class="stat-key">max (' +
+					cMax +
+					"px)</div></div>";
+			}
+
+			function calcConv() {
+				var val = +document.getElementById("c-input").value;
+				var base = +document.getElementById("c-base").value;
+				if (!base) return;
+				var result, unit;
+				if (tab === "px-rem") {
+					result = trim(val / base, 4);
+					unit = "rem";
+				} else if (tab === "rem-px") {
+					result = trim(val * base, 4);
+					unit = "px";
+				}
+				document.getElementById("c-result").textContent = result + unit;
+			}
+
+			function setTab(t, btn) {
+				tab = t;
+				document.querySelectorAll(".tab").forEach(function (b) {
+					b.classList.remove("on");
+				});
+				btn.classList.add("on");
+				var map = {
+					"px-rem": ["value in px", "px", "result in rem"],
+					"rem-px": ["value in rem", "rem", "result in px"],
+				};
+				document.getElementById("c-from-label").textContent = map[t][0];
+				document.getElementById("c-from-unit").textContent = map[t][1];
+				document.getElementById("c-to-label").textContent = map[t][2];
+				calcConv();
+			}
+
+			function doCopy(id, btn) {
+				var text = document.getElementById(id).textContent;
+				if (!text || text === "—") return;
+				navigator.clipboard.writeText(text).then(function () {
+					btn.textContent = "copied";
+					setTimeout(function () {
+						btn.textContent = "copy";
+					}, 2000);
+				});
+			}
+
+			calcClamp();
+			calcConv();
+		</script>
+	</body>
+</html>
