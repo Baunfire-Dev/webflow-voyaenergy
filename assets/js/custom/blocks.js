@@ -220,7 +220,7 @@
 
                 const arrowTL = gsap.timeline({
                     repeat: -1,
-                    repeatDelay: 1,
+                    repeatDelay: 0.2,
                 })
 
                 let fadeOut = false;
