@@ -246,13 +246,6 @@
                     },
                         '-=0.1'
                     )
-                    .to(svg, {
-                        autoAlpha: 0,
-                        duration: 0.35,
-                        ease: 'power2.in'
-                    },
-                        '+=0.4'
-                    )
                     .set(line, {
                         strokeDashoffset: len
                     })
@@ -260,9 +253,6 @@
                         autoAlpha: 0,
                         y: -4
                     })
-                    .set(svg, {
-                        autoAlpha: 1
-                    });
 
                 mm.add('(prefers-reduced-motion: no-preference)', () => {
                     arrowTL.play();
@@ -291,7 +281,7 @@
                         ease: 'power3.in'
                     });
                 }, { passive: true });
-            }
+            };
 
             script();
         },
