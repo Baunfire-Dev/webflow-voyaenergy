@@ -52,7 +52,7 @@
                             duration: 1.2,
                             ease: "power3.Out"
                         },
-                        ">-0.3"
+                        "<0.4"
                     );
                 }
 
