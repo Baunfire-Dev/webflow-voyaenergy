@@ -329,7 +329,7 @@
                     )
                     .fromTo(items,
                         {
-                            x: 10,
+                            x: -10,
                             autoAlpha: 0,
                         },
                         {
