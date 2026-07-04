@@ -181,7 +181,7 @@
                 });
 
                 gsap.to(sectionTwoImage, {
-                    yPercent: -12,
+                    yPercent: -4,
                     ease: "none",
                     scrollTrigger: {
                         trigger: heroInner,
