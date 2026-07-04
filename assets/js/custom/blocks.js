@@ -74,7 +74,7 @@
                         duration: 0.8,
                         ease: "power2.out"
                     },
-                    "<0.2"
+                    "<0.4"
                 );
 
                 introTL.fromTo(pageControls,
