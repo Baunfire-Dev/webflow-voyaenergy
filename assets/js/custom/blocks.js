@@ -1,6 +1,7 @@
 (function () {
     baunfire.Blocks = {
         init() {
+            this.sectionControls();
             this.heroHomepage();
             this.energyBottleNeck();
         },
@@ -222,76 +223,6 @@
                 });
             };
 
-            const handleScrollIndicator = (self) => {
-                const svg = document.getElementById('indicator');
-                const line = document.getElementById('dline');
-                const head = document.getElementById('dhead');
-                const len = line.getTotalLength();
-
-                const arrowTL = gsap.timeline({
-                    repeat: -1,
-                    repeatDelay: 0.2,
-                })
-
-                let fadeOut = false;
-
-                const mm = gsap.matchMedia();
-
-                gsap.set(line, {
-                    strokeDasharray: len,
-                    strokeDashoffset: len
-                });
-
-                gsap.set(head, {
-                    autoAlpha: 0,
-                    y: -4
-                });
-
-                arrowTL
-                    .to(line, {
-                        strokeDashoffset: 0,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    })
-                    .to(head, {
-                        autoAlpha: 1,
-                        y: 0,
-                        duration: 0.4,
-                        ease: 'back.out(2)'
-                    },
-                        '-=0.1'
-                    )
-                    .to([head, line], {
-                        autoAlpha: 0,
-                        y: 2,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    },
-                        '<0.3'
-                    )
-                    .set(line, {
-                        strokeDashoffset: len
-                    })
-                    .set(head, {
-                        y: -4
-                    })
-
-                addEventListener('scroll', () => {
-                    if (fadeOut) return;
-
-                    fadeOut = true;
-                    arrowTL.pause();
-
-                    gsap.to(svg, {
-                        autoAlpha: 0,
-                        y: 14,
-                        scale: 0.85,
-                        duration: 0.5,
-                        ease: 'power3.in'
-                    });
-                }, { passive: true });
-            };
-
             script();
         },
 
@@ -361,6 +292,130 @@
             };
 
             script();
+        },
+
+        sectionControls() {
+            const handleCTAHover = (self) => {
+                const trigger = document.querySelector(".sc-anchors");
+                const ctaInner = trigger.querySelector(".sc-anchor-cta-inner");
+                const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
+                const items = trigger.querySelector(".sc-anchor-item");
+
+                const hoverTL = gsap.timeline({ paused: true });
+
+                hoverTL
+                    .fromTo(ctaInner,
+                        {
+                            yPercent: 0,
+                            autoAlpha: 1,
+                        },
+                        {
+                            yPercent: 100,
+                            autoAlpha: 0,
+                            duration: 0.6,
+                            ease: "power2.out"
+                        }
+                    )
+                    .fromTo(itemsContainer,
+                        {
+                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)"
+                        },
+                        {
+                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
+                            duration: 0.8,
+                            ease: "power2.out"
+                        },
+                        "<0.3"
+                    )
+                    .fromTo(items,
+                        {
+                            x: 10
+                        },
+                        {
+                            x: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: { amount: 0.4, from: "start" }
+                        },
+                        "<0.6"
+                    )
+
+                trigger.addEventListener("mouseenter", () => hoverTL.play());
+                trigger.addEventListener("mouseleave", () => hoverTL.reverse());
+            }
+
+            const handleScrollIndicator = () => {
+                const svg = document.getElementById('indicator');
+                const line = document.getElementById('dline');
+                const head = document.getElementById('dhead');
+                const len = line.getTotalLength();
+
+                const arrowTL = gsap.timeline({
+                    repeat: -1,
+                    repeatDelay: 0.2,
+                })
+
+                let fadeOut = false;
+
+                const mm = gsap.matchMedia();
+
+                gsap.set(line, {
+                    strokeDasharray: len,
+                    strokeDashoffset: len
+                });
+
+                gsap.set(head, {
+                    autoAlpha: 0,
+                    y: -4
+                });
+
+                arrowTL
+                    .to(line, {
+                        strokeDashoffset: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    })
+                    .to(head, {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.4,
+                        ease: 'back.out(2)'
+                    },
+                        '-=0.1'
+                    )
+                    .to([head, line], {
+                        autoAlpha: 0,
+                        y: 2,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    },
+                        '<0.3'
+                    )
+                    .set(line, {
+                        strokeDashoffset: len
+                    })
+                    .set(head, {
+                        y: -4
+                    })
+
+                addEventListener('scroll', () => {
+                    if (fadeOut) return;
+
+                    fadeOut = true;
+                    arrowTL.pause();
+
+                    gsap.to(svg, {
+                        autoAlpha: 0,
+                        y: 14,
+                        scale: 0.85,
+                        duration: 0.5,
+                        ease: 'power3.in'
+                    });
+                }, { passive: true });
+            };
+
+            handleCTAHover();
+            handleScrollIndicator();
         }
     };
 

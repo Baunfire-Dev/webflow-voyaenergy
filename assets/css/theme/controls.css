@@ -3,12 +3,9 @@
 		&-anchors {
 			&.dark {
 				.sc {
-					&-anchor-cta {
+					&-anchor-cta,
+                    &-anchor-items {
 						background-color: var(--_colors---carbon-black);
-
-						.sc-anchor-text {
-							color: var(--_colors---white);
-						}
 					}
 
 					&-anchor-cta-icon {
@@ -18,14 +15,26 @@
 							}
 						}
 					}
+
+					&-anchor-text {
+                        color: var(--_colors---white);
+					}
 				}
 			}
 		}
 
-		&-anchor-cta,
-		&-anchor-cta-icon svg path,
-		&-anchor-text {
-			@apply transition-colors duration-300 ease-in-out;
-		}
+        &-anchor-items-c {
+            clip-path: inset(100% 100% 0% 0% round 0.5rem);
+        }
+
+        &-anchor-items {
+            
+        }
+
+        &-anchor-cta,
+        &-anchor-cta-icon svg path,
+        &-anchor-text {
+            @apply transition-colors duration-300 ease-in-out;
+        }
 	}
 }
