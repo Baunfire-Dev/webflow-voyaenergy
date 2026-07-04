@@ -51,7 +51,7 @@
                             mainHeading.style.opacity = "1";
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 1, ease: "power2.out", stagger: 0.08 },
+                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
                                 ">-0.3"
                             );
                         },
@@ -82,7 +82,7 @@
                             mainPara.style.opacity = "1";
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 1, ease: "power2.out", stagger: 0.08 },
+                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
                                 "<0.3"
                             );
                         },
