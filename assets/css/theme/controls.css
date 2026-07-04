@@ -5,6 +5,10 @@
 				.sc {
 					&-anchor-cta {
 						background-color: var(--_colors---carbon-black);
+
+						.sc-anchor-text {
+							color: var(--_colors---white);
+						}
 					}
 
 					&-anchor-cta-icon {
@@ -14,18 +18,14 @@
 							}
 						}
 					}
-
-					&-anchor-text {
-                        color: var(--_colors---white);
-					}
 				}
 			}
 		}
 
-        &-anchor-cta,
-        &-anchor-cta-icon svg path,
-        &-anchor-text {
-            @apply transition-colors duration-300 ease-in-out;
-        }
+		&-anchor-cta,
+		&-anchor-cta-icon svg path,
+		&-anchor-text {
+			@apply transition-colors duration-300 ease-in-out;
+		}
 	}
 }
