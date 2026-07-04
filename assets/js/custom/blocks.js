@@ -154,7 +154,7 @@
                             scrollTrigger: {
                                 trigger: heroInner,
                                 start: "top top",
-                                end: "+=300%",
+                                end: "+=350%",
                                 scrub: 1,
                                 pin: true,
                                 // anticipatePin: 1,
@@ -162,7 +162,7 @@
                             },
                         });
 
-                        tl.to({}, { duration: 0.5 }, 0);
+                        tl.to({}, { duration: 1 }, 0);
 
                         tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 }, 0);
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
