@@ -117,6 +117,7 @@
 
                 const sectionTwo = self.querySelector(".hh-section.two");
                 const sectionTwoLogo = sectionTwo.querySelector(".hh-logo");
+                const sectionTwoImage = sectionTwo.querySelector(".hh-bg-img");
 
                 const secondaryPara = sectionTwo.querySelector(".hh-long-para");
 
@@ -156,7 +157,7 @@
                             },
                         });
 
-                        tl.to({}, { duration: 0.5 }, 0); 
+                        tl.to({}, { duration: 0.5 }, 0);
 
                         tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 }, 0);
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
@@ -176,6 +177,18 @@
                         tl.to({}, { duration: 0.5 });
 
                         return tl;
+                    },
+                });
+
+                gsap.to(sectionTwoImage, {
+                    yPercent: -12,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: heroInner,
+                        start: "bottom bottom",
+                        end: "bottom top",
+                        scrub: true,
+                        invalidateOnRefresh: true,
                     },
                 });
             };
