@@ -100,7 +100,7 @@
                         {
                             scale: 1,
                             autoAlpha: 1,
-                            duration: 1.2,
+                            duration: 2,
                             ease: "circ.inOut",
                         },
                         "<-0.2"
