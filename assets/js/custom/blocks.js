@@ -334,10 +334,10 @@
                         },
                         {
                             x: 0,
-                            duration: 0.6,
+                            duration: 0.4,
                             ease: "power2.out",
                             autoAlpha: 1,
-                            stagger: { amount: 0.4, from: "start" }
+                            stagger: { amount: 0.3, from: "start" }
                         },
                         "<0.2"
                     )
