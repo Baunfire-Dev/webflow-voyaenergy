@@ -220,7 +220,6 @@
                 const arrowTL = gsap.timeline({
                     repeat: -1,
                     repeatDelay: 1,
-                    paused: true
                 })
 
                 let fadeOut = false;
@@ -258,19 +257,6 @@
                         autoAlpha: 0,
                         y: -4
                     })
-
-                mm.add('(prefers-reduced-motion: no-preference)', () => {
-                    arrowTL.play();
-                    return () => arrowTL.pause();
-                });
-
-                mm.add('(prefers-reduced-motion: reduce)', () => {
-                    gsap.set(line, { strokeDashoffset: 0 });
-                    gsap.set('#dhead', {
-                        autoAlpha: 1,
-                        y: 0
-                    });
-                });
 
                 addEventListener('scroll', () => {
                     if (fadeOut) return;
