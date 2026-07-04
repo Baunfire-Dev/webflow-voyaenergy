@@ -48,20 +48,6 @@
                     });
                 }
 
-                if (mainImage) {
-                    introTL.fromTo(mainImage,
-                        {
-                            scale: 1.1,
-                        },
-                        {
-                            scale: 1,
-                            duration: 1,
-                            ease: "power3.Out"
-                        },
-                        "<0.4"
-                    );
-                }
-
                 if (mainHeading) {
                     SplitText.create(mainHeading, {
                         type: "words",
@@ -102,6 +88,22 @@
                     },
                     "<"
                 );
+
+                if (mainImage) {
+                    introTL.fromTo(mainImage,
+                        {
+                            autoAlpha: 0,
+                            scale: 1.1,
+                        },
+                        {
+                            scale: 1,
+                            autoAlpha: 1,
+                            duration: 1.6,
+                            ease: "power3.Out"
+                        },
+                        "<0.4"
+                    );
+                }
 
                 if (mainPara) {
                     SplitText.create(mainPara, {
