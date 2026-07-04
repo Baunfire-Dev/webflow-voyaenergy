@@ -306,13 +306,13 @@
                 hoverTL
                     .fromTo(ctaInner,
                         {
-                            yPercent: 0,
+                            xPercent: 0,
                             autoAlpha: 1,
                         },
                         {
-                            yPercent: 100,
+                            xPercent: 100,
                             autoAlpha: 0,
-                            duration: 0.6,
+                            duration: 0.4,
                             ease: "power2.out"
                         }
                     )
@@ -322,10 +322,10 @@
                         },
                         {
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
-                            duration: 0.8,
+                            duration: 0.6,
                             ease: "power2.out"
                         },
-                        "<0.3"
+                        "<0.2"
                     )
                     .fromTo(items,
                         {
@@ -339,7 +339,7 @@
                             autoAlpha: 1,
                             stagger: { amount: 0.4, from: "start" }
                         },
-                        ">0.2"
+                        "<0.4"
                     )
 
                 trigger.addEventListener("mouseenter", () => hoverTL.play());
