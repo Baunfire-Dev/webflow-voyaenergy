@@ -37,7 +37,7 @@
                     introTL.to(pageReveal, {
                         yPercent: -100,
                         duration: 1,
-                        ease: "power3.in"
+                        ease: "power2.inOut"
                     });
                 }
 
