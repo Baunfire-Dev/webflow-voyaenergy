@@ -1,0 +1,11 @@
+section.hero-homepage {
+	.hh-section {
+		&.two {
+			will-change: clip-path;
+			--frame-t: 2rem;
+			--frame-x: 2.5rem;
+			--frame-b: 2.5rem;
+			--frame-r: 1rem;
+		}
+	}
+}
