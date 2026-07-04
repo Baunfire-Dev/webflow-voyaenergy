@@ -58,23 +58,6 @@
                     });
                 }
 
-                if (mainPara) {
-                    SplitText.create(mainPara, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            mainPara.style.visibility = "visible";
-                            mainPara.style.opacity = "1";
-                            return introTL.fromTo(split.words,
-                                { y: "100%" },
-                                { y: "-5%", duration: 0.6, ease: "power2.inOut", stagger: 0.03 },
-                                "<0.2"
-                            );
-                        },
-                    });
-                }
-
                 if (nav) {
                     introTL.fromTo(nav,
                         {
@@ -87,6 +70,23 @@
                         },
                         "<0.2"
                     );
+                }
+
+                if (mainPara) {
+                    SplitText.create(mainPara, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainPara.style.visibility = "visible";
+                            mainPara.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.6, ease: "power2.inOut", stagger: 0.03 },
+                                "<0.3"
+                            );
+                        },
+                    });
                 }
             };
 
