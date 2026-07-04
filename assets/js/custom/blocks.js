@@ -258,7 +258,7 @@
                             para.style.opacity = "1";
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 0.6, ease: "power2.out", stagger: { amount: 0.5, from: "start" } },
+                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: { amount: 0.6, from: "start" } },
                                 "<0.4"
                             );
                         },
