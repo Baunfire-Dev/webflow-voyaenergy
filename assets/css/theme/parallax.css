@@ -1,0 +1,34 @@
+[class*="plx-"] { --s: 0.3; }
+
+.plx-05 { --s: 0.5; }
+.plx-1  { --s: 1.0; }
+.plx-15 { --s: 1.5; }
+.plx-2  { --s: 2.0; }
+.plx-25 { --s: 2.5; }
+.plx-3  { --s: 3.0; }
+
+.plx-05r { --s: -0.5; }
+.plx-1r  { --s: -1.0; }
+.plx-15r { --s: -1.5; }
+.plx-2r  { --s: -2.0; }
+.plx-25r { --s: -2.5; }
+.plx-3r  { --s: -3.0; }
+
+@keyframes plx {
+	from {
+		transform: translateY(calc(var(--s) * 8vh));
+	}
+	to {
+		transform: translateY(calc(var(--s) * -8vh));
+	}
+}
+
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		[class*="plx-"] {
+			animation: plx linear both;
+			animation-timeline: view();
+			animation-range: cover;
+		}
+	}
+}
