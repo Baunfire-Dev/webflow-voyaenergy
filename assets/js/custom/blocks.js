@@ -11,6 +11,7 @@
 
                 els.forEach(self => {
                     handleEntrance(self);
+                    handleScroll(self);
                 });
             }
 
@@ -103,6 +104,54 @@
                         },
                     });
                 }
+            };
+
+            const handleScroll = (self) => {
+                const inner = self.querySelector(".hh-inner");
+                const one = self.querySelector(".hh-section.one");
+                const two = self.querySelector(".hh-section.two");
+                const logo = two.querySelector(".hh-logo");
+                const longPara = two.querySelector(".hh-long-para");
+                if (!inner || !one || !two) return;
+
+                const finalInset = () => {
+                    const s = getComputedStyle(two);
+                    const t = s.getPropertyValue("--frame-t").trim();
+                    const x = s.getPropertyValue("--frame-x").trim();
+                    const b = s.getPropertyValue("--frame-b").trim();
+                    const r = s.getPropertyValue("--frame-r").trim();
+                    return `inset(${t} ${x} ${b} ${x} round ${r})`;
+                };
+
+                SplitText.create(longPara, {
+                    type: "words",
+                    mask: "words",
+                    autoSplit: true,
+                    onSplit(split) {
+                        gsap.set(two, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)" });
+                        gsap.set(logo, { autoAlpha: 0, y: "2rem" });
+                        gsap.set(split.words, { yPercent: 110 });
+
+                        const tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: inner,
+                                start: "top top",
+                                end: "+=250%",
+                                scrub: true,
+                                pin: true,
+                                anticipatePin: 1,
+                                invalidateOnRefresh: true,
+                            },
+                        });
+
+                        tl.to(one, { yPercent: -100, ease: "none", duration: 1 }, 0);
+                        tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.5 }, 0.9);
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, 1.0);
+                        tl.to(two, { clipPath: finalInset(), ease: "none", duration: 0.6 }, 1.7);
+
+                        return tl;
+                    },
+                });
             };
 
             script();
