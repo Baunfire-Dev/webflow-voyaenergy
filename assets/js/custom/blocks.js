@@ -110,17 +110,19 @@
                 const inner = self.querySelector(".hh-inner");
                 const one = self.querySelector(".hh-section.one");
                 const two = self.querySelector(".hh-section.two");
+                const oneImg = one.querySelector(".hh-bg-img-outer");
+                const heading = one.querySelector(".hh-heading");
+                const para = one.querySelector(".hh-para");
                 const logo = two.querySelector(".hh-logo");
                 const longPara = two.querySelector(".hh-long-para");
                 if (!inner || !one || !two) return;
 
                 const finalInset = () => {
                     const s = getComputedStyle(two);
-                    const t = s.getPropertyValue("--frame-t").trim();
+                    const y = s.getPropertyValue("--frame-y").trim();
                     const x = s.getPropertyValue("--frame-x").trim();
-                    const b = s.getPropertyValue("--frame-b").trim();
                     const r = s.getPropertyValue("--frame-r").trim();
-                    return `inset(${t} ${x} ${b} ${x} round ${r})`;
+                    return `inset(${y} ${x} ${y} ${x} round ${r})`;
                 };
 
                 SplitText.create(longPara, {
@@ -128,34 +130,44 @@
                     mask: "words",
                     autoSplit: true,
                     onSplit(split) {
-                        gsap.set(two, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)" });
+                        gsap.set(two, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 6 });
+                        gsap.set(oneImg, { yPercent: 0 });
+                        gsap.set(heading, { yPercent: 0, autoAlpha: 1 });
+                        gsap.set(para, { yPercent: 0, autoAlpha: 1 });
                         gsap.set(logo, { autoAlpha: 0, y: "2rem" });
                         gsap.set(split.words, { yPercent: 110 });
 
                         const tl = gsap.timeline({
                             scrollTrigger: {
-                                trigger: self,
+                                trigger: inner,
                                 start: "top top",
-                                end: "+=250%",
-                                scrub: 1,
-                                pin: inner,
-                                pinSpacing: true,
+                                end: "+=300%",
+                                scrub: true,
+                                pin: true,
+                                anticipatePin: 1,
                                 invalidateOnRefresh: true,
                             },
                         });
 
                         tl.to(one, { yPercent: -100, ease: "none", duration: 1 }, 0);
-                        tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, "<0.9");
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, "<0.1");
-                        tl.to({}, { duration: 1.0 });    
+                        tl.to(oneImg, { yPercent: 40, ease: "none", duration: 1 }, "<");
+                        tl.to(two, { yPercent: 0, ease: "none", duration: 1 }, "<");
+                        tl.to(heading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
+                        tl.to(para, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
+
+                        tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, 1.0);
+
+                        tl.to({}, { duration: 1.0 });
+
                         tl.to(two, { clipPath: finalInset(), ease: "none", duration: 0.6 });
-                        tl.to({}, { duration: 1.0 });  
+
+                        tl.to({}, { duration: 1.0 });
 
                         return tl;
                     },
                 });
             };
-
             script();
         },
 
