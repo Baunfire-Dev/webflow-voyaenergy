@@ -1,9 +1,10 @@
-.plx-wrap {
+.plx-wrap,
+[class*="plx-"]:not(.plx-wrap) {
 	view-timeline-name: --plx;
 	view-timeline-axis: block;
 }
 
-[class*="plx-"] { --s: 0.3; }
+[class*="plx-"]:not(.plx-wrap) { --s: 0.3; }
 
 .plx-05 { --s: 0.5; }
 .plx-1  { --s: 1.0; }
