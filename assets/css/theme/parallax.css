@@ -1,3 +1,9 @@
+.plx-wrap {
+	overflow: hidden;
+	view-timeline-name: --plx;
+	view-timeline-axis: block;
+}
+
 [class*="plx-"] { --s: 0.3; }
 
 .plx-05 { --s: 0.5; }
@@ -27,7 +33,7 @@
 	@media (prefers-reduced-motion: no-preference) {
 		[class*="plx-"] {
 			animation: plx linear both;
-			animation-timeline: view();
+			animation-timeline: --plx;
 			animation-range: cover;
 		}
 	}
