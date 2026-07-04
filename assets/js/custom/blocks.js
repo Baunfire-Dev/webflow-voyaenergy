@@ -306,11 +306,11 @@
                 hoverTL
                     .fromTo(ctaInner,
                         {
-                            xPercent: 0,
+                            yPercent: 0,
                             autoAlpha: 1,
                         },
                         {
-                            xPercent: 100,
+                            yPercent: 100,
                             autoAlpha: 0,
                             duration: 0.6,
                             ease: "power2.out"
