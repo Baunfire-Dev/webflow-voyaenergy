@@ -50,7 +50,7 @@
                         {
                             scale: 1,
                             duration: 1.2,
-                            ease: "power2.inOut"
+                            ease: "power3.Out"
                         },
                         ">-0.3"
                     );
