@@ -101,7 +101,7 @@
                             scale: 1,
                             autoAlpha: 1,
                             duration: 2,
-                            ease: "circ.inOut",
+                            ease: "circ.out",
                         },
                         "<-0.2"
                     );
