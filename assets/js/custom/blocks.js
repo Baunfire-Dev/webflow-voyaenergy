@@ -196,10 +196,10 @@
 
                         tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
 
+                        tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
+
                         tl.call(() => siteAnchors.classList.add("dark"), null, "<");
                         tl.call(() => siteAnchors.classList.remove("dark"), null, ">");
-
-                        tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
 
                         tl.to({}, { duration: 0.5 });
 
