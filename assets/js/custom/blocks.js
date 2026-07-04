@@ -167,7 +167,7 @@
                         tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
 
                         tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.12, duration: 0.4 }, "<0.1");
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
 
                         tl.to({}, { duration: 0.5 });
 
