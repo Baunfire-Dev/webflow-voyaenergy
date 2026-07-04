@@ -164,7 +164,7 @@
 
                         tl.to({}, { duration: 1 }, 0);
 
-                        tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 }, 0);
+                        tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 });
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
                         tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1 }, "<");
 
@@ -223,7 +223,6 @@
                         trigger: self,
                         start: baunfire.anim.start,
                         once: true,
-                        markers: true
                     }
                 });
 
