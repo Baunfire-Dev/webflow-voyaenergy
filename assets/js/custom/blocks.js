@@ -217,8 +217,13 @@
                 const line = document.getElementById('dline');
                 const len = line.getTotalLength();
 
-                const arrowTL = gsap.timeline({ repeat: -1, repeatDelay: 0.5, paused: true })
-                let gone = false;
+                const arrowTL = gsap.timeline({
+                    repeat: -1,
+                    repeatDelay: 0.5,
+                    paused: true
+                })
+
+                let fadeOut = false;
 
                 const mm = gsap.matchMedia();
 
@@ -268,9 +273,9 @@
                 });
 
                 addEventListener('scroll', () => {
-                    if (gone) return;
+                    if (fadeOut) return;
 
-                    gone = true;
+                    fadeOut = true;
                     arrowTL.pause();
 
                     gsap.to(svg, {
