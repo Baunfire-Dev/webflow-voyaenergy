@@ -103,7 +103,7 @@
                             duration: 1.2,
                             ease: "circ.inOut",
                         },
-                        "<0.1"
+                        "<-0.2"
                     );
                 }
 
