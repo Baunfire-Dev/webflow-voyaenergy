@@ -141,7 +141,7 @@
 
                         gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
 
-                        gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 20 });
+                        gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
                         gsap.set(sectionTwoLogo, { autoAlpha: 0, y: "2rem" });
 
                         const tl = gsap.timeline({
