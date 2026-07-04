@@ -23,12 +23,8 @@
 			}
 		}
 
-        &-anchor-items-c {
-            clip-path: inset(100% 100% 0% 0% round 0.5rem);
-        }
-
         &-anchor-items {
-            
+
         }
 
         &-anchor-cta,
