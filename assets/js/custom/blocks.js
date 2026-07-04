@@ -118,6 +118,8 @@
                 const sectionTwo = self.querySelector(".hh-section.two");
                 const sectionTwoLogo = sectionTwo.querySelector(".hh-logo");
                 const sectionTwoImage = sectionTwo.querySelector(".hh-bg-img");
+                const sectionTwoContent = sectionTwo.querySelector(".hh-content.two");
+                const sectionTwoBGOverlay = sectionTwo.querySelector(".hh-bg-overlay");
 
                 const secondaryPara = sectionTwo.querySelector(".hh-long-para");
 
@@ -145,6 +147,8 @@
                         gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
                         gsap.set(sectionTwoLogo, { autoAlpha: 0, y: "2rem" });
 
+                        gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
+
                         const tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: heroInner,
@@ -161,7 +165,6 @@
 
                         tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 }, 0);
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
-
                         tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1 }, "<");
 
                         tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
@@ -170,9 +173,10 @@
                         tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
                         tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
 
-                        tl.to({}, { duration: 0.5 });
+                        tl.to({}, { duration: 1 });
 
                         tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.6 });
+                        tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
 
                         tl.to({}, { duration: 0.5 });
 
