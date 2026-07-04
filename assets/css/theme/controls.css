@@ -40,7 +40,7 @@
                 }
 
                 .sc-anchor-orb {
-                    @apply opacity-100 delay-200;
+                    @apply opacity-100 delay-100;
                 }
             }
         }
