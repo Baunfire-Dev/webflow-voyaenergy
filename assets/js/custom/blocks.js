@@ -246,7 +246,7 @@
                     .to(head, {
                         autoAlpha: 1,
                         y: 0,
-                        duration: 0.25,
+                        duration: 0.4,
                         ease: 'back.out(2)'
                     },
                         '-=0.1'
@@ -256,7 +256,9 @@
                         y: 2,
                         duration: 0.6,
                         ease: 'power2.out'
-                    })
+                    },
+                        '<0.3'
+                    )
                     .set(line, {
                         strokeDashoffset: len
                     })
