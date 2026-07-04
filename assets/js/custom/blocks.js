@@ -201,6 +201,72 @@
 
             script();
         },
+
+        energyBottleNeck() {
+            const script = () => {
+                const els = document.querySelectorAll("section.energy-bottleneck");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const heading = self.querySelector(".eb-icon");
+                const para = self.querySelector(".eb-para");
+                const logo = self.querySelector(".eb-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
+                                "<0.2"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    SplitText.create(para, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            para.style.visibility = "visible";
+                            para.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
+                                "<0.4"
+                            );
+                        },
+                    });
+                }
+            };
+        }
     };
 
     baunfire.addModule(baunfire.Blocks);
