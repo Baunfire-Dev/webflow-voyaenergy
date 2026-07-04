@@ -156,7 +156,7 @@
                         tl.to(para, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
 
                         tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, 1.0);
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.06, duration: 0.8 }, 1.0);
 
                         tl.to({}, { duration: 1.0 });
 
