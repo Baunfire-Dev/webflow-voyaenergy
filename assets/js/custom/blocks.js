@@ -23,7 +23,7 @@
                 const introTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        start: "top top"
+                        start: baunfire.anim.start
                     },
                 });
 
