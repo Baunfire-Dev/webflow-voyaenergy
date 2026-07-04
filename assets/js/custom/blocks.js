@@ -62,10 +62,10 @@
                 if (mainImage) {
                     introTL.fromTo(mainImage,
                         {
-                            scale: 106,
+                            scale: 1.2,
                         },
                         {
-                            scale: 100,
+                            scale: 1,
                             duration: 0.8,
                             ease: "power2.out"
                         },
