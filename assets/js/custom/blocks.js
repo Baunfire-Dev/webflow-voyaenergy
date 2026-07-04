@@ -101,7 +101,7 @@
                             scale: 1,
                             autoAlpha: 1,
                             duration: 1.2,
-                            ease: "power3.inOut"
+                            ease: "circ.inOut",
                         },
                         "<0.1"
                     );
