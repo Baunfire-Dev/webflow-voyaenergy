@@ -22,34 +22,33 @@
 
                 const introTL = gsap.timeline({
                     paused: true,
-                    scrollTrigger: {
-                        trigger: self,
-                        start: baunfire.anim.start
-                    },
+                });
+
+                ScrollTrigger.create({
+                    trigger: self,
+                    start: baunfire.anim.start,
+                    once: true,
+                    onEnter: () => {
+                        gsap.delayedCall(0.2, () => introTL.play());
+                    }
                 });
 
                 if (pageReveal) {
-                    introTL.to(pageReveal,
-                        {
-                            yPercent: -100,
-                            duration: 1,
-                            ease: "power2.inOut"
-                        },
-                    );
+                    introTL.to(pageReveal, {
+                        yPercent: -100,
+                        duration: 1,
+                        ease: "power2.inOut"
+                    });
                 }
 
                 if (nav) {
-                    introTL.fromTo(nav,
-                        {
-                            yPercent: -100,
-                        },
-                        {
-                            yPercent: 0,
-                            duration: 0.6,
-                            ease: "power2.out"
-                        },
-                        "<0.2"
-                    );
+                    introTL.fromTo(nav, {
+                        yPercent: -100,
+                    }, {
+                        yPercent: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "<0.2");
                 }
 
                 if (mainHeading) {
