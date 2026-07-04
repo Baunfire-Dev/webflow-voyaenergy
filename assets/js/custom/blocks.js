@@ -339,7 +339,7 @@
                             autoAlpha: 1,
                             stagger: { amount: 0.4, from: "start" }
                         },
-                        "<0.4"
+                        "<0.2"
                     )
 
                 trigger.addEventListener("mouseenter", () => hoverTL.play());
