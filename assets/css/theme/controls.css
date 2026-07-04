@@ -35,7 +35,7 @@
             &.active,
             &:hover {
                 .sc-anchor-text {
-                    @apply translate-x-[1.25rem];
+                    transform: translateX(1.25rem);
                     @apply font-semibold;
                 }
 
