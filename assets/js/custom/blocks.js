@@ -151,7 +151,7 @@
                                 end: "+=350%",
                                 scrub: true,
                                 pin: true,
-                                anticipatePin: 1,
+                                // anticipatePin: 1,
                                 invalidateOnRefresh: true,
                             },
                         });
