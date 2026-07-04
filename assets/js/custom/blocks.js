@@ -223,6 +223,7 @@
                         trigger: self,
                         start: baunfire.anim.start,
                         once: true,
+                        markes: true
                     }
                 });
 
