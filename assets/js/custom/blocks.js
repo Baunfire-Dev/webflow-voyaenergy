@@ -95,7 +95,7 @@
                     introTL.fromTo(mainImage,
                         {
                             autoAlpha: 0,
-                            scale: 1.1,
+                            scale: 1.3,
                         },
                         {
                             scale: 1,
