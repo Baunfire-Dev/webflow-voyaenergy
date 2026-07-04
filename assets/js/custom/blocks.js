@@ -323,18 +323,20 @@
                         {
                             clipPath: "inset(calc(100% - 2.625rem) 0% 0% 0% round 0.5rem)",
                             duration: 0.6,
-                            ease: "power2.out"
+                            ease: "power2.out",
+                            immediateRender: false
                         },
                         "<"
                     )
                     .fromTo(itemsContainer,
                         {
-                            clipPath: "inset(calc(100% - 2.625rem) 100% 0% 0% round 0.5rem)",
+                            clipPath: "inset(calc(100% - 2.625rem) 0% 0% 0% round 0.5rem)",
                         },
                         {
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                             duration: 0.6,
-                            ease: "power2.out"
+                            ease: "power2.out",
+                            immediateRender: false
                         },
                     )
                     .fromTo(items,
