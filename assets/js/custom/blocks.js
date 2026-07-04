@@ -66,8 +66,8 @@
                         },
                         {
                             scale: 1,
-                            duration: 0.8,
-                            ease: "power2.out"
+                            duration: 1.2,
+                            ease: "power2.inOut"
                         },
                         "<0.2"
                     );
