@@ -18,7 +18,10 @@
 
             const handleEntrance = (self) => {
                 const pageReveal = document.querySelector(".page-reveal");
+
                 const nav = document.querySelector("nav");
+                const pageControls = document.querySelector(".section-controls");
+
                 const mainHeading = self.querySelector(".hh-section.one .hh-heading");
                 const mainPara = self.querySelector(".hh-section.one .hh-para");
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
@@ -75,19 +78,29 @@
                     });
                 }
 
-                if (nav) {
-                    introTL.fromTo(nav,
-                        {
-                            yPercent: -100,
-                        },
-                        {
-                            yPercent: 0,
-                            duration: 0.8,
-                            ease: "power2.out"
-                        },
-                        "<0.2"
-                    );
-                }
+                introTL.fromTo(nav,
+                    {
+                        yPercent: -100,
+                    },
+                    {
+                        yPercent: 0,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    },
+                    "<0.2"
+                );
+
+                introTL.fromTo(pageControls,
+                    {
+                        y: -100,
+                    },
+                    {
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    },
+                    "<"
+                );
 
                 if (mainPara) {
                     SplitText.create(mainPara, {
