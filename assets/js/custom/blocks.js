@@ -134,13 +134,12 @@
 
                         const tl = gsap.timeline({
                             scrollTrigger: {
-                                trigger: inner,
+                                trigger: self,
                                 start: "top top",
                                 end: "+=250%",
-                                scrub: true,
-                                pin: true,
+                                scrub: 1,
+                                pin: inner,
                                 pinSpacing: true,
-                                anticipatePin: 1,
                                 invalidateOnRefresh: true,
                             },
                         });
