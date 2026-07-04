@@ -187,7 +187,7 @@
                         trigger: heroInner,
                         start: "bottom bottom",
                         end: "bottom top",
-                        scrub: true,
+                        scrub: 1,
                         invalidateOnRefresh: true,
                     },
                 });
