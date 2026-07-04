@@ -149,6 +149,7 @@
                         tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, 1.0);
                         tl.to({}, { duration: 1.0 });    
                         tl.to(two, { clipPath: finalInset(), ease: "none", duration: 0.6 });
+                        tl.to({}, { duration: 1.0 });  
 
                         return tl;
                     },
