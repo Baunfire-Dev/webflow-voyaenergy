@@ -29,7 +29,7 @@
                     start: baunfire.anim.start,
                     once: true,
                     onEnter: () => {
-                        gsap.delayedCall(0.2, () => introTL.play());
+                        gsap.delayedCall(0.1, () => introTL.play());
                     }
                 });
 
