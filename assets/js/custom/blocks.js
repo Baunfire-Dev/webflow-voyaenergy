@@ -147,7 +147,7 @@
                         const tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: heroInner,
-                                start: "top 30%",
+                                start: "top -30%",
                                 end: "+=400%",
                                 scrub: true,
                                 pin: true,
