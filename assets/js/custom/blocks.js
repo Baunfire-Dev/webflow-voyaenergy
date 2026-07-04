@@ -81,7 +81,7 @@
                     });
                 }
 
-                introTL.addLabel("nav_controls", "<0.4")
+                introTL.addLabel("nav_controls", "<0.2")
 
                 introTL.fromTo(nav,
                     {
