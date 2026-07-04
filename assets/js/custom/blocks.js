@@ -318,9 +318,11 @@
                     )
                     .fromTo(itemsContainer,
                         {
-                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)"
+                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
+                            autoAlpha: 0,
                         },
                         {
+                            autoAlpha: 1,
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                             duration: 0.8,
                             ease: "power2.out"
