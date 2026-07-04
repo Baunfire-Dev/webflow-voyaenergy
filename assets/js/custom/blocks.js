@@ -13,6 +13,7 @@
                 els.forEach(self => {
                     handleEntrance(self);
                     handleScroll(self);
+                    handleScrollIndicator(self);
                 });
             }
 
@@ -210,6 +211,87 @@
                     },
                 });
             };
+
+            const handleScrollIndicator = (self) => {
+                const svg = document.getElementById('indicator');
+                const line = document.getElementById('dline');
+                const len = line.getTotalLength();
+
+                const arrowTL = gsap.timeline({ repeat: -1, repeatDelay: 0.5, paused: true })
+                let gone = false;
+
+                const mm = gsap.matchMedia();
+
+                gsap.set(line, {
+                    strokeDasharray: len,
+                    strokeDashoffset: len
+                });
+
+                gsap.set('#dhead', {
+                    autoAlpha: 0,
+                    y: -4
+                });
+
+                arrowTL
+                    .to(line, {
+                        strokeDashoffset: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    })
+                    .to('#dhead', {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.25,
+                        ease: 'back.out(2)'
+                    },
+                        '-=0.1'
+                    )
+                    .to(svg, {
+                        autoAlpha: 0,
+                        duration: 0.35,
+                        ease: 'power2.in'
+                    },
+                        '+=0.4'
+                    )
+                    .set(line, {
+                        strokeDashoffset: len
+                    })
+                    .set('#dhead', {
+                        autoAlpha: 0,
+                        y: -4
+                    })
+                    .set(svg, {
+                        autoAlpha: 1
+                    });
+
+                mm.add('(prefers-reduced-motion: no-preference)', () => {
+                    arrowTL.play();
+                    return () => arrowTL.pause();
+                });
+
+                mm.add('(prefers-reduced-motion: reduce)', () => {
+                    gsap.set(line, { strokeDashoffset: 0 });
+                    gsap.set('#dhead', {
+                        autoAlpha: 1,
+                        y: 0
+                    });
+                });
+
+                addEventListener('scroll', () => {
+                    if (gone) return;
+
+                    gone = true;
+                    arrowTL.pause();
+
+                    gsap.to(svg, {
+                        autoAlpha: 0,
+                        y: 14,
+                        scale: 0.85,
+                        duration: 0.5,
+                        ease: 'power3.in'
+                    });
+                }, { passive: true });
+            }
 
             script();
         },
