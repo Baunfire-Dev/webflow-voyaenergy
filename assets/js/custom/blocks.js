@@ -81,6 +81,8 @@
                     });
                 }
 
+                introTL.addLabel("nav_controls", "<0.4")
+
                 introTL.fromTo(nav,
                     {
                         yPercent: -100,
@@ -90,7 +92,7 @@
                         duration: 0.8,
                         ease: "power2.out"
                     },
-                    "<0.4"
+                    "nav_controls"
                 );
 
                 introTL.fromTo(pageControls,
@@ -102,7 +104,7 @@
                         duration: 0.8,
                         ease: "power2.out"
                     },
-                    "<"
+                    "nav_controls"
                 );
 
                 if (mainPara) {
