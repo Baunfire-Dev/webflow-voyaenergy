@@ -310,9 +310,9 @@
                             autoAlpha: 1,
                         },
                         {
-                            y: 100,
+                            y: -40,
                             autoAlpha: 0,
-                            duration: 0.6,
+                            duration: 0.4,
                             ease: "power2.out"
                         }
                     )
