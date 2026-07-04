@@ -200,10 +200,10 @@
 
         handleTransitions() {
             const textReveal = () => {
-                const els = document.querySelectorAll("[data-split-words]");
+                const els = document.querySelectorAll("[split]");
 
                 els.forEach(el => {
-                    const hasTrigger = el.hasAttribute("data-split-trigger");
+                    const hasTrigger = el.hasAttribute("split-trigger");
                     const triggerSelector = el.dataset.splitTrigger;
                     const triggerEl = hasTrigger
                         ? (triggerSelector ? el.closest(triggerSelector) || el : el)
