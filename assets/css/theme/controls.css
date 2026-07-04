@@ -1,13 +1,31 @@
 section.section-controls {
-    .sc {
-        &-anchors {
-            &.dark {
-                .sc {
-                    &-anchor-cta {
-                        @apply transition-colors duration-300 ease-in-out;
-                    }
-                }
-            }
+	.sc {
+		&-anchors {
+			&.dark {
+				.sc {
+					&-anchor-cta {
+						background-color: var(--_colors---carbon-black);
+					}
+
+					&-anchor-cta-icon {
+						svg {
+							path {
+								fill: var(--_colors---white);
+							}
+						}
+					}
+
+					&-anchor-text {
+                        color: var(--_colors---white);
+					}
+				}
+			}
+		}
+
+        &-anchor-cta,
+        &-anchor-cta-icon svg path,
+        &-anchor-text {
+            @apply transition-colors duration-300 ease-in-out;
         }
-    }
+	}
 }
