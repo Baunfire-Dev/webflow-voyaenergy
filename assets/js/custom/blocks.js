@@ -145,8 +145,8 @@
                         });
 
                         tl.to(one, { yPercent: -100, ease: "none", duration: 1 }, 0);
-                        tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.5 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, 1.0);
+                        tl.to(logo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, "<0.9");
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.02, duration: 0.6 }, "<0.1");
                         tl.to({}, { duration: 1.0 });    
                         tl.to(two, { clipPath: finalInset(), ease: "none", duration: 0.6 });
                         tl.to({}, { duration: 1.0 });  
