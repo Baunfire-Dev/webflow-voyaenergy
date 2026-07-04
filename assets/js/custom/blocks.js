@@ -14,7 +14,6 @@
                 els.forEach(self => {
                     handleEntrance(self);
                     handleScroll(self);
-                    handleScrollIndicator(self);
                 });
             }
 
