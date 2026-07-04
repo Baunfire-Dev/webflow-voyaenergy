@@ -30,7 +30,7 @@
 
 @supports (animation-timeline: view()) {
 	@media (prefers-reduced-motion: no-preference) {
-		[class*="plx-"] {
+		[class*="plx-"]:not(.plx-wrap) {
 			animation: plx linear both;
 			animation-timeline: --plx;
 			animation-range: cover;
