@@ -82,7 +82,7 @@
                         yPercent: 0,
                         duration: 0.6,
                         ease: "power2.out"
-                    }, "<0.2");
+                    }, ">-0.2");
                 }
             };
 
