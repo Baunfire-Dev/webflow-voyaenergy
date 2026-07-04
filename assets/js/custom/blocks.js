@@ -319,10 +319,8 @@
                     .fromTo(itemsContainer,
                         {
                             clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
-                            autoAlpha: 0,
                         },
                         {
-                            autoAlpha: 1,
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                             duration: 0.8,
                             ease: "power2.out"
@@ -331,12 +329,14 @@
                     )
                     .fromTo(items,
                         {
-                            x: 10
+                            x: 10,
+                            autoAlpha: 0,
                         },
                         {
                             x: 0,
                             duration: 0.6,
                             ease: "power2.out",
+                            autoAlpha: 1,
                             stagger: { amount: 0.4, from: "start" }
                         },
                         "<0.6"
