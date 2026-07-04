@@ -21,6 +21,7 @@
                 const mainPara = self.querySelector(".hh-section.one .hh-para");
 
                 const introTL = gsap.timeline({
+                    paused: true,
                     scrollTrigger: {
                         trigger: self,
                         start: baunfire.anim.start
@@ -29,28 +30,28 @@
 
                 if (pageReveal) {
                     introTL.to(pageReveal,
-                        { 
+                        {
                             yPercent: -100,
-                            duration: 0.6, 
-                            ease: "power2.out" 
+                            duration: 1,
+                            ease: "power2.inOut"
                         },
                     );
                 }
 
                 if (nav) {
                     introTL.fromTo(nav,
-                        { 
+                        {
                             yPercent: -100,
                         },
-                        { 
+                        {
                             yPercent: 0,
-                            duration: 0.6, 
-                            ease: "power2.out" 
+                            duration: 0.6,
+                            ease: "power2.out"
                         },
                         "<0.2"
                     );
                 }
-                
+
                 if (mainHeading) {
                     SplitText.create(mainHeading, {
                         type: "words",
