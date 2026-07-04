@@ -204,7 +204,7 @@
                 gsap.set(sectionTwoImage, { scale: 1.06, transformOrigin: "center center" });
 
                 gsap.to(sectionTwoImage, {
-                    yPercent: 10,
+                    yPercent: 14,
                     ease: "none",
                     scrollTrigger: {
                         trigger: heroInner,
