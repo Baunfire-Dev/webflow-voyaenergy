@@ -219,7 +219,7 @@
 
                 const arrowTL = gsap.timeline({
                     repeat: -1,
-                    repeatDelay: 0.5,
+                    repeatDelay: 1,
                     paused: true
                 })
 
@@ -240,23 +240,23 @@
                 arrowTL
                     .to(line, {
                         strokeDashoffset: 0,
-                        duration: 0.5,
+                        duration: 0.6,
                         ease: 'power2.out'
                     })
                     .to('#dhead', {
                         autoAlpha: 1,
                         y: 0,
-                        duration: 0.25,
+                        duration: 0.4,
                         ease: 'back.out(2)'
                     },
-                        '-=0.1'
+                        '<0.2'
                     )
                     .set(line, {
                         strokeDashoffset: len
                     })
                     .set('#dhead', {
                         autoAlpha: 0,
-                        y: -4
+                        y: -4,
                     })
 
                 mm.add('(prefers-reduced-motion: no-preference)', () => {
