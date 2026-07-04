@@ -218,9 +218,9 @@
 
                             const props = {
                                 y: "-5%",
-                                duration: 0.6,
+                                duration: 0.8,
                                 ease: "power2.out",
-                                stagger: 0.03,
+                                stagger: 0.06,
                             };
 
                             if (hasTrigger && triggerEl) {
