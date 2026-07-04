@@ -122,7 +122,7 @@
 
                 if (!heroInner || !sectionOne || !sectionTwo) return;
 
-                const finalInset = () => {
+                const imageMask = () => {
                     const s = getComputedStyle(sectionTwo);
                     const y = s.getPropertyValue("--frame-y").trim();
                     const x = s.getPropertyValue("--frame-x").trim();
@@ -171,7 +171,7 @@
 
                         tl.to({}, { duration: 0.5 });
 
-                        tl.to(sectionTwo, { clipPath: finalInset(), ease: "none", duration: 0.6 });
+                        tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.6 });
 
                         tl.to({}, { duration: 0.5 });
 
