@@ -321,11 +321,22 @@
                             clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
                         },
                         {
-                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
+                            clipPath: "inset(0% 100% 0% 0% round 0.5rem)",
                             duration: 0.6,
                             ease: "power2.out"
                         },
                         "<"
+                    )
+                    .fromTo(itemsContainer,
+                        {
+                            clipPath: "inset(0% 100% 0% 0% round 0.5rem)",
+                        },
+                        {
+                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
+                            duration: 0.6,
+                            ease: "power2.out"
+                        },
+                        "<0.4"
                     )
                     .fromTo(items,
                         {
