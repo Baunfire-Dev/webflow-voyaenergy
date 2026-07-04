@@ -101,9 +101,9 @@
                             scale: 1,
                             autoAlpha: 1,
                             duration: 1.2,
-                            ease: "power3.Out"
+                            ease: "power3.InOut"
                         },
-                        "<0.2"
+                        "<0.1"
                     );
                 }
 
