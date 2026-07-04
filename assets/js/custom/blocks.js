@@ -65,6 +65,22 @@
                     });
                 }
 
+                if (mainImage) {
+                    introTL.fromTo(mainImage,
+                        {
+                            autoAlpha: 0,
+                            scale: 1.1,
+                        },
+                        {
+                            scale: 1,
+                            autoAlpha: 1,
+                            duration: 1.2,
+                            ease: "power3.Out"
+                        },
+                        "<0.3"
+                    );
+                }
+
                 introTL.fromTo(nav,
                     {
                         yPercent: -100,
@@ -88,22 +104,6 @@
                     },
                     "<"
                 );
-
-                if (mainImage) {
-                    introTL.fromTo(mainImage,
-                        {
-                            autoAlpha: 0,
-                            scale: 1.1,
-                        },
-                        {
-                            scale: 1,
-                            autoAlpha: 1,
-                            duration: 1.2,
-                            ease: "power3.Out"
-                        },
-                        "<0.3"
-                    );
-                }
 
                 if (mainPara) {
                     SplitText.create(mainPara, {
