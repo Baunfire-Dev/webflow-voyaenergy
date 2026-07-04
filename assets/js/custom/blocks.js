@@ -214,6 +214,7 @@
             }
 
             const handleEntrance = (self) => {
+                console.log(self);
                 const heading = self.querySelector(".eb-icon");
                 const para = self.querySelector(".eb-para");
                 const logo = self.querySelector(".eb-para");
