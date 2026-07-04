@@ -215,6 +215,7 @@
             const handleScrollIndicator = (self) => {
                 const svg = document.getElementById('indicator');
                 const line = document.getElementById('dline');
+                const head = document.getElementById('dhead');
                 const len = line.getTotalLength();
 
                 const arrowTL = gsap.timeline({
@@ -231,7 +232,7 @@
                     strokeDashoffset: len
                 });
 
-                gsap.set('#dhead', {
+                gsap.set(head, {
                     autoAlpha: 0,
                     y: -4
                 });
@@ -239,10 +240,10 @@
                 arrowTL
                     .to(line, {
                         strokeDashoffset: 0,
-                        duration: 0.5,
+                        duration: 0.6,
                         ease: 'power2.out'
                     })
-                    .to('#dhead', {
+                    .to(head, {
                         autoAlpha: 1,
                         y: 0,
                         duration: 0.25,
@@ -250,11 +251,16 @@
                     },
                         '-=0.1'
                     )
+                    .to([head, line], {
+                        autoAlpha: 0,
+                        y: 2,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    })
                     .set(line, {
                         strokeDashoffset: len
                     })
-                    .set('#dhead', {
-                        autoAlpha: 0,
+                    .set(head, {
                         y: -4
                     })
 
