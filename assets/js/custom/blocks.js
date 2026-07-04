@@ -60,7 +60,7 @@
                             duration: 1.2,
                             ease: "power3.Out"
                         },
-                        "<0.4"
+                        "<0.6"
                     );
                 }
 
