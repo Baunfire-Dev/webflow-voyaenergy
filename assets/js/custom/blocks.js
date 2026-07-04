@@ -306,11 +306,9 @@
                 hoverTL
                     .fromTo(ctaInner,
                         {
-                            x: 0,
                             autoAlpha: 1,
                         },
                         {
-                            x: 20,
                             autoAlpha: 0,
                             duration: 0.4,
                             ease: "power2.out"
@@ -318,24 +316,14 @@
                     )
                     .fromTo(itemsContainer,
                         {
-                            clipPath: "inset(calc(100% - 2.625rem) 100% 0% 0% round 0.5rem)",
-                            immediateRender: false
+                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
                         },
-                        {
-                            clipPath: "inset(calc(100% - 2.625rem) 0% 0% 0% round 0.5rem)",
-                            duration: 0.6,
-                            ease: "power2.out",
-                            immediateRender: false
-                        },
-                        "<"
-                    )
-                    .to(itemsContainer,
                         {
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                             duration: 0.6,
-                            ease: "power2.out",
-                            immediateRender: false
+                            ease: "power2.out"
                         },
+                        "<"
                     )
                     .fromTo(items,
                         {
@@ -344,10 +332,10 @@
                         },
                         {
                             x: 0,
-                            duration: 0.4,
+                            duration: 0.6,
                             ease: "power2.out",
                             autoAlpha: 1,
-                            stagger: { amount: 0.2, from: "start" }
+                            stagger: { amount: 0.4, from: "start" }
                         },
                         "<0.4"
                     )
