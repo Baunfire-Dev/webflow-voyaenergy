@@ -37,7 +37,7 @@
                     introTL.to(pageReveal, {
                         yPercent: -100,
                         duration: 1,
-                        ease: "power2.inOut"
+                        ease: "power3.inOut"
                     });
                 }
 
@@ -48,7 +48,7 @@
                         yPercent: 0,
                         duration: 0.6,
                         ease: "power2.out"
-                    }, "<0.2");
+                    }, ">-0.2");
                 }
 
                 if (mainHeading) {
