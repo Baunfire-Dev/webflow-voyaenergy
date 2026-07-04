@@ -1,6 +1,6 @@
 header {
-    @apply transition-all duration-500 ease-out;
-    
+	@apply transition-all duration-500 ease-out;
+
 	.nav {
 		/* @apply transition-all duration-500 ease-out; */
 
@@ -31,8 +31,8 @@ header {
 		} */
 	}
 
-@media (min-width: 62rem) {
-    /* .nav {
+	@media (min-width: 62rem) {
+		/* .nav {
         &-item {
             &:hover {
                 .nav-item-text {
@@ -54,7 +54,7 @@ header {
             @apply transition-colors duration-300 ease-out;
         }
     } */
-}
+	}
 
 	@media not all and (min-width: 62rem) {
 		.nav {
@@ -166,7 +166,7 @@ header {
 	&.mob-active {
 		.nav {
 			/* background-color: var(--_colors---off-black); */
-            background-color: #11081e;
+			/* background-color: #11081e; */
 		}
 	}
 
@@ -203,7 +203,7 @@ header {
 
 	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(:has(.nav-item.open)) {
 		@apply pointer-events-none;
-        transform: translateY(-100%);
+		transform: translateY(-100%);
 
 		.nav {
 			/* @apply pointer-events-none; */
