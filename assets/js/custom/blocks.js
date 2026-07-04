@@ -2,6 +2,7 @@
     baunfire.Blocks = {
         init() {
             this.heroHomepage();
+            this.energyBottleNeck();
         },
 
         heroHomepage() {
