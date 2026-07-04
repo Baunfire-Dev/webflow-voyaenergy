@@ -1,0 +1,13 @@
+section.section-controls {
+    .sc {
+        &-anchors {
+            &.dark {
+                .sc {
+                    &-anchor-cta {
+                        @apply transition-colors duration-300 ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}

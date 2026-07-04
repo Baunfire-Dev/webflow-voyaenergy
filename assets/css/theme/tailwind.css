@@ -4,6 +4,7 @@
 @import "header";
 @import "footer";
 @import "global";
+@import "controls";
 @import "parallax";
 @import-glob "../blocks/*.css";
 
