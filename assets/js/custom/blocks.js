@@ -148,7 +148,7 @@
                             scrollTrigger: {
                                 trigger: heroInner,
                                 start: "top top",
-                                end: "+=350%",
+                                end: "+=300%",
                                 scrub: 1,
                                 pin: true,
                                 // anticipatePin: 1,
