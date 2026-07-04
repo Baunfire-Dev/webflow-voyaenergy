@@ -310,7 +310,7 @@
                             autoAlpha: 1,
                         },
                         {
-                            xPercent: -100,
+                            xPercent: -40,
                             autoAlpha: 0,
                             duration: 0.4,
                             ease: "power2.out"
@@ -325,7 +325,7 @@
                             duration: 0.6,
                             ease: "power2.out"
                         },
-                        "<0.2"
+                        "<"
                     )
                     .fromTo(items,
                         {
