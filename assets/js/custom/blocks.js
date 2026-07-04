@@ -69,11 +69,20 @@
                 }
 
                 if (mainPara) {
-                    introTL.fromTo(mainPara,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" },
-                        "<0.3"
-                    );
+                    SplitText.create(mainPara, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainPara.style.visibility = "visible";
+                            mainPara.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.6, ease: "power2.out", stagger: 0.03 },
+                                "<0.3"
+                            );
+                        },
+                    });
                 }
             };
 
