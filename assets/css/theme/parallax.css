@@ -1,10 +1,4 @@
-.plx-wrap,
-[class*="plx-"]:not(.plx-wrap) {
-	view-timeline-name: --plx;
-	view-timeline-axis: block;
-}
-
-[class*="plx-"]:not(.plx-wrap) { --s: 0.3; }
+[class*="plx-"] { --s: 0.3; }
 
 .plx-05 { --s: 0.5; }
 .plx-1  { --s: 1.0; }
@@ -20,21 +14,26 @@
 .plx-25r { --s: -2.5; }
 .plx-3r  { --s: -3.0; }
 
+.plx-wrap {
+	view-timeline-name: --plx;
+	view-timeline-axis: block;
+}
+
 @keyframes plx {
-	from {
-		transform: translateY(calc(var(--s) * 8vh));
-	}
-	to {
-		transform: translateY(calc(var(--s) * -8vh));
-	}
+	from { transform: translateY(calc(var(--s) *  8vh)); }
+	to   { transform: translateY(calc(var(--s) * -8vh)); }
 }
 
 @supports (animation-timeline: view()) {
 	@media (prefers-reduced-motion: no-preference) {
 		[class*="plx-"]:not(.plx-wrap) {
 			animation: plx linear both;
-			animation-timeline: --plx;
+			animation-timeline: view();
 			animation-range: cover;
+		}
+        
+		.plx-clip {
+			animation-timeline: --plx;
 		}
 	}
 }
