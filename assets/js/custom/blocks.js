@@ -149,7 +149,7 @@
                                 trigger: heroInner,
                                 start: "top top",
                                 end: "+=350%",
-                                scrub: true,
+                                scrub: 1,
                                 pin: true,
                                 // anticipatePin: 1,
                                 invalidateOnRefresh: true,
