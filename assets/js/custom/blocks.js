@@ -240,23 +240,23 @@
                 arrowTL
                     .to(line, {
                         strokeDashoffset: 0,
-                        duration: 0.6,
+                        duration: 0.5,
                         ease: 'power2.out'
                     })
                     .to('#dhead', {
                         autoAlpha: 1,
                         y: 0,
-                        duration: 0.4,
+                        duration: 0.25,
                         ease: 'back.out(2)'
                     },
-                        '<0.2'
+                        '-=0.1'
                     )
                     .set(line, {
                         strokeDashoffset: len
                     })
                     .set('#dhead', {
                         autoAlpha: 0,
-                        y: -4,
+                        y: -4
                     })
 
                 mm.add('(prefers-reduced-motion: no-preference)', () => {
