@@ -214,9 +214,9 @@
             }
 
             const handleEntrance = (self) => {
-                const heading = self.querySelector(".eb-icon");
+                const logo = self.querySelector(".eb-icon");
+                const heading = self.querySelector(".eb-title");
                 const para = self.querySelector(".eb-para");
-                const logo = self.querySelector(".eb-para");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
