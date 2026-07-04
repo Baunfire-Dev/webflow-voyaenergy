@@ -19,7 +19,7 @@
                 const nav = document.querySelector("nav");
                 const mainHeading = self.querySelector(".hh-section.one .hh-heading");
                 const mainPara = self.querySelector(".hh-section.one .hh-para");
-                const mainImage = self.querySelector(".hh-section.one .hh-bg-img");
+                const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const introTL = gsap.timeline({
                     paused: true,
