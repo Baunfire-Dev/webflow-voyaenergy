@@ -180,8 +180,10 @@
                     },
                 });
 
+                gsap.set(sectionTwoImage, { scale: 1.12, transformOrigin: "center center" });
+
                 gsap.to(sectionTwoImage, {
-                    yPercent: 4,
+                    yPercent: 12,
                     ease: "none",
                     scrollTrigger: {
                         trigger: heroInner,
