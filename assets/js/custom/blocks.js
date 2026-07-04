@@ -329,11 +329,7 @@
                         },
                         "<"
                     )
-                    .fromTo(itemsContainer,
-                        {
-                            clipPath: "inset(calc(100% - 2.625rem) 0% 0% 0% round 0.5rem)",
-                            immediateRender: false
-                        },
+                    .to(itemsContainer,
                         {
                             clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                             duration: 0.6,
