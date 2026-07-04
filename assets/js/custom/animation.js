@@ -209,6 +209,8 @@
                         ? (triggerSelector ? el.closest(triggerSelector) || el : el)
                         : null;
 
+                    el.style.opacity = "0";
+
                     SplitText.create(el, {
                         type: "words",
                         mask: "words",
