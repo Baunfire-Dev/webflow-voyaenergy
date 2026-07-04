@@ -162,7 +162,7 @@
                             },
                         });
 
-                        tl.to({}, { duration: 0.5 });
+                        tl.to({}, { duration: 0.2 });
 
                         tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 });
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
