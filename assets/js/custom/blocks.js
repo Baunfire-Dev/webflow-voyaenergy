@@ -147,7 +147,7 @@
                         const tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: heroInner,
-                                start: "top -30%",
+                                start: "top top",
                                 end: "+=400%",
                                 scrub: true,
                                 pin: true,
@@ -155,6 +155,8 @@
                                 invalidateOnRefresh: true,
                             },
                         });
+
+                        tl.to({}, { duration: 0.5 }, 0); 
 
                         tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1 }, 0);
                         tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1 }, "<");
