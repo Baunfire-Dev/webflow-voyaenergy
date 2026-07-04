@@ -23,8 +23,25 @@
 			}
 		}
 
-        &-anchor-items {
+        &-anchor-orb {
+            @apply transition-opacity duration-300 ease-in-out;
+        }
 
+        &-anchor-text {
+            @apply transition-transform duration-300 ease-in-out;
+        }
+
+        &-anchor-item {
+            &.active,
+            &:hover {
+                .sc-anchor-text {
+                    @apply translate-x-[1.25rem];
+                }
+
+                .sc-anchor-orb {
+                    @apply opacity-100 delay-200;
+                }
+            }
         }
 
         &-anchor-cta,
