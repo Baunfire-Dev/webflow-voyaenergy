@@ -147,8 +147,8 @@
                         const tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: heroInner,
-                                start: "top top",
-                                end: "+=300%",
+                                start: "top 30%",
+                                end: "+=400%",
                                 scrub: true,
                                 pin: true,
                                 anticipatePin: 1,
@@ -165,7 +165,7 @@
                         tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
 
                         tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.2, duration: 0.8 }, 1.0);
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.12, duration: 0.6 }, "<0.1");
 
                         tl.to({}, { duration: 1.0 });
 
