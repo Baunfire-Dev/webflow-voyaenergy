@@ -19,6 +19,7 @@
                 const nav = document.querySelector("nav");
                 const mainHeading = self.querySelector(".hh-section.one .hh-heading");
                 const mainPara = self.querySelector(".hh-section.one .hh-para");
+                const mainImage = self.querySelector(".hh-section.one .hh-bg-img");
 
                 const introTL = gsap.timeline({
                     paused: true,
@@ -56,6 +57,20 @@
                             );
                         },
                     });
+                }
+
+                if (mainImage) {
+                    introTL.fromTo(mainImage,
+                        {
+                            scale: 106,
+                        },
+                        {
+                            scale: 100,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        },
+                        "<0.2"
+                    );
                 }
 
                 if (nav) {
