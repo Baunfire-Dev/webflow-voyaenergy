@@ -36,6 +36,7 @@
             &:hover {
                 .sc-anchor-text {
                     @apply translate-x-[1.25rem];
+                    @apply font-semibold;
                 }
 
                 .sc-anchor-orb {
