@@ -52,7 +52,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 { y: "-5%", duration: 0.6, ease: "power2.out", stagger: 0.03 },
-                                ">-0.2"
+                                ">-0.4"
                             );
                         },
                     });
