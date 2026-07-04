@@ -173,7 +173,7 @@
 
                         tl.to(sectionTwo, { clipPath: finalInset(), ease: "none", duration: 0.6 });
 
-                        tl.to({}, { duration: 1.0 });
+                        tl.to({}, { duration: 0.5 });
 
                         return tl;
                     },
