@@ -170,7 +170,7 @@
                         tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
 
                         tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: { amount: 1, from: "start" }, duration: 0.6 }, "<0.1");
 
                         tl.to({}, { duration: 1 });
 
