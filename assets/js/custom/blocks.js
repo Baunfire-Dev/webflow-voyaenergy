@@ -92,7 +92,7 @@
 
                 introTL.fromTo(pageControls,
                     {
-                        y: -100,
+                        y: 100,
                     },
                     {
                         y: 0,
