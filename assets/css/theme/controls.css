@@ -28,7 +28,7 @@
         }
 
         &-anchor-text {
-            @apply transition-transform duration-300 ease-in-out;
+            @apply transition-all duration-300 ease-in-out;
         }
 
         &-anchor-item {
@@ -46,8 +46,7 @@
         }
 
         &-anchor-cta,
-        &-anchor-cta-icon svg path,
-        &-anchor-text {
+        &-anchor-cta-icon svg path {
             @apply transition-colors duration-300 ease-in-out;
         }
 	}
