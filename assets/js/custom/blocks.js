@@ -198,8 +198,8 @@
 
                         tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
 
-                        tl.call(() => siteAnchors.classList.add("dark"), null, "<");
                         tl.call(() => siteAnchors.classList.remove("dark"), null, ">");
+                        tl.call(() => siteAnchors.classList.add("dark"), null, "<");
 
                         tl.to({}, { duration: 0.5 });
 
