@@ -299,7 +299,7 @@
                 const trigger = document.querySelector(".sc-anchors");
                 const ctaInner = trigger.querySelector(".sc-anchor-cta-inner");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
-                const items = trigger.querySelectorAll(".sc-anchor-item");
+                const items = Array.from(trigger.querySelectorAll(".sc-anchor-item")).reverse();
 
                 const hoverTL = gsap.timeline({ paused: true });
 
