@@ -55,7 +55,7 @@
                         },
                         {
                             scale: 1,
-                            duration: 2,
+                            duration: 2.5,
                             ease: "circ.out",
                         },
                         "<-0.1"
