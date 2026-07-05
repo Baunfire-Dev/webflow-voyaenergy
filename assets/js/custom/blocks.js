@@ -58,7 +58,7 @@
                             duration: 2,
                             ease: "circ.out",
                         },
-                        "<0.1"
+                        "<"
                     );
                 }
 
