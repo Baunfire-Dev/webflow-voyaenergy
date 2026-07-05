@@ -36,7 +36,7 @@
                     start: baunfire.anim.start,
                     once: true,
                     onEnter: () => {
-                        gsap.delayedCall(0.05, () => introTL.play());
+                        gsap.delayedCall(0.08, () => introTL.play());
                     }
                 });
 
@@ -58,7 +58,7 @@
                             duration: 2,
                             ease: "circ.out",
                         },
-                        "<"
+                        "<-0.2"
                     );
                 }
 
@@ -73,7 +73,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
-                                "<0.2"
+                                "<0.4"
                             );
                         },
                     });
