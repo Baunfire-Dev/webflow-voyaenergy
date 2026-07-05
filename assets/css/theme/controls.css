@@ -40,6 +40,10 @@
 		&-anchor-item {
 			&.active,
 			&:hover {
+				.sc-anchor-text-c {
+					transform: translateX(1.25rem);
+				}
+
 				.sc-anchor-text {
 					&:not(.is-active-state) {
 						opacity: 0;
@@ -52,10 +56,6 @@
 			}
 
 			&.active {
-				.sc-anchor-text-c {
-					transform: translateX(1.25rem);
-				}
-
 				.sc-anchor-orb {
 					@apply opacity-100 delay-100;
 				}
