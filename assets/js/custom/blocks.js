@@ -320,7 +320,7 @@
                             duration: 0.4,
                             ease: "power2.out"
                         },
-                        "<"
+                        "<0.2"
                     )
                     .fromTo(items,
                         {
