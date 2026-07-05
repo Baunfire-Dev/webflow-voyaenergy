@@ -48,6 +48,20 @@
                     });
                 }
 
+                if (mainImage) {
+                    introTL.fromTo(mainImage,
+                        {
+                            scale: 1.3,
+                        },
+                        {
+                            scale: 1,
+                            duration: 2,
+                            ease: "circ.out",
+                        },
+                        "<0.4"
+                    );
+                }
+
                 if (mainHeading) {
                     SplitText.create(mainHeading, {
                         type: "words",
@@ -59,7 +73,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
-                                "<0.6"
+                                "<0.2"
                             );
                         },
                     });
@@ -90,22 +104,6 @@
                     },
                     "nav_controls"
                 );
-
-                if (mainImage) {
-                    introTL.fromTo(mainImage,
-                        {
-                            autoAlpha: 0,
-                            scale: 1.3,
-                        },
-                        {
-                            scale: 1,
-                            autoAlpha: 1,
-                            duration: 2,
-                            ease: "circ.out",
-                        },
-                        "<-0.2"
-                    );
-                }
 
                 if (mainPara) {
                     SplitText.create(mainPara, {
