@@ -296,7 +296,8 @@
                 const trigger = document.querySelector(".sc-anchors");
                 const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
-                const items = Array.from(trigger.querySelectorAll(".sc-anchor-item")).reverse();
+                const items = trigger.querySelectorAll(".sc-anchor-item");
+                items[0].classList.add("active");
 
                 const hoverTL = gsap.timeline({ paused: true });
 
@@ -325,7 +326,7 @@
                         },
                         "<0.2"
                     )
-                    .fromTo(items,
+                    .fromTo(Array.from(items).reverse(),
                         {
                             x: -10,
                             autoAlpha: 0,
