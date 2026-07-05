@@ -27,8 +27,13 @@
 			@apply transition-opacity duration-300 ease-in-out;
 		}
 
-		&-anchor-text,
-        &-anchor-text-c {
+		&-anchor-cta {
+			.sc-anchor-text {
+				@apply transition-co,ors duration-300 ease-in-out;
+			}
+		}
+
+		&-anchor-text-c {
 			@apply transition-all duration-300 ease-in-out;
 		}
 
@@ -36,7 +41,7 @@
 			&.active,
 			&:hover {
 				.sc-anchor-text {
-                    &:not(.is-active-state) {
+					&:not(.is-active-state) {
 						opacity: 0;
 					}
 
@@ -46,7 +51,7 @@
 				}
 			}
 
-            &.active {
+			&.active {
 				.sc-anchor-text-c {
 					transform: translateX(1.25rem);
 				}
