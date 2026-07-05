@@ -4,7 +4,7 @@
 			&.dark {
 				.sc {
 					&-anchor-cta,
-                    &-anchor-items {
+					&-anchor-items {
 						background-color: var(--_colors---carbon-black);
 					}
 
@@ -17,37 +17,46 @@
 					}
 
 					&-anchor-text {
-                        color: var(--_colors---white);
+						color: var(--_colors---white);
 					}
 				}
 			}
 		}
 
-        &-anchor-orb {
-            @apply transition-opacity duration-300 ease-in-out;
-        }
+		&-anchor-orb {
+			@apply transition-opacity duration-300 ease-in-out;
+		}
 
-        &-anchor-text {
-            @apply transition-all duration-300 ease-in-out;
-        }
+		&-anchor-text {
+			@apply transition-all duration-300 ease-in-out;
+		}
 
-        &-anchor-item {
-            &.active,
-            &:hover {
-                .sc-anchor-text {
-                    transform: translateX(1.25rem);
-                    @apply font-semibold;
-                }
+		&-anchor-item {
+			&.active,
+			&:hover {
+				.sc-anchor-text-c {
+					transform: translateX(1.25rem);
+				}
 
-                .sc-anchor-orb {
-                    @apply opacity-100 delay-100;
-                }
-            }
-        }
+				.sc-anchor-text {
+                    &:not(.is-active-state) {
+						opacity: 0;
+					}
 
-        &-anchor-cta,
-        &-anchor-cta-icon svg path {
-            @apply transition-colors duration-300 ease-in-out;
-        }
+					&.is-active-state {
+						opacity: 1;
+					}
+				}
+
+				.sc-anchor-orb {
+					@apply opacity-100 delay-100;
+				}
+			}
+		}
+
+		&-anchor-cta,
+		&-anchor-cta-icon svg path {
+			@apply transition-colors duration-300 ease-in-out;
+		}
 	}
 }
