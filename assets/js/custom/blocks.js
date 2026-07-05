@@ -337,8 +337,8 @@
                         "<0.2"
                     )
 
-                trigger.addEventListener("mouseenter", () => hoverTL.play());
-                trigger.addEventListener("mouseleave", () => hoverTL.timeScale(2).reverse());
+                trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
+                trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
             }
 
             const handleScrollIndicator = () => {
