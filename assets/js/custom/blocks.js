@@ -307,7 +307,7 @@
                             autoAlpha: 1,
                         },
                         {
-                            scale: 0,
+                            scale: 0.4,
                             autoAlpha: 0,
                             transformOrigin: "bottom left",
                             duration: 0.4,
