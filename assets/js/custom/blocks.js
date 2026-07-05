@@ -294,21 +294,19 @@
         sectionControls() {
             const handleCTAHover = (self) => {
                 const trigger = document.querySelector(".sc-anchors");
-                const ctaInner = trigger.querySelector(".sc-anchor-cta-inner");
+                const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
                 const items = Array.from(trigger.querySelectorAll(".sc-anchor-item")).reverse();
 
                 const hoverTL = gsap.timeline({ paused: true });
 
                 hoverTL
-                    .fromTo(ctaInner,
+                    .fromTo(cta,
                         {
-                            xPercent: 0,
-                            autoAlpha: 1,
+                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
                         },
                         {
-                            xPercent: -40,
-                            autoAlpha: 0,
+                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
                             duration: 0.4,
                             ease: "power2.out"
                         }
