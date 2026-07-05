@@ -303,10 +303,13 @@
                 hoverTL
                     .fromTo(cta,
                         {
-                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
+                            scale: 1,
+                            autoAlpha: 1,
                         },
                         {
-                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
+                            scale: 0,
+                            autoAlpha: 0,
+                            transformOrigin: "bottom left",
                             duration: 0.4,
                             ease: "power2.out"
                         }
