@@ -27,7 +27,8 @@
 			@apply transition-opacity duration-300 ease-in-out;
 		}
 
-		&-anchor-text {
+		&-anchor-text,
+        &-anchor-text-c {
 			@apply transition-all duration-300 ease-in-out;
 		}
 
