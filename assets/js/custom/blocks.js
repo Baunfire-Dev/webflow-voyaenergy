@@ -529,7 +529,7 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleTextsAndImages(self, ebTL);
+                    handleTexts(self, ebTL);
                 });
             };
 
@@ -558,6 +558,10 @@
                     const isFirst = i === 0;
                     const isLast = i === lines.length - 1;
 
+                    if (isLast) {
+                        ebTL.set(item, { yPercent: 14 }, 0);
+                    }
+
                     if (isFirst) {
                         ebTL.set(item, { autoAlpha: 1 }, 0);
                     } else {
@@ -571,11 +575,14 @@
                         stagger: { each: 0.02, from: "start" },
                     }, isFirst ? "-=0.8" : undefined);
 
+                    if (isLast) {
+                        handleImages(self, item, ebTL);
+                    }
+
                     ebTL.to({}, { duration: 0.3 });
 
                     if (!isLast) {
                         ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
-                        handleImages(self, item, ebTL);
                     }
                 });
             };
@@ -584,6 +591,16 @@
                 const images = self.find(".tl-images");
                 target.appendChild(images);
                 target.addClass("has-images");
+
+                gsap.set(imageItems, { xPercent: 120, autoAlpha: 0 });
+                
+                ebTL.to(imageItems, {
+                    xPercent: 0,
+                    autoAlpha: 1,
+                    ease: "power3.out",
+                    duration: 0.8,
+                    stagger: 0.25,
+                }, "<0.2");
             };
 
             script();
