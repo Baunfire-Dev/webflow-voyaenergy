@@ -162,10 +162,10 @@
                     },
                     mainImage: {
                         duration: 2,
-                        position: "<-0.04"
+                        position: "<-0.02"
                     },
                     mainHeading: {
-                        position: "<0.3"
+                        position: "<0.2"
                     },
                     navControls: {
                         duration: 0.6,
