@@ -620,6 +620,8 @@
                 //     "<0.2"
                 // );
 
+                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
+
                 ebTL.to(imageContainer, {
                     autoAlpha: 1,
                     ease: "none",
