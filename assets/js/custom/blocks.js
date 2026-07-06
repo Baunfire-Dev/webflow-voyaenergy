@@ -374,6 +374,7 @@
                         end: "+=300%",
                         pinSpacing: true,
                         scrub: 1,
+                        invalidateOnRefresh: true,
                     }
                 });
             };
