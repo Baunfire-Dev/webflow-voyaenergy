@@ -606,7 +606,7 @@
                     xPercent: 0,
                     ease: "none",
                     duration: 1.6,
-                }, "<0.2");
+                }, "<0.4");
             };
 
             script();
