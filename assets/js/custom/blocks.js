@@ -361,6 +361,8 @@
                     this.energyBottleNeck(self, ebTL);
                     this.transitionLine(self, ebTL);
                 });
+
+                baunfire.Global.screenSizeChange();
             };
 
             const handlePin = (self) => {
