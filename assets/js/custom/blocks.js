@@ -559,7 +559,7 @@
                     const isLast = i === lines.length - 1;
 
                     if (isLast) {
-                        ebTL.set(item, { yPercent: 14 }, 0);
+                        ebTL.set(item.querySelector(".tl-text-c-inner"), { yPercent: 14 }, 0);
                     }
 
                     if (isFirst) {
@@ -593,6 +593,8 @@
                 target.classList.add("has-images");
 
                 gsap.set(imageContainer, { xPercent: 120, autoAlpha: 0 });
+
+                ebTL.to(target.querySelector(".tl-text-c-inner"), { yPercent: 0 }, "<0.2");
                 
                 ebTL.to(imageContainer, {
                     xPercent: 0,
