@@ -392,7 +392,7 @@
                             start: "top top",
                             end: "+=400%",
                             pinSpacing: true,
-                            scrub: true,
+                            scrub: 1,
                             invalidateOnRefresh: true,
                         }
                     });
