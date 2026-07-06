@@ -480,7 +480,6 @@
                 const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
-                ebTL.to({}, { duration: 0.3 });
                 ebTL.to(contentGroup, { yPercent: -60, autoAlpha: 0, ease: "none", duration: 1.8 });
                 ebTL.to(inner, { yPercent: -110, ease: "none", duration: 2 }, "<0.1");
 
