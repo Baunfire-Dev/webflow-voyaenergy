@@ -383,29 +383,25 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const ebTL = handlePin(self);
+                    const inner = self.querySelector(".sb-inner");
+
+                    const ebTL = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: self,
+                            pin: inner,
+                            start: "top top",
+                            end: "+=400%",
+                            pinSpacing: true,
+                            scrub: true,
+                            invalidateOnRefresh: true,
+                        }
+                    });
+
                     this.energyBottleNeck(self, ebTL);
                     this.transitionLine(self, ebTL);
                 });
 
                 baunfire.Global.screenSizeChange();
-            };
-
-            const handlePin = (self) => {
-                const inner = self.querySelector(".sb-inner");
-
-                return gsap.timeline({
-                    scrollTrigger: {
-                        trigger: self,
-                        pin: inner,
-                        start: "top top",
-                        end: "+=400%",
-                        pinSpacing: true,
-                        scrub: true,
-                        invalidateOnRefresh: true,
-                        markers: true
-                    }
-                });
             };
 
             script();
@@ -603,7 +599,26 @@
 
                 gsap.set(imageContainer, { xPercent: 80, autoAlpha: 0 });
 
-                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
+                // const targetInner = target.querySelector(".tl-text-c-inner");
+                // const offset = 80;
+
+                // ebTL.fromTo(targetInner,
+                //     {
+                //         yPercent: () => {
+                //             const rect = targetInner.getBoundingClientRect();
+                //             const currentCenter = rect.top + rect.height / 2;
+                //             const viewportCenter = window.innerHeight / 2;
+                //             const deltaPx = (viewportCenter - currentCenter) - offset;
+                //             return (deltaPx / rect.height) * 100;
+                //         }
+                //     },
+                //     {
+                //         ease: "none",
+                //         duration: 0.8,
+                //         yPercent: 0
+                //     },
+                //     "<0.2"
+                // );
 
                 ebTL.to(imageContainer, {
                     autoAlpha: 1,
