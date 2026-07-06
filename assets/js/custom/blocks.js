@@ -359,6 +359,7 @@
                 els.forEach(self => {
                     const ebTL = handlePin(self);
                     this.energyBottleNeck(self, ebTL);
+                    this.transitionLine(self, ebTL);
                 });
             };
 
@@ -380,9 +381,9 @@
             script();
         },
 
-        energyBottleNeck(parent, ebTL) {
+        energyBottleNeck(sectionParent, ebTL) {
             const script = () => {
-                const els = parent.querySelectorAll("section.energy-bottleneck");
+                const els = sectionParent.querySelectorAll("section.energy-bottleneck");
                 if (!els.length) return;
 
                 els.forEach(self => {
@@ -399,7 +400,7 @@
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
-                        trigger: self,
+                        trigger: sectionParent,
                         start: baunfire.anim.start,
                         once: true,
                     }
@@ -474,11 +475,29 @@
             };
 
             const handleExit = (self, ebTL) => {
+                const inner = self.querySelector(".eb-inner");
                 const contentGroup = self.querySelector(".eb-content");
 
                 ebTL.to({}, { duration: 0.3 });
                 ebTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
-                ebTL.to(self, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
+                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
+            };
+
+            script();
+        },
+
+        transitionLine(parent, ebTL) {
+            const script = () => {
+                const els = parent.querySelectorAll("section.transition-line");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleTexts(self);
+                });
+            };
+
+            const handleTexts = (self) => {
+                
             };
 
             script();
