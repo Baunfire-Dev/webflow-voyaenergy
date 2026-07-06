@@ -492,12 +492,43 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleTexts(self);
+                    handleTexts(self, ebTL);
                 });
             };
 
-            const handleTexts = (self) => {
-                
+            const handleTexts = (self, ebTL) => {
+                const texts = self.querySelectorAll(".tl-text");
+                if (!texts.length) return;
+
+                const lines = [...texts].map(text => {
+                    const split = SplitText.create(text, {
+                        type: "chars, words",
+                        autoSplit: false,
+                    });
+
+                    split.chars.forEach(c => {
+                        c.dataset.fill = getComputedStyle(c).color;
+                    });
+
+                    gsap.set(text, { autoAlpha: 0 });
+                    gsap.set(split.chars, { color: "#EBEBEB" });
+
+                    return { text, split };
+                });
+
+                lines.forEach(({ text, split }) => {
+                    ebTL.to(text, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+
+                    ebTL.to(split.chars, {
+                        color: (i, target) => target.dataset.fill,
+                        duration: 0.05,
+                        ease: "none",
+                        stagger: { each: 0.02, from: "start" },
+                    });
+
+                    ebTL.to({}, { duration: 0.4 });
+                    ebTL.to(text, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                });
             };
 
             script();
