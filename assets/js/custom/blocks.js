@@ -532,7 +532,7 @@
                     const isFirst = i === 0;
 
                     if (isFirst) {
-                        ebTL.set(item, { autoAlpha: 1 }, 0, ">-0.4");
+                        gsap.set(item, { autoAlpha: 1 }, 0);
                     } else {
                         ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
@@ -542,7 +542,7 @@
                         duration: 0.05,
                         ease: "none",
                         stagger: { each: 0.02, from: "start" },
-                    });
+                    }, isFirst ? ">-0.4" : "");
 
                     ebTL.to({}, { duration: 0.4 });
 
