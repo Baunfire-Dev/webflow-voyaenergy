@@ -587,7 +587,7 @@
                 const targetInner = target.querySelector(".tl-text-c-inner");
                 const offset = 80;
 
-                ebTL.set(inner, {
+                ebTL.set(targetInner, {
                     yPercent: () => {
                         const rect = targetInner.getBoundingClientRect();
                         const currentCenter = rect.top + rect.height / 2;
