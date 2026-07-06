@@ -23,7 +23,7 @@ section.section-bridge-eb-tl {
 				@apply relative w-full;
 			}
 
-			&-text {
+            &-text-c {
 				@apply absolute top-1/2 left-0 opacity-0;
 				transform: translateY(-50%);
 			}
