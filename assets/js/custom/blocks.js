@@ -386,6 +386,7 @@
 
                 els.forEach(self => {
                     handleEntrance(self);
+                    handleParallax(self, ebTL);
                 });
             };
 
@@ -444,7 +445,7 @@
                 }
             };
 
-            const handleParallax = (self) => {
+            const handleParallax = (self, ebTL) => {
                 const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
