@@ -465,7 +465,7 @@
                         yPercent: -14,
                     },
                     {
-                        yPercent: 9,
+                        yPercent: 0,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
