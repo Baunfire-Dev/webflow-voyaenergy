@@ -559,7 +559,7 @@
                     const isLast = i === lines.length - 1;
 
                     if (isLast) {
-                        ebTL.set(item.querySelector(".tl-text-c-inner"), { yPercent: 14 }, 0);
+                        ebTL.set(item.querySelector(".tl-text-c-inner"), { yPercent: 20 }, 0);
                     }
 
                     if (isFirst) {
