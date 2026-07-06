@@ -588,13 +588,13 @@
             };
 
             const handleImages = (self, target, ebTL) => {
-                const images = self.querySelector(".tl-images");
+                const imageContainer = self.querySelector(".tl-images");
                 target.appendChild(images);
                 target.classList.add("has-images");
 
-                gsap.set(imageItems, { xPercent: 120, autoAlpha: 0 });
+                gsap.set(imageContainer, { xPercent: 120, autoAlpha: 0 });
                 
-                ebTL.to(imageItems, {
+                ebTL.to(imageContainer, {
                     xPercent: 0,
                     autoAlpha: 1,
                     ease: "power3.out",
