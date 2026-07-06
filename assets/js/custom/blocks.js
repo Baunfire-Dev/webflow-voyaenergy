@@ -373,9 +373,9 @@
                         trigger: self,
                         pin: inner,
                         start: "top top",
-                        end: "+=300%",
+                        end: () => "+=500%",
                         pinSpacing: true,
-                        scrub: 1,
+                        scrub: true,
                         invalidateOnRefresh: true,
                         markers: true
                     }
