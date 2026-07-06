@@ -542,7 +542,7 @@
                         duration: 0.05,
                         ease: "none",
                         stagger: { each: 0.02, from: "start" },
-                    }, isFirst ? ">-0.4" : "");
+                    }, isFirst ? ">-0.8" : "");
 
                     ebTL.to({}, { duration: 0.4 });
 
