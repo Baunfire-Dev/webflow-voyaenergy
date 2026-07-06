@@ -505,12 +505,10 @@
 
             const handleExit = (self, ebTL) => {
                 const inner = self.querySelector(".eb-inner");
-                const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
                 ebTL.to({}, { duration: 1 });
 
-                ebTL.to(contentGroup, { yPercent: -30, autoAlpha: 0, ease: "none", duration: 1.2 });
                 ebTL.to(inner, { yPercent: -100, ease: "none", duration: 2.5 }, "<0.6");
 
                 ebTL.to(bgImage, {
@@ -559,7 +557,17 @@
                     const isLast = i === lines.length - 1;
 
                     if (isLast) {
-                        ebTL.set(item.querySelector(".tl-text-c-inner"), { yPercent: 20 }, 0);
+                        const inner = item.querySelector(".tl-text-c-inner");
+
+                        ebTL.set(inner, {
+                            yPercent: () => {
+                                const rect = inner.getBoundingClientRect();
+                                const currentCenter = rect.top + rect.height / 2;
+                                const viewportCenter = window.innerHeight / 2;
+                                const deltaPx = viewportCenter - currentCenter;
+                                return (deltaPx / rect.height) * 100;
+                            }
+                        }, 0);
                     }
 
                     if (isFirst) {
@@ -595,7 +603,7 @@
                 gsap.set(imageContainer, { xPercent: 80, autoAlpha: 0 });
 
                 ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
-                
+
                 ebTL.to(imageContainer, {
                     autoAlpha: 1,
                     ease: "none",
