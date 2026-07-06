@@ -460,10 +460,10 @@
 
                 gsap.fromTo(bgImage,
                     {
-                        yPercent: 0,
+                        yPercent: -6,
                     },
                     {
-                        yPercent: -6,
+                        yPercent: 0,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
@@ -478,7 +478,7 @@
             const handleExit = (self, ebTL) => {
                 const inner = self.querySelector(".eb-inner");
                 const contentGroup = self.querySelector(".eb-content");
-                const bg = self.querySelector(".eb-bg");
+                const bgImage = self.querySelector(".eb-bg-img");
 
                 ebTL.to({}, { duration: 0.3 });
                 ebTL.to(contentGroup, { yPercent: -60, autoAlpha: 0, ease: "none", duration: 1.8 });
