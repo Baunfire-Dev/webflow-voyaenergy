@@ -599,7 +599,7 @@
                 ebTL.to(imageContainer, {
                     autoAlpha: 1,
                     ease: "none",
-                    duration: 0.3,
+                    duration: 0.6,
                 }, "<0.2");
 
                 ebTL.to(imageContainer, {
