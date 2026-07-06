@@ -530,23 +530,26 @@
 
                 lines.forEach(({ item, split }, i) => {
                     const isFirst = i === 0;
+                    const isLast = i === lines.length - 1;
 
                     if (isFirst) {
-                        gsap.set(item, { autoAlpha: 1 }, 0);
+                        ebTL.set(item, { autoAlpha: 1 }, 0);
                     } else {
                         ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
 
                     ebTL.to(split.chars, {
-                        color: (i, target) => target.dataset.fill,
+                        color: (idx, target) => target.dataset.fill,
                         duration: 0.05,
                         ease: "none",
                         stagger: { each: 0.02, from: "start" },
-                    }, isFirst ? ">-0.8" : "");
+                    }, isFirst ? "-=1.2" : undefined);
 
                     ebTL.to({}, { duration: 0.4 });
 
-                    ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                    if (!isLast) {
+                        ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                    }
                 });
             };
 
