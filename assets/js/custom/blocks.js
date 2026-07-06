@@ -373,7 +373,7 @@
                         trigger: self,
                         pin: inner,
                         start: "top top",
-                        end: "+=500%",
+                        end: "+=300%",
                         pinSpacing: true,
                         scrub: true,
                         invalidateOnRefresh: true,
@@ -545,7 +545,7 @@
                         stagger: { each: 0.02, from: "start" },
                     }, isFirst ? "-=0.8" : undefined);
 
-                    ebTL.to({}, { duration: 0.4 });
+                    ebTL.to({}, { duration: 0.3 });
 
                     if (!isLast) {
                         ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
