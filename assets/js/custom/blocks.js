@@ -371,7 +371,7 @@
                         trigger: self,
                         start: "top top",
                         pin: inner,
-                        end: "bottom+=300%",
+                        end: "bottom bottom+=300%",
                         pinSpacing: true,
                         scrub: 1,
                         invalidateOnRefresh: true,
