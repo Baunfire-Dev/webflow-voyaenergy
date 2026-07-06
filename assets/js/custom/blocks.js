@@ -430,15 +430,15 @@
 
                 gsap.fromTo(bgImage,
                     {
-                        yPercent: 4,
+                        yPercent: 0,
                     },
                     {
-                        yPercent: -14,
+                        yPercent: -6,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
-                            end: "bottom top",
+                            end: "+=50%",
                             scrub: 1,
                         }
                     }
