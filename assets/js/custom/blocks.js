@@ -155,6 +155,32 @@
                 const mainPara = self.querySelector(".hh-section.one .hh-para");
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
+                const timings = {
+                    callDelay: 0.1,
+                    reveal: {
+                        duration: 1.2,
+                    },
+                    mainImage: {
+                        duration: 2.5,
+                        position: "<-0.04"
+                    },
+                    mainHeading: {
+                        position: "<0.6"
+                    },
+                    navControls: {
+                        duration: 0.6,
+                        position: "<0.2"
+                    },
+                    mainPara: {
+                        position: "<0.3"
+                    },
+                }
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+
                 const introTL = gsap.timeline({
                     paused: true,
                 });
@@ -164,14 +190,14 @@
                     start: baunfire.anim.start,
                     once: true,
                     onEnter: () => {
-                        gsap.delayedCall(0.1, () => introTL.play());
+                        gsap.delayedCall(timings.callDelay, () => introTL.play());
                     }
                 });
 
                 if (pageReveal) {
                     introTL.to(pageReveal, {
                         yPercent: -100,
-                        duration: 1.2,
+                        duration: timings.reveal.duration,
                         ease: "power2.inOut"
                     });
                 }
@@ -183,10 +209,10 @@
                         },
                         {
                             scale: 1,
-                            duration: 2.5,
+                            duration: timings.mainImage.duration,
                             ease: "circ.out",
                         },
-                        "<-0.04"
+                        timings.mainImage.position
                     );
                 }
 
@@ -200,14 +226,14 @@
                             mainHeading.style.opacity = "1";
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
-                                "<0.6"
+                                { y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger },
+                                timings.mainHeading.position
                             );
                         },
                     });
                 }
 
-                introTL.addLabel("nav_controls", "<0.2")
+                introTL.addLabel("nav_controls", timings.navControls.position)
 
                 introTL.fromTo(nav,
                     {
@@ -215,7 +241,7 @@
                     },
                     {
                         yPercent: 0,
-                        duration: 0.6,
+                        duration: timings.navControls.duration,
                         ease: "power2.out"
                     },
                     "nav_controls"
@@ -227,7 +253,7 @@
                     },
                     {
                         y: 0,
-                        duration: 0.6,
+                        duration: timings.navControls.duration,
                         ease: "power2.out"
                     },
                     "nav_controls"
@@ -243,8 +269,8 @@
                             mainPara.style.opacity = "1";
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 0.8, ease: "power2.out", stagger: 0.06 },
-                                "<0.3"
+                                { y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger },
+                                timings.mainPara.position
                             );
                         },
                     });
