@@ -371,7 +371,7 @@
                         trigger: self,
                         start: "top top",
                         pin: inner,
-                        end: "+=300%",
+                        end: "bottom+=300%",
                         pinSpacing: true,
                         scrub: 1,
                         invalidateOnRefresh: true,
@@ -463,7 +463,7 @@
                         yPercent: 0,
                     },
                     {
-                        yPercent: -3,
+                        yPercent: -10,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
