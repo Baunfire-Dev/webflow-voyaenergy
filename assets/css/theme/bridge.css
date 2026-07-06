@@ -1,0 +1,32 @@
+section.section-bridge-eb-tl {
+	height: 100vh;
+
+	.sb {
+		&-inner {
+			@apply h-screen;
+		}
+	}
+
+	section.energy-bottleneck {
+        @apply relative z-[2];
+    } 
+    
+    section.transition-line {
+        @apply w-full absolute top-0 left-0 h-full z-[1];
+
+		.tl {
+			&-texts-c {
+				@apply h-screen flex items-center;
+			}
+
+			&-texts {
+				@apply relative w-full;
+			}
+
+			&-text {
+				@apply absolute top-1/2 left-0;
+				transform: translateY(-50%);
+			}
+		}
+	}
+}

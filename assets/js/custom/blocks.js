@@ -3,7 +3,7 @@
         init() {
             this.sectionControls();
             this.heroHomepage();
-            this.energyBottleNeck();
+            this.bridgeEBTL();
         },
 
         sectionControls() {
@@ -351,13 +351,40 @@
             script();
         },
 
-        energyBottleNeck() {
+        bridgeEBTL() {
             const script = () => {
-                const els = document.querySelectorAll("section.energy-bottleneck");
+                const els = document.querySelectorAll("section.section-bridge-eb-tl");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handlePin(self);
+                    const ebTL = handlePin(self);
+                    this.energyBottleNeck(self, ebTL);
+                });
+            };
+
+            const handlePin = (self) => {
+                const inner = self.querySelector(".sb-inner");
+
+                return gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: "top top",
+                        pin: inner,
+                        end: "+=300%",
+                        pinSpacing: true,
+                    }
+                });
+            };
+
+            script();
+        },
+
+        energyBottleNeck(parent, ebTL) {
+            const script = () => {
+                const els = parent.querySelectorAll("section.energy-bottleneck");
+                if (!els.length) return;
+
+                els.forEach(self => {
                     handleEntrance(self);
                 });
             };
@@ -417,9 +444,7 @@
                 }
             };
 
-            const handlePin = (self) => {
-                const inner = self.querySelector(".eb-inner");
-                const box = self.querySelector(".eb-box");
+            const handleParallax = (self) => {
                 const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
@@ -438,27 +463,15 @@
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
-                            end: "+=50%",
+                            end: "bottom top",
                             scrub: 1,
                         }
                     }
                 )
 
-                const pinTL = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: self,
-                        start: "top top",
-                        pin: self,
-                        end: "+=100%",
-                        pinSpacing: false,
-                        scrub: 1,
-                    }
-                });
-
-                pinTL.to({}, { duration: 1 });
-                pinTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
-                pinTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
-                pinTL.to({}, { duration: 0.5 });
+                ebTL.to({}, { duration: 0.3 });
+                ebTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
+                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
             };
 
             script();

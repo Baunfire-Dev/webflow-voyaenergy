@@ -6,6 +6,7 @@
 @import "global";
 @import "controls";
 @import "parallax";
+@import "bridge";
 @import-glob "../blocks/*.css";
 
 * {
