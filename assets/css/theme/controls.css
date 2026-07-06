@@ -55,9 +55,15 @@
 				.sc-anchor-orb {
 					@apply opacity-100 delay-100;
 				}
-                
+
 				.sc-anchor-text-c {
 					transform: translateX(1.25rem);
+				}
+			}
+
+            &:hover:not(.active) {
+				.sc-anchor-text-c {
+					transform: translateX(0.375rem);
 				}
 			}
 		}
