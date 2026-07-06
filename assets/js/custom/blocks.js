@@ -558,13 +558,14 @@
 
                     if (isLast) {
                         const inner = item.querySelector(".tl-text-c-inner");
+                        const offset = 80;
 
                         ebTL.set(inner, {
                             yPercent: () => {
                                 const rect = inner.getBoundingClientRect();
                                 const currentCenter = rect.top + rect.height / 2;
                                 const viewportCenter = window.innerHeight / 2;
-                                const deltaPx = viewportCenter - currentCenter;
+                                const deltaPx = (viewportCenter - currentCenter) - offset;
                                 return (deltaPx / rect.height) * 100;
                             }
                         }, 0);
