@@ -399,7 +399,7 @@
                         trigger: self,
                         pin: inner,
                         start: "top top",
-                        end: "+=300%",
+                        end: "+=400%",
                         pinSpacing: true,
                         scrub: true,
                         invalidateOnRefresh: true,
