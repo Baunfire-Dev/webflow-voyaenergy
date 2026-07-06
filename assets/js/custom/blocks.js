@@ -165,11 +165,11 @@
                         position: "<-0.04"
                     },
                     mainHeading: {
-                        position: "<0.6"
+                        position: "<0.3"
                     },
                     navControls: {
                         duration: 0.6,
-                        position: "<0.2"
+                        position: "<0.4"
                     },
                     mainPara: {
                         position: "<0.3"
