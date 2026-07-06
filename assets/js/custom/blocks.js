@@ -158,7 +158,7 @@
                 const timings = {
                     callDelay: 0.3,
                     reveal: {
-                        duration: 0.8,
+                        duration: 1,
                     },
                     mainImage: {
                         duration: 2,
@@ -196,9 +196,9 @@
 
                 if (pageReveal) {
                     introTL.to(pageReveal, {
-                        yPercent: -100,
+                        yPercent: -120,
                         duration: timings.reveal.duration,
-                        ease: "circ.Out"
+                        ease: "power4.Out"
                     });
                 }
 
