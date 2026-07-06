@@ -383,29 +383,25 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const ebTL = handlePin(self);
+                    const inner = self.querySelector(".sb-inner");
+
+                    const ebTL = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: self,
+                            pin: inner,
+                            start: "top top",
+                            end: "+=400%",
+                            pinSpacing: true,
+                            scrub: true,
+                            invalidateOnRefresh: true,
+                        }
+                    });
+
                     this.energyBottleNeck(self, ebTL);
                     this.transitionLine(self, ebTL);
                 });
 
                 baunfire.Global.screenSizeChange();
-            };
-
-            const handlePin = (self) => {
-                const inner = self.querySelector(".sb-inner");
-
-                return gsap.timeline({
-                    scrollTrigger: {
-                        trigger: self,
-                        pin: inner,
-                        start: "top top",
-                        end: "+=400%",
-                        pinSpacing: true,
-                        scrub: true,
-                        invalidateOnRefresh: true,
-                        markers: true
-                    }
-                });
             };
 
             script();
