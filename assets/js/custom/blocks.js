@@ -462,7 +462,7 @@
 
                 gsap.fromTo(bgImage,
                     {
-                        yPercent: -6,
+                        yPercent: -8,
                     },
                     {
                         yPercent: 0,
@@ -470,7 +470,7 @@
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
-                            end: "top 30%",
+                            end: "top 10%",
                             scrub: true,
                         }
                     }
@@ -482,13 +482,13 @@
                 const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
-                ebTL.to({}, { duration: 0.3 });
+                ebTL.to({}, { duration: 0.6 });
 
                 ebTL.to(contentGroup, { yPercent: -60, autoAlpha: 0, ease: "none", duration: 1.6 });
                 ebTL.to(inner, { yPercent: -110, ease: "none", duration: 1.8 }, "<0.1");
 
                 ebTL.to(bgImage, {
-                    yPercent: 6,
+                    yPercent: 14,
                     ease: "none",
                     duration: 1.8
                 }, "<");
