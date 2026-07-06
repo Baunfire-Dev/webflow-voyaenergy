@@ -1,8 +1,6 @@
 section.section-bridge-eb-tl {
-	height: 100vh;
-
 	.sb {
-		&-inner {
+		&-sections {
 			@apply h-screen;
 		}
 	}
