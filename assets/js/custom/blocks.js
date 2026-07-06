@@ -532,7 +532,7 @@
                     const isFirst = i === 0;
 
                     if (isFirst) {
-                        ebTL.set(item, { autoAlpha: 1 }, 0);
+                        ebTL.set(item, { autoAlpha: 1 }, 0, ">0.4");
                     } else {
                         ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
