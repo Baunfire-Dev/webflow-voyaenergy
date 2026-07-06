@@ -465,7 +465,7 @@
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
-                            end: "bottom top",
+                            end: "bottom bottom",
                             scrub: 1,
                             markers: true,
                         }
