@@ -5,7 +5,7 @@ section.transition-line {
 		}
         
         &-texts {
-            @apply relative;
+            @apply relative w-full;
         }
 
         &-text {
