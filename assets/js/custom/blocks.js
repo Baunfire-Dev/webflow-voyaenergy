@@ -6,6 +6,134 @@
             this.energyBottleNeck();
         },
 
+        sectionControls() {
+            const handleCTAHover = (self) => {
+                const trigger = document.querySelector(".sc-anchors");
+                const cta = trigger.querySelector(".sc-anchor-cta");
+                const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
+                const items = trigger.querySelectorAll(".sc-anchor-item");
+                items[0].classList.add("active");
+
+                const hoverTL = gsap.timeline({ paused: true });
+
+                hoverTL
+                    .fromTo(cta,
+                        {
+                            scale: 1,
+                            autoAlpha: 1,
+                        },
+                        {
+                            scale: 0.4,
+                            autoAlpha: 0,
+                            transformOrigin: "bottom left",
+                            duration: 0.4,
+                            ease: "power2.out"
+                        }
+                    )
+                    .fromTo(itemsContainer,
+                        {
+                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
+                        },
+                        {
+                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
+                            duration: 0.4,
+                            ease: "power2.out"
+                        },
+                        "<0.2"
+                    )
+                    .fromTo(Array.from(items).reverse(),
+                        {
+                            x: -10,
+                            autoAlpha: 0,
+                        },
+                        {
+                            x: 0,
+                            duration: 0.4,
+                            ease: "power2.out",
+                            autoAlpha: 1,
+                            stagger: { amount: 0.3, from: "start" }
+                        },
+                        "<0.2"
+                    )
+
+                trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
+                trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
+            }
+
+            const handleScrollIndicator = () => {
+                const svg = document.getElementById('indicator');
+                const line = document.getElementById('dline');
+                const head = document.getElementById('dhead');
+                const len = line.getTotalLength();
+
+                const arrowTL = gsap.timeline({
+                    repeat: -1,
+                    repeatDelay: 0.2,
+                })
+
+                let fadeOut = false;
+
+                const mm = gsap.matchMedia();
+
+                gsap.set(line, {
+                    strokeDasharray: len,
+                    strokeDashoffset: len
+                });
+
+                gsap.set(head, {
+                    autoAlpha: 0,
+                    y: -4
+                });
+
+                arrowTL
+                    .to(line, {
+                        strokeDashoffset: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    })
+                    .to(head, {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.4,
+                        ease: 'back.out(2)'
+                    },
+                        '-=0.1'
+                    )
+                    .to([head, line], {
+                        autoAlpha: 0,
+                        y: 2,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    },
+                        '<0.3'
+                    )
+                    .set(line, {
+                        strokeDashoffset: len
+                    })
+                    .set(head, {
+                        y: -4
+                    })
+
+                addEventListener('scroll', () => {
+                    if (fadeOut) return;
+
+                    fadeOut = true;
+                    arrowTL.pause();
+
+                    gsap.to(svg, {
+                        autoAlpha: 0,
+                        y: 14,
+                        scale: 0.85,
+                        duration: 0.5,
+                        ease: 'power3.in'
+                    });
+                }, { passive: true });
+            };
+
+            handleCTAHover();
+            handleScrollIndicator();
+        },
+
         heroHomepage() {
             const script = () => {
                 const els = document.querySelectorAll("section.hero-homepage");
@@ -229,9 +357,10 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
+                    handlePin(self);
                     handleEntrance(self);
                 });
-            }
+            };
 
             const handleEntrance = (self) => {
                 const logo = self.querySelector(".eb-icon");
@@ -288,136 +417,26 @@
                 }
             };
 
-            script();
-        },
+            const handlePin = (self) => {
+                const inner = self.querySelector(".eb-inner");
+                const contentGroup = self.querySelector(".eb-content");
+                const bgImage = self.querySelector(".eb-bg-img");
 
-        sectionControls() {
-            const handleCTAHover = (self) => {
-                const trigger = document.querySelector(".sc-anchors");
-                const cta = trigger.querySelector(".sc-anchor-cta");
-                const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
-                const items = trigger.querySelectorAll(".sc-anchor-item");
-                items[0].classList.add("active");
-
-                const hoverTL = gsap.timeline({ paused: true });
-
-                hoverTL
-                    .fromTo(cta,
-                        {
-                            scale: 1,
-                            autoAlpha: 1,
-                        },
-                        {
-                            scale: 0.4,
-                            autoAlpha: 0,
-                            transformOrigin: "bottom left",
-                            duration: 0.4,
-                            ease: "power2.out"
-                        }
-                    )
-                    .fromTo(itemsContainer,
-                        {
-                            clipPath: "inset(100% 100% 0% 0% round 0.5rem)",
-                        },
-                        {
-                            clipPath: "inset(0% 0% 0% 0% round 0.5rem)",
-                            duration: 0.4,
-                            ease: "power2.out"
-                        },
-                        "<0.2"
-                    )
-                    .fromTo(Array.from(items).reverse(),
-                        {
-                            x: -10,
-                            autoAlpha: 0,
-                        },
-                        {
-                            x: 0,
-                            duration: 0.4,
-                            ease: "power2.out",
-                            autoAlpha: 1,
-                            stagger: { amount: 0.3, from: "start" }
-                        },
-                        "<0.2"
-                    )
-
-                trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
-                trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
-            }
-
-            const handleScrollIndicator = () => {
-                const svg = document.getElementById('indicator');
-                const line = document.getElementById('dline');
-                const head = document.getElementById('dhead');
-                const len = line.getTotalLength();
-
-                const arrowTL = gsap.timeline({
-                    repeat: -1,
-                    repeatDelay: 0.2,
-                })
-
-                let fadeOut = false;
-
-                const mm = gsap.matchMedia();
-
-                gsap.set(line, {
-                    strokeDasharray: len,
-                    strokeDashoffset: len
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: "top top",
+                        pin: inner,
+                        end: "+=100%",
+                        scrub: 1,
+                    }
                 });
 
-                gsap.set(head, {
-                    autoAlpha: 0,
-                    y: -4
-                });
-
-                arrowTL
-                    .to(line, {
-                        strokeDashoffset: 0,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    })
-                    .to(head, {
-                        autoAlpha: 1,
-                        y: 0,
-                        duration: 0.4,
-                        ease: 'back.out(2)'
-                    },
-                        '-=0.1'
-                    )
-                    .to([head, line], {
-                        autoAlpha: 0,
-                        y: 2,
-                        duration: 0.6,
-                        ease: 'power2.out'
-                    },
-                        '<0.3'
-                    )
-                    .set(line, {
-                        strokeDashoffset: len
-                    })
-                    .set(head, {
-                        y: -4
-                    })
-
-                addEventListener('scroll', () => {
-                    if (fadeOut) return;
-
-                    fadeOut = true;
-                    arrowTL.pause();
-
-                    gsap.to(svg, {
-                        autoAlpha: 0,
-                        y: 14,
-                        scale: 0.85,
-                        duration: 0.5,
-                        ease: 'power3.in'
-                    });
-                }, { passive: true });
+                
             };
 
-            handleCTAHover();
-            handleScrollIndicator();
-        }
+            script();
+        },
     };
 
     baunfire.addModule(baunfire.Blocks);

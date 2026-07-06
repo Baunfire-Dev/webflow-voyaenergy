@@ -1,0 +1,16 @@
+section.transition-line {
+	.tl {
+		&-texts-c {
+			@apply h-screen flex items-center;
+		}
+        
+        &-texts {
+            @apply relative;
+        }
+
+        &-text {
+            @apply absolute top-1/2 left-0;
+            transform: translateY(-50%);
+        }
+	}
+}
