@@ -210,7 +210,7 @@
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
-                            ease: "circ.out",
+                            ease: "circ.inOut",
                         },
                         timings.mainImage.position
                     );
