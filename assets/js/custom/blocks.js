@@ -462,7 +462,7 @@
 
                 gsap.fromTo(bgImage,
                     {
-                        yPercent: -8,
+                        yPercent: -14,
                     },
                     {
                         yPercent: 2,
