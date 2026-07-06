@@ -156,7 +156,7 @@
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const timings = {
-                    callDelay: 0.2,
+                    callDelay: 0.3,
                     reveal: {
                         duration: 1,
                     },
