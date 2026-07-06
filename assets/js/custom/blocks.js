@@ -210,7 +210,7 @@
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
-                            ease: "power2.Out",
+                            ease: "power4.Out",
                         },
                         timings.mainImage.position
                     );
