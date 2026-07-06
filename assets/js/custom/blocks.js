@@ -386,7 +386,8 @@
 
                 els.forEach(self => {
                     handleEntrance(self);
-                    handleParallax(self, ebTL);
+                    handleParallax(self);
+                    handleExit(self, ebTL);
                 });
             };
 
@@ -445,8 +446,7 @@
                 }
             };
 
-            const handleParallax = (self, ebTL) => {
-                const contentGroup = self.querySelector(".eb-content");
+            const handleParallax = (self) => {
                 const bgImage = self.querySelector(".eb-bg-img");
 
                 gsap.set(bgImage, {
@@ -469,10 +469,14 @@
                         }
                     }
                 )
+            };
+
+            const handleExit = (self, ebTL) => {
+                const contentGroup = self.querySelector(".eb-content");
 
                 ebTL.to({}, { duration: 0.3 });
                 ebTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
-                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
+                ebTL.to(self, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
             };
 
             script();
