@@ -375,6 +375,7 @@
                         pinSpacing: true,
                         scrub: 1,
                         invalidateOnRefresh: true,
+                        markers: true
                     }
                 });
             };
@@ -469,7 +470,6 @@
                             start: "top bottom",
                             end: "bottom bottom",
                             scrub: 1,
-                            markers: true,
                         }
                     }
                 )
