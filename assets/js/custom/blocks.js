@@ -171,7 +171,7 @@
                 if (pageReveal) {
                     introTL.to(pageReveal, {
                         yPercent: -100,
-                        duration: 1,
+                        duration: 1.2,
                         ease: "power2.inOut"
                     });
                 }
@@ -207,7 +207,7 @@
                     });
                 }
 
-                introTL.addLabel("nav_controls", "<0.4")
+                introTL.addLabel("nav_controls", "<0.2")
 
                 introTL.fromTo(nav,
                     {
@@ -215,7 +215,7 @@
                     },
                     {
                         yPercent: 0,
-                        duration: 0.8,
+                        duration: 0.6,
                         ease: "power2.out"
                     },
                     "nav_controls"
@@ -227,7 +227,7 @@
                     },
                     {
                         y: 0,
-                        duration: 0.8,
+                        duration: 0.6,
                         ease: "power2.out"
                     },
                     "nav_controls"
