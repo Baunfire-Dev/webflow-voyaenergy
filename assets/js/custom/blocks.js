@@ -161,7 +161,7 @@
                         duration: 0.8,
                     },
                     mainImage: {
-                        duration: 2.5,
+                        duration: 2,
                         position: "<-0.04"
                     },
                     mainHeading: {
