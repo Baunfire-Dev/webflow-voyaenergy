@@ -480,8 +480,8 @@
                 const contentGroup = self.querySelector(".eb-content");
 
                 ebTL.to({}, { duration: 0.3 });
-                ebTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
-                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
+                ebTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 1.2 });
+                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 2 }, "<0.1");
             };
 
             script();
