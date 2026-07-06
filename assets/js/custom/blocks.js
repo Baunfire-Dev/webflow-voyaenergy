@@ -588,7 +588,7 @@
             };
 
             const handleImages = (self, target, ebTL) => {
-                const images = self.find(".tl-images");
+                const images = self.querySelector(".tl-images");
                 target.appendChild(images);
                 target.addClass("has-images");
 
