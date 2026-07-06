@@ -599,40 +599,19 @@
 
                 gsap.set(imageContainer, { xPercent: 80, autoAlpha: 0 });
 
-                // const targetInner = target.querySelector(".tl-text-c-inner");
-                // const offset = 80;
-
-                // ebTL.fromTo(targetInner,
-                //     {
-                //         yPercent: () => {
-                //             const rect = targetInner.getBoundingClientRect();
-                //             const currentCenter = rect.top + rect.height / 2;
-                //             const viewportCenter = window.innerHeight / 2;
-                //             const deltaPx = (viewportCenter - currentCenter) - offset;
-                //             return (deltaPx / rect.height) * 100;
-                //         }
-                //     },
-                //     {
-                //         ease: "none",
-                //         duration: 0.8,
-                //         yPercent: 0
-                //     },
-                //     "<0.2"
-                // );
-
                 ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
-
-                ebTL.to(imageContainer, {
-                    autoAlpha: 1,
-                    ease: "none",
-                    duration: 0.6,
-                }, "<0.2");
 
                 ebTL.to(imageContainer, {
                     xPercent: 0,
                     ease: "none",
                     duration: 1.6,
                 }, "<0.4");
+
+                ebTL.to(imageContainer, {
+                    autoAlpha: 1,
+                    ease: "none",
+                    duration: 0.6,
+                }, "<0.2");
             };
 
             script();
