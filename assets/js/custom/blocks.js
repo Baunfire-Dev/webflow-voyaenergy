@@ -590,7 +590,7 @@
             const handleImages = (self, target, ebTL) => {
                 const images = self.querySelector(".tl-images");
                 target.appendChild(images);
-                target.addClass("has-images");
+                target.classList.add("has-images");
 
                 gsap.set(imageItems, { xPercent: 120, autoAlpha: 0 });
                 
