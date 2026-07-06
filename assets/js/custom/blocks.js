@@ -594,14 +594,18 @@
 
                 gsap.set(imageContainer, { xPercent: 120, autoAlpha: 0 });
 
-                ebTL.to(target.querySelector(".tl-text-c-inner"), { duration: 0.8, yPercent: 0 }, "<0.2");
+                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
                 
                 ebTL.to(imageContainer, {
-                    xPercent: 0,
                     autoAlpha: 1,
-                    ease: "power3.out",
-                    duration: 0.8,
-                    stagger: 0.25,
+                    ease: "none",
+                    duration: 0.3,
+                }, "<0.2");
+
+                ebTL.to(imageContainer, {
+                    xPercent: 0,
+                    ease: "none",
+                    duration: 1.6,
                 }, "<0.2");
             };
 
