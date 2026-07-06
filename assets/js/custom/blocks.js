@@ -454,8 +454,8 @@
                 const bgImage = self.querySelector(".eb-bg-img");
 
                 gsap.set(bgImage, {
-                    scale: 1.15,
-                    transformOrigin: "center center"
+                    scale: 1.3,
+                    transformOrigin: "top center"
                 })
 
                 gsap.fromTo(bgImage,
