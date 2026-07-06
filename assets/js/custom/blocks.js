@@ -158,7 +158,7 @@
                 const timings = {
                     callDelay: 0.1,
                     reveal: {
-                        duration: 1.2,
+                        duration: 1,
                     },
                     mainImage: {
                         duration: 2.5,
