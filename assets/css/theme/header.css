@@ -1,5 +1,5 @@
 header {
-	@apply transition-all duration-500 ease-out;
+	@apply transition-all duration-700 ease-out;
 
 	.nav {
 		/* @apply transition-all duration-500 ease-out; */
