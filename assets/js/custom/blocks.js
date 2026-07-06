@@ -468,8 +468,8 @@
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
-                            end: "bottom bottom",
-                            scrub: 1,
+                            end: "top 30%",
+                            scrub: true,
                         }
                     }
                 )
