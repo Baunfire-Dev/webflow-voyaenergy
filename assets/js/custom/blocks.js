@@ -419,20 +419,45 @@
 
             const handlePin = (self) => {
                 const inner = self.querySelector(".eb-inner");
+                const box = self.querySelector(".eb-box");
                 const contentGroup = self.querySelector(".eb-content");
                 const bgImage = self.querySelector(".eb-bg-img");
 
-                const introTL = gsap.timeline({
+                gsap.set(bgImage, {
+                    scale: 1.15,
+                    transformOrigin: "center center"
+                })
+
+                gsap.fromTo(bgImage,
+                    {
+                        yPercent: 4,
+                    },
+                    {
+                        yPercent: -14,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: self,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 1,
+                        }
+                    }
+                )
+
+                const pinTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
                         start: "top top",
-                        pin: inner,
+                        pin: self,
                         end: "+=100%",
                         scrub: 1,
                     }
                 });
 
-                
+                pinTL.to({}, { duration: 1 });
+                pinTL.to(contentGroup, { yPercent: -80, autoAlpha: 0, ease: "none", duration: 0.8 });
+                pinTL.to(inner, { yPercent: -110, ease: "none", duration: 0.8 }, "<0.2");
+                pinTL.to({}, { duration: 0.5 });
             };
 
             script();
