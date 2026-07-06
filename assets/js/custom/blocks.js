@@ -450,6 +450,7 @@
                         start: "top top",
                         pin: self,
                         end: "+=100%",
+                        pinSpacing: false,
                         scrub: 1,
                     }
                 });
