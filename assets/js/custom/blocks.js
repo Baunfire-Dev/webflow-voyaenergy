@@ -372,6 +372,7 @@
                         pin: inner,
                         end: "+=300%",
                         pinSpacing: true,
+                        scrub: 1,
                     }
                 });
             };
