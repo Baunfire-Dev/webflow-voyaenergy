@@ -525,8 +525,14 @@
                     return { item, split };
                 });
 
-                lines.forEach(({ item, split }) => {
-                    ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                lines.forEach(({ item, split }, i) => {
+                    const isFirst = i === 0;
+
+                    if (isFirst) {
+                        ebTL.set(item, { autoAlpha: 1 }, 0);
+                    } else {
+                        ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                    }
 
                     ebTL.to(split.chars, {
                         color: (i, target) => target.dataset.fill,
