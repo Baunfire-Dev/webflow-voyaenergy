@@ -529,7 +529,7 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleTexts(self, ebTL);
+                    handleTextsAndImages(self, ebTL);
                 });
             };
 
@@ -575,8 +575,15 @@
 
                     if (!isLast) {
                         ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                        handleImages(self, item, ebTL);
                     }
                 });
+            };
+
+            const handleImages = (self, target, ebTL) => {
+                const images = self.find(".tl-images");
+                target.appendChild(images);
+                target.addClass("has-images");
             };
 
             script();
