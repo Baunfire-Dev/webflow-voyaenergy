@@ -510,13 +510,13 @@
 
                 ebTL.to({}, { duration: 0.6 });
 
-                ebTL.to(contentGroup, { yPercent: -20, autoAlpha: 0, ease: "none", duration: 1 });
-                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 1.8 }, "<0.4");
+                ebTL.to(contentGroup, { yPercent: -60, autoAlpha: 0, ease: "none", duration: 1 });
+                ebTL.to(inner, { yPercent: -110, ease: "none", duration: 2.5 }, "<0.6");
 
                 ebTL.to(bgImage, {
                     yPercent: 14,
                     ease: "none",
-                    duration: 1.8
+                    duration: 2.5
                 }, "<");
             };
 
