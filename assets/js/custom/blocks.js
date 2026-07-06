@@ -485,7 +485,7 @@
                 ebTL.to(inner, { yPercent: -110, ease: "none", duration: 2 }, "<0.1");
 
                 gsap.to(bg, {
-                    yPercent: -6,
+                    yPercent: -3,
                     ease: "none",
                     duration: 2
                 }, "<");
