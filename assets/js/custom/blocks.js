@@ -498,10 +498,12 @@
             };
 
             const handleTexts = (self, ebTL) => {
-                const texts = self.querySelectorAll(".tl-text");
-                if (!texts.length) return;
+                const items = self.querySelectorAll(".tl-text-c");
+                if (!items.length) return;
 
-                const lines = [...texts].map(text => {
+                const lines = [...items].map(item => {
+                    const text = item.querySelector(".tl-text");
+
                     const split = SplitText.create(text, {
                         type: "chars, words",
                         autoSplit: false,
@@ -511,14 +513,13 @@
                         c.dataset.fill = getComputedStyle(c).color;
                     });
 
-                    gsap.set(text, { autoAlpha: 0 });
                     gsap.set(split.chars, { color: "#EBEBEB" });
 
-                    return { text, split };
+                    return { item, split };
                 });
 
-                lines.forEach(({ text, split }) => {
-                    ebTL.to(text, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                lines.forEach(({ item, split }) => {
+                    ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
 
                     ebTL.to(split.chars, {
                         color: (i, target) => target.dataset.fill,
@@ -528,7 +529,8 @@
                     });
 
                     ebTL.to({}, { duration: 0.4 });
-                    ebTL.to(text, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+
+                    ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
                 });
             };
 
