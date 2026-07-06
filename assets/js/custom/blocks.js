@@ -198,7 +198,7 @@
                     introTL.to(pageReveal, {
                         yPercent: -100,
                         duration: timings.reveal.duration,
-                        ease: "power2.inOut"
+                        ease: "power2.Out"
                     });
                 }
 
@@ -210,7 +210,7 @@
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
-                            ease: "circ.inOut",
+                            ease: "power2.Out",
                         },
                         timings.mainImage.position
                     );
