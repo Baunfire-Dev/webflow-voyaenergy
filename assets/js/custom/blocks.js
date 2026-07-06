@@ -383,25 +383,29 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const inner = self.querySelector(".sb-inner");
-
-                    const ebTL = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: self,
-                            pin: inner,
-                            start: "top top",
-                            end: "+=400%",
-                            pinSpacing: true,
-                            scrub: true,
-                            invalidateOnRefresh: true,
-                        }
-                    });
-
+                    const ebTL = handlePin(self);
                     this.energyBottleNeck(self, ebTL);
                     this.transitionLine(self, ebTL);
                 });
 
                 baunfire.Global.screenSizeChange();
+            };
+
+            const handlePin = (self) => {
+                const inner = self.querySelector(".sb-inner");
+
+                return gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        pin: inner,
+                        start: "top top",
+                        end: "+=400%",
+                        pinSpacing: true,
+                        scrub: true,
+                        invalidateOnRefresh: true,
+                        markers: true
+                    }
+                });
             };
 
             script();
@@ -552,6 +556,21 @@
                     const isFirst = i === 0;
                     const isLast = i === lines.length - 1;
 
+                    if (isLast) {
+                        const inner = item.querySelector(".tl-text-c-inner");
+                        const offset = 80;
+
+                        ebTL.set(inner, {
+                            yPercent: () => {
+                                const rect = inner.getBoundingClientRect();
+                                const currentCenter = rect.top + rect.height / 2;
+                                const viewportCenter = window.innerHeight / 2;
+                                const deltaPx = (viewportCenter - currentCenter) - offset;
+                                return (deltaPx / rect.height) * 100;
+                            }
+                        }, 0);
+                    }
+
                     if (isFirst) {
                         ebTL.set(item, { autoAlpha: 1 }, 0);
                     } else {
@@ -584,26 +603,7 @@
 
                 gsap.set(imageContainer, { xPercent: 80, autoAlpha: 0 });
 
-                const targetInner = target.querySelector(".tl-text-c-inner");
-                const offset = 80;
-
-                ebTL.fromTo(targetInner,
-                    {
-                        yPercent: () => {
-                            const rect = targetInner.getBoundingClientRect();
-                            const currentCenter = rect.top + rect.height / 2;
-                            const viewportCenter = window.innerHeight / 2;
-                            const deltaPx = (viewportCenter - currentCenter) - offset;
-                            return (deltaPx / rect.height) * 100;
-                        }
-                    },
-                    {
-                        ease: "none",
-                        duration: 0.8,
-                        yPercent: 0
-                    },
-                    "<0.2"
-                );
+                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
                 ebTL.to(imageContainer, {
                     autoAlpha: 1,
