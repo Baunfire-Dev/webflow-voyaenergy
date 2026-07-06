@@ -465,13 +465,13 @@
                         yPercent: -8,
                     },
                     {
-                        yPercent: 0,
+                        yPercent: 2,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
                             start: "top bottom",
                             end: "top 10%",
-                            scrub: true,
+                            scrub: 1,
                         }
                     }
                 )
