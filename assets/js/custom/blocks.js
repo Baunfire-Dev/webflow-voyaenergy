@@ -589,7 +589,7 @@
 
             const handleImages = (self, target, ebTL) => {
                 const imageContainer = self.querySelector(".tl-images");
-                target.appendChild(images);
+                target.appendChild(imageContainer);
                 target.classList.add("has-images");
 
                 gsap.set(imageContainer, { xPercent: 120, autoAlpha: 0 });
