@@ -33,7 +33,7 @@ section.content-grid-items {
             /* transform: translateY(2.5rem); */
         }
 
-        &-item {
+        &-card {
             @apply will-change-transform;
         }
     }
