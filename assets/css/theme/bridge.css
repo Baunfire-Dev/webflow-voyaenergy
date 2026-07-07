@@ -6,7 +6,7 @@ section.section-bridge-eb-tl {
 	}
 
 	section.energy-bottleneck {
-		@apply relative z-[2];
+		@apply relative z-[2] pointer-events-none;
 	}
 
 	section.transition-line {
