@@ -603,13 +603,13 @@
 
                 ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
-                ebTL.to(imageContainer, {
+                ebTL.to(imageContainerInner, {
                     xPercent: 0,
                     ease: "none",
                     duration: 1.6,
                 }, "<0.4");
 
-                ebTL.to(imageContainer, {
+                ebTL.to(imageContainerInner, {
                     autoAlpha: 1,
                     ease: "none",
                     duration: 0.6,
