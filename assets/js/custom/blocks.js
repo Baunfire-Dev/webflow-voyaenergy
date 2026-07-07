@@ -630,6 +630,8 @@
                     handleEntrance(self);
                     handleTabs(self);
                 });
+                
+                baunfire.Global.screenSizeChange();
             }
 
             const handleEntrance = (self) => {
