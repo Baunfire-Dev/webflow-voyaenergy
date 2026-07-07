@@ -9,6 +9,8 @@ section.content-grid-items {
         }
 
         &-panel {
+            perspective: 2000px;
+            
             &.active {
                 @apply relative;
 

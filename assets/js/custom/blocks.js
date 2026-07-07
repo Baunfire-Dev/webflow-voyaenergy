@@ -711,6 +711,27 @@
 
                     tab.classList.add('active');
                     activePanel.classList.add('active');
+
+                    baunfire.Global.screenSizeChange();
+                };
+
+                const animateItems = (panel) => {
+                    const items = panel.querySelectorAll(".cgi-card");
+
+                    gsap.fromTo(items,
+                        {
+                            autoAlpha: 0,
+                            rotateX: "84deg"
+                        },
+                        {
+                            autoAlpha: 1,
+                            rotateX: 0,
+                            stagger: { amount: 0.3, from: "start" },
+                            ease: "power2.out",
+                            duration: 0.4,
+                            overwrite: true
+                        }
+                    )
                 };
             };
 
