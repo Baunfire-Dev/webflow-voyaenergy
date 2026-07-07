@@ -32,5 +32,9 @@ section.content-grid-items {
             @apply opacity-0;
             /* transform: translateY(2.5rem); */
         }
+
+        &-item {
+            @apply will-change-transform;
+        }
     }
 }
