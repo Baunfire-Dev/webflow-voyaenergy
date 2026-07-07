@@ -3,19 +3,21 @@
 
     baunfire.Global = {
         init() {
-            // this.refreshOnImagesLoaded(document.querySelector("main"));
-
-            // window.addEventListener("resize", this.debounce(() => {
-            //     this.screenSizeChange();
-            // }, 300));
+            this.refreshOnImagesLoaded(document.querySelector("main"));
         },
 
         refreshOnImagesLoaded(container = document) {
             const images = container.querySelectorAll("img");
-            const promises = Array.from(images).map(img => {
-                if (img.complete) return Promise.resolve();
+            const promises = [...images].map(img => {
+                if (img.complete) {
+                    return img.decode?.().catch(() => { });
+                }
+
                 return new Promise(resolve => {
-                    img.addEventListener("load", resolve, { once: true });
+                    img.addEventListener("load", () => {
+                        img.decode?.().catch(() => { }).finally(resolve);
+                    }, { once: true });
+
                     img.addEventListener("error", resolve, { once: true });
                 });
             });
@@ -190,13 +192,13 @@
         //     this._tippyQueue = [];
 
         //     this.fancyLog("Loading Tippy...");
-            
+
         //     const link = document.createElement("link");
         //     link.rel = "stylesheet";
         //     link.href = `${templateURL}/assets/css/external/tippy.css`;
         //     link.dataset.tippyCss = "true";
         //     document.head.appendChild(link);
-            
+
         //     const script = document.createElement("script");
         //     script.src = `${templateURL}/assets/js/external/tippy-bundle.umd.min.js`;
         //     script.defer = true;
