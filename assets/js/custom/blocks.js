@@ -636,6 +636,7 @@
                 const heading = self.querySelector(".cgi-title");
                 const para = self.querySelector(".cgi-para");
                 const tabContainer = self.querySelector(".cgi-tabs");
+                const panelsContainer = self.querySelector(".cgi-panels");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
@@ -680,6 +681,14 @@
 
                 if (tabContainer) {
                     introTL.fromTo(tabContainer,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.2"
+                    );
+                }
+
+                if (panelsContainer) {
+                    introTL.fromTo(panelsContainer,
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
                         "<0.2"
