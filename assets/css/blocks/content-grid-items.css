@@ -1,5 +1,14 @@
 section.content-grid-items {
 	.cgi {
+        &-tab {
+            @apply cursor-pointer;
+            @apply transition-all duration-300 ease-out;
+
+            &.active {
+                background: var(--_colors---impact-yellow);
+            }
+        }
+
         &-panel {
             &.active {
                 @apply relative;
