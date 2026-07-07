@@ -14,7 +14,7 @@ section.content-grid-items {
 
                 .cgi-panel-inner {
                     @apply transition-all duration-500 ease-out;
-                    @apply opacity-0;
+                    @apply opacity-100;
                     transform: translateY(0);
                 }
             }
