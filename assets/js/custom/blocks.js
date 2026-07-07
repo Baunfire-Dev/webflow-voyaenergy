@@ -673,7 +673,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 { y: "-5%", duration: 0.8, ease: "power3.out", stagger: { amount: 0.4, from: "start" } },
-                                "<0.4"
+                                "<0.2"
                             );
                         },
                     });
@@ -691,7 +691,7 @@
                     introTL.fromTo(panelsContainer,
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
-                        "<0.2"
+                        "<0.1"
                     );
                 }
             };
