@@ -630,7 +630,7 @@
                     handleEntrance(self);
                     handleTabs(self);
                 });
-                
+
                 baunfire.Global.screenSizeChange();
             }
 
@@ -739,7 +739,7 @@
                             autoAlpha: 1,
                             rotateX: 0,
                             stagger: 0.14,
-                            ease: "power3.out",
+                            ease: "power3.inOut",
                             duration: 0.8,
                             overwrite: true
                         }
