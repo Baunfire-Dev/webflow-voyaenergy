@@ -711,6 +711,7 @@
 
                     tab.classList.add('active');
                     activePanel.classList.add('active');
+                    animateItems(activePanel);
 
                     baunfire.Global.screenSizeChange();
                 };
