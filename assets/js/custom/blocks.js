@@ -597,7 +597,7 @@
                 target.appendChild(imageContainer);
                 target.classList.add("has-images");
 
-                gsap.set(imageContainer, { x: "80%", autoAlpha: 0 });
+                gsap.set(imageContainer, { x: () => imageContainer.getBoundingClientRect().width, autoAlpha: 0 });
 
                 ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
