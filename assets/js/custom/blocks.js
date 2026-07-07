@@ -463,6 +463,7 @@
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
                         "<0.4"
                     );
+                }
             };
 
             const handleParallax = (self) => {
