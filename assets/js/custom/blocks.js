@@ -727,9 +727,9 @@
                         {
                             autoAlpha: 1,
                             rotateX: 0,
-                            stagger: { amount: 0.3, from: "start" },
+                            stagger: 0.14,
                             ease: "power2.out",
-                            duration: 0.4,
+                            duration: 0.6,
                             overwrite: true
                         }
                     )
