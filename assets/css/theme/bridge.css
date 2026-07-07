@@ -41,11 +41,15 @@ section.section-bridge-eb-tl {
 
 						&-image-item {
 							@apply w-auto h-full;
-							@apply max-h-[21.125rem] aspect-[506/338];
+							@apply min-h-[21.125rem] aspect-[506/338];
 						}
 					}
 				}
 			}
+
+            &-images-inner {
+                @apply flex;
+            }
 		}
 	}
 }
