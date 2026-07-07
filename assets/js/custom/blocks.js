@@ -597,12 +597,12 @@
                 target.appendChild(imageContainer);
                 target.classList.add("has-images");
 
-                gsap.set(imageContainer, { transform: () => `translateX(${imageContainer.getBoundingClientRect().width})`, autoAlpha: 0 });
+                gsap.set(imageContainer, { transform: () => `translateX(${imageContainer.getBoundingClientRect().width}px)`, autoAlpha: 0 });
 
                 ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
                 ebTL.to(imageContainer, {
-                    transform: "translateX(0)",
+                    transform: "translateX(0px)",
                     ease: "none",
                     duration: 1.6,
                 }, "<0.4");
