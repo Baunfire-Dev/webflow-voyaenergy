@@ -36,20 +36,21 @@ section.section-bridge-eb-tl {
 						}
 
 						&-images {
-							@apply flex gap-[1.125rem] ml-auto w-fit opacity-0 translate-x-[100%];
+							direction: rtl;
+							@apply flex gap-[1.125rem] w-full;
 						}
 
-						&-image-item {
-							@apply w-auto h-full;
-							@apply min-h-[21.125rem] aspect-[506/338];
+						&-images-inner {
+							@apply flex min-w-fit translate-x-[100%] opacity-0;
 						}
+					}
+
+					&-image-item {
+						@apply w-auto h-full;
+						@apply min-h-[21.125rem] aspect-[506/338];
 					}
 				}
 			}
-
-            &-images-inner {
-                @apply flex;
-            }
 		}
 	}
 }
