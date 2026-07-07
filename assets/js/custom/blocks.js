@@ -619,6 +619,172 @@
 
             script();
         },
+
+        contentGridItems() {
+            const script = () => {
+                const els = document.querySelectorAll("section.content-grid-items");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                    handleTabs(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const heading = self.querySelector(".cgi-title");
+                const para = self.querySelector(".cgi-para");
+                const tabContainer = self.querySelector(".cgi-tabs");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06 },
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    SplitText.create(para, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            para.style.visibility = "visible";
+                            para.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.8, ease: "power3.out", stagger: { amount: 0.4, from: "start" } },
+                                "<0.4"
+                            );
+                        },
+                    });
+                }
+
+                if (tabContainer) {
+                    introTL.fromTo(tabContainer,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.2"
+                    );
+                }
+            };
+
+            const handleTabs = (self) => {
+                const siteAnchors = document.querySelector(".sc-anchors");
+
+                const heroInner = self.querySelector(".hh-inner");
+
+                const sectionOne = self.querySelector(".hh-section.one");
+                const sectionOneImage = sectionOne.querySelector(".hh-bg-img-outer");
+
+                const mainHeading = sectionOne.querySelector(".hh-heading");
+                const mainPara = sectionOne.querySelector(".hh-para");
+
+                const sectionTwo = self.querySelector(".hh-section.two");
+                const sectionTwoLogo = sectionTwo.querySelector(".hh-logo");
+                const sectionTwoImage = sectionTwo.querySelector(".hh-bg-img");
+                const sectionTwoContent = sectionTwo.querySelector(".hh-content.two");
+                const sectionTwoBGOverlay = sectionTwo.querySelector(".hh-bg-overlay");
+
+                const secondaryPara = sectionTwo.querySelector(".hh-long-para");
+
+                if (!heroInner || !sectionOne || !sectionTwo) return;
+
+                const imageMask = () => {
+                    const s = getComputedStyle(sectionTwo);
+                    const y = s.getPropertyValue("--frame-y").trim();
+                    const x = s.getPropertyValue("--frame-x").trim();
+                    const r = s.getPropertyValue("--frame-r").trim();
+                    return `inset(${y} ${x} ${y} ${x} round ${r})`;
+                };
+
+                SplitText.create(secondaryPara, {
+                    type: "words",
+                    mask: "words",
+                    autoSplit: true,
+                    onSplit(split) {
+                        gsap.set(split.words, { yPercent: 110 });
+
+                        gsap.set(sectionOneImage, { yPercent: 0 });
+
+                        gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
+
+                        gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
+                        gsap.set(sectionTwoLogo, { autoAlpha: 0, y: "2rem" });
+
+                        gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
+
+                        const tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: heroInner,
+                                start: "top top",
+                                end: "+=250%",
+                                scrub: 1,
+                                pin: true,
+                                // anticipatePin: 1,
+                                invalidateOnRefresh: true,
+                            },
+                        });
+
+                        tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1.4 }, 0);
+                        tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1.4 }, "<");
+                        tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1.4 }, "<");
+
+                        tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
+                        tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
+
+                        tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
+                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
+
+                        tl.to({}, { duration: 1 });
+
+                        tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
+
+                        tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
+
+                        tl.call(() => siteAnchors.classList.remove("dark"), null, ">");
+                        tl.call(() => siteAnchors.classList.add("dark"), null, "<");
+
+                        tl.to({}, { duration: 0.5 });
+
+                        return tl;
+                    },
+                });
+
+                gsap.set(sectionTwoImage, { scale: 1.06, transformOrigin: "center center" });
+
+                gsap.to(sectionTwoImage, {
+                    yPercent: 14,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: heroInner,
+                        start: "bottom bottom",
+                        end: "bottom top",
+                        scrub: true,
+                        invalidateOnRefresh: true,
+                    },
+                });
+            };
+
+            script();
+        }
     };
 
     baunfire.addModule(baunfire.Blocks);

@@ -1,0 +1,24 @@
+section.content-grid-items {
+	.cgi {
+        &-panel {
+            &.active {
+                @apply relative;
+
+                .cgi-panel-inner {
+                    @apply transition-all duration-500 ease-out;
+                    @apply opacity-0;
+                    transform: translateY(0);
+                }
+            }
+
+            &:not(.active) {
+                @apply w-full h-auto absolute invisible left-0 top-0;
+            }
+        }
+
+        &-panel-inner {
+            @apply opacity-0;
+            transform: translateY(2.5rem);
+        }
+    }
+}
