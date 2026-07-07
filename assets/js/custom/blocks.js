@@ -595,13 +595,14 @@
             const handleImages = (self, target, ebTL) => {
                 const imageContainer = self.querySelector(".tl-images");
                 const imageContainerInner = self.querySelector(".tl-images-inner");
+                const targetInner = target.querySelector(".tl-text-c-inner");
 
                 target.appendChild(imageContainer);
                 target.classList.add("has-images");
 
                 gsap.set(imageContainerInner, { xPercent: 80, autoAlpha: 0 });
 
-                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
+                ebTL.to(targetInner, { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
                 ebTL.to(imageContainerInner, {
                     xPercent: 0,
