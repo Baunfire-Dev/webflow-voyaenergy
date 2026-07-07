@@ -736,7 +736,7 @@
                         {
                             autoAlpha: 1,
                             rotateX: 0,
-                            stagger: 0.2,
+                            stagger: 0.14,
                             ease: "power3.out",
                             duration: 0.8,
                             overwrite: true
