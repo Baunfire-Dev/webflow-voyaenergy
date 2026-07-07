@@ -1,7 +1,7 @@
 section.content-grid-items {
 	.cgi {
         &-tab {
-            @apply transition-all duration-300 ease-out;
+            @apply transition-all duration-[0.6s] ease-out;
 
             &.active {
                 background: var(--_colors---impact-yellow);
@@ -10,7 +10,7 @@ section.content-grid-items {
 
         &-panel {
             perspective: 2000px;
-            
+
             &.active {
                 @apply relative;
 
