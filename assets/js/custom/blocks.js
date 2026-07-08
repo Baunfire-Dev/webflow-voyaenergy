@@ -562,8 +562,11 @@
 
                 if (isLast) {
                     const inner = item.querySelector(".tl-text-c-inner");
-                    ebTL.set(inner, { y: () => measureLift(inner) }, 0);
-                    ebTL.to(inner, { y: 0, ease: "none", duration: 1.6, immediateRender: false }, "<");
+                    ebTL.fromTo(inner,
+                        { y: () => measureLift(inner) },
+                        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
+                        "<"
+                    );
                 }
 
                 ebTL.to(split.chars, {
