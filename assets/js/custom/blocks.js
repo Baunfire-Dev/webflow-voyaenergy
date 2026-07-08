@@ -168,7 +168,7 @@
                         slat: {
                             duration: 0.7,
                             stagger: 0.08,
-                            position: "<0.15",
+                            position: "<",
                         },
                     },
                     mainImage: {
@@ -208,7 +208,7 @@
                 if (pageReveal) {
                     introTL.fromTo(pageMark,
                         { autoAlpha: 1, },
-                        { autoAlpha: 0, yPercent: -4, duration: timings.reveal.markFade.duration, ease: "power1.out" }
+                        { autoAlpha: 0, yPercent: -10, duration: timings.reveal.markFade.duration, ease: "power1.out" }
                     );
 
                     introTL.fromTo(pageSlats,
