@@ -553,19 +553,17 @@
                     if (isLast) {
     const inner = item.querySelector(".tl-text-c-inner");
     const offset = 80;
+    let liftFrom = 0;
 
-    // measure once, at rest, before the timeline transforms anything
-    const measure = () => {
+    // capture after this refresh completes (pin applied, layout settled)
+    ScrollTrigger.addEventListener("refresh", () => {
+        // temporarily neutralize any y so we measure the true resting spot
+        const prev = gsap.getProperty(inner, "y");
+        gsap.set(inner, { y: 0 });
         const rect = inner.getBoundingClientRect();
         const innerCenter = rect.top + rect.height / 2;
-        return (window.innerHeight / 2 - innerCenter) - offset;
-    };
-
-    let liftFrom = measure();
-
-    // re-measure on refresh, but only capture when the pin is at its start
-    ScrollTrigger.addEventListener("refreshInit", () => {
-        liftFrom = measure();
+        liftFrom = (window.innerHeight / 2 - innerCenter) - offset;
+        gsap.set(inner, { y: prev });
     });
 
     ebTL.fromTo(inner,
