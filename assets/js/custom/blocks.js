@@ -557,13 +557,12 @@
                         ebTL.fromTo(inner,
                             {
                                 y: () => {
-                                    const parent = inner.parentElement;
-                                    const rect = parent.getBoundingClientRect();
-                                    const center = rect.top + rect.height / 2;
-                                    return (window.innerHeight / 2 - center) - offset;
+                                    const rect = inner.getBoundingClientRect();
+                                    const innerCenter = rect.top + rect.height / 2;
+                                    return (window.innerHeight / 2 - innerCenter) - offset;
                                 }
                             },
-                            { y: 0, ease: "none", duration: 1.6 },
+                            { y: 0, ease: "none", duration: 1.6, immediateRender: false },
                             "<"
                         );
                     }
