@@ -5,6 +5,7 @@
             this.heroHomepage();
             this.bridgeEBTL();
             this.contentGridItems();
+            this.ctaBanner();
         },
 
         sectionControls() {
@@ -610,6 +611,126 @@
         },
 
         contentGridItems() {
+            const script = () => {
+                const els = document.querySelectorAll("section.content-grid-items");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                    handleTabs(self);
+                });
+
+                baunfire.Global.screenSizeChange();
+            }
+
+            const handleEntrance = (self) => {
+                const heading = self.querySelector(".cgi-title");
+                const para = self.querySelector(".cgi-para");
+                const tabContainer = self.querySelector(".cgi-tabs");
+                const panelsContainer = self.querySelector(".cgi-panels");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                { y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06 },
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+
+                if (tabContainer) {
+                    introTL.fromTo(tabContainer,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.2"
+                    );
+                }
+
+                if (panelsContainer) {
+                    introTL.fromTo(panelsContainer,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.1"
+                    );
+                }
+            };
+
+            const handleTabs = (self) => {
+                const tabs = [...self.querySelectorAll('.cgi-tab[target]')];
+                const panels = [...self.querySelectorAll('.cgi-panel[panel-key]')];
+
+                tabs[0].classList.add("active");
+                panels[0].classList.add("active");
+
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        if (tab.classList.contains('active')) return;
+                        const targetId = tab.getAttribute('target');
+                        updateTabsPanels(targetId, tab, tabs, panels);
+                    });
+                });
+
+                const updateTabsPanels = (targetId, tab, tabs, panels) => {
+                    const activePanel = panels.find(panel => panel.getAttribute('panel-key') === targetId);
+                    if (!activePanel) return;
+
+                    panels.forEach(panel => panel.classList.remove('active'));
+                    tabs.forEach(panel => panel.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    activePanel.classList.add('active');
+                    animateItems(activePanel);
+
+                    baunfire.Global.screenSizeChange();
+                };
+
+                const animateItems = (panel) => {
+                    const items = panel.querySelectorAll(".cgi-card");
+
+                    gsap.fromTo(items,
+                        {
+                            autoAlpha: 0,
+                            rotateX: "84deg"
+                        },
+                        {
+                            autoAlpha: 1,
+                            rotateX: 0,
+                            stagger: 0.14,
+                            ease: "power3.inOut",
+                            duration: 0.8,
+                            overwrite: true
+                        }
+                    )
+                };
+            };
+
+            script();
+        },
+
+        ctaBanner() {
             const script = () => {
                 const els = document.querySelectorAll("section.content-grid-items");
                 if (!els.length) return;
