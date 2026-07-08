@@ -659,7 +659,7 @@
                     introTL.fromTo(para,
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
-                        "<0.2"
+                        "<0.4"
                     );
                 }
 
