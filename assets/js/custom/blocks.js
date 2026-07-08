@@ -226,9 +226,13 @@
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger },
+                                {
+                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
                                 timings.mainHeading.position
                             );
                         },
@@ -269,9 +273,13 @@
                         onSplit(split) {
                             mainPara.style.visibility = "visible";
                             mainPara.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger },
+                                {
+                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
                                 timings.mainPara.position
                             );
                         },
@@ -449,9 +457,13 @@
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
-                                { y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06 },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
                                 "<0.2"
                             );
                         },
