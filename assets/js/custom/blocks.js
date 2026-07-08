@@ -172,7 +172,7 @@
                         },
                     },
                     mainImage: {
-                        duration: 2,
+                        duration: 2.5,
                         position: "<-0.02"
                     },
                     mainHeading: {
