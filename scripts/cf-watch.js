@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const axios = require("axios");
 const notifier = require("node-notifier");
 const ora = require("ora").default;

@@ -550,7 +550,6 @@
                         ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
 
-                    // establish centered at the moment the line appears, hold, then return home
                     if (isLast) {
                         const inner = item.querySelector(".tl-text-c-inner");
                         const offset = 80;
@@ -558,14 +557,14 @@
                         ebTL.fromTo(inner,
                             {
                                 y: () => {
-                                    const rect = inner.getBoundingClientRect();
-                                    const innerCenter = rect.top + rect.height / 2;
-                                    const viewportCenter = window.innerHeight / 2;
-                                    return (viewportCenter - innerCenter) - offset;
+                                    const parent = inner.parentElement;
+                                    const rect = parent.getBoundingClientRect();
+                                    const center = rect.top + rect.height / 2;
+                                    return (window.innerHeight / 2 - center) - offset;
                                 }
                             },
                             { y: 0, ease: "none", duration: 1.6 },
-                            "<" 
+                            "<"
                         );
                     }
 
