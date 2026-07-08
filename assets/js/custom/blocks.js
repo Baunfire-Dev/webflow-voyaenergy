@@ -699,8 +699,8 @@
 
                 if (tabContainer) {
                     introTL.fromTo(tabContainer,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        { autoAlpha: 0 },
+                        { autoAlpha: 1, duration: 0.6, ease: "power3.out" },
                         "<0.2"
                     );
                 }
