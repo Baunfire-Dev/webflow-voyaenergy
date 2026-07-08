@@ -550,6 +550,7 @@
                         ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
 
+                    // establish centered at the moment the line appears, hold, then return home
                     if (isLast) {
                         const inner = item.querySelector(".tl-text-c-inner");
                         const offset = 80;
@@ -563,8 +564,8 @@
                                     return (viewportCenter - innerCenter) - offset;
                                 }
                             },
-                            { y: 0, ease: "none", duration: 0.8 },
-                            "<0.2"
+                            { y: 0, ease: "none", duration: 1.6 },
+                            "<" 
                         );
                     }
 
@@ -573,11 +574,9 @@
                         duration: 0.05,
                         ease: "none",
                         stagger: { each: 0.02, from: "start" },
-                    }, isFirst ? "-=0.8" : undefined);
+                    }, isFirst ? "-=0.8" : "<0.2");
 
-                    if (isLast) {
-                        handleImages(self, item, ebTL);
-                    }
+                    if (isLast) handleImages(self, item, ebTL);
 
                     ebTL.to({}, { duration: 0.3 });
 
