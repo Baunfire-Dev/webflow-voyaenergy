@@ -648,14 +648,14 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleEntrance(self);
-                    handleTabs(self);
+                    const activePanel = handleTabs(self);
+                    handleEntrance(self, activePanel);
                 });
 
                 baunfire.Global.screenSizeChange();
             }
 
-            const handleEntrance = (self) => {
+            const handleEntrance = (self, activePanel) => {
                 const heading = self.querySelector(".cgi-title");
                 const para = self.querySelector(".cgi-para");
                 const tabContainer = self.querySelector(".cgi-tabs");
@@ -707,10 +707,16 @@
 
                 if (panelsContainer) {
                     introTL.fromTo(panelsContainer,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        { autoAlpha: 0 },
+                        {
+                            autoAlpha: 1, duration: 0.6, ease: "power3.out",
+                            onStart: () => {
+                                animateItems(activePanel);
+                            }
+                        },
                         "<0.1"
                     );
+
                 }
             };
 
@@ -743,24 +749,26 @@
                     baunfire.Global.screenSizeChange();
                 };
 
-                const animateItems = (panel) => {
-                    const items = panel.querySelectorAll(".cgi-card");
+                return panels[0];
+            };
 
-                    gsap.fromTo(items,
-                        {
-                            autoAlpha: 0,
-                            rotateX: "84deg"
-                        },
-                        {
-                            autoAlpha: 1,
-                            rotateX: 0,
-                            stagger: 0.14,
-                            ease: "power2.out",
-                            duration: 0.8,
-                            overwrite: true
-                        }
-                    )
-                };
+            const animateItems = (panel) => {
+                const items = panel.querySelectorAll(".cgi-card");
+
+                gsap.fromTo(items,
+                    {
+                        autoAlpha: 0,
+                        rotateX: "84deg"
+                    },
+                    {
+                        autoAlpha: 1,
+                        rotateX: 0,
+                        stagger: 0.14,
+                        ease: "power2.out",
+                        duration: 0.8,
+                        overwrite: true
+                    }
+                )
             };
 
             script();
