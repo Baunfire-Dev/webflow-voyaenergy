@@ -594,7 +594,7 @@
 
                 gsap.set(imageContainerInner, { xPercent: 80, autoAlpha: 0 });
 
-                ebTL.to(targetInner, { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
+                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
 
                 ebTL.to(imageContainerInner, {
                     xPercent: 0,
