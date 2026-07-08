@@ -654,18 +654,18 @@
                 const minSpacing = 188;
                 const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-                const inner = self.querySelector(".hiw-inner");
+                const head = self.querySelector(".hiw-head");
                 const hasImg = document.querySelector(".tl-text-c.has-images");
                 const images = hasImg?.querySelector(".tl-images");
-                if (!inner || !hasImg || !images) return;
+                if (!head || !hasImg || !images) return;
 
                 const gap = hasImg.getBoundingClientRect().bottom - images.getBoundingClientRect().bottom;
 
                 const paddingTop = gap < minSpacing ? minSpacing - gap : 0;
                 const paddingBottom = Math.max(gap, minSpacing);
 
-                inner.style.paddingTop = `${paddingTop / rootFontSize}rem`;
-                inner.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
+                head.style.paddingTop = `${paddingTop / rootFontSize}rem`;
+                head.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
             };
 
             ScrollTrigger.addEventListener("refreshInit", script);
