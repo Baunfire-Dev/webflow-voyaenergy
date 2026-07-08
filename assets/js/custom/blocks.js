@@ -649,7 +649,7 @@
                 els.forEach(self => {
                     handleVisualBalance(self);
 
-                    ScrollTrigger.addEventListener("refreshInit", handleVisualBalance(self));
+                    ScrollTrigger.addEventListener("refreshInit", () => handleVisualBalance(self));
                     ScrollTrigger.refresh();
 
                     handleEntrance(self);
