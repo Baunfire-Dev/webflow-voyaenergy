@@ -149,6 +149,8 @@
 
             const handleEntrance = (self) => {
                 const pageReveal = document.querySelector(".page-reveal");
+                const pageMark = pageReveal.querySelector(".page-reveal");
+                const pageSlats = pageReveal.querySelectorAll(".page-slat");
 
                 const nav = document.querySelector("nav");
                 const pageControls = document.querySelector(".section-controls");
@@ -160,7 +162,14 @@
                 const timings = {
                     callDelay: 0.3,
                     reveal: {
-                        duration: 1,
+                        markFade: {
+                            duration: 0.2
+                        },
+                        slat: {
+                            duration: 0.6,
+                            stagger: 0.04,
+                            position: ""
+                        }
                     },
                     mainImage: {
                         duration: 2,
@@ -197,11 +206,22 @@
                 });
 
                 if (pageReveal) {
-                    introTL.to(pageReveal, {
-                        yPercent: -120,
-                        duration: timings.reveal.duration,
-                        ease: "power2.out"
-                    });
+                    introTL.fromTo(mark,
+                        { autoAlpha: 1, },
+                        { autoAlpha: 0, yPercent: -58, duration: timings.reveal.markFade.duration, ease: "power1.out" }
+                    );
+
+                    introTL.fromTo(pageSlats,
+                        { yPercent: 0 },
+                        {
+                            yPercent: -102,
+                            duration: timings.reveal.slat.duration,
+                            ease: "power2.inOut",
+                            stagger: timings.reveal.slat.stagger,
+                            onComplete: () => pageReveal.remove(),
+                        },
+                        timings.reveal.slat.position
+                    );
                 }
 
                 if (mainImage) {
