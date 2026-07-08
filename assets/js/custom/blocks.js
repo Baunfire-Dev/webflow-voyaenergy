@@ -529,7 +529,6 @@
                 lines.forEach(line => buildLineBeat(line, ebTL));
             };
 
-            // --- setup: split, park chars, and (for the last line) relocate images ---
             const setupLine = (self, item, i, total) => {
                 const isFirst = i === 0;
                 const isLast = i === total - 1;
@@ -552,28 +551,21 @@
                 return { item, split, imagesInner, isFirst, isLast };
             };
 
-            // --- per-line timeline beat: appear -> (lift) -> wipe -> (images) -> hold -> exit ---
             const buildLineBeat = (line, ebTL) => {
                 const { item, split, imagesInner, isFirst, isLast } = line;
 
-                // appear
                 if (isFirst) {
                     ebTL.set(item, { autoAlpha: 1 }, 0);
                 } else {
                     ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                 }
 
-                // last line drifts from viewport-centered back to its resting spot
                 if (isLast) {
                     const inner = item.querySelector(".tl-text-c-inner");
-                    ebTL.fromTo(inner,
-                        { y: () => measureLift(inner) },
-                        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
-                        "<"
-                    );
+                    ebTL.set(inner, { y: () => measureLift(inner) }, 0);
+                    ebTL.to(inner, { y: 0, ease: "none", duration: 1.6, immediateRender: false }, "<");
                 }
 
-                // fill wipe
                 ebTL.to(split.chars, {
                     color: (idx, target) => target.dataset.fill,
                     duration: 0.05,
@@ -581,21 +573,17 @@
                     stagger: { each: 0.02, from: "start" },
                 }, isFirst ? "-=0.8" : "<0.2");
 
-                // images slide in
                 if (isLast && imagesInner) {
                     ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, "<0.2");
                 }
 
-                // hold
                 ebTL.to({}, { duration: 0.3 });
 
-                // exit (all but the last)
                 if (!isLast) {
                     ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
                 }
             };
 
-            // distance to pull the text down so its center hits viewport center, minus the lift
             const measureLift = (inner) => {
                 const rect = inner.getBoundingClientRect();
                 const innerCenter = rect.top + rect.height / 2;
