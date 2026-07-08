@@ -149,6 +149,7 @@
 
             const handleEntrance = (self) => {
                 const pageReveal = document.querySelector(".page-reveal");
+                // const pageMark = pageReveal.querySelector(".page-mark");
                 const pageSlats = pageReveal.querySelectorAll(".page-slat");
 
                 const nav = document.querySelector("nav");
@@ -205,6 +206,11 @@
                 });
 
                 if (pageReveal) {
+                    // introTL.fromTo(pageMark,
+                    //     { autoAlpha: 1, },
+                    //     { autoAlpha: 0, yPercent: -10, duration: timings.reveal.markFade.duration, ease: "power1.out" }
+                    // );
+
                     introTL.fromTo(pageSlats,
                         { yPercent: 0 },
                         {
@@ -214,7 +220,7 @@
                             stagger: timings.reveal.slat.stagger,
                             onComplete: () => pageReveal.remove(),
                         },
-                        timings.reveal.slat.position
+                        // timings.reveal.slat.position
                     );
                 }
 
