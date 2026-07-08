@@ -647,42 +647,26 @@
             const script = () => {
                 const els = document.querySelectorAll("section.how-it-works");
                 if (!els.length) return;
-
-                els.forEach(self => {
-                    handleVisualBalance(self);
-                    // handleEntrance(self);
-                });
+                els.forEach(handleVisualBalance);
             };
-
-            const rootFontSize = parseFloat(
-                getComputedStyle(document.documentElement).fontSize
-            );
 
             const handleVisualBalance = (self) => {
                 const minSpacing = 188;
+                const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
                 const inner = self.querySelector(".hiw-inner");
-                const imagesContainer = document.querySelector(".tl-images");
-
+                const imagesContainer = self.previousElementSibling?.querySelector(".tl-images");
                 if (!inner || !imagesContainer) return;
 
-                const topSpace =  inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
+                const topSpace = inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
+                const gap = Math.max(topSpace, minSpacing);
 
-                let paddingTop;
-                let paddingBottom;
-
-                if (topSpace < minSpacing) {
-                    paddingTop = minSpacing - topSpace;
-                    paddingBottom = minSpacing;
-                } else {
-                    paddingBottom = topSpace;
-                }
-
-                inner.style.paddingTop = `${paddingTop / rootFontSize}rem`;
-                inner.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
-
-                baunfire.Global.screenSizeChange();
+                inner.style.paddingTop = `${(gap - topSpace) / rootFontSize}rem`;
+                inner.style.paddingBottom = `${gap / rootFontSize}rem`;
             };
+
+            ScrollTrigger.addEventListener("refreshInit", script);
+            ScrollTrigger.refresh();
 
             const handleEntrance = (self) => {
                 const heading = self.querySelector(".cb-title");
