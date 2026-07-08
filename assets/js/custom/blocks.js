@@ -655,19 +655,15 @@
                 const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
                 const inner = self.querySelector(".hiw-inner");
-                const imagesContainer = self.previousElementSibling?.querySelector(".tl-images");
-                if (!inner || !imagesContainer) return;
+                const hasImg = document.querySelector(".tl-text-c.has-images");
+                const images = hasImg?.querySelector(".tl-images");
+                if (!inner || !hasImg || !images) return;
 
-                const prev = imagesContainer.style.transform;
-                imagesContainer.style.transform = "none";
+                const gap = hasImg.getBoundingClientRect().bottom - images.getBoundingClientRect().bottom;
+                const pad = Math.max(gap, minSpacing);
 
-                const topSpace = inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
-
-                imagesContainer.style.transform = prev;
-
-                const gap = Math.max(topSpace, minSpacing);
-                inner.style.paddingTop = `${(gap - topSpace) / rootFontSize}rem`;
-                inner.style.paddingBottom = `${gap / rootFontSize}rem`;
+                inner.style.paddingTop = `${pad / rootFontSize}rem`;
+                inner.style.paddingBottom = `${pad / rootFontSize}rem`;
             };
 
             ScrollTrigger.addEventListener("refreshInit", script);
