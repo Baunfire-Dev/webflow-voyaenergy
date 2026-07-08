@@ -561,9 +561,9 @@
                 }
 
                 if (isLast) {
-                    const inner = item.querySelector(".tl-text-c-inner");
+                    // const inner = item.querySelector(".tl-text-c-inner");
                     ebTL.fromTo(item.querySelector(".tl-text-c-inner"),
-                        { y: () => measureLift(inner) },
+                        { y: () => measureLift(item.querySelector(".tl-text-c-inner")) },
                         { y: 0, ease: "none", duration: 1.6, immediateRender: false },
                         "<"
                     );
