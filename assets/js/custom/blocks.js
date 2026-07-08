@@ -599,7 +599,9 @@
             const measureLift = (inner) => {
                 const rect = inner.getBoundingClientRect();
                 const innerCenter = rect.top + rect.height / 2;
-                return (window.innerHeight / 2 - innerCenter) - LIFT_OFFSET;
+                const value = (window.innerHeight / 2 - innerCenter) - LIFT_OFFSET;
+                console.log(value);
+                return value;
             };
 
             script();
