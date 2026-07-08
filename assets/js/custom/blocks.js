@@ -758,7 +758,7 @@
                 gsap.fromTo(items,
                     {
                         autoAlpha: 0,
-                        rotateX: "84deg"
+                        rotateX: "-96deg"
                     },
                     {
                         autoAlpha: 1,
