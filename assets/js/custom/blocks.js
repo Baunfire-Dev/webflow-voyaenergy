@@ -561,9 +561,9 @@
                 }
 
                 if (isLast) {
-                    // const inner = item.querySelector(".tl-text-c-inner");
-                    ebTL.fromTo(item.querySelector(".tl-text-c-inner"),
-                        { y: () => measureLift(item.querySelector(".tl-text-c-inner")) },
+                    const inner = item.querySelector(".tl-text-c-inner");
+                    ebTL.fromTo(inner,
+                        { y: () => measureLift(inner) },
                         { y: 0, ease: "none", duration: 1.6, immediateRender: false },
                         "<"
                     );
@@ -588,11 +588,11 @@
             };
 
             const measureLift = (inner) => {
-                const rect = inner.getBoundingClientRect();
-                const innerCenter = rect.top + rect.height / 2;
-                const value = (window.innerHeight / 2 - innerCenter) - LIFT_OFFSET;
-                console.log(value);
-                return value;
+                const tc = inner.closest(".tl-text-c");
+                const outer = inner.closest(".tl-text-c-outer");
+                const tcCenter = tc.offsetHeight / 2;
+                const outerCenter = outer.offsetTop + outer.offsetHeight / 2;
+                return (tcCenter - outerCenter) - LIFT_OFFSET;
             };
 
             script();
