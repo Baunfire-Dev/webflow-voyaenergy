@@ -510,106 +510,96 @@
         },
 
         transitionLine(parent, ebTL) {
+            const RESTING_COLOR = "#EBEBEB";
+            const LIFT_OFFSET = 80;
+
             const script = () => {
                 const els = parent.querySelectorAll("section.transition-line");
                 if (!els.length) return;
 
-                els.forEach(self => {
-                    handleTexts(self, ebTL);
-                });
+                els.forEach(self => handleTexts(self, ebTL));
             };
 
             const handleTexts = (self, ebTL) => {
-                const items = self.querySelectorAll(".tl-text-c");
+                const items = [...self.querySelectorAll(".tl-text-c")];
                 if (!items.length) return;
 
-                const lines = [...items].map(item => {
-                    const text = item.querySelector(".tl-text");
+                const lines = items.map((item, i) => setupLine(self, item, i, items.length));
 
-                    const split = SplitText.create(text, {
-                        type: "chars, words",
-                        autoSplit: false,
-                    });
-
-                    split.chars.forEach(c => {
-                        c.dataset.fill = getComputedStyle(c).color;
-                    });
-
-                    gsap.set(split.chars, { color: "#EBEBEB" });
-
-                    return { item, split };
-                });
-
-                lines.forEach(({ item, split }, i) => {
-                    const isFirst = i === 0;
-                    const isLast = i === lines.length - 1;
-
-                    if (isFirst) {
-                        ebTL.set(item, { autoAlpha: 1 }, 0);
-                    } else {
-                        ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
-                    }
-
-                    if (isLast) {
-    const inner = item.querySelector(".tl-text-c-inner");
-    const offset = 80;
-    let liftFrom = 0;
-
-    // capture after this refresh completes (pin applied, layout settled)
-    ScrollTrigger.addEventListener("refresh", () => {
-        // temporarily neutralize any y so we measure the true resting spot
-        const prev = gsap.getProperty(inner, "y");
-        gsap.set(inner, { y: 0 });
-        const rect = inner.getBoundingClientRect();
-        const innerCenter = rect.top + rect.height / 2;
-        liftFrom = (window.innerHeight / 2 - innerCenter) - offset;
-        gsap.set(inner, { y: prev });
-    });
-
-    ebTL.fromTo(inner,
-        { y: () => liftFrom },
-        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
-        "<"
-    );
-}
-
-                    ebTL.to(split.chars, {
-                        color: (idx, target) => target.dataset.fill,
-                        duration: 0.05,
-                        ease: "none",
-                        stagger: { each: 0.02, from: "start" },
-                    }, isFirst ? "-=0.8" : "<0.2");
-
-                    if (isLast) handleImages(self, item, ebTL);
-
-                    ebTL.to({}, { duration: 0.3 });
-
-                    if (!isLast) {
-                        ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
-                    }
-                });
+                lines.forEach(line => buildLineBeat(line, ebTL));
             };
 
-            const handleImages = (self, target, ebTL) => {
-                const imageContainer = self.querySelector(".tl-images");
-                const imageContainerInner = imageContainer.querySelector(".tl-images-inner");
+            // --- setup: split, park chars, and (for the last line) relocate images ---
+            const setupLine = (self, item, i, total) => {
+                const isFirst = i === 0;
+                const isLast = i === total - 1;
 
-                target.appendChild(imageContainer);
-                target.classList.add("has-images");
+                const text = item.querySelector(".tl-text");
+                const split = SplitText.create(text, { type: "chars, words", autoSplit: false });
 
-                gsap.set(imageContainerInner, { xPercent: 100, autoAlpha: 0 });
+                split.chars.forEach(c => (c.dataset.fill = getComputedStyle(c).color));
+                gsap.set(split.chars, { color: RESTING_COLOR });
 
-                ebTL.to(imageContainerInner, {
-                    xPercent: 0,
+                let imagesInner = null;
+                if (isLast) {
+                    const images = self.querySelector(".tl-images");
+                    item.appendChild(images);              // relocate BEFORE any measuring
+                    item.classList.add("has-images");
+                    imagesInner = images.querySelector(".tl-images-inner");
+                    gsap.set(imagesInner, { xPercent: 100, autoAlpha: 0 });
+                }
+
+                return { item, split, imagesInner, isFirst, isLast };
+            };
+
+            // --- per-line timeline beat: appear -> (lift) -> wipe -> (images) -> hold -> exit ---
+            const buildLineBeat = (line, ebTL) => {
+                const { item, split, imagesInner, isFirst, isLast } = line;
+
+                // appear
+                if (isFirst) {
+                    ebTL.set(item, { autoAlpha: 1 }, 0);
+                } else {
+                    ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                }
+
+                // last line drifts from viewport-centered back to its resting spot
+                if (isLast) {
+                    const inner = item.querySelector(".tl-text-c-inner");
+                    ebTL.fromTo(inner,
+                        { y: () => measureLift(inner) },
+                        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
+                        "<"
+                    );
+                }
+
+                // fill wipe
+                ebTL.to(split.chars, {
+                    color: (idx, target) => target.dataset.fill,
+                    duration: 0.05,
                     ease: "none",
-                    duration: 1.6,
-                }, "<0.4");
+                    stagger: { each: 0.02, from: "start" },
+                }, isFirst ? "-=0.8" : "<0.2");
 
-                ebTL.to(imageContainerInner, {
-                    autoAlpha: 1,
-                    ease: "none",
-                    duration: 0.6,
-                }, "<0.2");
+                // images slide in
+                if (isLast && imagesInner) {
+                    ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, "<0.2");
+                }
+
+                // hold
+                ebTL.to({}, { duration: 0.3 });
+
+                // exit (all but the last)
+                if (!isLast) {
+                    ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                }
+            };
+
+            // distance to pull the text down so its center hits viewport center, minus the lift
+            const measureLift = (inner) => {
+                const rect = inner.getBoundingClientRect();
+                const innerCenter = rect.top + rect.height / 2;
+                return (window.innerHeight / 2 - innerCenter) - LIFT_OFFSET;
             };
 
             script();
