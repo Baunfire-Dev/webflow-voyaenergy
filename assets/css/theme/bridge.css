@@ -44,14 +44,14 @@ section.section-bridge-eb-tl {
 							@apply flex min-w-fit translate-x-[100%] opacity-0;
 						}
 
-						/* &-image-item {
-							@apply w-auto h-[21.125rem] aspect-[506/338];
-						} */
-
 						&-image-item {
+							@apply w-auto h-[21.125rem] aspect-[506/338];
+						}
+
+						/* &-image-item {
 							@apply w-auto h-full;
 							@apply min-h-[21.125rem] aspect-[506/338];
-						}
+						} */
 					}
 				}
 			}
