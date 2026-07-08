@@ -529,8 +529,6 @@
                 const inner = self.querySelector(".eb-inner");
                 const bgImage = self.querySelector(".eb-bg-img");
 
-                ebTL.to({}, { duration: 1 });
-
                 ebTL.to(inner, { yPercent: -100, ease: "none", duration: 2.5 }, "<0.6");
 
                 ebTL.to(bgImage, {
@@ -558,12 +556,12 @@
                 const items = [...self.querySelectorAll(".tl-text-c")];
                 if (!items.length) return;
 
-                const lines = items.map((item, i) => setupLine(self, item, i, items.length));
+                const lines = items.map((item, i) => setupTextGroup(self, item, i, items.length));
 
-                lines.forEach(line => buildLineBeat(line, ebTL));
+                lines.forEach(line => textGroupAnim(line, ebTL));
             };
 
-            const setupLine = (self, item, i, total) => {
+            const setupTextGroup = (self, item, i, total) => {
                 const isFirst = i === 0;
                 const isLast = i === total - 1;
 
@@ -586,7 +584,7 @@
                 return { item, split, imagesInner, isFirst, isLast };
             };
 
-            const buildLineBeat = (line, ebTL) => {
+            const textGroupAnim = (line, ebTL) => {
                 const { item, split, imagesInner, isFirst, isLast } = line;
 
                 if (isFirst) {
@@ -598,7 +596,7 @@
                 if (isLast) {
                     const inner = item.querySelector(".tl-text-c-inner");
                     ebTL.fromTo(inner,
-                        { y: () => measureLift(inner) },
+                        { y: () => yPercentLift(inner) },
                         { y: 0, ease: "none", duration: 1.6, immediateRender: false },
                         "<"
                     );
@@ -632,7 +630,7 @@
                 }
             };
 
-            const measureLift = (inner) => {
+            const yPercentLift = (inner) => {
                 const tc = inner.closest(".tl-text-c");
                 const outer = inner.closest(".tl-text-c-outer");
                 const tcCenter = tc.offsetHeight / 2;
@@ -647,7 +645,15 @@
             const script = () => {
                 const els = document.querySelectorAll("section.how-it-works");
                 if (!els.length) return;
-                els.forEach(handleVisualBalance);
+
+                els.forEach(self => {
+                    handleVisualBalance(self);
+
+                    ScrollTrigger.addEventListener("refreshInit", handleVisualBalance);
+                    ScrollTrigger.refresh();
+
+                    handleEntrance(self);
+                });
             };
 
             const handleVisualBalance = (self) => {
@@ -668,12 +674,9 @@
                 head.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
             };
 
-            ScrollTrigger.addEventListener("refreshInit", script);
-            ScrollTrigger.refresh();
-
             const handleEntrance = (self) => {
-                const heading = self.querySelector(".cb-title");
-                const para = self.querySelector(".cb-para");
+                const heading = self.querySelector(".hiw-title");
+                if (!heading) return;
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
@@ -683,33 +686,23 @@
                     }
                 });
 
-                if (heading) {
-                    SplitText.create(heading, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            heading.style.visibility = "visible";
-                            heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
-                            return introTL.fromTo(split.words,
-                                { y: "100%" },
-                                {
-                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
-                                },
-                            );
-                        },
-                    });
-                }
-
-                if (para) {
-                    introTL.fromTo(para,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
-                        "<0.4"
-                    );
-                }
+                SplitText.create(heading, {
+                    type: "words",
+                    mask: "words",
+                    autoSplit: true,
+                    onSplit(split) {
+                        heading.style.visibility = "visible";
+                        heading.style.opacity = "1";
+                        gsap.set(split.words, { willChange: "transform" });
+                        return introTL.fromTo(split.words,
+                            { y: "100%" },
+                            {
+                                y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                            },
+                        );
+                    },
+                });
             };
 
             script();
