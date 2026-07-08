@@ -586,7 +586,7 @@
 
             const handleImages = (self, target, ebTL) => {
                 const imageContainer = self.querySelector(".tl-images");
-                const imageContainerInner = self.querySelector(".tl-images-inner");
+                const imageContainerInner = imageContainer.querySelector(".tl-images-inner");
                 const targetInner = target.querySelector(".tl-text-c-inner");
 
                 target.appendChild(imageContainer);
