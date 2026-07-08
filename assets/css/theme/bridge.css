@@ -30,7 +30,7 @@ section.section-bridge-eb-tl {
 					@apply flex flex-col justify-center;
 
 					.tl {
-						&-text-c-inner,
+						&-text-c-outer,
 						&-images {
 							@apply min-h-[1px];
 						}
