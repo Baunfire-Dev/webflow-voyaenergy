@@ -660,10 +660,12 @@
                 if (!inner || !hasImg || !images) return;
 
                 const gap = hasImg.getBoundingClientRect().bottom - images.getBoundingClientRect().bottom;
-                const pad = Math.max(gap, minSpacing);
 
-                inner.style.paddingTop = `${pad / rootFontSize}rem`;
-                inner.style.paddingBottom = `${pad / rootFontSize}rem`;
+                const paddingTop = gap < minSpacing ? minSpacing - gap : 0;
+                const paddingBottom = Math.max(gap, minSpacing);
+
+                inner.style.paddingTop = `${paddingTop / rootFontSize}rem`;
+                inner.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
             };
 
             ScrollTrigger.addEventListener("refreshInit", script);
