@@ -540,12 +540,13 @@
                 gsap.set(split.chars, { color: RESTING_COLOR });
 
                 let imagesInner = null;
+
                 if (isLast) {
                     const images = self.querySelector(".tl-images");
-                    item.appendChild(images);              // relocate BEFORE any measuring
+                    item.appendChild(images); 
                     item.classList.add("has-images");
                     imagesInner = images.querySelector(".tl-images-inner");
-                    gsap.set(imagesInner, { xPercent: 100, autoAlpha: 0 });
+                    gsap.set(imagesInner, { xPercent: 80, autoAlpha: 0 });
                 }
 
                 return { item, split, imagesInner, isFirst, isLast };
@@ -577,7 +578,7 @@
                 }, isFirst ? "-=0.8" : "<0.2");
 
                 if (isLast && imagesInner) {
-                    ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, "<0.2");
+                    ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, "<0.6");
                 }
 
                 ebTL.to({}, { duration: 0.3 });
