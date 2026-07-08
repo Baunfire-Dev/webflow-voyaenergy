@@ -658,9 +658,14 @@
                 const imagesContainer = self.previousElementSibling?.querySelector(".tl-images");
                 if (!inner || !imagesContainer) return;
 
-                const topSpace = inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
-                const gap = Math.max(topSpace, minSpacing);
+                const prev = imagesContainer.style.transform;
+                imagesContainer.style.transform = "none";
 
+                const topSpace = inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
+
+                imagesContainer.style.transform = prev;
+
+                const gap = Math.max(topSpace, minSpacing);
                 inner.style.paddingTop = `${(gap - topSpace) / rootFontSize}rem`;
                 inner.style.paddingBottom = `${gap / rootFontSize}rem`;
             };
