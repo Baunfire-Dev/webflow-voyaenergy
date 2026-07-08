@@ -578,7 +578,7 @@
                 }, isFirst ? "-=0.8" : "<0.2");
 
                 if (isLast && imagesInner) {
-                    ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, "<0.6");
+                    ebTL.to(imagesInner, { xPercent: 0, autoAlpha: 1, ease: "power3.out", duration: 1.6 }, ">-0.4");
                 }
 
                 ebTL.to({}, { duration: 0.3 });
