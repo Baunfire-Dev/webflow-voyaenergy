@@ -206,7 +206,7 @@
                 });
 
                 if (pageReveal) {
-                    introTL.fromTo(mark,
+                    introTL.fromTo(pageMark,
                         { autoAlpha: 1, },
                         { autoAlpha: 0, yPercent: -58, duration: timings.reveal.markFade.duration, ease: "power1.out" }
                     );
