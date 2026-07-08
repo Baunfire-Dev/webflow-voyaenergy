@@ -8,10 +8,6 @@ section.content-grid-items {
             }
         }
 
-        &-panels {
-            perspective: 2000px;
-        }
-
         &-panel {
             &.active {
                 @apply relative;
@@ -30,6 +26,7 @@ section.content-grid-items {
 
         &-panel-inner {
             @apply opacity-0;
+            perspective: 2000px;
             /* transform: translateY(2.5rem); */
         }
 
