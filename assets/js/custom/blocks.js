@@ -642,6 +642,91 @@
             script();
         },
 
+        howItWorks() {
+            const script = () => {
+                const els = document.querySelectorAll("section.how-it-works");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleVisualBalance(self);
+                    // handleEntrance(self);
+                });
+            };
+
+            const rootFontSize = parseFloat(
+                getComputedStyle(document.documentElement).fontSize
+            );
+
+            const handleVisualBalance = (self) => {
+                const minSpacing = 188;
+
+                const inner = self.querySelector(".hiw-inner");
+                const imagesContainer = document.querySelector(".tl-images");
+
+                if (!inner || !imagesContainer) return;
+
+                const topSpace =  inner.getBoundingClientRect().top - imagesContainer.getBoundingClientRect().bottom;
+
+                let paddingTop;
+                let paddingBottom;
+
+                if (topSpace < minSpacing) {
+                    paddingTop = minSpacing - topSpace;
+                    paddingBottom = minSpacing;
+                } else {
+                    paddingBottom = topSpace;
+                }
+
+                inner.style.paddingTop = `${paddingTop / rootFontSize}rem`;
+                inner.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
+
+                baunfire.Global.screenSizeChange();
+            };
+
+            const handleEntrance = (self) => {
+                const heading = self.querySelector(".cb-title");
+                const para = self.querySelector(".cb-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+            };
+
+            script();
+        },
+
         contentGridItems() {
             const script = () => {
                 const els = document.querySelectorAll("section.content-grid-items");
@@ -826,7 +911,7 @@
             };
 
             script();
-        }
+        },
     };
 
     baunfire.addModule(baunfire.Blocks);
