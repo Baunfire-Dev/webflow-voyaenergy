@@ -559,6 +559,7 @@
                                 y: () => {
                                     const rect = inner.getBoundingClientRect();
                                     const innerCenter = rect.top + rect.height / 2;
+                                    console.log((window.innerHeight / 2 - innerCenter) - offset);
                                     return (window.innerHeight / 2 - innerCenter) - offset;
                                 }
                             },
