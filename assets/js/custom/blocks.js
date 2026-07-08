@@ -149,7 +149,7 @@
 
             const handleEntrance = (self) => {
                 const pageReveal = document.querySelector(".page-reveal");
-                const pageMark = pageReveal.querySelector(".page-reveal");
+                const pageMark = pageReveal.querySelector(".page-mark");
                 const pageSlats = pageReveal.querySelectorAll(".page-slat");
 
                 const nav = document.querySelector("nav");
