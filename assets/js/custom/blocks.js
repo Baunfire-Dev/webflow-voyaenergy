@@ -163,7 +163,7 @@
                     callDelay: 0.3,
                     reveal: {
                         markFade: {
-                            duration: 0.35,
+                            duration: 0.6,
                         },
                         slat: {
                             duration: 0.7,
@@ -216,7 +216,7 @@
                         {
                             yPercent: -102,
                             duration: timings.reveal.slat.duration,
-                            ease: "power2.inOut",
+                            ease: "power3.inOut",
                             stagger: timings.reveal.slat.stagger,
                             onComplete: () => pageReveal.remove(),
                         },
