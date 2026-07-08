@@ -4,6 +4,7 @@
             this.sectionControls();
             this.heroHomepage();
             this.bridgeEBTL();
+            this.howItWorks();
             this.contentGridItems();
             this.contactBanner();
         },
