@@ -545,7 +545,7 @@
                     const isLast = i === lines.length - 1;
 
                     if (isLast) {
-                        const inner = item.querySelector(".tl-text-c-outer");
+                        const inner = item.querySelector(".tl-text-c-inner");
                         const offset = 80;
 
                         ebTL.set(inner, {
