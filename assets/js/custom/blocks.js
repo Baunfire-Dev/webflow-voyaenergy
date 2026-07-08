@@ -163,13 +163,13 @@
                     callDelay: 0.3,
                     reveal: {
                         markFade: {
-                            duration: 0.2
+                            duration: 0.35,
                         },
                         slat: {
-                            duration: 0.6,
-                            stagger: 0.04,
-                            position: ""
-                        }
+                            duration: 0.7,
+                            stagger: 0.08,
+                            position: "<0.15",
+                        },
                     },
                     mainImage: {
                         duration: 2,
