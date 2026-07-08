@@ -551,22 +551,29 @@
                     }
 
                     if (isLast) {
-                        const inner = item.querySelector(".tl-text-c-inner");
-                        const offset = 80;
+    const inner = item.querySelector(".tl-text-c-inner");
+    const offset = 80;
 
-                        ebTL.fromTo(inner,
-                            {
-                                y: () => {
-                                    const rect = inner.getBoundingClientRect();
-                                    const innerCenter = rect.top + rect.height / 2;
-                                    console.log((window.innerHeight / 2 - innerCenter) - offset);
-                                    return (window.innerHeight / 2 - innerCenter) - offset;
-                                }
-                            },
-                            { y: 0, ease: "none", duration: 1.6, immediateRender: false },
-                            "<"
-                        );
-                    }
+    // measure once, at rest, before the timeline transforms anything
+    const measure = () => {
+        const rect = inner.getBoundingClientRect();
+        const innerCenter = rect.top + rect.height / 2;
+        return (window.innerHeight / 2 - innerCenter) - offset;
+    };
+
+    let liftFrom = measure();
+
+    // re-measure on refresh, but only capture when the pin is at its start
+    ScrollTrigger.addEventListener("refreshInit", () => {
+        liftFrom = measure();
+    });
+
+    ebTL.fromTo(inner,
+        { y: () => liftFrom },
+        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
+        "<"
+    );
+}
 
                     ebTL.to(split.chars, {
                         color: (idx, target) => target.dataset.fill,
