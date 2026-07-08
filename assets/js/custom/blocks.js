@@ -548,15 +548,18 @@
                         const inner = item.querySelector(".tl-text-c-inner");
                         const offset = 80;
 
-                        ebTL.set(inner, {
-                            yPercent: () => {
-                                const rect = inner.getBoundingClientRect();
-                                const currentCenter = rect.top + rect.height / 2;
-                                const viewportCenter = window.innerHeight / 2;
-                                const deltaPx = (viewportCenter - currentCenter) - offset;
-                                return (deltaPx / rect.height) * 100;
-                            }
-                        }, 0);
+                        ebTL.fromTo(inner,
+                            {
+                                y: () => {
+                                    const rect = inner.getBoundingClientRect();
+                                    const innerCenter = rect.top + rect.height / 2;
+                                    const viewportCenter = window.innerHeight / 2;
+                                    return (viewportCenter - innerCenter) - offset;
+                                }
+                            },
+                            { y: 0, ease: "none", duration: 0.8 },
+                            "<0.2"
+                        );
                     }
 
                     if (isFirst) {
@@ -587,14 +590,11 @@
             const handleImages = (self, target, ebTL) => {
                 const imageContainer = self.querySelector(".tl-images");
                 const imageContainerInner = imageContainer.querySelector(".tl-images-inner");
-                const targetInner = target.querySelector(".tl-text-c-inner");
 
                 target.appendChild(imageContainer);
                 target.classList.add("has-images");
 
-                gsap.set(imageContainerInner, { xPercent: 80, autoAlpha: 0 });
-
-                ebTL.to(target.querySelector(".tl-text-c-inner"), { ease: "none", duration: 0.8, yPercent: 0 }, "<0.2");
+                gsap.set(imageContainerInner, { xPercent: 100, autoAlpha: 0 });
 
                 ebTL.to(imageContainerInner, {
                     xPercent: 0,
