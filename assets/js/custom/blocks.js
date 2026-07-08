@@ -544,6 +544,12 @@
                     const isFirst = i === 0;
                     const isLast = i === lines.length - 1;
 
+                    if (isFirst) {
+                        ebTL.set(item, { autoAlpha: 1 }, 0);
+                    } else {
+                        ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                    }
+
                     if (isLast) {
                         const inner = item.querySelector(".tl-text-c-inner");
                         const offset = 80;
@@ -560,12 +566,6 @@
                             { y: 0, ease: "none", duration: 0.8 },
                             "<0.2"
                         );
-                    }
-
-                    if (isFirst) {
-                        ebTL.set(item, { autoAlpha: 1 }, 0);
-                    } else {
-                        ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                     }
 
                     ebTL.to(split.chars, {
