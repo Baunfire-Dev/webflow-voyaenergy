@@ -740,19 +740,15 @@
                     }, "color-transition");
                 }
 
-                if (title) {
-                    switchTL.to(dots, {
-                        fill: "#BCBCBC",
-                        ease: "none"
-                    }, "color-transition");
-                }
+                switchTL.to(dots, {
+                    fill: "#BCBCBC",
+                    ease: "none"
+                }, "color-transition");
 
-                if (title) {
-                    switchTL.to(main, {
-                        background: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                        ease: "none"
-                    }, "color-transition");
-                }
+                switchTL.to(main, {
+                    background: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                    ease: "none"
+                }, "color-transition");
             };
 
             const animateFirstSlide = (panel) => {
@@ -782,6 +778,7 @@
                 const body = self.querySelector(".hiw-body");
                 if (!body) return;
 
+                const main = document.querySelector("main.g-main");
                 const slides = self.querySelector(".hiw-slides");
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
                 const dotContainer = self.querySelector(".hiw-pagination");
@@ -814,6 +811,10 @@
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
+
+                    master.set(main, {
+                        background: "white"
+                    });
 
                     master.fromTo(dotContainer,
                         {
