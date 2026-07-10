@@ -787,7 +787,7 @@
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
                     const INTRO_DUR = 0.2;
-                    
+
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
 
@@ -845,7 +845,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<0.1"
+                        "<"
                     );
 
                     master.to(panels, {
