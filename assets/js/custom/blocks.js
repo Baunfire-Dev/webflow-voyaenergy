@@ -819,7 +819,7 @@
                         {
                             background: "white",
                             immediateRender: false,
-                            duration: 0
+                            duration: 0.1
                         }
                     );
 
@@ -836,7 +836,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<0.1"
+                        "<-0.1"
                     );
 
                     master.to(panels, {
