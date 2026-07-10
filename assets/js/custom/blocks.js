@@ -868,11 +868,9 @@
                                 trigger: panel,
                                 containerAnimation: master,
                                 start: "left center",
-                                onToggle: (self) => gsap.to(dot, {
-                                    fill: self.isActive ? "#f1b510" : "#c7c7c7",
-                                    duration: 0.6,
-                                    ease: "power2.out"
-                                }),
+                                end: "right center",
+                                onEnter: () => activateDot(dot),
+                                onLeaveBack: () => activateDot(dot, false),
                             });
                         }
 
@@ -895,6 +893,10 @@
                     });
                 });
             };
+
+            const activateDot = (dot, active = true) => {
+                gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", duration: 0.6, ease: "power2.out" });
+            }
 
             script();
         },
