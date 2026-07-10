@@ -745,10 +745,10 @@
                     ease: "none"
                 }, "color-transition");
 
-                switchTL.to(main, {
-                    backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                    ease: "none"
-                }, "color-transition");
+                // switchTL.to(main, {
+                //     backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                //     ease: "none"
+                // }, "color-transition");
             };
 
             const animateFirstSlide = (panel) => {
