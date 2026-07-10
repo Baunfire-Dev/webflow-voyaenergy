@@ -841,12 +841,12 @@
                         const enterTL = gsap.timeline({ paused: true });
 
                         enterTL.fromTo([brow, title, para],
-                            { xPercent: 40, autoAlpha: 0 },
+                            { xPercent: 20, autoAlpha: 0 },
                             {
                                 xPercent: 0,
                                 autoAlpha: 1,
-                                duration: 0.8,
-                                ease: "power3.out",
+                                duration: 0.6,
+                                ease: "power2.out",
                                 stagger: 0.08,
                             }
                         );
