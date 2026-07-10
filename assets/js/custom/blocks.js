@@ -785,6 +785,7 @@
 
                 const slides = self.querySelector(".hiw-slides");
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
+                const pagination = self.querySelector(".hiw-slides svg circle");
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
@@ -840,16 +841,17 @@
 
                         const enterTL = gsap.timeline({ paused: true });
 
-                        enterTL.fromTo([brow, title, para],
-                            { x: 40, autoAlpha: 0 },
-                            {
-                                x: 0,
-                                autoAlpha: 1,
-                                duration: 0.6,
-                                ease: "power2.out",
-                                stagger: 0.08,
-                            }
-                        );
+                        enterTL
+                            .fromTo([brow, title, para],
+                                { x: 40, autoAlpha: 0 },
+                                {
+                                    x: 0,
+                                    autoAlpha: 1,
+                                    duration: 0.6,
+                                    ease: "power2.out",
+                                    stagger: 0.08,
+                                }
+                            );
 
                         ScrollTrigger.create({
                             trigger: panel,
@@ -857,6 +859,8 @@
                             start: "left 80%",
                             end: "right center",
                             animation: enterTL,
+                            onEnter: () => gsap.to(dots[index + 1], { fill: "#f1b510", duration: 0.3 }),
+                            onLeaveBack: () => gsap.to(dots[index + 1], { fill: "#c7c7c7", duration: 0.3 }),
                         });
 
                         if (img) {
