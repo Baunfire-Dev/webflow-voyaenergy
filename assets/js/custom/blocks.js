@@ -868,7 +868,7 @@
                                     scrollTrigger: {
                                         trigger: panel,
                                         containerAnimation: master,
-                                        start: "left right",
+                                        start: "left center",
                                         end: isLast ? "right right" : "right left",
                                         scrub: 1
                                     }
