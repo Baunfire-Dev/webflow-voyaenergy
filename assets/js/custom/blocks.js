@@ -775,7 +775,8 @@
                             scrub: 1,
                             pin: body,
                             anticipatePin: 1,
-                            invalidateOnRefresh: true
+                            invalidateOnRefresh: true,
+                            pinSpacing: true,
                         }
                     });
 
@@ -818,7 +819,7 @@
                             start: "left center",
                             end: "right center",
                             toggleActions: "play none none reverse",
-                            animation: enterTL
+                            animation: enterTL,
                         });
                     });
 

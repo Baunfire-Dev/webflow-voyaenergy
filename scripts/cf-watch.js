@@ -1,8 +1,7 @@
 const axios = require("axios");
-const notifier = require("node-notifier");
+// const notifier = require("node-notifier");
 const ora = require("ora").default;
 const { execSync } = require("child_process");
-const config = require("./cf-watch.config.json");
 
 const ACCOUNT = "dffc52f541ed5a2188c5a8961cc4002e";
 const TOKEN = "cfat_Gio0InUmJf71IMo7w9gzM12j7wKHadq8IsUTSbvB53b8e08d";
@@ -30,11 +29,11 @@ async function poll() {
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
         if (dep.latest_stage.status === "success") {
             spinner.succeed("Deployment successful!");
-            notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(0));
+            // notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(0));
         }
         if (dep.latest_stage.status === "failure") {
             spinner.fail("Deployment failed!");
-            notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(1));
+            // notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(1));
         }
     } catch (e) {
         spinner.fail(e.message);
