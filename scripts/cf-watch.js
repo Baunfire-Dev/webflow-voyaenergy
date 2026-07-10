@@ -30,12 +30,28 @@ async function poll() {
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
         if (dep.latest_stage.status === "success") {
             spinner.succeed("Deployment successful!");
-            notifier.notify({ title: "Cloudflare Pages", message: `${PROJECT} deployed successfully ✅` });
+            notifier.notify(
+                {
+                    title: "Cloudflare Pages",
+                    message: `${PROJECT} deployed successfully ✅`,
+                    appName: "Cloudflare Watcher",
+                    appID: "Cloudflare Watcher",
+                },
+                () => process.exit(0)
+            );
             process.exit(0);
         }
         if (dep.latest_stage.status === "failure") {
             spinner.fail("Deployment failed!");
-            notifier.notify({ title: "Cloudflare Pages", message: `${PROJECT} deployment failed ❌` });
+            notifier.notify(
+                {
+                    title: "Cloudflare Pages",
+                    message: `${PROJECT} deployment failed ❌`,
+                    appName: "Cloudflare Watcher",
+                    appID: "Cloudflare Watcher",
+                },
+                () => process.exit(0)
+            );
             process.exit(1);
         }
     } catch (e) {
