@@ -830,8 +830,8 @@
 
                     animateFirstSlide(panels[0]);
 
-                    panels.slice(1).forEach((panel, index) => {
-                        const isLast = ((index + 1) == panels.slice(1).length);
+                    panels.slice(1).forEach((panel, index, arr) => {
+                        const isLast = index === arr.length - 1;
 
                         const brow = panel.querySelector(".hiw-c-brow");
                         const title = panel.querySelector(".hiw-c-title");
