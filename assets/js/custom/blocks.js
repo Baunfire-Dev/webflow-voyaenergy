@@ -787,8 +787,12 @@
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
                     const INTRO_DUR = 0.2;
+
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
+
+                    const COLOR_START = INTRO_DUR;
+                    const COLOR_DUR = 0.15;
 
                     const covers = self.querySelectorAll(".hiw-cover");
                     const firstImg = panels[0].querySelector(".hiw-img");
@@ -812,22 +816,6 @@
                         duration: INTRO_DUR
                     }, 0);
 
-                    gsap.fromTo(main,
-                        { backgroundColor: "#1a1a1a" },
-                        {
-                            backgroundColor: "#fff",
-                            ease: "none",
-                            immediateRender: false,
-                            scrollTrigger: {
-                                trigger: body,
-                                start: "top top-=" + panels[0].offsetWidth,
-                                end: () => "+=" + panels[0].offsetWidth,
-                                scrub: 1,
-                                invalidateOnRefresh: true,
-                            },
-                        }
-                    );
-
                     master.fromTo(dotContainer,
                         {
                             autoAlpha: 0,
@@ -842,6 +830,22 @@
                             duration: 0.4
                         },
                         "<0.1"
+                    );
+
+                    gsap.fromTo(main,
+                        { backgroundColor: "#1a1a1a" },
+                        {
+                            backgroundColor: "#fff",
+                            ease: "none",
+                            immediateRender: false,
+                            scrollTrigger: {
+                                trigger: body,
+                                start: () => "top top-=" + (COLOR_START * panels[0].offsetWidth),
+                                end: () => "top top-=" + ((COLOR_START + COLOR_DUR) * panels[0].offsetWidth),
+                                scrub: 1,
+                                invalidateOnRefresh: true,
+                            },
+                        }
                     );
 
                     master.to(panels, {
