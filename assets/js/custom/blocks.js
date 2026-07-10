@@ -863,13 +863,13 @@
                             gsap.fromTo(img,
                                 { xPercent: 0 },
                                 {
-                                    xPercent: 10,
+                                    xPercent: 14,
                                     ease: "none",
                                     scrollTrigger: {
                                         trigger: panel,
                                         containerAnimation: master,
                                         start: "left center",
-                                        end: isLast ? "right right" : "right left",
+                                        end: isLast ? "right right" : "right center",
                                         scrub: 1
                                     }
                                 }
