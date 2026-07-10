@@ -747,6 +747,49 @@
                     }, "color-transition")
             };
 
+            const handleBGSwitch = (self) => {
+                const head = self.querySelector(".hiw-head");
+                if (!head) return;
+
+                const switchTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: head,
+                        start: "top 90%",
+                        end: "top 70%",
+                        scrub: 1,
+                    }
+                });
+
+                const rootStyles = getComputedStyle(document.documentElement);
+
+                const title = head.querySelector(".hiw-title");
+                const dots = head.querySelectorAll("svg path");
+                const main = document.querySelector("main.g-main");
+
+                switchTL.addLabel("color-transition")
+
+                if (title) {
+                    switchTL.to(title, {
+                        color: rootStyles.getPropertyValue('--_colors---white'),
+                        ease: "none"
+                    }, "color-transition");
+                }
+
+                if (title) {
+                    switchTL.to(dots, {
+                        fill: "#BCBCBC",
+                        ease: "none"
+                    }, "color-transition");
+                }
+
+                if (title) {
+                    switchTL.to(main, {
+                        background: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                        ease: "none"
+                    }, "color-transition");
+                }
+            };
+
             script();
         },
 
