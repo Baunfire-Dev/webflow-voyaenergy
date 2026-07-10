@@ -765,13 +765,23 @@
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
-                    const horizontalTween = gsap.to(panels, {
-                        xPercent: -100 * (panels.length - 1),
-                        ease: "none",
+                    const INTRO_DUR = 1.2;
+                    const H_DUR = panels.length - 1;
+
+                    const first = panels[0];
+                    const firstEls = [
+                        first.querySelector(".hiw-c-brow"),
+                        first.querySelector(".hiw-c-title"),
+                        first.querySelector(".hiw-para"),
+                    ];
+
+                    const cover = self.querySelector(".hiw-cover");
+
+                    const master = gsap.timeline({
                         scrollTrigger: {
                             trigger: body,
                             start: "top top",
-                            end: () => "+=" + (panels.length - 1) * panels[0].offsetWidth,
+                            end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
                             scrub: 1,
                             pin: body,
                             anticipatePin: 1,
@@ -780,12 +790,18 @@
                         }
                     });
 
-                    const first = panels[0];
-                    const firstEls = [
-                        first.querySelector(".hiw-c-brow"),
-                        first.querySelector(".hiw-c-title"),
-                        first.querySelector(".hiw-para")
-                    ];
+                    master.from(cover, {
+                        width: "100%",
+                        width: "100%",
+                        ease: "power3.out",
+                        duration: INTRO_DUR
+                    }, 0);
+
+                    master.to(panels, {
+                        xPercent: -100 * (panels.length - 1),
+                        ease: "none",
+                        duration: H_DUR
+                    }, ">");
 
                     gsap.from(firstEls, {
                         yPercent: 40,
@@ -815,8 +831,8 @@
 
                         ScrollTrigger.create({
                             trigger: panel,
-                            containerAnimation: horizontalTween,
-                            start: "left 80%",
+                            containerAnimation: master,
+                            start: "left center",
                             end: "right center",
                             animation: enterTL,
                         });
@@ -833,7 +849,7 @@
                                 ease: "none",
                                 scrollTrigger: {
                                     trigger: panel,
-                                    containerAnimation: horizontalTween,
+                                    containerAnimation: master,
                                     start: "left left",
                                     end: "right left",
                                     scrub: 1
