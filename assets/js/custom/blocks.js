@@ -765,7 +765,7 @@
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
-                    const INTRO_DUR = 1;
+                    const INTRO_DUR = 0.5;
                     const H_DUR = panels.length - 1;
 
                     const first = panels[0];
@@ -791,7 +791,7 @@
                     });
 
                     master.to(covers, {
-                        scale: 2,
+                        scale: 1.4,
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
@@ -800,8 +800,8 @@
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
                         duration: H_DUR
-                    }, ">");
-
+                    });
+                    
                     gsap.fromTo(firstEls,
                         {
                             yPercent: 40,
