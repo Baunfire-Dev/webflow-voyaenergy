@@ -819,10 +819,12 @@
                     master.fromTo(dotContainer,
                         {
                             autoAlpha: 0,
-                            scale: 0
+                            scale: 0,
+                            rotate: '45deg',
                         },
                         {
                             scale: 1,
+                            rotate: 0,
                             autoAlpha: 1,
                             ease: "none",
                             duration: 0.4
