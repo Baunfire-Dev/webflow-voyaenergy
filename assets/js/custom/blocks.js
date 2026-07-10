@@ -869,7 +869,7 @@
                                         trigger: panel,
                                         containerAnimation: master,
                                         start: "left center",
-                                        end: isLast ? "right right" : "right 30%",
+                                        end: isLast ? "right right" : "right 20%",
                                         scrub: 1
                                     }
                                 }
