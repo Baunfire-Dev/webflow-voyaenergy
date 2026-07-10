@@ -841,9 +841,9 @@
                         const enterTL = gsap.timeline({ paused: true });
 
                         enterTL.fromTo([brow, title, para],
-                            { yPercent: 40, autoAlpha: 0 },
+                            { xPercent: 40, autoAlpha: 0 },
                             {
-                                yPercent: 0,
+                                xPercent: 0,
                                 autoAlpha: 1,
                                 duration: 0.8,
                                 ease: "power3.out",
