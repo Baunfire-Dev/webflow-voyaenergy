@@ -839,6 +839,8 @@
                         const para = panel.querySelector(".hiw-para");
                         const img = panel.querySelector(".hiw-img");
 
+                        const dot = dots[index + 1];
+
                         const enterTL = gsap.timeline({ paused: true });
 
                         enterTL
@@ -859,9 +861,20 @@
                             start: "left 80%",
                             end: "right center",
                             animation: enterTL,
-                            onEnter: () => gsap.to(dots[index + 1], { fill: "#f1b510", duration: 0.3 }),
-                            onLeaveBack: () => gsap.to(dots[index + 1], { fill: "#c7c7c7", duration: 0.3 }),
                         });
+
+                        if (dot) {
+                            ScrollTrigger.create({
+                                trigger: panel,
+                                containerAnimation: master,
+                                start: "left center",
+                                end: "right center",
+                                onToggle: (self) => gsap.to(dot, {
+                                    fill: self.isActive ? "#f1b510" : "#c7c7c7",
+                                    duration: 0.3
+                                }),
+                            });
+                        }
 
                         if (img) {
                             gsap.fromTo(img,
