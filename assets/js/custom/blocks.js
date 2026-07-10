@@ -785,7 +785,8 @@
 
                 const slides = self.querySelector(".hiw-slides");
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
-                const dots = self.querySelectorAll(".hiw-pagination svg circle");
+                const dotContainer = self.querySelector(".hiw-pagination");
+                const dots = dotContainer.querySelectorAll("svg circle");
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
@@ -814,6 +815,12 @@
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
+
+                    master.to(dotContainer, {
+                        autoAlpha: 0,
+                        ease: "none",
+                        duration: INTRO_DUR
+                    }, "<");
 
                     master.to(panels, {
                         xPercent: -100 * (panels.length - 1),
@@ -896,7 +903,7 @@
 
             const activateDot = (dot, active = true) => {
                 gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", duration: 0.6, ease: "power2.out" });
-            }
+            };
 
             script();
         },
