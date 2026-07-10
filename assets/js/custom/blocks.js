@@ -823,7 +823,7 @@
                     if (firstImg) {
                         master.fromTo(firstImg,
                             { xPercent: 0 },
-                            { xPercent: 10, ease: "none", duration: 1 },
+                            { xPercent: 14, ease: "none", duration: 1 },
                             H_START
                         );
                     }
