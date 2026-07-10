@@ -712,7 +712,7 @@
                 const switchTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: head,
-                        start: "top 80%",
+                        start: "top 90%",
                         end: "top 50%",
                         scrub: 1,
                         markers: true,
