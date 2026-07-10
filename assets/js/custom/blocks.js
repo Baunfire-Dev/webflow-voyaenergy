@@ -830,13 +830,16 @@
 
                     animateFirstSlide(panels[0]);
 
-                    panels.slice(1).forEach((panel) => {
+                    panels.slice(1).forEach((panel, index) => {
+                        const isLast = ((index + 1) == panels.slice(1).length);
+
                         const brow = panel.querySelector(".hiw-c-brow");
                         const title = panel.querySelector(".hiw-c-title");
                         const para = panel.querySelector(".hiw-para");
                         const img = panel.querySelector(".hiw-img");
 
                         const enterTL = gsap.timeline({ paused: true });
+
                         enterTL.fromTo([brow, title, para],
                             { yPercent: 40, autoAlpha: 0 },
                             {
@@ -866,7 +869,7 @@
                                         trigger: panel,
                                         containerAnimation: master,
                                         start: "left left",
-                                        end: "right left",
+                                        end: isLast ? "right right" : "right left",
                                         scrub: 1
                                     }
                                 }
