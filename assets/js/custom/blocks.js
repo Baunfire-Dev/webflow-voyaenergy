@@ -786,6 +786,7 @@
                 const slides = self.querySelector(".hiw-slides");
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
                 const dots = self.querySelector(".hiw-pagination svg circle");
+                console.log(dots);
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
