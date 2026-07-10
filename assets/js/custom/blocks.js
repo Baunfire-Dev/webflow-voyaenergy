@@ -820,8 +820,8 @@
                             immediateRender: false,
                             scrollTrigger: {
                                 trigger: body,
-                                start: "top top-=" + INTRO_DUR,
-                                end: () => "+=" + INTRO_DUR * panels[0].offsetWidth,
+                                start: "top top-=" + panels[0].offsetWidth,
+                                end: () => "+=" + panels[0].offsetWidth,
                                 scrub: 1,
                                 invalidateOnRefresh: true,
                             },
