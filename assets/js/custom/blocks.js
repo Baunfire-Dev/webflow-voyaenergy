@@ -765,7 +765,7 @@
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
-                    const INTRO_DUR = 1.2;
+                    const INTRO_DUR = 1;
                     const H_DUR = panels.length - 1;
 
                     const first = panels[0];
@@ -775,7 +775,7 @@
                         first.querySelector(".hiw-para"),
                     ];
 
-                    const cover = self.querySelector(".hiw-cover");
+                    const covers = self.querySelectorAll(".hiw-cover");
 
                     const master = gsap.timeline({
                         scrollTrigger: {
@@ -790,9 +790,8 @@
                         }
                     });
 
-                    master.to(cover, {
-                        width: "100%",
-                        height: "100%",
+                    master.to(covers, {
+                        scale: 2,
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
