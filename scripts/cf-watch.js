@@ -32,9 +32,8 @@ async function poll() {
             spinner.succeed("Deployment successful!");
             notifier.notify(
                 {
-                    title: "Cloudflare Pages",
-                    message: `${PROJECT} deployed successfully ✅`,
-                    appName: "Cloudflare Watcher",
+                    title: `${PROJECT}`,
+                    message: `Deployment successful!`
                 },
                 () => process.exit(0)
             );
@@ -43,9 +42,8 @@ async function poll() {
             spinner.fail("Deployment failed!");
             notifier.notify(
                 {
-                    title: "Cloudflare Pages",
-                    message: `${PROJECT} deployment failed ❌`,
-                    appName: "Cloudflare Watcher",
+                    title: `${PROJECT}`,
+                    message: `Deployment failed!`
                 },
                 () => process.exit(1)
             );
