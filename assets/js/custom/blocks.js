@@ -826,20 +826,25 @@
                         const para = panel.querySelector(".hiw-para");
 
                         const enterTL = gsap.timeline({ paused: true });
-                        enterTL.from([brow, title, para], {
-                            yPercent: 40,
-                            autoAlpha: 0,
-                            duration: 0.6,
-                            ease: "power3.out",
-                            stagger: 0.08
-                        });
+                        enterTL.fromTo([brow, title, para],
+                            {
+                                yPercent: 40,
+                                autoAlpha: 0,
+                            },
+                            {
+                                yPercent: 0,
+                                autoAlpha: 1,
+                                duration: 0.6,
+                                ease: "power3.out",
+                                stagger: 0.08,
+                            }
+                        );
 
                         ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: master,
-                            start: () => "top top-=" + INTRO_DUR * panels[0].offsetWidth,
-                            end: () => "top top-=" + (INTRO_DUR + 1) * panels[0].offsetWidth,
-                            invalidateOnRefresh: true,
+                            start: "left center",
+                            end: "right center",
                             animation: enterTL,
                         });
                     });
