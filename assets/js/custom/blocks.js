@@ -714,8 +714,7 @@
                         trigger: head,
                         start: "top 80%",
                         end: "top 30%",
-                        once: true,
-                        scrub: true,
+                        scrub: 1,
                         markers: true,
                     }
                 });
