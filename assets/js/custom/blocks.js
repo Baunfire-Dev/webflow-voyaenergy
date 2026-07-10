@@ -775,19 +775,35 @@
                             scrub: 1,
                             pin: body,
                             anticipatePin: 1,
-                            pinSpacing: true,
                             invalidateOnRefresh: true
                         }
                     });
 
-                    panels.forEach((panel) => {
+                    const first = panels[0];
+                    const firstEls = [
+                        first.querySelector(".hiw-c-brow"),
+                        first.querySelector(".hiw-c-title"),
+                        first.querySelector(".hiw-para")
+                    ];
+
+                    gsap.from(firstEls, {
+                        yPercent: 40,
+                        autoAlpha: 0,
+                        duration: 0.6,
+                        ease: "power3.out",
+                        stagger: 0.08,
+                        scrollTrigger: {
+                            trigger: body,
+                            start: baunfire.anim.start,
+                        }
+                    });
+
+                    panels.slice(1).forEach((panel) => {
                         const brow = panel.querySelector(".hiw-c-brow");
                         const title = panel.querySelector(".hiw-c-title");
                         const para = panel.querySelector(".hiw-para");
-                        const img = panel.querySelector(".hiw-img");
 
                         const enterTL = gsap.timeline({ paused: true });
-
                         enterTL.from([brow, title, para], {
                             yPercent: 40,
                             autoAlpha: 0,
@@ -804,23 +820,26 @@
                             toggleActions: "play none none reverse",
                             animation: enterTL
                         });
+                    });
 
-                        if (img) {
-                            gsap.fromTo(img,
-                                { xPercent: 0 },
-                                {
-                                    xPercent: -10,
-                                    ease: "none",
-                                    scrollTrigger: {
-                                        trigger: panel,
-                                        containerAnimation: horizontalTween,
-                                        start: "left left",
-                                        end: "right left",
-                                        scrub: true
-                                    }
+                    panels.forEach((panel) => {
+                        const img = panel.querySelector(".hiw-img");
+                        if (!img) return;
+
+                        gsap.fromTo(img,
+                            { xPercent: 0 },
+                            {
+                                xPercent: 10,
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: panel,
+                                    containerAnimation: horizontalTween,
+                                    start: "left left",
+                                    end: "right left",
+                                    scrub: 1
                                 }
-                            );
-                        }
+                            }
+                        );
                     });
                 });
             };
