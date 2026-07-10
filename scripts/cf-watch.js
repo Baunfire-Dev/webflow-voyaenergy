@@ -16,55 +16,26 @@ if (!ACCOUNT || !TOKEN) {
 const SHA = execSync("git rev-parse HEAD").toString().trim();
 const spinner = ora(`Watching ${PROJECT}...`).start();
 
-let finished = false;
-
 async function poll() {
-    if (finished) return;
-
     try {
         const { data } = await axios.get(
             `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/pages/projects/${PROJECT}/deployments`,
             { headers: { Authorization: `Bearer ${TOKEN}` } }
         );
-
         const dep = data.result.find(d => d.deployment_trigger?.metadata?.commit_hash === SHA);
-
         if (!dep) {
             spinner.text = "Waiting for deployment...";
             return;
         }
-
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
-
         if (dep.latest_stage.status === "success") {
-            finished = true;
             spinner.succeed("Deployment successful!");
-            notifier.notify(
-                {
-                    title: `${PROJECT}`,
-                    message: `Deployment successful!`
-                },
-                () => process.exit(0)
-            );
-
-            return;
+            notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(0));
         }
-        
         if (dep.latest_stage.status === "failure") {
-            finished = true;
             spinner.fail("Deployment failed!");
-            notifier.notify(
-                {
-                    title: `${PROJECT}`,
-                    message: `Deployment failed!`
-                },
-                () => process.exit(1)
-            );
-            
-            return;
+            notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(1));
         }
-
-        setTimeout(poll, 5000);
     } catch (e) {
         spinner.fail(e.message);
         console.log(e.response?.status);
@@ -72,5 +43,5 @@ async function poll() {
         process.exit(1);
     }
 }
-
 poll();
+setInterval(poll, 5000);
