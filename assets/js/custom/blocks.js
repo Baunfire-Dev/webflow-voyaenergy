@@ -863,7 +863,7 @@
                             gsap.fromTo(img,
                                 { xPercent: 0 },
                                 {
-                                    xPercent: 20,
+                                    xPercent: 14,
                                     ease: "none",
                                     scrollTrigger: {
                                         trigger: panel,
