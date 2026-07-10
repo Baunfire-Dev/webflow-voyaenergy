@@ -745,10 +745,10 @@
                     ease: "none"
                 }, "color-transition");
 
-                // switchTL.to(main, {
-                //     backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                //     ease: "none"
-                // }, "color-transition");
+                switchTL.to(main, {
+                    backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                    ease: "none"
+                }, "color-transition");
             };
 
             const animateFirstSlide = (panel) => {
@@ -812,14 +812,19 @@
                         duration: INTRO_DUR
                     }, 0);
 
-                    master.fromTo(main,
-                        {
-                            backgroundColor: "#1a1a1a",
-                        },
+                    gsap.fromTo(main,
+                        { backgroundColor: "#1a1a1a" },
                         {
                             backgroundColor: "#fff",
+                            ease: "none",
                             immediateRender: false,
-                            duration: 0.1
+                            scrollTrigger: {
+                                trigger: body,
+                                start: "top top",
+                                end: () => "+=" + INTRO_DUR * panels[0].offsetWidth,
+                                scrub: 1,
+                                invalidateOnRefresh: true,
+                            },
                         }
                     );
 
