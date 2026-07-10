@@ -764,9 +764,9 @@
                 ];
 
                 return gsap.fromTo(els,
-                    { yPercent: 40, autoAlpha: 0 },
+                    { y: 40, autoAlpha: 0 },
                     {
-                        yPercent: 0,
+                        y: 0,
                         autoAlpha: 1,
                         duration: 0.6,
                         ease: "power3.out",
@@ -854,7 +854,7 @@
                         ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: master,
-                            start: "left center",
+                            start: "left 80%",
                             end: "right center",
                             animation: enterTL,
                         });
