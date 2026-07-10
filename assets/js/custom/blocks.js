@@ -861,9 +861,9 @@
 
                         if (img) {
                             gsap.fromTo(img,
-                                { x: 0 },
+                                { xPercent: 0 },
                                 {
-                                    x: "-10%",
+                                    xPercent: 20,
                                     ease: "none",
                                     scrollTrigger: {
                                         trigger: panel,
