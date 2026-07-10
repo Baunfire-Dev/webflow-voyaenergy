@@ -824,7 +824,7 @@
                             immediateRender: false,
                             scrollTrigger: {
                                 trigger: body,
-                                start: () => "top top+=" + (COLOR_START * panels[0].offsetWidth),
+                                start: () => "top top-" + (COLOR_START * panels[0].offsetWidth),
                                 end: () => "top top+=" + ((COLOR_START + COLOR_DUR) * panels[0].offsetWidth),
                                 scrub: 1,
                                 invalidateOnRefresh: true,
