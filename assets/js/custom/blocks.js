@@ -775,6 +775,7 @@
                             scrub: 1,
                             pin: body,
                             anticipatePin: 1,
+                            pinSpacing: true,
                             invalidateOnRefresh: true
                         }
                     });
