@@ -819,8 +819,8 @@
                     master.to(dotContainer, {
                         autoAlpha: 1,
                         ease: "none",
-                        duration: 0.6
-                    }, "<0.2");
+                        duration: 0.4
+                    }, "<0.1");
 
                     master.to(panels, {
                         xPercent: -100 * (panels.length - 1),
