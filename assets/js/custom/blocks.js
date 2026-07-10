@@ -815,10 +815,10 @@
                     master.fromTo(main,
                         {
                             background: "#1a1a1a",
-                            duration: 0
                         },
                         {
                             background: "white",
+                            immediateRender: false,
                             duration: 0
                         }
                     );
