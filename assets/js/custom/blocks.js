@@ -766,6 +766,7 @@
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
                     const INTRO_DUR = 0.5;
+                    const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
 
                     const first = panels[0];
@@ -800,7 +801,7 @@
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
                         duration: H_DUR
-                    }, ">");
+                    }, H_START);
 
                     gsap.fromTo(firstEls,
                         {
@@ -820,36 +821,17 @@
                         }
                     );
 
-                    panels.slice(1).forEach((panel) => {
-                        const brow = panel.querySelector(".hiw-c-brow");
-                        const title = panel.querySelector(".hiw-c-title");
-                        const para = panel.querySelector(".hiw-para");
-
-                        const enterTL = gsap.timeline({ paused: true });
-                        enterTL.fromTo([brow, title, para],
-                            {
-                                yPercent: 40,
-                                autoAlpha: 0,
-                            },
-                            {
-                                yPercent: 0,
-                                autoAlpha: 1,
-                                duration: 0.8,
-                                ease: "power3.out",
-                                stagger: 0.08,
-                            }
+                    const firstImg = panels[0].querySelector(".hiw-img");
+                    
+                    if (firstImg) {
+                        master.fromTo(firstImg,
+                            { xPercent: 0 },
+                            { xPercent: 10, ease: "none", duration: 1 },
+                            H_START
                         );
+                    }
 
-                        ScrollTrigger.create({
-                            trigger: panel,
-                            containerAnimation: master,
-                            start: "left center",
-                            end: "right center",
-                            animation: enterTL,
-                        });
-                    });
-
-                    panels.forEach((panel, i) => {
+                    panels.slice(1).forEach((panel) => {
                         const img = panel.querySelector(".hiw-img");
                         if (!img) return;
 
