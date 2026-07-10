@@ -817,7 +817,7 @@
                     }, 0);
 
                     master.to(dotContainer, {
-                        autoAlpha: 0,
+                        autoAlpha: 1,
                         ease: "none",
                         duration: INTRO_DUR
                     }, "<");
