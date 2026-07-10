@@ -756,6 +756,29 @@
                 }
             };
 
+            const animateFirstSlide = (panel) => {
+                const els = [
+                    panel.querySelector(".hiw-c-brow"),
+                    panel.querySelector(".hiw-c-title"),
+                    panel.querySelector(".hiw-para"),
+                ];
+
+                return gsap.fromTo(els,
+                    { yPercent: 40, autoAlpha: 0 },
+                    {
+                        yPercent: 0,
+                        autoAlpha: 1,
+                        duration: 0.6,
+                        ease: "power3.out",
+                        stagger: 0.08,
+                        scrollTrigger: {
+                            trigger: panel.closest(".hiw-body"),
+                            start: baunfire.anim.start,
+                        }
+                    }
+                );
+            };
+
             const handleSlides = (self) => {
                 const body = self.querySelector(".hiw-body");
                 if (!body) return;
@@ -769,14 +792,8 @@
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
 
-                    const first = panels[0];
-                    const firstEls = [
-                        first.querySelector(".hiw-c-brow"),
-                        first.querySelector(".hiw-c-title"),
-                        first.querySelector(".hiw-para"),
-                    ];
-
                     const covers = self.querySelectorAll(".hiw-cover");
+                    const firstImg = panels[0].querySelector(".hiw-img");
 
                     const master = gsap.timeline({
                         scrollTrigger: {
@@ -803,26 +820,6 @@
                         duration: H_DUR
                     }, H_START);
 
-                    gsap.fromTo(firstEls,
-                        {
-                            yPercent: 40,
-                            autoAlpha: 0,
-                        },
-                        {
-                            yPercent: 0,
-                            autoAlpha: 1,
-                            duration: 0.6,
-                            ease: "power3.out",
-                            stagger: 0.08,
-                            scrollTrigger: {
-                                trigger: body,
-                                start: baunfire.anim.start,
-                            }
-                        }
-                    );
-
-                    const firstImg = panels[0].querySelector(".hiw-img");
-                    
                     if (firstImg) {
                         master.fromTo(firstImg,
                             { xPercent: 0 },
@@ -831,24 +828,50 @@
                         );
                     }
 
-                    panels.slice(1).forEach((panel) => {
-                        const img = panel.querySelector(".hiw-img");
-                        if (!img) return;
+                    animateFirstSlide(panels[0]);
 
-                        gsap.fromTo(img,
-                            { xPercent: 0 },
+                    panels.slice(1).forEach((panel) => {
+                        const brow = panel.querySelector(".hiw-c-brow");
+                        const title = panel.querySelector(".hiw-c-title");
+                        const para = panel.querySelector(".hiw-para");
+                        const img = panel.querySelector(".hiw-img");
+
+                        const enterTL = gsap.timeline({ paused: true });
+                        enterTL.fromTo([brow, title, para],
+                            { yPercent: 40, autoAlpha: 0 },
                             {
-                                xPercent: 10,
-                                ease: "none",
-                                scrollTrigger: {
-                                    trigger: panel,
-                                    containerAnimation: master,
-                                    start: "left left",
-                                    end: "right left",
-                                    scrub: 1
-                                }
+                                yPercent: 0,
+                                autoAlpha: 1,
+                                duration: 0.8,
+                                ease: "power3.out",
+                                stagger: 0.08,
                             }
                         );
+
+                        ScrollTrigger.create({
+                            trigger: panel,
+                            containerAnimation: master,
+                            start: "left center",
+                            end: "right center",
+                            animation: enterTL,
+                        });
+
+                        if (img) {
+                            gsap.fromTo(img,
+                                { xPercent: 0 },
+                                {
+                                    xPercent: 10,
+                                    ease: "none",
+                                    scrollTrigger: {
+                                        trigger: panel,
+                                        containerAnimation: master,
+                                        start: "left left",
+                                        end: "right left",
+                                        scrub: 1
+                                    }
+                                }
+                            );
+                        }
                     });
                 });
             };
