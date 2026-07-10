@@ -39,7 +39,6 @@ async function poll() {
                 },
                 () => process.exit(0)
             );
-            process.exit(0);
         }
         if (dep.latest_stage.status === "failure") {
             spinner.fail("Deployment failed!");
@@ -50,9 +49,8 @@ async function poll() {
                     appName: "Cloudflare Watcher",
                     appID: "Cloudflare Watcher",
                 },
-                () => process.exit(0)
+                () => process.exit(1)
             );
-            process.exit(1);
         }
     } catch (e) {
         spinner.fail(e.message);
