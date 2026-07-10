@@ -30,10 +30,12 @@ async function poll() {
         if (dep.latest_stage.status === "success") {
             spinner.succeed("Deployment successful!");
             // notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(0));
+            process.exit(0)
         }
         if (dep.latest_stage.status === "failure") {
             spinner.fail("Deployment failed!");
             // notifier.notify({ title: `${PROJECT}`, message: `Deployment successful!` }, () => process.exit(1));
+            process.exit(1)
         }
     } catch (e) {
         spinner.fail(e.message);
