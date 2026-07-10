@@ -648,12 +648,11 @@
 
                 els.forEach(self => {
                     handleVisualBalance(self);
+                    handleEntrance(self);
+                    handleBGSwitch(self);
 
                     ScrollTrigger.addEventListener("refreshInit", () => handleVisualBalance(self));
                     ScrollTrigger.refresh();
-
-                    handleEntrance(self);
-                    handleBGSwitch(self);
                 });
             };
 
