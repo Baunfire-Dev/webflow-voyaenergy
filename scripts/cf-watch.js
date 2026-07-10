@@ -26,12 +26,16 @@ async function poll() {
             `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/pages/projects/${PROJECT}/deployments`,
             { headers: { Authorization: `Bearer ${TOKEN}` } }
         );
+
         const dep = data.result.find(d => d.deployment_trigger?.metadata?.commit_hash === SHA);
+
         if (!dep) {
             spinner.text = "Waiting for deployment...";
             return;
         }
+
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
+
         if (dep.latest_stage.status === "success") {
             finished = true;
             spinner.succeed("Deployment successful!");
@@ -42,7 +46,10 @@ async function poll() {
                 },
                 () => process.exit(0)
             );
+
+            return;
         }
+        
         if (dep.latest_stage.status === "failure") {
             finished = true;
             spinner.fail("Deployment failed!");
@@ -53,7 +60,11 @@ async function poll() {
                 },
                 () => process.exit(1)
             );
+            
+            return;
         }
+
+        setTimeout(poll, 5000);
     } catch (e) {
         spinner.fail(e.message);
         console.log(e.response?.status);
@@ -61,5 +72,5 @@ async function poll() {
         process.exit(1);
     }
 }
+
 poll();
-setInterval(poll, 5000);
