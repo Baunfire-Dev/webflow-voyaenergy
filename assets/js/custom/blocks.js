@@ -843,9 +843,27 @@
                         });
                     });
 
-                    panels.forEach((panel) => {
+                    panels.forEach((panel, i) => {
                         const img = panel.querySelector(".hiw-img");
                         if (!img) return;
+
+                        if (i === 0) {
+                            gsap.fromTo(img,
+                                { xPercent: 0 },
+                                {
+                                    xPercent: 10,
+                                    ease: "none",
+                                    scrollTrigger: {
+                                        trigger: body,
+                                        start: () => "top top-=" + INTRO_DUR * panels[0].offsetWidth,
+                                        end: () => "top top-=" + (INTRO_DUR + 1) * panels[0].offsetWidth,
+                                        scrub: 1,
+                                        invalidateOnRefresh: true,
+                                    }
+                                }
+                            );
+                            return;
+                        }
 
                         gsap.fromTo(img,
                             { xPercent: 0 },
