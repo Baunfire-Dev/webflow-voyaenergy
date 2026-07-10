@@ -730,17 +730,14 @@
                 .addLabel("color-transition")
                 .to(title, {
                     color: rootStyles.getPropertyValue('--_colors---white'),
-                    duration: 1.2,
                     ease: "none"
                 }, "color-transition")
                 .to(dots, {
                     fill: "#BCBCBC",
-                    duration: 1.2,
                     ease: "none"
                 }, "color-transition")
                 .to(main, {
                     background: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                    duration: 1.2,
                     ease: "none"
                 }, "color-transition")
             };
