@@ -714,7 +714,7 @@
                     scrollTrigger: {
                         trigger: head,
                         start: "top 80%",
-                        start: "top 30%",
+                        end: "top 30%",
                         once: true,
                         scrub: true,
                         markers: true,
