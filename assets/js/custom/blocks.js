@@ -790,10 +790,10 @@
                         }
                     });
 
-                    master.from(cover, {
+                    master.to(cover, {
                         width: "100%",
-                        width: "100%",
-                        ease: "power3.out",
+                        height: "100%",
+                        ease: "none",
                         duration: INTRO_DUR
                     }, 0);
 
