@@ -812,8 +812,9 @@
                         duration: INTRO_DUR
                     }, 0);
 
-                    master.set(main, {
-                        background: "white"
+                    master.to(main, {
+                        background: "white",
+                        duration: 0
                     });
 
                     master.fromTo(dotContainer,
