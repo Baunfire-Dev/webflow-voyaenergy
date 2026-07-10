@@ -653,6 +653,7 @@
                     ScrollTrigger.refresh();
 
                     handleEntrance(self);
+                    handleBGSwitch(self);
                 });
             };
 
@@ -681,7 +682,7 @@
                 const introTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        start: baunfire.anim.start,
+                        start: "top 90%",
                         once: true,
                     }
                 });
@@ -703,6 +704,45 @@
                         );
                     },
                 });
+            };
+
+            const handleBGSwitch = (self) => {
+                const head = self.querySelector(".hiw-head");
+                if (!head) return;
+
+                const switchTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: head,
+                        start: "top 80%",
+                        start: "top 30%",
+                        once: true,
+                        scrub: true,
+                    }
+                });
+
+                const rootStyles = getComputedStyle(document.documentElement);
+
+                const title = head.querySelector(".hiw-title");
+                const dots = head.querySelectorAll("svg path");
+                const main = head.querySelector("main.g-main");
+
+                switchTL
+                .addLabel("color-transition")
+                .to(title, {
+                    color: rootStyles.getPropertyValue('--_colors---white'),
+                    duration: 1.2,
+                    ease: "none"
+                }, "color-transition")
+                .to(dots, {
+                    fill: "#BCBCBC",
+                    duration: 1.2,
+                    ease: "none"
+                }, "color-transition")
+                .to(main, {
+                    color: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                    duration: 1.2,
+                    ease: "none"
+                }, "color-transition")
             };
 
             script();
