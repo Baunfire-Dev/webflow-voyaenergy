@@ -874,7 +874,7 @@
                         ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: master,
-                            start: "left 80%",
+                            start: "left 60%",
                             end: "right center",
                             animation: enterTL,
                         });
