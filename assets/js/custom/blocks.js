@@ -800,8 +800,8 @@
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
                         duration: H_DUR
-                    });
-                    
+                    }, ">");
+
                     gsap.fromTo(firstEls,
                         {
                             yPercent: 40,
