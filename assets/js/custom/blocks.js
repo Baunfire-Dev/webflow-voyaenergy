@@ -812,13 +812,9 @@
                         duration: INTRO_DUR
                     }, 0);
 
-                    master.fromTo(main,
-                        {
-                            background: "#1a1a1a",
-                        },
+                    master.to(main,
                         {
                             background: "white",
-                            immediateRender: false,
                             duration: 0
                         }
                     );
