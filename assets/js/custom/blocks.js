@@ -787,12 +787,8 @@
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
                     const INTRO_DUR = 0.2;
-
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
-
-                    const COLOR_START = INTRO_DUR;
-                    const COLOR_DUR = 0.15;
 
                     const covers = self.querySelectorAll(".hiw-cover");
                     const firstImg = panels[0].querySelector(".hiw-img");
@@ -815,7 +811,7 @@
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
-
+                    
                     master.fromTo(dotContainer,
                         {
                             autoAlpha: 0,
@@ -829,29 +825,15 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<"
-                    );
-
-                    gsap.fromTo(main,
-                        { backgroundColor: "#1a1a1a" },
-                        {
-                            backgroundColor: "#fff",
-                            ease: "none",
-                            immediateRender: false,
-                            scrollTrigger: {
-                                trigger: body,
-                                start: () => "top top-=" + (COLOR_START * panels[0].offsetWidth),
-                                end: () => "top top-=" + ((COLOR_START + COLOR_DUR) * panels[0].offsetWidth),
-                                scrub: 1,
-                                invalidateOnRefresh: true,
-                            },
-                        }
+                        "<0.1"
                     );
 
                     master.to(panels, {
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
-                        duration: H_DUR
+                        duration: H_DUR,
+                        onStart: () => gsap.set(main, { backgroundColor: "#fff" }),
+                        onReverseComplete: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                     }, H_START);
 
                     if (firstImg) {
