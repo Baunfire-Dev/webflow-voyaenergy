@@ -818,7 +818,6 @@
                             containerAnimation: horizontalTween,
                             start: "left center",
                             end: "right center",
-                            toggleActions: "play none none reverse",
                             animation: enterTL,
                         });
                     });
