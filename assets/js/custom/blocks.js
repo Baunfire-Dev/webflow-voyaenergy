@@ -829,7 +829,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<0.1"
+                        "<"
                     );
 
                     gsap.fromTo(main,
