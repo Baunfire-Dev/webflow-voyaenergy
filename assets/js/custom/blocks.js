@@ -814,10 +814,10 @@
 
                     master.fromTo(main,
                         {
-                            background: "#1a1a1a",
+                            backgroundColor: "#1a1a1a",
                         },
                         {
-                            background: "white",
+                            backgroundColor: "#fff",
                             immediateRender: false,
                             duration: 0.1
                         }
@@ -836,7 +836,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<-0.1"
+                        "<0.1"
                     );
 
                     master.to(panels, {
