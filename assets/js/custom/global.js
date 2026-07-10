@@ -3,7 +3,7 @@
 
     baunfire.Global = {
         init() {
-            this.refreshOnImagesLoaded(document.querySelector("main"));
+            // this.refreshOnImagesLoaded(document.querySelector("main"));
         },
 
         refreshOnImagesLoaded(container = document) {
