@@ -787,12 +787,8 @@
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
                     const INTRO_DUR = 0.2;
-
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
-
-                    const COLOR_START = INTRO_DUR;
-                    const COLOR_DUR = 0.15;
 
                     const covers = self.querySelectorAll(".hiw-cover");
                     const firstImg = panels[0].querySelector(".hiw-img");
@@ -824,8 +820,8 @@
                             immediateRender: false,
                             scrollTrigger: {
                                 trigger: body,
-                                start: () => "top top-" + (COLOR_START * panels[0].offsetWidth),
-                                end: () => "top top+=" + ((COLOR_START + COLOR_DUR) * panels[0].offsetWidth),
+                                start: "top top-=" + INTRO_DUR,
+                                end: () => "+=" + INTRO_DUR * panels[0].offsetWidth,
                                 scrub: 1,
                                 invalidateOnRefresh: true,
                             },
@@ -845,7 +841,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<"
+                        "<0.1"
                     );
 
                     master.to(panels, {
