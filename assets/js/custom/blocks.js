@@ -837,8 +837,9 @@
                         ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: master,
-                            start: "left center",
-                            end: "right center",
+                            start: () => "top top-=" + INTRO_DUR * panels[0].offsetWidth,
+                            end: () => "top top-=" + (INTRO_DUR + 1) * panels[0].offsetWidth,
+                            invalidateOnRefresh: true,
                             animation: enterTL,
                         });
                     });
