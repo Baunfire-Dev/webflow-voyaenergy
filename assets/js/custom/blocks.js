@@ -746,7 +746,7 @@
                 }, "color-transition");
 
                 switchTL.to(main, {
-                    background: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                    backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
                     ease: "none"
                 }, "color-transition");
             };
