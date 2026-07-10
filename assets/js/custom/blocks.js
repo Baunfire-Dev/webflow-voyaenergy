@@ -816,11 +816,19 @@
                         duration: INTRO_DUR
                     }, 0);
 
-                    master.to(dotContainer, {
-                        autoAlpha: 1,
-                        ease: "none",
-                        duration: 0.4
-                    }, "<0.1");
+                    master.fromTo(dotContainer,
+                        {
+                            autoAlpha: 0,
+                            scale: 0
+                        },
+                        {
+                            scale: 1,
+                            autoAlpha: 1,
+                            ease: "none",
+                            duration: 0.4
+                        },
+                        "<0.1"
+                    );
 
                     master.to(panels, {
                         xPercent: -100 * (panels.length - 1),
