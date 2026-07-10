@@ -690,7 +690,6 @@
                     scrollTrigger: {
                         trigger: self,
                         start: "top 90%",
-                        once: true,
                     }
                 });
 
@@ -705,7 +704,7 @@
                         return introTL.fromTo(split.words,
                             { y: "100%" },
                             {
-                                y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.08,
                                 onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                             },
                         );
