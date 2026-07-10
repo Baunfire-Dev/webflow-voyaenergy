@@ -834,7 +834,7 @@
                             {
                                 yPercent: 0,
                                 autoAlpha: 1,
-                                duration: 0.6,
+                                duration: 0.8,
                                 ease: "power3.out",
                                 stagger: 0.08,
                             }
