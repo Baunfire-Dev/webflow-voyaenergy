@@ -868,7 +868,6 @@
                                 trigger: panel,
                                 containerAnimation: master,
                                 start: "left center",
-                                end: "right center",
                                 onToggle: (self) => gsap.to(dot, {
                                     fill: self.isActive ? "#f1b510" : "#c7c7c7",
                                     duration: 0.3
