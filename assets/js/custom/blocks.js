@@ -722,7 +722,6 @@
                         start: "top 90%",
                         end: "top 70%",
                         scrub: 1,
-                        markers: true,
                     }
                 });
 
