@@ -739,7 +739,7 @@
                     ease: "none"
                 }, "color-transition")
                 .to(main, {
-                    color: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                    background: rootStyles.getPropertyValue('--_colors---carbon-black'),
                     duration: 1.2,
                     ease: "none"
                 }, "color-transition")
