@@ -802,17 +802,23 @@
                         duration: H_DUR
                     }, ">");
 
-                    gsap.from(firstEls, {
-                        yPercent: 40,
-                        autoAlpha: 0,
-                        duration: 0.6,
-                        ease: "power3.out",
-                        stagger: 0.08,
-                        scrollTrigger: {
-                            trigger: body,
-                            start: baunfire.anim.start,
+                    gsap.fromTo(firstEls,
+                        {
+                            yPercent: 40,
+                            autoAlpha: 0,
+                        },
+                        {
+                            yPercent: 0,
+                            autoAlpha: 1,
+                            duration: 0.6,
+                            ease: "power3.out",
+                            stagger: 0.08,
+                            scrollTrigger: {
+                                trigger: body,
+                                start: baunfire.anim.start,
+                            }
                         }
-                    });
+                    );
 
                     panels.slice(1).forEach((panel) => {
                         const brow = panel.querySelector(".hiw-c-brow");
