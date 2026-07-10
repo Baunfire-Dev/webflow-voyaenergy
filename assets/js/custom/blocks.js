@@ -717,6 +717,7 @@
                         start: "top 30%",
                         once: true,
                         scrub: true,
+                        markers: true,
                     }
                 });
 
