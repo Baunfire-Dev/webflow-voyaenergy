@@ -725,7 +725,7 @@
 
                 const title = head.querySelector(".hiw-title");
                 const dots = head.querySelectorAll("svg path");
-                const main = head.querySelector("main.g-main");
+                const main = document.querySelector("main.g-main");
 
                 switchTL
                 .addLabel("color-transition")
