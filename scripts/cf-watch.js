@@ -35,7 +35,6 @@ async function poll() {
                     title: "Cloudflare Pages",
                     message: `${PROJECT} deployed successfully ✅`,
                     appName: "Cloudflare Watcher",
-                    appID: "Cloudflare Watcher",
                 },
                 () => process.exit(0)
             );
@@ -47,7 +46,6 @@ async function poll() {
                     title: "Cloudflare Pages",
                     message: `${PROJECT} deployment failed ❌`,
                     appName: "Cloudflare Watcher",
-                    appID: "Cloudflare Watcher",
                 },
                 () => process.exit(1)
             );
