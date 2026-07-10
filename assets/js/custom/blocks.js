@@ -653,6 +653,7 @@
 
                     handleEntrance(self);
                     handleBGSwitch(self);
+                    handleSlides(self);
                 });
             };
 
@@ -731,41 +732,6 @@
                 const dots = head.querySelectorAll("svg path");
                 const main = document.querySelector("main.g-main");
 
-                switchTL
-                    .addLabel("color-transition")
-                    .to(title, {
-                        color: rootStyles.getPropertyValue('--_colors---white'),
-                        ease: "none"
-                    }, "color-transition")
-                    .to(dots, {
-                        fill: "#BCBCBC",
-                        ease: "none"
-                    }, "color-transition")
-                    .to(main, {
-                        background: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                        ease: "none"
-                    }, "color-transition")
-            };
-
-            const handleBGSwitch = (self) => {
-                const head = self.querySelector(".hiw-head");
-                if (!head) return;
-
-                const switchTL = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: head,
-                        start: "top 90%",
-                        end: "top 70%",
-                        scrub: 1,
-                    }
-                });
-
-                const rootStyles = getComputedStyle(document.documentElement);
-
-                const title = head.querySelector(".hiw-title");
-                const dots = head.querySelectorAll("svg path");
-                const main = document.querySelector("main.g-main");
-
                 switchTL.addLabel("color-transition")
 
                 if (title) {
@@ -788,6 +754,74 @@
                         ease: "none"
                     }, "color-transition");
                 }
+            };
+
+            const handleSlides = (self) => {
+                const body = self.querySelector(".hiw-body");
+                if (!body) return;
+
+                const slides = self.querySelector(".hiw-slides");
+                const panels = gsap.utils.toArray(".hiw-slide", slides);
+                if (!panels.length) return;
+
+                gsap.matchMedia().add("(min-width: 768px)", () => {
+                    const horizontalTween = gsap.to(panels, {
+                        xPercent: -100 * (panels.length - 1),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: body,
+                            start: "top top",
+                            end: () => "+=" + (panels.length - 1) * panels[0].offsetWidth,
+                            scrub: 1,
+                            pin: body,
+                            anticipatePin: 1,
+                            invalidateOnRefresh: true
+                        }
+                    });
+
+                    panels.forEach((panel) => {
+                        const brow = panel.querySelector(".hiw-c-brow");
+                        const title = panel.querySelector(".hiw-c-title");
+                        const para = panel.querySelector(".hiw-para");
+                        const img = panel.querySelector(".hiw-img");
+
+                        const enterTL = gsap.timeline({ paused: true });
+
+                        enterTL.from([brow, title, para], {
+                            yPercent: 40,
+                            autoAlpha: 0,
+                            duration: 0.6,
+                            ease: "power3.out",
+                            stagger: 0.08
+                        });
+
+                        ScrollTrigger.create({
+                            trigger: panel,
+                            containerAnimation: horizontalTween,
+                            start: "left center",
+                            end: "right center",
+                            toggleActions: "play none none reverse",
+                            animation: enterTL
+                        });
+
+                        if (img) {
+                            gsap.fromTo(img,
+                                { xPercent: 0 },
+                                {
+                                    xPercent: 10,
+                                    ease: "none",
+                                    scrollTrigger: {
+                                        trigger: panel,
+                                        containerAnimation: horizontalTween,
+                                        start: "left left",
+                                        end: "right left",
+                                        scrub: true
+                                    }
+                                }
+                            );
+                        }
+                    });
+                });
             };
 
             script();
