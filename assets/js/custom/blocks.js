@@ -647,31 +647,38 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
+                    ScrollTrigger.addEventListener("refreshInit", () => handleVisualBalance(self));
                     handleVisualBalance(self);
+                    ScrollTrigger.refresh();
+
                     handleEntrance(self);
                     handleBGSwitch(self);
-
-                    ScrollTrigger.addEventListener("refreshInit", () => handleVisualBalance(self));
-                    ScrollTrigger.refresh();
                 });
             };
 
             const handleVisualBalance = (self) => {
                 const minSpacing = 188;
-                const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+                const rootFontSize = parseFloat(
+                    getComputedStyle(document.documentElement).fontSize
+                );
 
                 const head = self.querySelector(".hiw-head");
                 const hasImg = document.querySelector(".tl-text-c.has-images");
                 const images = hasImg?.querySelector(".tl-images");
+
                 if (!head || !hasImg || !images) return;
 
-                const gap = hasImg.getBoundingClientRect().bottom - images.getBoundingClientRect().bottom;
+                const gap =
+                    hasImg.getBoundingClientRect().bottom -
+                    images.getBoundingClientRect().bottom;
 
                 const paddingTop = gap < minSpacing ? minSpacing - gap : 0;
                 const paddingBottom = Math.max(gap, minSpacing);
 
-                head.style.paddingTop = `${paddingTop / rootFontSize}rem`;
-                head.style.paddingBottom = `${paddingBottom / rootFontSize}rem`;
+                gsap.set(head, {
+                    paddingTop: `${paddingTop / rootFontSize}rem`,
+                    paddingBottom: `${paddingBottom / rootFontSize}rem`,
+                });
             };
 
             const handleEntrance = (self) => {
@@ -726,19 +733,19 @@
                 const main = document.querySelector("main.g-main");
 
                 switchTL
-                .addLabel("color-transition")
-                .to(title, {
-                    color: rootStyles.getPropertyValue('--_colors---white'),
-                    ease: "none"
-                }, "color-transition")
-                .to(dots, {
-                    fill: "#BCBCBC",
-                    ease: "none"
-                }, "color-transition")
-                .to(main, {
-                    background: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                    ease: "none"
-                }, "color-transition")
+                    .addLabel("color-transition")
+                    .to(title, {
+                        color: rootStyles.getPropertyValue('--_colors---white'),
+                        ease: "none"
+                    }, "color-transition")
+                    .to(dots, {
+                        fill: "#BCBCBC",
+                        ease: "none"
+                    }, "color-transition")
+                    .to(main, {
+                        background: rootStyles.getPropertyValue('--_colors---carbon-black'),
+                        ease: "none"
+                    }, "color-transition")
             };
 
             script();
