@@ -29,6 +29,7 @@ async function poll() {
         }
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
         if (dep.latest_stage.status === "success") {
+            clearInterval(interval);
             spinner.succeed("Deployment successful!");
             notifier.notify(
                 {
@@ -39,6 +40,7 @@ async function poll() {
             );
         }
         if (dep.latest_stage.status === "failure") {
+            clearInterval(interval);
             spinner.fail("Deployment failed!");
             notifier.notify(
                 {
