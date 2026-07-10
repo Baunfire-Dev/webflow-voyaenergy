@@ -16,7 +16,11 @@ if (!ACCOUNT || !TOKEN) {
 const SHA = execSync("git rev-parse HEAD").toString().trim();
 const spinner = ora(`Watching ${PROJECT}...`).start();
 
+let finished = false;
+
 async function poll() {
+    if (finished) return;
+
     try {
         const { data } = await axios.get(
             `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/pages/projects/${PROJECT}/deployments`,
@@ -29,7 +33,7 @@ async function poll() {
         }
         spinner.text = `${dep.latest_stage.name} (${dep.latest_stage.status})`;
         if (dep.latest_stage.status === "success") {
-            clearInterval(interval);
+            finished = true;
             spinner.succeed("Deployment successful!");
             notifier.notify(
                 {
@@ -40,7 +44,7 @@ async function poll() {
             );
         }
         if (dep.latest_stage.status === "failure") {
-            clearInterval(interval);
+            finished = true;
             spinner.fail("Deployment failed!");
             notifier.notify(
                 {
