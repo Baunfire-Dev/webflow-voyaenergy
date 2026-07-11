@@ -1029,13 +1029,20 @@
                     });
                 }
 
-                if (generatorMain) {
-                    soTL.to(generatorMain, {
-                        yPercent: -90,
-                        ease: "power2.out",
-                        duration: 1.2
-                    }, "<0.2");
-                }
+                soTL.to(generatorMain, {
+                    yPercent: -90,
+                    ease: "power2.out",
+                    duration: 1.2
+                }, "<0.2");
+
+                soTL.add(
+                    Flip.fit(generatorMain, generatorShadow, {
+                        duration: 1,
+                        ease: "power2.inOut",
+                        scale: true,
+                        absolute: true,
+                    })
+                );
 
                 soTL.to({}, { duration: 1 });
             };
