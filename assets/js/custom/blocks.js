@@ -916,7 +916,7 @@
             };
 
             const activateDot = (dot, active = true) => {
-                gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", duration: 0.6, ease: "power2.out" });
+                gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", rotation: "-=72", duration: 0.6, ease: "power2.out" });
             };
 
             script();
@@ -953,7 +953,7 @@
             const handleEntrance = (self) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
                 const contentContainer = sceneOne.querySelector(".so-content");
-                
+
                 const logo = sceneOne.querySelector(".so-icon");
                 const heading = sceneOne.querySelector(".so-title");
                 const para = sceneOne.querySelector(".so-para");
