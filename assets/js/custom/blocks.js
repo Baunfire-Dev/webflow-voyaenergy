@@ -1059,7 +1059,7 @@
                             y: 0,
                             autoAlpha: 1,
                             ease: "power2.out",
-                            duration: 0.8,
+                            duration: 0.6,
                             onStart: () => {
                                 baunfire.Global.handleTextCount(panel);
                             }
