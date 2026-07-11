@@ -952,13 +952,15 @@
 
             const handleEntrance = (self) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
+                const contentContainer = sceneOne.querySelector(".so-content");
+                
                 const logo = sceneOne.querySelector(".so-icon");
                 const heading = sceneOne.querySelector(".so-title");
                 const para = sceneOne.querySelector(".so-para");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
-                        trigger: self,
+                        trigger: contentContainer,
                         start: baunfire.anim.start,
                         once: true,
                     }
