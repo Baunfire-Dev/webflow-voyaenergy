@@ -1114,7 +1114,7 @@
                     );
                 }
 
-                soTL.set(sceneOne, { autoAlpha: 0 })
+                soTL.set(sceneOne, { autoAlpha: 0, pointerEvents: "none" })
                 soTL.set(sceneTwo, { autoAlpha: 1 })
             };
 
