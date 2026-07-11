@@ -1056,7 +1056,7 @@
                         duration: 2,
                         ease: "none"
                     }),
-                    "<0.3"
+                    "<0.2"
                 );
 
                 soTL.add(
