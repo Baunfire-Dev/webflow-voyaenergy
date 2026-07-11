@@ -1094,8 +1094,6 @@
                     })
                 );
 
-                soTL.to({}, { duration: 0.3 });
-
                 soTL.add(
                     Flip.fit(generatorMain, generatorS2No3, {
                         duration: 0.8,
