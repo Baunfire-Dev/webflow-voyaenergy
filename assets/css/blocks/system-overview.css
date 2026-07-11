@@ -1,0 +1,11 @@
+section.system-overview {
+    .so {
+        &-scene {
+            @apply hidden;
+
+            &.is-s1 {
+                @apply visible;
+            }
+        }
+    }
+}
