@@ -179,13 +179,12 @@
 
         handleTextCount(el, duration = 0.8, withTrigger = false, parent) {
             const counter = el.querySelector("[data-amount]");
-            console.log(counter);
             const rawAmount = counter.dataset.amount.toString();
             const clean = v => (v + "").replace(/[^\d\.-]/gi, "");
             const num = clean(rawAmount);
             const decimals = (num.split(".")[1] || "").length;
 
-            const proxy = { val: parseFloat(clean(counter.textContent)) || 0 };
+            const proxy = { val: 0 };
 
             const props = {
                 val: +num,
