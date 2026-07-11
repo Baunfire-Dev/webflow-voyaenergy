@@ -943,7 +943,7 @@
                         start: "top top",
                         end: () => "+=" + soTL.duration() * PX_PER_SEC,
                         pinSpacing: true,
-                        scrub: true,
+                        scrub: 1,
                         invalidateOnRefresh: true,
                     });
                 });
@@ -1005,15 +1005,17 @@
                 const contentContainer = sceneOne.querySelector(".so-content");
                 const generator = sceneOne.querySelector(".so-gen");
 
-                soTL.to({}, { duration: 1 });
+                soTL.to({}, { duration: 0.3 });
 
                 if (contentContainer) {
                     soTL.to(contentContainer, { yPercent: -100, autoAlpha: 0, ease: "none", duration: 0.8 });
                 }
 
                 if (generator) {
-                    soTL.to(generator, { yPercent: -80, ease: "none", duration: 1.2 }, "<0.4");
+                    soTL.to(generator, { yPercent: -80, ease: "none", duration: 1.2 }, "<0.2");
                 }
+
+                soTL.to({}, { duration: 1 });
             };
 
             script();
