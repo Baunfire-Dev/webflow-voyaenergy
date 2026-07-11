@@ -1129,7 +1129,7 @@
                     soTL.add(
                         Flip.fit(gen, generator3, {
                             duration: 0,
-                            ease: none,
+                            ease: "none",
                             scale: true
                         }),
                         "0"
@@ -1143,6 +1143,22 @@
                         scale: true,
                     })
                 );
+
+                if (text) {
+                    soTL.fromTo(text,
+                        {
+                            y: 40,
+                            autoAlpha: 0,
+                        },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            ease: "power1.out",
+                            duration: 0.6,
+                        },
+                        "<0.6"
+                    );
+                }
 
                 soTL.to({}, { duration: 1 });
             };
