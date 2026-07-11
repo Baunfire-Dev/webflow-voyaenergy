@@ -178,6 +178,7 @@
         },
 
         handleTextCount(el, duration = 0.8, withTrigger = false, parent) {
+            console.log(el);
             const counter = el.querySelector("[data-amount]");
             const rawAmount = counter.dataset.amount.toString();
             const clean = v => (v + "").replace(/[^\d\.-]/gi, "");
