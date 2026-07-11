@@ -1012,7 +1012,7 @@
                 }
 
                 if (generator) {
-                    soTL.to(generator, { yPercent: -100, ease: "power2.out", duration: 1.2 }, "<0.2");
+                    soTL.to(generator, { yPercent: -90, ease: "power2.out", duration: 1.2 }, "<0.2");
                 }
 
                 soTL.to({}, { duration: 1 });
