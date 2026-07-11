@@ -1051,13 +1051,17 @@
                     });
                 }
 
+                soTL.addLabel("transform-up", "<0.2")
+
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
                         duration: 2,
                         ease: "none"
                     }),
-                    "<0.2"
+                    "transform-up"
                 );
+
+                soTL.addLabel("scale-down", "<0.8")
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
@@ -1065,7 +1069,7 @@
                         ease: "none",
                         scale: true
                     }),
-                    "<0.8"
+                    "scale-down"
                 );
 
                 if (panel) {
@@ -1159,7 +1163,6 @@
                         ease: "none",
                         scale: true,
                     }),
-                    "<-0.4"
                 );
 
                 soTL.fromTo(secondaryOverlays,
