@@ -935,6 +935,7 @@
 
                     handleEntrance(self);
                     handleSceneOne(self, soTL);
+                    handleSceneTwo(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
@@ -1102,6 +1103,48 @@
                         "<0.4"
                     );
                 }
+
+                soTL.set(sceneOne, { autoAlpha: 0 })
+                soTL.set(sceneTwo, { autoAlpha: 1 })
+            };
+
+            const handleSceneTwo = (self, soTL) => {
+                const sceneTwo = self.querySelector(".so-scene.is-s2");
+
+                const generator1 = sceneTwo.querySelector(".so-gen.is-s2.is-no-1");
+                const generator2 = sceneTwo.querySelector(".so-gen.is-s2.is-no-2");
+                const generator3 = sceneTwo.querySelector(".so-gen.is-s2.is-no-3");
+                const generator4 = sceneTwo.querySelector(".so-gen.is-s2.is-no-4");
+                const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
+
+                const secondaryGenerators = [generator1, generator2, generator4, generator5];
+
+                const text = sceneTwo.querySelector(".so-scene-para");
+
+                const genStates = Flip.getState(secondaryGenerators, {
+                    props: "transform",
+                });
+
+                secondaryGenerators.forEach(gen => {
+                    soTL.add(
+                        Flip.fit(gen, generator3, {
+                            duration: 0,
+                            ease: none,
+                            scale: true
+                        }),
+                        "0"
+                    );
+                });
+
+                soTL.add(
+                    Flip.from(genState, {
+                        duration: 1,
+                        ease: "power2.out",
+                        scale: true,
+                    })
+                );
+
+                soTL.to({}, { duration: 1 });
             };
 
             script();
