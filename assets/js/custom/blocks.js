@@ -1034,7 +1034,6 @@
                     Flip.fit(generatorMain, generatorShadow1, {
                         duration: 1.2,
                         ease: "power2.out",
-                        scale: true,
                         absolute: true,
                     }),
                     "<0.2"
