@@ -920,7 +920,7 @@
                     .to(dot.parentElement, {
                         rotation: active ? "-=72" : "+=72",
                         duration: 0.6,
-                        ease: "power2.inOut"
+                        ease: "power2.out"
                     })
                     .to(dot, {
                         fill: active ? "#f1b510" : "#c7c7c7",
@@ -1129,26 +1129,69 @@
                 const generator4 = sceneTwo.querySelector(".so-gen.is-s2.is-no-4");
                 const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
 
-                const secondaryGenerators = [generator1, generator2, generator4, generator5];
+                const subGenerators = [generator1, generator2, generator4, generator5];
+                const secondaryGenerators = [generator2, generator4];
+                const secondaryOverlays = [generator2.querySelector(".so-gen-overlay"), generator4.querySelector(".so-gen-overlay")];
+
+                const tertiaryGenerators = [generator1, generator5];
+                const tertiaryOverlays = [generator1.querySelector(".so-gen-overlay"), generator5.querySelector(".so-gen-overlay")];
 
                 const text = sceneTwo.querySelector(".so-scene-para");
 
-                const genStates = Flip.getState(secondaryGenerators, {
+                const secondaryGenStates = Flip.getState(secondaryGenerators, {
                     props: "transform,opacity",
                 });
 
-                secondaryGenerators.forEach(gen => {
-                    Flip.fit(gen, generator3, { scale: true });
+                const tertiaryGenStates = Flip.getState(tertiaryGenerators, {
+                    props: "transform,opacity",
                 });
 
-                gsap.set(secondaryGenerators, { opacity: 0 });
+                Flip.fit(generator1, generator2, { scale: true });
+                Flip.fit(generator5, generator4, { scale: true });
+                Flip.fit(generator2, generator3, { scale: true });
+                Flip.fit(generator4, generator3, { scale: true });
+
+                gsap.set(subGenerators, { opacity: 0 });
 
                 soTL.add(
-                    Flip.to(genStates, {
+                    Flip.to(secondaryGenStates, {
                         duration: 1,
                         ease: "power2.out",
                         scale: true,
                     }),
+                );
+
+                soTL.fromTo(secondaryOverlays,
+                    {
+                        autoAlpha: 0
+                    },
+                    {
+                        autoAlpha: 1,
+                        ease: "power2.out",
+                        duration: 1,
+                    },
+                    "<"
+                );
+
+                soTL.add(
+                    Flip.to(tertiaryGenStates, {
+                        duration: 1,
+                        ease: "power2.out",
+                        scale: true,
+                    }),
+                    "<0.6"
+                );
+
+                soTL.fromTo(tertiaryOverlays,
+                    {
+                        autoAlpha: 0
+                    },
+                    {
+                        autoAlpha: 1,
+                        ease: "power2.out",
+                        duration: 1,
+                    },
+                    "<"
                 );
 
                 if (text) {
