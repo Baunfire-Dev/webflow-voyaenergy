@@ -1122,7 +1122,7 @@
                 const text = sceneTwo.querySelector(".so-scene-para");
 
                 const genStates = Flip.getState(secondaryGenerators, {
-                    props: "transform,opacity, visibility",
+                    props: "transform,opacity,visibility",
                 });
 
                 secondaryGenerators.forEach(gen => {
@@ -1139,7 +1139,7 @@
                     }),
                     "0"
                 );
-                
+
                 if (text) {
                     soTL.fromTo(text,
                         {
