@@ -786,7 +786,7 @@
                 if (!panels.length) return;
 
                 gsap.matchMedia().add("(min-width: 768px)", () => {
-                    const INTRO_DUR = 0.2;
+                    const INTRO_DUR = 0.3;
                     const H_START = INTRO_DUR;
                     const H_DUR = panels.length - 1;
 
