@@ -1027,14 +1027,14 @@
                     }
                 );
 
-                soTL.to({}, { duration: 0.2 });
+                soTL.to({}, { duration: 0.5 });
 
                 if (contentContainer) {
                     soTL.to(contentContainer, {
                         yPercent: -100,
                         autoAlpha: 0,
                         ease: "power2.out",
-                        duration: 0.8
+                        duration: 1
                     });
                 }
 
@@ -1081,7 +1081,7 @@
                     })
                 );
 
-                soTL.to({}, { duration: 1 });
+                soTL.to({}, { duration: 0.5 });
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorS2No3, {
