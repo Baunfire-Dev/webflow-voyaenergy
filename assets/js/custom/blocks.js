@@ -935,7 +935,7 @@
 
                     const soTL = gsap.timeline({
                         scrollTrigger: {
-                            trigger: self,
+                            trigger: sceneContainer,
                             pin: sceneContainer,
                             start: "top top",
                             end: `+=${scenes.length * 100}%`,
