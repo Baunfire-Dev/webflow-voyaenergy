@@ -1130,6 +1130,7 @@
                 const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
 
                 const subGenerators = [generator1, generator2, generator4, generator5];
+
                 const secondaryGenerators = [generator2, generator4];
                 const secondaryOverlays = [generator2.querySelector(".so-gen-overlay"), generator4.querySelector(".so-gen-overlay")];
 
@@ -1163,10 +1164,10 @@
 
                 soTL.fromTo(secondaryOverlays,
                     {
-                        autoAlpha: 0
+                        autoAlpha: 1
                     },
                     {
-                        autoAlpha: 1,
+                        autoAlpha: 0,
                         ease: "power2.out",
                         duration: 1,
                     },
@@ -1184,10 +1185,10 @@
 
                 soTL.fromTo(tertiaryOverlays,
                     {
-                        autoAlpha: 0
+                        autoAlpha: 1
                     },
                     {
-                        autoAlpha: 1,
+                        autoAlpha: 0,
                         ease: "power2.out",
                         duration: 1,
                     },
