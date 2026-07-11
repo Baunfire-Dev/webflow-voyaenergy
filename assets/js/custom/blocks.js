@@ -930,13 +930,13 @@
                 els.forEach(self => {
                     handleEntrance(self);
 
-                    const inner = self.querySelector(".so-inner");
+                    const sceneContainer = self.querySelector(".so-scenes");
                     const scenes = document.querySelectorAll(".so-scene");
 
                     const soTL = gsap.timeline({
                         scrollTrigger: {
                             trigger: self,
-                            pin: inner,
+                            pin: sceneContainer,
                             start: "top top",
                             end: `+=${scenes.length * 100}%`,
                             pinSpacing: true,
