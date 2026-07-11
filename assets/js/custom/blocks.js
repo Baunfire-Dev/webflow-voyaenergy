@@ -1138,6 +1138,7 @@
 
                 soTL.add(
                     Flip.from(genStates, {
+                        autoAlpha: 0,
                         duration: 1,
                         ease: "power2.out",
                         scale: true,
