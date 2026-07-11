@@ -931,7 +931,7 @@
                     handleEntrance(self);
 
                     const inner = self.querySelector(".so-inner");
-                    const scenes = self.querySelector(".so-scene");
+                    const scenes = document.querySelectorAll(".so-scene");
 
                     const soTL = gsap.timeline({
                         scrollTrigger: {
