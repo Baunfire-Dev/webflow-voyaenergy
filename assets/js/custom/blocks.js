@@ -1025,7 +1025,7 @@
                 }
 
                 if (generator) {
-                    soTL.to(generator, {
+                    soTL.to(generatorMain, {
                         yPercent: -90,
                         ease: "power2.out",
                         duration: 1.2
