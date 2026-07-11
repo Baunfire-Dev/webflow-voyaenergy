@@ -746,7 +746,7 @@
 
                 switchTL.fromTo(main,
                     { backgroundColor: "#fff" },
-                    { backgroundColor: "#1a1a1a", ease: "none", immediateRender: true, overwrite: true },
+                    { backgroundColor: "#1a1a1a", ease: "none" },
                     "color-transition"
                 );
             };
