@@ -933,33 +933,54 @@
             };
 
             const handleEntrance = (self) => {
-                const heading = self.querySelector(".hiw-title");
-                if (!heading) return;
+                const sceneOne = self.querySelector(".so-scene.is-s1");
+                const logo = sceneOne.querySelector(".so-icon");
+                const heading = sceneOne.querySelector(".so-title");
+                const para = sceneOne.querySelector(".so-para");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        start: "top 90%",
+                        start: baunfire.anim.start,
+                        once: true,
                     }
                 });
 
-                SplitText.create(heading, {
-                    type: "words",
-                    mask: "words",
-                    autoSplit: true,
-                    onSplit(split) {
-                        heading.style.visibility = "visible";
-                        heading.style.opacity = "1";
-                        gsap.set(split.words, { willChange: "transform" });
-                        return introTL.fromTo(split.words,
-                            { y: "100%" },
-                            {
-                                y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.08,
-                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
-                            },
-                        );
-                    },
-                });
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<0.2"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
             };
 
             const handleBGSwitch = (self) => {
