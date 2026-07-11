@@ -1159,6 +1159,7 @@
                         ease: "none",
                         scale: true,
                     }),
+                    "<0.4"
                 );
 
                 soTL.fromTo(secondaryOverlays,
