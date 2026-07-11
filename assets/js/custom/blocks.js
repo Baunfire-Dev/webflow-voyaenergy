@@ -1002,7 +1002,7 @@
 
             const handleSceneOne = (self, soTL) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
-                const sceneTwo = self.querySelector(".sco-scene.is-s2");
+                const sceneTwo = self.querySelector(".so-scene.is-s2");
 
                 const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
