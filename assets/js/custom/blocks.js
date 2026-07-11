@@ -918,7 +918,7 @@
             const activateDot = (dot, dotContainer, active = true) => {
                 gsap.timeline()
                     .to(dotContainer, {
-                        rotation: active ? "=-75" : "=+75",
+                        rotation: active ? "=-75deg" : "=+75deg",
                         transformOrigin: "50% 50%",
                         duration: 0.6,
                         ease: "power2.inOut"
