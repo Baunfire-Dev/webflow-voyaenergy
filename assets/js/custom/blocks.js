@@ -722,8 +722,6 @@
                         start: "top 90%",
                         end: "top 70%",
                         scrub: 1,
-                        markers: true,
-                        onLeaveBack: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                     }
                 });
 
@@ -804,6 +802,7 @@
                             anticipatePin: 1,
                             invalidateOnRefresh: true,
                             pinSpacing: true,
+                            onLeaveBack: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                         }
                     });
 
