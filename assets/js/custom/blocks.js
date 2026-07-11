@@ -1021,6 +1021,8 @@
                     }
                 );
 
+                soTL.to({}, { duration: 0.2 });
+
                 if (contentContainer) {
                     soTL.to(contentContainer, {
                         yPercent: -100,
@@ -1035,7 +1037,7 @@
                         duration: 1.2,
                         ease: "power2.out",
                     }),
-                    "<0.2"
+                    "<0.3"
                 );
 
                 soTL.add(
