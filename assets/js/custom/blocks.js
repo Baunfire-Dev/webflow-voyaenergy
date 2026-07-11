@@ -890,8 +890,8 @@
                                 containerAnimation: master,
                                 start: "left center",
                                 end: "right center",
-                                onEnter: () => activateDot(dot),
-                                onLeaveBack: () => activateDot(dot, false),
+                                onEnter: () => activateDot(dot, dotContainer),
+                                onLeaveBack: () => activateDot(dot, dotContainer, false),
                             });
                         }
 
@@ -915,8 +915,19 @@
                 });
             };
 
-            const activateDot = (dot, active = true) => {
-                gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", rotation: "-=72", duration: 0.6, ease: "power2.out" });
+            const activateDot = (dot, dotContainer, rotation, active = true) => {
+                gsap.timeline()
+                    .to(dotContainer, {
+                        rotation,
+                        transformOrigin: "50% 50%",
+                        duration: 0.6,
+                        ease: "power2.inOut"
+                    })
+                    .to(dot, {
+                        fill: active ? "#f1b510" : "#c7c7c7",
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "<");
             };
 
             script();
@@ -1131,7 +1142,7 @@
                     Flip.fit(gen, generator3, { scale: true });
                 });
 
-                gsap.set(secondaryGenerators, { opacity: 0 }); 
+                gsap.set(secondaryGenerators, { opacity: 0 });
 
                 soTL.add(
                     Flip.to(genStates, {
