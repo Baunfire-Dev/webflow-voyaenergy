@@ -5,6 +5,7 @@
             this.heroHomepage();
             this.bridgeEBTL();
             this.howItWorks();
+            this.systemOverview();
             this.contentGridItems();
             this.contactBanner();
         },
@@ -679,6 +680,255 @@
                 gsap.set(head, {
                     paddingTop: `${paddingTop / rootFontSize}rem`,
                     paddingBottom: `${paddingBottom / rootFontSize}rem`,
+                });
+            };
+
+            const handleEntrance = (self) => {
+                const heading = self.querySelector(".hiw-title");
+                if (!heading) return;
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: "top 90%",
+                    }
+                });
+
+                SplitText.create(heading, {
+                    type: "words",
+                    mask: "words",
+                    autoSplit: true,
+                    onSplit(split) {
+                        heading.style.visibility = "visible";
+                        heading.style.opacity = "1";
+                        gsap.set(split.words, { willChange: "transform" });
+                        return introTL.fromTo(split.words,
+                            { y: "100%" },
+                            {
+                                y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.08,
+                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                            },
+                        );
+                    },
+                });
+            };
+
+            const handleBGSwitch = (self) => {
+                const head = self.querySelector(".hiw-head");
+                if (!head) return;
+
+                const switchTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: head,
+                        start: "top 90%",
+                        end: "top 70%",
+                        scrub: 1,
+                    }
+                });
+
+                const title = head.querySelector(".hiw-title");
+                const dots = head.querySelectorAll("svg path");
+                const main = document.querySelector("main.g-main");
+
+                switchTL.addLabel("color-transition")
+
+                if (title) {
+                    switchTL.to(title, {
+                        color: "#fff",
+                        ease: "none"
+                    }, "color-transition");
+                }
+
+                switchTL.to(dots, {
+                    fill: "#BCBCBC",
+                    ease: "none"
+                }, "color-transition");
+
+                switchTL.fromTo(main,
+                    { backgroundColor: "#fff" },
+                    { backgroundColor: "#1a1a1a", ease: "none", immediateRender: true, overwrite: true },
+                    "color-transition"
+                );
+            };
+
+            const animateFirstSlide = (panel) => {
+                const els = [
+                    panel.querySelector(".hiw-c-brow"),
+                    panel.querySelector(".hiw-c-title"),
+                    panel.querySelector(".hiw-para"),
+                ];
+
+                return gsap.fromTo(els,
+                    { y: 40, autoAlpha: 0 },
+                    {
+                        y: 0,
+                        autoAlpha: 1,
+                        duration: 0.6,
+                        ease: "power3.out",
+                        stagger: 0.08,
+                        scrollTrigger: {
+                            trigger: panel.closest(".hiw-body"),
+                            start: baunfire.anim.start,
+                        }
+                    }
+                );
+            };
+
+            const handleSlides = (self) => {
+                const body = self.querySelector(".hiw-body");
+                if (!body) return;
+
+                const main = document.querySelector("main.g-main");
+                const slides = self.querySelector(".hiw-slides");
+                const panels = gsap.utils.toArray(".hiw-slide", slides);
+                const dotContainer = self.querySelector(".hiw-pagination");
+                const dots = dotContainer.querySelectorAll("svg circle");
+                if (!panels.length) return;
+
+                gsap.matchMedia().add("(min-width: 768px)", () => {
+                    const INTRO_DUR = 0.3;
+                    const H_START = INTRO_DUR;
+                    const H_DUR = panels.length - 1;
+
+                    const covers = self.querySelectorAll(".hiw-cover");
+                    const firstImg = panels[0].querySelector(".hiw-img");
+
+                    const master = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: body,
+                            start: "top top",
+                            end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
+                            scrub: 1,
+                            pin: body,
+                            anticipatePin: 1,
+                            invalidateOnRefresh: true,
+                            pinSpacing: true,
+                        }
+                    });
+
+                    master.to(covers, {
+                        scale: 1.4,
+                        ease: "none",
+                        duration: INTRO_DUR,
+                    }, 0);
+
+                    master.fromTo(dotContainer,
+                        {
+                            autoAlpha: 0,
+                            scale: 0,
+                            rotate: '45deg',
+                        },
+                        {
+                            scale: 1,
+                            rotate: 0,
+                            autoAlpha: 1,
+                            ease: "none",
+                            duration: 0.4
+                        },
+                        "<"
+                    );
+
+                    master.to(panels, {
+                        xPercent: -100 * (panels.length - 1),
+                        ease: "none",
+                        duration: H_DUR,
+                        onReverseComplete: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
+                    }, H_START);
+
+                    master.fromTo(main,
+                        { backgroundColor: "#1a1a1a" },
+                        { backgroundColor: "#fff", ease: "none", duration: 0.05, immediateRender: false },
+                        H_START
+                    );
+
+                    if (firstImg) {
+                        master.fromTo(firstImg,
+                            { xPercent: 0 },
+                            { xPercent: 14, ease: "none", duration: 1 },
+                            H_START
+                        );
+                    }
+
+                    animateFirstSlide(panels[0]);
+
+                    panels.slice(1).forEach((panel, index, arr) => {
+                        const isLast = index === arr.length - 1;
+
+                        const contentContainer = panel.querySelector(".hiw-content");
+                        const brow = panel.querySelector(".hiw-c-brow");
+                        const title = panel.querySelector(".hiw-c-title");
+                        const para = panel.querySelector(".hiw-para");
+                        const img = panel.querySelector(".hiw-img");
+
+                        const dot = dots[index + 1];
+
+                        const enterTL = gsap.timeline({ paused: true });
+
+                        enterTL
+                            .fromTo([brow, title, para],
+                                { x: 60, autoAlpha: 0 },
+                                {
+                                    x: 0,
+                                    autoAlpha: 1,
+                                    duration: 1,
+                                    ease: "power3.out",
+                                    stagger: 0.08,
+                                }
+                            );
+
+                        ScrollTrigger.create({
+                            trigger: contentContainer,
+                            containerAnimation: master,
+                            start: "left 60%",
+                            end: "right center",
+                            animation: enterTL,
+                        });
+
+                        if (dot) {
+                            ScrollTrigger.create({
+                                trigger: panel,
+                                containerAnimation: master,
+                                start: "left center",
+                                end: "right center",
+                                onEnter: () => activateDot(dot),
+                                onLeaveBack: () => activateDot(dot, false),
+                            });
+                        }
+
+                        if (img) {
+                            gsap.fromTo(img,
+                                { xPercent: 0 },
+                                {
+                                    xPercent: 14,
+                                    ease: "none",
+                                    scrollTrigger: {
+                                        trigger: panel,
+                                        containerAnimation: master,
+                                        start: "left center",
+                                        end: isLast ? "right right" : "right 10%",
+                                        scrub: 1
+                                    }
+                                }
+                            );
+                        }
+                    });
+                });
+            };
+
+            const activateDot = (dot, active = true) => {
+                gsap.to(dot, { fill: active ? "#f1b510" : "#c7c7c7", duration: 0.6, ease: "power2.out" });
+            };
+
+            script();
+        },
+
+        systemOverview() {
+            const script = () => {
+                const els = document.querySelectorAll("section.system-overview");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
                 });
             };
 
