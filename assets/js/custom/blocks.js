@@ -1035,14 +1035,16 @@
                     duration: 1.2
                 }, "<0.2");
 
-                soTL.add(
-                    Flip.fit(generatorMain, generatorShadow, {
-                        duration: 1,
+                soTL.add(() => {
+                    const sub = gsap.timeline();
+                    sub.add(Flip.fit(elementToMove, targetElement, {
+                        duration: 0.6,
                         ease: "power2.inOut",
                         scale: true,
                         absolute: true,
-                    })
-                );
+                    }));
+                    return sub;
+                });
 
                 soTL.to({}, { duration: 1 });
             };
