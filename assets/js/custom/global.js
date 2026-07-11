@@ -177,48 +177,6 @@
             document.body.appendChild(script);
         },
 
-        // importTippyScript(callback) {
-        //     if (typeof tippy !== "undefined") {
-        //         callback?.();
-        //         return;
-        //     }
-
-        //     if (this._tippyLoading) {
-        //         this._tippyQueue.push(callback);
-        //         return;
-        //     }
-
-        //     this._tippyLoading = true;
-        //     this._tippyQueue = [];
-
-        //     this.fancyLog("Loading Tippy...");
-
-        //     const link = document.createElement("link");
-        //     link.rel = "stylesheet";
-        //     link.href = `${templateURL}/assets/css/external/tippy.css`;
-        //     link.dataset.tippyCss = "true";
-        //     document.head.appendChild(link);
-
-        //     const script = document.createElement("script");
-        //     script.src = `${templateURL}/assets/js/external/tippy-bundle.umd.min.js`;
-        //     script.defer = true;
-
-        //     script.onload = () => {
-        //         this.fancyLog('Tippy loaded.');
-        //         this._tippyLoading = false;
-        //         callback?.();
-        //         this._tippyQueue.forEach(cb => cb?.());
-        //         this._tippyQueue = [];
-        //     };
-
-        //     script.onerror = () => {
-        //         this._tippyLoading = false;
-        //         console.error("Failed to load Tippy.");
-        //     };
-
-        //     document.body.appendChild(script);
-        // },
-
         handleTextCount(el, duration = 0.8, withTrigger = false, parent) {
             const counter = el.querySelector("[data-amount]");
             const rawAmount = counter.dataset.amount.toString();
