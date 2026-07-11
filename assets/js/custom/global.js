@@ -197,6 +197,7 @@
             };
 
             if (withTrigger && parent) {
+                props.once = true;
                 props.scrollTrigger = {
                     trigger: parent,
                     start: baunfire.anim.start
