@@ -1035,7 +1035,7 @@
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
-                        duration: 1,
+                        duration: 1.4,
                         ease: "power2.out",
                     }),
                     "<0.3"
@@ -1061,7 +1061,6 @@
                             ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
-                                console.log(panel);
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
