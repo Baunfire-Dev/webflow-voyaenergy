@@ -1002,11 +1002,16 @@
 
             const handleSceneOne = (self, soTL) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
+                const sceneTwo = self.querySelector(".sco-scene.is-s2");
+
                 const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
+
                 const generatorMain = sceneOne.querySelector(".so-gen.is-s1");
                 const generatorShadow1 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-1");
                 const generatorShadow2 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-2");
+                const generatorS2No3 = sceneTwo.querySelector(".so-gen.is-s2.is-no-3");
+
                 const panel = sceneOne.querySelector(".so-panel");
 
                 soTL.to({}, { duration: 0.2 });
@@ -1068,8 +1073,35 @@
                     );
                 }
 
+                soTL.add(
+                    Flip.fit(generatorMain, generatorShadow2, {
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scale: true
+                    })
+                );
 
                 soTL.to({}, { duration: 1 });
+
+                soTL.add(
+                    Flip.fit(generatorMain, generatorS2No3, {
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scale: true
+                    })
+                );
+
+                if (panel) {
+                    soTL.to(panel,
+                        {
+                            y: 80,
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.6,
+                        },
+                        "<0.4"
+                    );
+                }
             };
 
             script();
