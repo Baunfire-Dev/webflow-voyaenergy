@@ -1002,17 +1002,34 @@
 
             const handleSceneOne = (self, soTL) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
+                const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
-                const generator = sceneOne.querySelector(".so-gen");
+                const generatorMain = sceneOne.querySelector(".so-gen.is-s1");
+                const generatorShadow = sceneOne.querySelector(".so-gen.is-s1-shadow");
 
-                soTL.to({}, { duration: 0.3 });
+                soTL.to({}, { duration: 0.2 });
+
+                soTL.to(box, {
+                    clipPath: "inset(0% 0% 0% 0%)",
+                    duration: 0.8,
+                    ease: "none"
+                });
 
                 if (contentContainer) {
-                    soTL.to(contentContainer, { yPercent: -100, autoAlpha: 0, ease: "power2.out", duration: 0.8 });
+                    soTL.to(contentContainer, {
+                        yPercent: -100,
+                        autoAlpha: 0,
+                        ease: "power2.out",
+                        duration: 0.8
+                    });
                 }
 
                 if (generator) {
-                    soTL.to(generator, { yPercent: -90, ease: "power2.out", duration: 1.2 }, "<0.2");
+                    soTL.to(generator, {
+                        yPercent: -90,
+                        ease: "power2.out",
+                        duration: 1.2
+                    }, "<0.2");
                 }
 
                 soTL.to({}, { duration: 1 });
