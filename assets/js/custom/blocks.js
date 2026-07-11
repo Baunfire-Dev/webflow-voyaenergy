@@ -1008,11 +1008,11 @@
                 soTL.to({}, { duration: 0.3 });
 
                 if (contentContainer) {
-                    soTL.to(contentContainer, { yPercent: -100, autoAlpha: 0, ease: "none", duration: 0.8 });
+                    soTL.to(contentContainer, { yPercent: -100, autoAlpha: 0, ease: "power2.out", duration: 0.8 });
                 }
 
                 if (generator) {
-                    soTL.to(generator, { yPercent: -100, ease: "none", duration: 1.2 }, "<0.2");
+                    soTL.to(generator, { yPercent: -100, ease: "power2.out", duration: 1.2 }, "<0.2");
                 }
 
                 soTL.to({}, { duration: 1 });
