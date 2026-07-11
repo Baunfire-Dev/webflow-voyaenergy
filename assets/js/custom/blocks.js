@@ -1122,34 +1122,24 @@
                 const text = sceneTwo.querySelector(".so-scene-para");
 
                 const genStates = Flip.getState(secondaryGenerators, {
-                    props: "transform",
+                    props: "transform,opacity, visibility",
                 });
 
                 secondaryGenerators.forEach(gen => {
-                    soTL.add(
-                        Flip.fit(gen, generator3, {
-                            duration: 0,
-                            ease: "none",
-                            scale: true
-                        }),
-                        "0"
-                    );
+                    Flip.fit(gen, generator3, { scale: true });
                 });
 
-                soTL.add(
-                    Flip.fromTo(genStates,
-                        {
-                            autoAlpha: 0
-                        },
-                        {
-                            autoAlpha: 1,
-                            duration: 1,
-                            ease: "power2.out",
-                            scale: true,
-                        }
-                    )
-                );
+                gsap.set(secondaryGenerators, { autoAlpha: 0 }); 
 
+                soTL.add(
+                    Flip.to(genStates, {
+                        duration: 1,
+                        ease: "power2.out",
+                        scale: true,
+                    }),
+                    "0"
+                );
+                
                 if (text) {
                     soTL.fromTo(text,
                         {
