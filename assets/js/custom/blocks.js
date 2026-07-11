@@ -865,7 +865,7 @@
 
                         enterTL
                             .fromTo([brow, title, para],
-                                { x: 40, autoAlpha: 0 },
+                                { x: 60, autoAlpha: 0 },
                                 {
                                     x: 0,
                                     autoAlpha: 1,
