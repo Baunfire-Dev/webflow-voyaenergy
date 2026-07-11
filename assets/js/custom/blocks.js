@@ -1005,8 +1005,8 @@
                 const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
                 const generatorMain = sceneOne.querySelector(".so-gen.is-s1");
-                const generatorShadow1 = sceneOne.querySelector(".so-gen.is-s1-shadow-1");
-                const generatorShadow2 = sceneOne.querySelector(".so-gen.is-s1-shadow-2");
+                const generatorShadow1 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-1");
+                const generatorShadow2 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-2");
 
                 soTL.to({}, { duration: 0.2 });
 
