@@ -811,7 +811,7 @@
                         ease: "none",
                         duration: INTRO_DUR
                     }, 0);
-                    
+
                     master.fromTo(dotContainer,
                         {
                             autoAlpha: 0,
@@ -832,9 +832,13 @@
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
                         duration: H_DUR,
-                        onStart: () => gsap.set(main, { backgroundColor: "#fff" }),
-                        onReverseComplete: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                     }, H_START);
+
+                    master.fromTo(main,
+                        { backgroundColor: "#1a1a1a" },
+                        { backgroundColor: "#fff", ease: "none", immediateRender: false, duration: 0.05 },
+                        H_START
+                    );
 
                     if (firstImg) {
                         master.fromTo(firstImg,
