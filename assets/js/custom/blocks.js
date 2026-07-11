@@ -1061,6 +1061,7 @@
                             ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
+                                console.log(panel);
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
