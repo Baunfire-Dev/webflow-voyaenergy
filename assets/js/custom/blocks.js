@@ -915,10 +915,10 @@
                 });
             };
 
-            const activateDot = (dot, dotContainer, rotation, active = true) => {
+            const activateDot = (dot, dotContainer, active = true) => {
                 gsap.timeline()
                     .to(dotContainer, {
-                        rotation,
+                        rotation: active ? "=-75" : "=+75",
                         transformOrigin: "50% 50%",
                         duration: 0.6,
                         ease: "power2.inOut"
