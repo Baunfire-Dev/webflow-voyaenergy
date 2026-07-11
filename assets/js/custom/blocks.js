@@ -1137,7 +1137,6 @@
                         ease: "power2.out",
                         scale: true,
                     }),
-                    "0"
                 );
 
                 if (text) {
