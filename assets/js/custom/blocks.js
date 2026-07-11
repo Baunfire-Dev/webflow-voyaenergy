@@ -1171,7 +1171,7 @@
                         ease: "power2.out",
                         duration: 1,
                     },
-                    "<"
+                    "<0.4"
                 );
 
                 soTL.add(
@@ -1192,7 +1192,7 @@
                         ease: "power2.out",
                         duration: 1,
                     },
-                    "<"
+                    "<0.4"
                 );
 
                 if (text) {
