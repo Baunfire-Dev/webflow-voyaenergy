@@ -1037,9 +1037,9 @@
 
                 soTL.add(() => {
                     const sub = gsap.timeline();
-                    sub.add(Flip.fit(elementToMove, targetElement, {
+                    sub.add(Flip.fit(generatorMain, generatorShadow, {
                         duration: 1,
-                        ease: "power2.inOut",
+                        ease: "power2.Out",
                         scale: true,
                         absolute: true,
                     }));
