@@ -722,7 +722,8 @@
                         start: "top 90%",
                         end: "top 70%",
                         scrub: 1,
-                        onLeaveBack: () => gsap.set(main, { backgroundColor: "" }),
+                        markers: true,
+                        onLeaveBack: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                     }
                 });
 
