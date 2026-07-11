@@ -1064,7 +1064,8 @@
                         duration: 0.8,
                         ease: "none",
                         scale: true
-                    })
+                    }),
+                    "<0.8"
                 );
 
                 if (panel) {
