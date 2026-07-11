@@ -1050,7 +1050,7 @@
                 );
 
                 if (panel) {
-                    soTL.to(panel,
+                    soTL.fromTo(panel,
                         {
                             y: -40,
                             autoAlpha: 0,
