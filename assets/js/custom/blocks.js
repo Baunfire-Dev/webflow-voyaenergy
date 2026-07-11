@@ -938,7 +938,7 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const PX_PER_SEC = 500;
+                    const PX_PER_SEC = 600;
                     const soTL = gsap.timeline();
 
                     const sceneContainer = self.querySelector(".so-scenes");
