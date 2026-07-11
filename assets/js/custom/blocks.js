@@ -1009,11 +1009,16 @@
 
                 soTL.to({}, { duration: 0.2 });
 
-                soTL.to(box, {
-                    clipPath: "inset(0px 0px 0px 0px round 0px)",
-                    duration: 0.8,
-                    ease: "none"
-                });
+                soTL.fromTo(box,
+                    {
+                        clipPath: "inset(5rem 4rem 5rem 4rem round 0.5rem)",
+                    },
+                    {
+                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
+                        duration: 0.8,
+                        ease: "none"
+                    }
+                );
 
                 if (contentContainer) {
                     soTL.to(contentContainer, {
