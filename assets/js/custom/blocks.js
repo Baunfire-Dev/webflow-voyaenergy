@@ -1010,7 +1010,7 @@
                 soTL.to({}, { duration: 0.2 });
 
                 soTL.to(box, {
-                    clipPath: "inset(0% 0% 0% 0%)",
+                    clipPath: "inset(0px 0px 0px 0px round 0px)",
                     duration: 0.8,
                     ease: "none"
                 });
