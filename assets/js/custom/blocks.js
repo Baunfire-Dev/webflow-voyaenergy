@@ -1052,13 +1052,13 @@
                 if (panel) {
                     soTL.fromTo(panel,
                         {
-                            y: -40,
+                            y: 80,
                             autoAlpha: 0,
                         },
                         {
                             y: 0,
                             autoAlpha: 1,
-                            ease: "power2.out",
+                            ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
                                 baunfire.Global.handleTextCount(panel);
