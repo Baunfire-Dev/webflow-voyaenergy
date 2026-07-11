@@ -1007,6 +1007,7 @@
                 const generatorMain = sceneOne.querySelector(".so-gen.is-s1");
                 const generatorShadow1 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-1");
                 const generatorShadow2 = sceneOne.querySelector(".so-gen-shadow.is-s1-shadow-2");
+                const panel = sceneOne.querySelector(".so-panel");
 
                 soTL.to({}, { duration: 0.2 });
 
@@ -1047,6 +1048,23 @@
                         scale: true
                     })
                 );
+
+                if (panel) {
+                    soTL.to(panel,
+                        {
+                            y: -40,
+                            autoAlpha: 0,
+                        },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            ease: "power2.out",
+                            duration: 0.8
+                        },
+                        "<0.4"
+                    );
+                }
+
 
                 soTL.to({}, { duration: 1 });
             };
