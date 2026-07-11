@@ -1024,7 +1024,7 @@
                     });
                 }
 
-                if (generator) {
+                if (generatorMain) {
                     soTL.to(generatorMain, {
                         yPercent: -90,
                         ease: "power2.out",
