@@ -836,7 +836,7 @@
 
                     master.fromTo(main,
                         { backgroundColor: "#1a1a1a" },
-                        { backgroundColor: "#fff", ease: "none", duration: 0.05, overwrite: true },
+                        { backgroundColor: "#fff", ease: "none", duration: 0.05, immediateRender: false, overwrite: true },
                         H_START
                     );
 
