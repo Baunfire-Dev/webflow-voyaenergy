@@ -1046,6 +1046,7 @@
                         ease: "power2.out",
                         scale: true,
                         absolute: true,
+                        immediateRender: false
                     })
                 );
 
