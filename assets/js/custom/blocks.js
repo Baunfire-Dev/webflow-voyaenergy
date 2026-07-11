@@ -928,24 +928,24 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleEntrance(self);
+                    const PX_PER_SEC = 2000;
+                    const soTL = gsap.timeline();
 
                     const sceneContainer = self.querySelector(".so-scenes");
-                    const scenes = document.querySelectorAll(".so-scene");
 
-                    const soTL = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: sceneContainer,
-                            pin: sceneContainer,
-                            start: "top top",
-                            end: `+=${scenes.length * 100}%`,
-                            pinSpacing: true,
-                            scrub: 1,
-                            invalidateOnRefresh: true,
-                        }
-                    });
-
+                    handleEntrance(self);
                     handleSceneOne(self, soTL);
+
+                    ScrollTrigger.create({
+                        animation: soTL,
+                        trigger: sceneContainer,
+                        pin: sceneContainer,
+                        start: "top top",
+                        end: () => "+=" + soTL.duration() * PX_PER_SEC,
+                        pinSpacing: true,
+                        scrub: true,
+                        invalidateOnRefresh: true,
+                    });
                 });
             };
 
@@ -1008,7 +1008,7 @@
                 soTL.to({}, { duration: 1 });
 
                 if (contentContainer) {
-                    soTL.to(contentContainer, { yPercent: -40, autoAlpha: 0, ease: "none", duration: 0.8 });
+                    soTL.to(contentContainer, { yPercent: -100, autoAlpha: 0, ease: "none", duration: 0.8 });
                 }
 
                 if (generator) {
