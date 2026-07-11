@@ -802,14 +802,13 @@
                             anticipatePin: 1,
                             invalidateOnRefresh: true,
                             pinSpacing: true,
-                            onLeaveBack: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                         }
                     });
 
                     master.to(covers, {
                         scale: 1.4,
                         ease: "none",
-                        duration: INTRO_DUR
+                        duration: INTRO_DUR,
                     }, 0);
 
                     master.fromTo(dotContainer,
@@ -832,6 +831,7 @@
                         xPercent: -100 * (panels.length - 1),
                         ease: "none",
                         duration: H_DUR,
+                        onReverseComplete: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
                     }, H_START);
 
                     master.fromTo(main,
