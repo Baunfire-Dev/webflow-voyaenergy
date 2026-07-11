@@ -726,8 +726,6 @@
                     }
                 });
 
-                const rootStyles = getComputedStyle(document.documentElement);
-
                 const title = head.querySelector(".hiw-title");
                 const dots = head.querySelectorAll("svg path");
                 const main = document.querySelector("main.g-main");
@@ -736,7 +734,7 @@
 
                 if (title) {
                     switchTL.to(title, {
-                        color: rootStyles.getPropertyValue('--_colors---white'),
+                        color: "#fff",
                         ease: "none"
                     }, "color-transition");
                 }
@@ -746,10 +744,11 @@
                     ease: "none"
                 }, "color-transition");
 
-                switchTL.to(main, {
-                    backgroundColor: rootStyles.getPropertyValue('--_colors---carbon-black'),
-                    ease: "none"
-                }, "color-transition");
+                switchTL.fromTo(main,
+                    { backgroundColor: "#fff" },
+                    { backgroundColor: "#1a1a1a", ease: "none", immediateRender: false, duration: 0.05, overwrite: true },
+                    "color-transition"
+                );
             };
 
             const animateFirstSlide = (panel) => {
@@ -837,7 +836,7 @@
 
                     master.fromTo(main,
                         { backgroundColor: "#1a1a1a" },
-                        { backgroundColor: "#fff", ease: "none", immediateRender: false, duration: 0.05 },
+                        { backgroundColor: "#fff", ease: "none", immediateRender: false, duration: 0.05, overwrite: true },
                         H_START
                     );
 
