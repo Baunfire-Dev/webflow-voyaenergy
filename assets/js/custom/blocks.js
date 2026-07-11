@@ -722,6 +722,7 @@
                         start: "top 90%",
                         end: "top 70%",
                         scrub: 1,
+                        onLeaveBack: () => gsap.set(main, { backgroundColor: "" }),
                     }
                 });
 
