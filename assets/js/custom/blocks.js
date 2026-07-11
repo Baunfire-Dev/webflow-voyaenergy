@@ -1005,7 +1005,8 @@
                 const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
                 const generatorMain = sceneOne.querySelector(".so-gen.is-s1");
-                const generatorShadow = sceneOne.querySelector(".so-gen.is-s1-shadow");
+                const generatorShadow1 = sceneOne.querySelector(".so-gen.is-s1-shadow-1");
+                const generatorShadow2 = sceneOne.querySelector(".so-gen.is-s1-shadow-2");
 
                 soTL.to({}, { duration: 0.2 });
 
@@ -1030,13 +1031,22 @@
                 }
 
                 soTL.add(
-                    Flip.fit(generatorMain, generatorShadow, {
-                        duration: 1.4,
-                        ease: "back.out(1.2)",
+                    Flip.fit(generatorMain, generatorShadow1, {
+                        duration: 1.2,
+                        ease: "power2.out",
                         scale: true,
                         absolute: true,
                     }),
                     "<0.2"
+                );
+
+                soTL.add(
+                    Flip.fit(generatorMain, generatorShadow2, {
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scale: true,
+                        absolute: true,
+                    }),
                 );
 
                 soTL.to({}, { duration: 1 });
