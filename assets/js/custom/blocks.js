@@ -825,7 +825,7 @@
                             ease: "none",
                             duration: 0.4
                         },
-                        "<0.1"
+                        "<"
                     );
 
                     master.to(panels, {
