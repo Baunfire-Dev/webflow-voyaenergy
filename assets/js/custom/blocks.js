@@ -890,8 +890,8 @@
                                 containerAnimation: master,
                                 start: "left center",
                                 end: "right center",
-                                onEnter: () => activateDot(dot, dotContainer),
-                                onLeaveBack: () => activateDot(dot, dotContainer, false),
+                                onEnter: () => activateDot(dot),
+                                onLeaveBack: () => activateDot(dot, false),
                             });
                         }
 
@@ -915,11 +915,10 @@
                 });
             };
 
-            const activateDot = (dot, dotContainer, active = true) => {
+            const activateDot = (dot, active = true) => {
                 gsap.timeline()
-                    .to(dotContainer, {
-                        rotation: active ? "=-75deg" : "=+75deg",
-                        transformOrigin: "50% 50%",
+                    .to(dot.parentElement, {
+                        rotation: active ? "=-75" : "=+75",
                         duration: 0.6,
                         ease: "power2.inOut"
                     })
