@@ -1008,7 +1008,7 @@
                 soTL.to({}, { duration: 1 });
 
                 if (contentContainer) {
-                    soTL.to(content, { yPercent: -40, autoAlpha: 0, ease: "none", duration: 0.8 });
+                    soTL.to(contentContainer, { yPercent: -40, autoAlpha: 0, ease: "none", duration: 0.8 });
                 }
 
                 if (generator) {
