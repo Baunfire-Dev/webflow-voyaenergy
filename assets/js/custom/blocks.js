@@ -1029,22 +1029,15 @@
                     });
                 }
 
-                soTL.to(generatorMain, {
-                    yPercent: -90,
-                    ease: "power2.out",
-                    duration: 1.2
-                }, "<0.2");
-
-                soTL.add(() => {
-                    const sub = gsap.timeline();
-                    sub.add(Flip.fit(generatorMain, generatorShadow, {
-                        duration: 1,
-                        ease: "power2.Out",
+                soTL.add(
+                    Flip.fit(generatorMain, generatorShadow, {
+                        duration: 1.4,
+                        ease: "back.out(1.2)",
                         scale: true,
                         absolute: true,
-                    }));
-                    return sub;
-                });
+                    }),
+                    "<0.2"
+                );
 
                 soTL.to({}, { duration: 1 });
             };
