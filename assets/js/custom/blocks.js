@@ -1046,7 +1046,7 @@
                         ease: "power2.out",
                         scale: true,
                         absolute: true,
-                    }),
+                    })
                 );
 
                 soTL.to({}, { duration: 1 });
