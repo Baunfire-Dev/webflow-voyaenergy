@@ -853,6 +853,7 @@
                     panels.slice(1).forEach((panel, index, arr) => {
                         const isLast = index === arr.length - 1;
 
+                        const contentContainer = panel.querySelector(".hiw-content");
                         const brow = panel.querySelector(".hiw-c-brow");
                         const title = panel.querySelector(".hiw-c-title");
                         const para = panel.querySelector(".hiw-para");
@@ -868,14 +869,14 @@
                                 {
                                     x: 0,
                                     autoAlpha: 1,
-                                    duration: 0.6,
-                                    ease: "power2.out",
+                                    duration: 1,
+                                    ease: "power3.out",
                                     stagger: 0.08,
                                 }
                             );
 
                         ScrollTrigger.create({
-                            trigger: panel,
+                            trigger: contentContainer,
                             containerAnimation: master,
                             start: "left 60%",
                             end: "right center",
