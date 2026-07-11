@@ -746,7 +746,7 @@
 
                 switchTL.fromTo(main,
                     { backgroundColor: "#fff" },
-                    { backgroundColor: "#1a1a1a", ease: "none" },
+                    { backgroundColor: "#1a1a1a", ease: "none", immediateRender: true, overwrite: true },
                     "color-transition"
                 );
             };
@@ -836,7 +836,7 @@
 
                     master.fromTo(main,
                         { backgroundColor: "#1a1a1a" },
-                        { backgroundColor: "#fff", ease: "none", duration: 0.05, immediateRender: false, overwrite: true },
+                        { backgroundColor: "#fff", ease: "none", duration: 0.05, immediateRender: false },
                         H_START
                     );
 
