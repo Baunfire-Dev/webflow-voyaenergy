@@ -1137,12 +1137,17 @@
                 });
 
                 soTL.add(
-                    Flip.from(genStates, {
-                        autoAlpha: 0,
-                        duration: 1,
-                        ease: "power2.out",
-                        scale: true,
-                    })
+                    Flip.fromTo(genStates,
+                        {
+                            autoAlpha: 0
+                        },
+                        {
+                            autoAlpha: 1,
+                            duration: 1,
+                            ease: "power2.out",
+                            scale: true,
+                        }
+                    )
                 );
 
                 if (text) {
