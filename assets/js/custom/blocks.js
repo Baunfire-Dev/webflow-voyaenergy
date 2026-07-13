@@ -1381,11 +1381,15 @@
                     "<0.4"
                 );
 
-                soTL.add(
-                    Flip.to(generatorContainerState, {
-                        duration: 0.6,
+                soTL.to(generatorContainer,
+                    {
+                        scale: 1
+                    },
+                    {
+                        scale: 0.4,
                         ease: "power1.out",
-                    })
+                        duration: 0.6,
+                    }
                 );
 
                 if (text) {
