@@ -1352,7 +1352,7 @@
 
                 soTL.add(
                     Flip.fit(generatorContainer, generatorContainerShadow, {
-                        duration: 1,
+                        duration: 0.8,
                         opacity: 1,
                         ease: "power1.out",
                         scale: true
@@ -1366,7 +1366,8 @@
                     Flip.to(secondaryStates, {
                         duration: 1,
                         ease: "power1.out",
-                    })
+                    }),
+                    "<0.4"
                 );
 
                 soTL.fromTo(secondaryOverlays,
