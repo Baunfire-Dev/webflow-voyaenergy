@@ -974,7 +974,6 @@
                     scrollTrigger: {
                         trigger: contentContainer,
                         start: baunfire.anim.start,
-                        once: true,
                     }
                 });
 
