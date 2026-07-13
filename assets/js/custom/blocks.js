@@ -1489,7 +1489,7 @@
 
                 soTL.add(
                     Flip.fit(generator2MWMain, generatorS5Main, {
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power1.out",
                         scale: true
                     }),
