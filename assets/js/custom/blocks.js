@@ -1288,7 +1288,7 @@
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
-                        "<0.4"
+                        "<-0.4"
                     );
                 }
 
