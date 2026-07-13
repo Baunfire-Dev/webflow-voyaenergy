@@ -947,6 +947,7 @@
                     handleSceneTwo(self, soTL);
                     handleSceneThree(self, soTL);
                     handleSceneFour(self, soTL);
+                    handleSceneFive(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
@@ -1320,6 +1321,7 @@
             const handleSceneFour = (self, soTL) => {
                 const sceneThree = self.querySelector(".so-scene.is-s3");
                 const sceneFour = self.querySelector(".so-scene.is-s4");
+                const sceneFive = self.querySelector(".so-scene.is-s5");
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
                 const text = sceneFour.querySelector(".so-scene-para");
@@ -1336,6 +1338,8 @@
                 const generator2MWMain = sceneFour.querySelector(".so-gen3.is-main");
                 const generator2MWShadow1 = sceneFour.querySelector(".so-gen3.is-shadow-1");
                 const generator2MWShadow2 = sceneFour.querySelector(".so-gen3.is-shadow-2");
+
+                const generatorS5Main = sceneFive.querySelector(".so-gen4");
 
                 const secondaryGenerators = [generatorGroup1, generatorGroup4];
                 const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")];
@@ -1466,6 +1470,106 @@
                             }
                         },
                         "<"
+                    );
+                }
+
+                soTL.to({}, { duration: 0.5 });
+
+                soTL.add(
+                    Flip.fit(generator2MWMain, generatorS5Main, {
+                        duration: 1,
+                        ease: "power1.out",
+                        scale: true
+                    }),
+                );
+
+                if (panel) {
+                    soTL.to(panel,
+                        {
+                            yPercent: 100,
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.8,
+                        },
+                        "<"
+                    );
+                }
+
+                soTL.set(sceneFour, { autoAlpha: 0, pointerEvents: "none" })
+                soTL.set(sceneFive, { autoAlpha: 1 })
+            };
+
+            const handleSceneFive = (self, soTL) => {
+                const sceneFive = self.querySelector(".so-scene.is-s5");
+
+                const contentContainer = sceneFive.querySelector(".so-scene-c");
+
+                const logo = sceneFive.querySelector(".so-s-icon");
+                const heading = sceneFive.querySelector(".so-s-title");
+                const para = sceneFive.querySelector(".so-s-para");
+
+                const fuelImg = sceneFive.querySelector(".so-fuel-img");
+                const bpImg = sceneFive.querySelector(".so-bp-img");
+
+                const actions = sceneFive.querySelectorAll(".so-action-c");
+
+                if (logo) {
+                    soTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return soTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<0.2"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    soTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+
+                if (fuelImg) {
+                    soTL.fromTo(fuelImg,
+                        { autoAlpha: 0, y: 60 },
+                        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power1.out" },
+                        "<0.4"
+                    );
+                }
+
+                if (bpImg) {
+                    soTL.fromTo(bpImg,
+                        { autoAlpha: 0, y: 60 },
+                        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power1.out" },
+                        "<0.2"
+                    );
+                }
+
+                if (actions) {
+                    soTL.fromTo(actions,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power1.out" },
+                        "<0.6"
                     );
                 }
 
