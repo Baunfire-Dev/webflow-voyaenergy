@@ -1334,8 +1334,11 @@
                 const generatorGroup3 = sceneFour.querySelector(".so-gen-group.is-no-3");
                 const generatorGroup4 = sceneFour.querySelector(".so-gen-group.is-no-4");
 
+                const generator2MWMain = sceneFour.querySelector(".so-gen3.is-main");
+                const generator2MWShadow = sceneFour.querySelector(".so-gen3.is-shadow");
+
                 const secondaryGenerators = [generatorGroup1, generatorGroup4];
-                const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")]
+                const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")];
 
                 const generatorContainerState = Flip.getState(generatorContainer, {
                     props: "transform,opacity",
@@ -1407,6 +1410,37 @@
                         "<0.2"
                     );
                 }
+
+                soTL.to({}, { duration: 0.5 });
+
+                if (text) {
+                    soTL.to(text,
+                        {
+                            y: 40,
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.6,
+                        },
+                    );
+                }
+
+                soTL.to(generatorS2250kwMain,
+                    {
+                        autoAlpha: 1,
+                        ease: "power1.out",
+                        duration: 0.6,
+                    },
+                    "<0.2"
+                );
+
+                soTL.add(
+                    Flip.fit(generator2MWMain, generator2MWShadow, {
+                        duration: 1,
+                        ease: "power1.out",
+                        scale: true
+                    }),
+                    "<0.2"
+                );
 
                 soTL.to({}, { duration: 1 });
             };
