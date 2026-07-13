@@ -1325,6 +1325,7 @@
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
                 const text = sceneFour.querySelector(".so-scene-para");
+                const panel = sceneThree.querySelector(".so-panel");
 
                 const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
                 const generatorContainerShadow = sceneFour.querySelector(".so-gens-shadow");
@@ -1441,6 +1442,25 @@
                     }),
                     "<0.2"
                 );
+
+                if (panel) {
+                    soTL.fromTo(panel,
+                        {
+                            y: 80,
+                            autoAlpha: 0,
+                        },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            ease: "power1.out",
+                            duration: 0.6,
+                            onStart: () => {
+                                baunfire.Global.handleTextCount(panel);
+                            }
+                        },
+                        "<0.4"
+                    );
+                }
 
                 soTL.to({}, { duration: 1 });
             };
