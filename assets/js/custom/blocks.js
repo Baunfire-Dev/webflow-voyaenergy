@@ -1384,6 +1384,8 @@
                 soTL.to(generatorContainer,
                     {
                         scale: 1,
+                        x: 0,
+                        y: 0,
                         ease: "power1.out",
                         duration: 0.6,
                     }
