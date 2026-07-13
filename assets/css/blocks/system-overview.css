@@ -5,18 +5,22 @@ section.system-overview {
 
             &.is-s1 {
                 @apply visible;
-                @apply z-[4];
+                @apply z-[5];
             }
 
             &.is-s2 {
-                @apply z-[3];
+                @apply z-[4];
             }
 
             &.is-s3 {
-                @apply z-[2];
+                @apply z-[3];
             }
 
             &.is-s4 {
+                @apply z-[2];
+            }
+
+            &.is-s5 {
                 @apply z-[1];
             }
         }
