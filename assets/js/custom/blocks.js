@@ -1327,6 +1327,7 @@
                 const text = sceneFour.querySelector(".so-scene-para");
 
                 const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
+                const generatorContainerShadow = sceneFour.querySelector(".so-gens-shadow");
                 
                 const generatorGroup1 = sceneFour.querySelector(".so-gen-group.is-no-1");
                 const generatorGroup2 = sceneFour.querySelector(".so-gen-group.is-no-2");
@@ -1336,6 +1337,10 @@
                 const secondaryGenerators = [generatorGroup1, generatorGroup4];
                 const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")]
 
+                const generatorContainerState = Flip.getState(generatorContainer, {
+                    props: "transform,opacity",
+                });
+
                 const secondaryStates = Flip.getState(secondaryGenerators, {
                     props: "transform,opacity",
                 });
@@ -1343,19 +1348,15 @@
                 Flip.fit(generatorGroup1, generatorGroup2, { scale: true });
                 Flip.fit(generatorGroup4, generatorGroup3, { scale: true });
 
-                gsap.set([generatorGroup1, generatorGroup4], { opacity: 0 });
+                gsap.set([generatorGroup1, generatorGroup4, generatorContainer], { opacity: 0 });
 
-                soTL.fromTo(generatorContainer,
-                    {
-                        autoAlpha: 0,
-                        scale: 0.4
-                    },
-                    {
-                        scale: 1,
-                        autoAlpha: 1,
+                soTL.add(
+                    Flip.fit(generatorContainer, generatorContainerShadow, {
+                        duration: 1,
+                        opacity: 1,
                         ease: "power1.out",
-                        duration: 0.8,
-                    },
+                        scale: true
+                    }),
                     "<0.2"
                 );
 
