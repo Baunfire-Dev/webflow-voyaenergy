@@ -1479,10 +1479,10 @@
                 if (panel) {
                     soTL.to(panel,
                         {
-                            scale: 0,
+                            y: 80,
                             autoAlpha: 0,
                             ease: "power1.out",
-                            duration: 0.6,
+                            duration: 0.8,
                         },
                     );
                 }
