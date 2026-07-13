@@ -1570,7 +1570,7 @@
                     soTL.fromTo(actions,
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power1.out" },
-                        "<0.6"
+                        "<0.2"
                     );
                 }
 
