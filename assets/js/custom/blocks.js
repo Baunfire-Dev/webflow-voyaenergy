@@ -1079,7 +1079,7 @@
                             ease: "none",
                             duration: 0.6,
                             onStart: () => {
-                                baunfire.Global.handleTextCount(panel, 0.4);
+                                baunfire.Global.handleTextCount(panel, 0.8);
                             }
                         },
                         "<0.4"
