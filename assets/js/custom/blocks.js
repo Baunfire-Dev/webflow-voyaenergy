@@ -947,6 +947,7 @@
                     handleSceneOne(self, soTL);
                     handleSceneTwo(self, soTL);
                     handleSceneThree(self, soTL);
+                    handleSceneFour(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
@@ -1238,6 +1239,8 @@
                     );
                 }
 
+                soTL.to({}, { duration: 0.5 });
+
                 soTL.to(generatorS2250kwMain,
                     {
                         autoAlpha: 1,
@@ -1294,6 +1297,102 @@
                 }
 
                 soTL.to({}, { duration: 1 });
+
+                soTL.to(generatorS3Main,
+                    {
+                        yPercent: -100,
+                        autoAlpha: 0,
+                        ease: "power1.out",
+                        duration: 0.8,
+                    },
+                );
+
+                if (panel) {
+                    soTL.to(panel,
+                        {
+                            yPercent: 100,
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.8,
+                        },
+                        "<"
+                    );
+                }
+
+                soTL.set(sceneThree, { autoAlpha: 0, pointerEvents: "none" })
+            };
+
+            const handleSceneFour = (self, soTL) => {
+                const sceneFour = self.querySelector(".so-scene.is-s4");
+                gsap.set(sceneFour, { autoAlpha: 1 });
+
+                const text = sceneTwo.querySelector(".so-scene-para");
+
+                const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
+                
+                const generatorGroup1 = sceneFour.querySelector(".so-gen-group.is-no-1");
+                const generatorGroup2 = sceneFour.querySelector(".so-gen-group.is-no-2");
+                const generatorGroup3 = sceneFour.querySelector(".so-gen-group.is-no-3");
+                const generatorGroup4 = sceneFour.querySelector(".so-gen-group.is-no-4");
+
+                const secondaryGenerators = [generatorGroup1, generatorGroup4];
+                const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")]
+
+                const secondaryStates = Flip.getState(secondaryGenerators, {
+                    props: "transform,opacity",
+                });
+
+                Flip.fit(generatorGroup1, generatorGroup2, { scale: true });
+                Flip.fit(generatorGroup4, generatorGroup3, { scale: true });
+
+                gsap.set([generatorGroup1, generatorGroup4], { opacity: 0 });
+
+                soTL.fromTo(generatorContainer,
+                    {
+                        scale: 0.4
+                    },
+                    {
+                        scale: 1,
+                        ease: "power1.out",
+                        duration: 0.8,
+                    },
+                    "<0.4"
+                );
+
+                soTL.add(
+                    Flip.to(secondaryStates, {
+                        duration: 1,
+                        ease: "power1.out",
+                    })
+                );
+
+                soTL.fromTo(secondaryOverlays,
+                    {
+                        autoAlpha: 1
+                    },
+                    {
+                        autoAlpha: 0,
+                        ease: "power1.out",
+                        duration: 1,
+                    },
+                    "<0.4"
+                );
+
+                if (text) {
+                    soTL.fromTo(text,
+                        {
+                            y: 40,
+                            autoAlpha: 0,
+                        },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            ease: "power1.out",
+                            duration: 0.6,
+                        },
+                        "<-0.2"
+                    );
+                }
             };
 
             script();
