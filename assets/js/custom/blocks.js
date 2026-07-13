@@ -1300,7 +1300,7 @@
 
                 soTL.to(generatorS3Main,
                     {
-                        yPercent: -100,
+                        yPercent: -200,
                         autoAlpha: 0,
                         ease: "power1.out",
                         duration: 0.8,
@@ -1318,11 +1318,10 @@
                         "<"
                     );
                 }
-
-                soTL.set(sceneThree, { autoAlpha: 0, pointerEvents: "none" })
             };
 
             const handleSceneFour = (self, soTL) => {
+                const sceneThree = self.querySelector(".so-scene.is-s3");
                 const sceneFour = self.querySelector(".so-scene.is-s4");
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
@@ -1358,6 +1357,8 @@
                     },
                     "<0.4"
                 );
+
+                soTL.set(sceneThree, { autoAlpha: 0, pointerEvents: "none" })
 
                 soTL.add(
                     Flip.to(secondaryStates, {
