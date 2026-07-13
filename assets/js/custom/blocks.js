@@ -1046,7 +1046,7 @@
                     soTL.to(contentContainer, {
                         yPercent: -100,
                         autoAlpha: 0,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         duration: 1
                     });
                 }
@@ -1054,7 +1054,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
                         duration: 1.4,
-                        ease: "power2.out",
+                        ease: "power1.out",
                     }),
                     "<0.3"
                 );
@@ -1062,7 +1062,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
                         duration: 0.8,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         scale: true
                     })
                 );
@@ -1089,7 +1089,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
                         duration: 0.8,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         scale: true
                     })
                 );
@@ -1097,7 +1097,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorS2No3, {
                         duration: 0.8,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         scale: true
                     })
                 );
@@ -1155,7 +1155,7 @@
                 soTL.add(
                     Flip.to(secondaryGenStates, {
                         duration: 1,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         scale: true,
                     }),
                 );
@@ -1166,7 +1166,7 @@
                     },
                     {
                         autoAlpha: 0,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         duration: 1,
                     },
                     "<0.4"
@@ -1175,7 +1175,7 @@
                 soTL.add(
                     Flip.to(tertiaryGenStates, {
                         duration: 1,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         scale: true,
                     }),
                     "<0.6"
@@ -1187,7 +1187,7 @@
                     },
                     {
                         autoAlpha: 0,
-                        ease: "power2.out",
+                        ease: "power1.out",
                         duration: 1,
                     },
                     "<0.4"
