@@ -1325,7 +1325,7 @@
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
                 const text = sceneFour.querySelector(".so-scene-para");
-                const panel = sceneThree.querySelector(".so-panel");
+                const panel = sceneFour.querySelector(".so-panel");
 
                 const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
                 const generatorContainerShadow = sceneFour.querySelector(".so-gens-shadow");
