@@ -1245,6 +1245,7 @@
                         ease: "power1.out",
                         duration: 0.6,
                     },
+                    "<0.2"
                 );
 
                 soTL.add(
