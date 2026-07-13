@@ -946,6 +946,7 @@
                     handleEntrance(self);
                     handleSceneOne(self, soTL);
                     handleSceneTwo(self, soTL);
+                    handleSceneThree(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
@@ -1120,12 +1121,17 @@
 
             const handleSceneTwo = (self, soTL) => {
                 const sceneTwo = self.querySelector(".so-scene.is-s2");
+                const sceneThree = self.querySelector(".so-scene.is-s3");
 
                 const generator1 = sceneTwo.querySelector(".so-gen.is-s2.is-no-1");
                 const generator2 = sceneTwo.querySelector(".so-gen.is-s2.is-no-2");
                 const generator3 = sceneTwo.querySelector(".so-gen.is-s2.is-no-3");
                 const generator4 = sceneTwo.querySelector(".so-gen.is-s2.is-no-4");
                 const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
+
+                const generatorS2250kwMain = sceneTwo.querySelector(".so-gen2.is-s2.is-main");
+                const generatorS2250kwShadow = sceneTwo.querySelector(".so-gen2.is-s2.is-shadow");
+                const generatorS3250kw = sceneThree.querySelector(".so-gen2.is-s3");
 
                 const subGenerators = [generator1, generator2, generator4, generator5];
 
@@ -1206,6 +1212,65 @@
                             duration: 0.6,
                         },
                         "<-0.2"
+                    );
+                }
+
+                soTL.to({}, { duration: 0.5 });
+
+                soTL.add(
+                    Flip.fit(generatorS2250kwMain, generatorS2250kwShadow, {
+                        duration: 0.8,
+                        opacity: 1,
+                        ease: "power1.out",
+                        scale: true
+                    })
+                );
+
+                if (text) {
+                    soTL.to(text,
+                        {
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.4,
+                        },
+                        "<0.2"
+                    );
+                }
+
+                soTL.add(
+                    Flip.fit(generatorS2250kwMain, generatorS3250kw, {
+                        duration: 0.8,
+                        ease: "power1.out",
+                        scale: true
+                    })
+                );
+
+                soTL.set(sceneTwo, { autoAlpha: 0, pointerEvents: "none" })
+                soTL.set(sceneThree, { autoAlpha: 1 })
+            };
+
+            const handleSceneThree = (self, soTL) => {
+                const sceneThree = self.querySelector(".so-scene.is-s3");
+
+                const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s2.is-main");
+                const panel = sceneThree.querySelector(".so-panel");
+
+                if (panel) {
+                    soTL.fromTo(panel,
+                        {
+                            y: 80,
+                            autoAlpha: 0,
+                        },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            ease: "power1.out",
+                            duration: 0.6,
+                            onStart: () => {
+                                baunfire.Global.handleTextCount(panel);
+                            }
+                        },
+                        "<0.4"
                     );
                 }
 
