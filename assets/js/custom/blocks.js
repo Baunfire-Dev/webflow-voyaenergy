@@ -1420,10 +1420,9 @@
                 if (text) {
                     soTL.to(text,
                         {
-                            y: -20,
                             autoAlpha: 0,
                             ease: "power1.out",
-                            duration: 0.8
+                            duration: 0.6
                         },
                     );
                 }
@@ -1445,6 +1444,8 @@
                     }),
                     "<0.2"
                 );
+
+                soTL.set(generatorContainer, { autoAlpha: 0 })
 
                 soTL.add(
                     Flip.fit(generator2MWMain, generator2MWShadow2, {
@@ -1475,25 +1476,25 @@
 
                 soTL.to({}, { duration: 0.5 });
 
+                if (panel) {
+                    soTL.to(panel,
+                        {
+                            scale: 0,
+                            autoAlpha: 0,
+                            ease: "power1.out",
+                            duration: 0.6,
+                        },
+                    );
+                }
+
                 soTL.add(
                     Flip.fit(generator2MWMain, generatorS5Main, {
                         duration: 1,
                         ease: "power1.out",
                         scale: true
                     }),
+                    "<"
                 );
-
-                if (panel) {
-                    soTL.to(panel,
-                        {
-                            yPercent: 100,
-                            autoAlpha: 0,
-                            ease: "power1.out",
-                            duration: 0.8,
-                        },
-                        "<"
-                    );
-                }
 
                 soTL.set(sceneFour, { autoAlpha: 0, pointerEvents: "none" })
                 soTL.set(sceneFive, { autoAlpha: 1 })
