@@ -1326,7 +1326,7 @@
                 const sceneFour = self.querySelector(".so-scene.is-s4");
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
-                const text = sceneTwo.querySelector(".so-scene-para");
+                const text = sceneFour.querySelector(".so-scene-para");
 
                 const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
                 
@@ -1356,7 +1356,7 @@
                         ease: "power1.out",
                         duration: 0.8,
                     },
-                    "<"
+                    "<0.4"
                 );
 
                 soTL.add(
