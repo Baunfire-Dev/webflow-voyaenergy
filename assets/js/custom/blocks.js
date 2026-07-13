@@ -1479,7 +1479,7 @@
                 if (panel) {
                     soTL.to(panel,
                         {
-                            y: 80,
+                            yPercent: 180,
                             autoAlpha: 0,
                             ease: "power1.out",
                             duration: 0.8,
