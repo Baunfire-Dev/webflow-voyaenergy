@@ -1493,7 +1493,7 @@
                         ease: "power1.out",
                         scale: true
                     }),
-                    "<"
+                    "<0.2"
                 );
 
                 soTL.set(sceneFour, { autoAlpha: 0, pointerEvents: "none" })
