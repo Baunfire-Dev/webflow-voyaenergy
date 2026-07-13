@@ -1129,6 +1129,8 @@
                 const generator4 = sceneTwo.querySelector(".so-gen.is-s2.is-no-4");
                 const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
 
+                const generatorContainer = sceneTwo.querySelector(".so-gens.is-s2");
+
                 const generatorS2250kwMain = sceneTwo.querySelector(".so-gen2.is-s2.is-main");
                 const generatorS2250kwShadow = sceneTwo.querySelector(".so-gen2.is-s2.is-shadow");
                 const generatorS3250kw = sceneThree.querySelector(".so-gen2.is-s3");
@@ -1217,13 +1219,12 @@
 
                 soTL.to({}, { duration: 0.5 });
 
-                soTL.add(
-                    Flip.fit(generatorS2250kwMain, generatorS2250kwShadow, {
-                        duration: 0.8,
-                        opacity: 1,
+                soTL.to(generatorContainer,
+                    {
+                        scale: 0.8,
                         ease: "power1.out",
-                        scale: true
-                    })
+                        duration: 0.8,
+                    },
                 );
 
                 if (text) {
@@ -1231,11 +1232,28 @@
                         {
                             autoAlpha: 0,
                             ease: "power1.out",
-                            duration: 0.4,
+                            duration: 0.6,
                         },
-                        "<0.2"
+                        "<"
                     );
                 }
+
+                soTL.to(generatorS2250kwMain,
+                    {
+                        autoAlpha: 1,
+                        ease: "power1.out",
+                        duration: 0.4,
+                    },
+                );
+
+                soTL.add(
+                    Flip.fit(generatorS2250kwMain, generatorS2250kwShadow, {
+                        duration: 1,
+                        ease: "power1.out",
+                        scale: true
+                    }),
+                    "<0.2"
+                );
 
                 soTL.add(
                     Flip.fit(generatorS2250kwMain, generatorS3250kw, {
