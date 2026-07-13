@@ -1053,7 +1053,7 @@
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
-                        duration: 1,
+                        duration: 1.5,
                         ease: "none"
                     }),
                     "<0.3"
