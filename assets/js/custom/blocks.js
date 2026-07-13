@@ -1336,7 +1336,8 @@
                 const generatorGroup4 = sceneFour.querySelector(".so-gen-group.is-no-4");
 
                 const generator2MWMain = sceneFour.querySelector(".so-gen3.is-main");
-                const generator2MWShadow = sceneFour.querySelector(".so-gen3.is-shadow");
+                const generator2MWShadow1 = sceneFour.querySelector(".so-gen3.is-shadow-1");
+                const generator2MWShadow2 = sceneFour.querySelector(".so-gen3.is-shadow-2");
 
                 const secondaryGenerators = [generatorGroup1, generatorGroup4];
                 const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")];
@@ -1417,10 +1418,10 @@
                 if (text) {
                     soTL.to(text,
                         {
-                            y: 40,
+                            y: -20,
                             autoAlpha: 0,
                             ease: "power1.out",
-                            duration: 0.6,
+                            duration: 0.8
                         },
                     );
                 }
@@ -1435,12 +1436,20 @@
                 );
 
                 soTL.add(
-                    Flip.fit(generator2MWMain, generator2MWShadow, {
+                    Flip.fit(generator2MWMain, generator2MWShadow1, {
                         duration: 1,
                         ease: "power1.out",
                         scale: true
                     }),
                     "<0.2"
+                );
+
+                soTL.add(
+                    Flip.fit(generator2MWMain, generator2MWShadow2, {
+                        duration: 0.6,
+                        ease: "power1.out",
+                        scale: true
+                    }),
                 );
 
                 if (panel) {
@@ -1458,7 +1467,7 @@
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
-                        "<0.4"
+                        "<"
                     );
                 }
 
