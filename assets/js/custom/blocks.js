@@ -1242,7 +1242,7 @@
                     {
                         autoAlpha: 1,
                         ease: "power1.out",
-                        duration: 0.4,
+                        duration: 0.6,
                     },
                 );
 
