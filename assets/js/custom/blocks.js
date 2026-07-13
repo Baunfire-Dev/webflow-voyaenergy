@@ -1381,6 +1381,13 @@
                     "<0.4"
                 );
 
+                soTL.add(
+                    Flip.to(generatorContainerState, {
+                        duration: 0.6,
+                        ease: "power1.out",
+                    })
+                );
+
                 if (text) {
                     soTL.fromTo(text,
                         {
