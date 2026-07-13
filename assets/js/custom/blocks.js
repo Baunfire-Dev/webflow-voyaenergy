@@ -8,6 +8,8 @@
             this.systemOverview();
             this.contentGridItems();
             this.contactBanner();
+
+            baunfire.Global.screenSizeChange();
         },
 
         sectionControls() {
@@ -432,8 +434,6 @@
                     this.energyBottleNeck(self, ebTL);
                     this.transitionLine(self, ebTL);
                 });
-
-                baunfire.Global.screenSizeChange();
             };
 
             script();
