@@ -1303,7 +1303,7 @@
                         yPercent: -200,
                         autoAlpha: 0,
                         ease: "power1.out",
-                        duration: 0.8,
+                        duration: 2,
                     },
                 );
 
@@ -1355,7 +1355,7 @@
                         ease: "power1.out",
                         duration: 0.8,
                     },
-                    "<0.4"
+                    "<0.2"
                 );
 
                 soTL.set(sceneThree, { autoAlpha: 0, pointerEvents: "none" })
