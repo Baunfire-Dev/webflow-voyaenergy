@@ -1712,6 +1712,69 @@
             script();
         },
 
+        wideImageBanner() {
+            const script = () => {
+                const els = document.querySelectorAll("section.wide-image-banner");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const logo = self.querySelector(".wib-icon");
+                const heading = self.querySelector(".wib-title");
+                const para = self.querySelector(".wib-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<0.2"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+            };
+
+            script();
+        },
+
         contactBanner() {
             const script = () => {
                 const els = document.querySelectorAll("section.contact-banner");
