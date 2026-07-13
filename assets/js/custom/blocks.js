@@ -1046,22 +1046,18 @@
                     soTL.to(contentContainer, {
                         yPercent: -100,
                         autoAlpha: 0,
-                        ease: "none"
+                        ease: "none",
                         duration: 1
                     });
                 }
 
-                soTL.addLabel("transform-up", "<0.2")
-
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
-                        duration: 2,
+                        duration: 1,
                         ease: "none"
                     }),
-                    "transform-up"
+                    "<0.3"
                 );
-
-                soTL.addLabel("scale-down", "<0.8")
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
@@ -1069,7 +1065,6 @@
                         ease: "none",
                         scale: true
                     }),
-                    "scale-down"
                 );
 
                 if (panel) {
