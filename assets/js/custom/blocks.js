@@ -800,7 +800,6 @@
                             end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
                             scrub: 1,
                             pin: body,
-                            anticipatePin: 1,
                             invalidateOnRefresh: true,
                             pinSpacing: true,
                         }
