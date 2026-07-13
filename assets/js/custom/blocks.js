@@ -768,7 +768,7 @@
                         stagger: 0.08,
                         scrollTrigger: {
                             trigger: panel.closest(".hiw-body"),
-                            start: baunfire.anim.start,
+                            start: "top center",
                         }
                     }
                 );
