@@ -1216,7 +1216,7 @@
                     );
                 }
 
-                soTL.to({}, { duration: 0.5 });
+                soTL.to({}, { duration: 0.2 });
 
                 soTL.to(generatorContainer,
                     {
