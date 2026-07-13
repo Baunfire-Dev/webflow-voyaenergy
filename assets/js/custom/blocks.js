@@ -1239,8 +1239,6 @@
                     );
                 }
 
-                soTL.to({}, { duration: 0.5 });
-
                 soTL.to(generatorS2250kwMain,
                     {
                         autoAlpha: 1,
