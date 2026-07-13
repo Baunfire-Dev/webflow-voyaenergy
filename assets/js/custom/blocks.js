@@ -1424,7 +1424,7 @@
                     );
                 }
 
-                soTL.to(generatorS2250kwMain,
+                soTL.to(generator2MWMain,
                     {
                         autoAlpha: 1,
                         ease: "power1.out",
