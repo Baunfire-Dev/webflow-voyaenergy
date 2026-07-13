@@ -1046,15 +1046,15 @@
                     soTL.to(contentContainer, {
                         yPercent: -100,
                         autoAlpha: 0,
-                        ease: "none",
+                        ease: "power2.out",
                         duration: 1
                     });
                 }
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
-                        duration: 1.5,
-                        ease: "none"
+                        duration: 1.4,
+                        ease: "power2.out",
                     }),
                     "<0.3"
                 );
@@ -1062,9 +1062,9 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
                         duration: 0.8,
-                        ease: "none",
+                        ease: "power2.out",
                         scale: true
-                    }),
+                    })
                 );
 
                 if (panel) {
@@ -1076,10 +1076,10 @@
                         {
                             y: 0,
                             autoAlpha: 1,
-                            ease: "none",
+                            ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
-                                baunfire.Global.handleTextCount(panel, 0.8);
+                                baunfire.Global.handleTextCount(panel);
                             }
                         },
                         "<0.4"
@@ -1089,7 +1089,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow2, {
                         duration: 0.8,
-                        ease: "none",
+                        ease: "power2.out",
                         scale: true
                     })
                 );
@@ -1097,7 +1097,7 @@
                 soTL.add(
                     Flip.fit(generatorMain, generatorS2No3, {
                         duration: 0.8,
-                        ease: "none",
+                        ease: "power2.out",
                         scale: true
                     })
                 );
@@ -1107,7 +1107,7 @@
                         {
                             y: 80,
                             autoAlpha: 0,
-                            ease: "none",
+                            ease: "power1.out",
                             duration: 0.6,
                         },
                         "<0.4"
@@ -1155,7 +1155,7 @@
                 soTL.add(
                     Flip.to(secondaryGenStates, {
                         duration: 1,
-                        ease: "none",
+                        ease: "power2.out",
                         scale: true,
                     }),
                 );
@@ -1166,7 +1166,7 @@
                     },
                     {
                         autoAlpha: 0,
-                        ease: "none",
+                        ease: "power2.out",
                         duration: 1,
                     },
                     "<0.4"
@@ -1175,7 +1175,7 @@
                 soTL.add(
                     Flip.to(tertiaryGenStates, {
                         duration: 1,
-                        ease: "none",
+                        ease: "power2.out",
                         scale: true,
                     }),
                     "<0.6"
@@ -1187,7 +1187,7 @@
                     },
                     {
                         autoAlpha: 0,
-                        ease: "none",
+                        ease: "power2.out",
                         duration: 1,
                     },
                     "<0.4"
@@ -1202,14 +1202,14 @@
                         {
                             y: 0,
                             autoAlpha: 1,
-                            ease: "none",
+                            ease: "power1.out",
                             duration: 0.6,
                         },
                         "<-0.2"
                     );
                 }
 
-                soTL.to({}, { duration: 3 });
+                soTL.to({}, { duration: 1 });
             };
 
             script();
