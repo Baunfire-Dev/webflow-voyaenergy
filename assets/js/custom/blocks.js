@@ -1209,7 +1209,7 @@
                     );
                 }
 
-                soTL.to({}, { duration: 1 });
+                soTL.to({}, { duration: 3 });
             };
 
             script();
