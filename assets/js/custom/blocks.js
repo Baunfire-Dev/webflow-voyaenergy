@@ -506,7 +506,7 @@
 
                 gsap.set(bgImage, {
                     scale: 1.15,
-                    transformOrigin: "bottom center"
+                    transformOrigin: "top center"
                 })
 
                 gsap.fromTo(bgImage,
@@ -514,7 +514,7 @@
                         yPercent: 0,
                     },
                     {
-                        yPercent: -14,
+                        yPercent: -10,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
