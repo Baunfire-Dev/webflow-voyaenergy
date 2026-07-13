@@ -1364,10 +1364,10 @@
 
                 soTL.add(
                     Flip.to(secondaryStates, {
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power1.out",
                     }),
-                    "<0.4"
+                    "<-0.4"
                 );
 
                 soTL.fromTo(secondaryOverlays,
@@ -1377,7 +1377,7 @@
                     {
                         autoAlpha: 0,
                         ease: "power1.out",
-                        duration: 1,
+                        duration: 0.8,
                     },
                     "<0.4"
                 );
