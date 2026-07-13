@@ -1255,14 +1255,6 @@
                     "<0.2"
                 );
 
-                soTL.add(
-                    Flip.fit(generatorS2250kwMain, generatorS3250kw, {
-                        duration: 0.8,
-                        ease: "power1.out",
-                        scale: true
-                    })
-                );
-
                 soTL.set(sceneTwo, { autoAlpha: 0, pointerEvents: "none" })
                 soTL.set(sceneThree, { autoAlpha: 1 })
             };
@@ -1270,8 +1262,17 @@
             const handleSceneThree = (self, soTL) => {
                 const sceneThree = self.querySelector(".so-scene.is-s3");
 
-                const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s2.is-main");
+                const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s3.is-main");
+                const generatorS3Shadow = sceneThree.querySelector(".so-gen2.is-s3.is-shadow");
                 const panel = sceneThree.querySelector(".so-panel");
+
+                soTL.add(
+                    Flip.fit(generatorS3Main, generatorS3Shadow, {
+                        duration: 0.8,
+                        ease: "power1.out",
+                        scale: true
+                    })
+                );
 
                 if (panel) {
                     soTL.fromTo(panel,
@@ -1288,7 +1289,7 @@
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
-                        "<-0.4"
+                        "<0.4"
                     );
                 }
 
