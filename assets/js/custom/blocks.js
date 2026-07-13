@@ -752,6 +752,8 @@
             };
 
             const animateFirstSlide = (panel) => {
+                const contentContainer = panel.find(".hiw-content");
+                
                 const els = [
                     panel.querySelector(".hiw-c-brow"),
                     panel.querySelector(".hiw-c-title"),
@@ -767,8 +769,8 @@
                         ease: "power3.out",
                         stagger: 0.08,
                         scrollTrigger: {
-                            trigger: panel.closest(".hiw-body"),
-                            start: "top center",
+                            trigger: contentContainer,
+                            start: baunfire.anim.start,
                         }
                     }
                 );
