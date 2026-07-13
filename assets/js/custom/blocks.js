@@ -1348,9 +1348,11 @@
 
                 soTL.fromTo(generatorContainer,
                     {
-                        autoAlpha: 0
+                        autoAlpha: 0,
+                        scale: 0.4
                     },
                     {
+                        scale: 1,
                         autoAlpha: 1,
                         ease: "power1.out",
                         duration: 0.8,
