@@ -1381,7 +1381,7 @@
                     "<0.4"
                 );
 
-                soTL.to(generatorContainer,
+                soTL.fromTo(generatorContainer,
                     {
                         scale: 1
                     },
