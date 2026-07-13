@@ -8,6 +8,7 @@
             this.systemOverview();
             this.contentGridItems();
             this.contactBanner();
+            this.wideImageBanner();
 
             baunfire.Global.screenSizeChange();
         },
@@ -1726,6 +1727,7 @@
                 const logo = self.querySelector(".wib-icon");
                 const heading = self.querySelector(".wib-title");
                 const para = self.querySelector(".wib-para");
+                const cta = self.querySelector(".g-btn");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
@@ -1765,6 +1767,14 @@
 
                 if (para) {
                     introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+
+                if (cta) {
+                    introTL.fromTo(cta,
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
                         "<0.4"
