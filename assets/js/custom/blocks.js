@@ -506,15 +506,15 @@
 
                 gsap.set(bgImage, {
                     scale: 1.15,
-                    transformOrigin: "top center"
+                    transformOrigin: "bottom center"
                 })
 
                 gsap.fromTo(bgImage,
                     {
-                        yPercent: -14,
+                        yPercent: 0,
                     },
                     {
-                        yPercent: 0,
+                        yPercent: -14,
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
@@ -533,7 +533,7 @@
                 ebTL.to(inner, { yPercent: -100, ease: "none", duration: 2.5 }, "<0.6");
 
                 ebTL.to(bgImage, {
-                    yPercent: 14,
+                    yPercent: 0,
                     ease: "none",
                     duration: 2.5
                 }, "<");
