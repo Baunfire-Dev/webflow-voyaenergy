@@ -10,6 +10,7 @@
             this.contactBanner();
             this.wideImageBanner();
             this.heroWithGallery();
+            this.largeText();
 
             baunfire.Global.screenSizeChange();
         },
@@ -1871,6 +1872,41 @@
                     ScrollTrigger.addEventListener("refreshInit", () => handleAnimation(self));
                     handleAnimation(self);
                     ScrollTrigger.refresh();
+                });
+            };
+
+            script();
+        },
+        largeText() {
+            const script = () => {
+                const els = document.querySelectorAll("section.large-text");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    const text = self.querySelector(".lt-para");
+                    SplitText.create(text, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            gsap.set(split.words, { yPercent: 110 });
+
+                            const tl = gsap.timeline({
+                                scrollTrigger: {
+                                    trigger: self,
+                                    start: "top top",
+                                    end: "+=250%",
+                                    scrub: 1,
+                                    pin: true,
+                                    invalidateOnRefresh: true
+                                },
+                            });
+
+                            tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
+
+                            return tl;
+                        },
+                    });
                 });
             };
 
