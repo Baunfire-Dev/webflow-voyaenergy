@@ -9,6 +9,7 @@
             this.contentGridItems();
             this.contactBanner();
             this.wideImageBanner();
+            this.heroWithGallery();
 
             baunfire.Global.screenSizeChange();
         },
@@ -1834,6 +1835,43 @@
                         "<0.4"
                     );
                 }
+            };
+
+            script();
+        },
+        heroWithGallery() {
+            const script = () => {
+                const els = document.querySelectorAll("section.hero-with-gallery");
+                if (!els.length) return;
+
+                const handleAnimation = (self) => {
+                    const container = self.querySelector(".hwg-imgs");
+                    const imgsInner = self.querySelector(".hwg-imgs-inner");
+
+                    if (!container || !imgsInner) return;
+
+                    gsap.set(imgsInner, { x: 0 });
+
+                    const moveX = Math.max(0, imgsInner.scrollWidth - container.clientWidth);
+
+                    gsap.to(imgsInner, {
+                        x: -moveX,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 65%",
+                            end: "bottom center",
+                            scrub: 1.5,
+                            invalidateOnRefresh: true
+                        },
+                    });
+                }
+
+                els.forEach(self => {
+                    ScrollTrigger.addEventListener("refreshInit", () => handleAnimation(self));
+                    handleAnimation(self);
+                    ScrollTrigger.refresh();
+                });
             };
 
             script();
