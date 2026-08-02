@@ -189,7 +189,7 @@
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const timings = {
-                    callDelay: 0.3,
+                    callDelay: 0,
                     reveal: {
                         markFade: {
                             duration: 0.6,

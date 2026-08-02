@@ -21,9 +21,6 @@
                 transitions: [this.reveal()],
             });
 
-            barba.hooks.beforeLeave(() => {
-            });
-
             barba.hooks.before(() => {
                 baunfire.Global.siteScrolling(false);
             });
@@ -33,6 +30,7 @@
                 this.syncWebflowState(data.next);
                 baunfire.lenis?.scrollTo(0, { immediate: true, force: true });
                 baunfire.mount(data.next.container);
+                this.holdTriggers();
                 this.reinitWebflow();
                 this.updateNavState();
                 baunfire.Global.screenSizeChange();
@@ -40,8 +38,21 @@
 
             barba.hooks.after(() => {
                 baunfire.Global.siteScrolling(true);
+                this.releaseTriggers();
                 ScrollTrigger.refresh();
             });
+        },
+
+        holdTriggers() {
+            this._held = ScrollTrigger.getAll();
+            this._held.forEach(st => st.disable(false));
+        },
+
+        releaseTriggers() {
+            if (!this._held) return;
+            this._held.forEach(st => st.enable());
+            this._held = null;
+            ScrollTrigger.refresh();
         },
 
         reveal() {
@@ -102,13 +113,20 @@
 
         coverOut() {
             const e = this.els();
-            if (!e) return;
+            if (!e) {
+                this.releaseTriggers();
+                return;
+            }
+
+            const HANDOFF = 0.4;
 
             const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
 
             tl.to(e.panel, { yPercent: -100 }, 0);
             if (e.inner) tl.to(e.inner, { yPercent: 100 }, 0);
             if (e.logo) tl.to(e.logo, { yPercent: -100 }, 0);
+
+            tl.call(() => this.releaseTriggers(), null, HANDOFF);
 
             tl.set(e.panel, { visibility: 'hidden' })
                 .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
