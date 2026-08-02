@@ -23,6 +23,7 @@
         "deploy:watch:plain": "node build/cloudflare-watch.js --plain"
     },
     "dependencies": {
+        "@barba/core": "^2.10.3",
         "gsap": "^3.12.5",
         "lenis": "^1.3.23"
     }

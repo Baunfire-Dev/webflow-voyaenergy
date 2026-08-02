@@ -9,7 +9,7 @@
             this.contentGridItems();
             this.contactBanner();
             this.wideImageBanner();
-            
+
             this.heroWithGallery();
             this.largeText();
 
@@ -1340,7 +1340,7 @@
 
                 const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
                 const generatorContainerShadow = sceneFour.querySelector(".so-gens-shadow");
-                
+
                 const generatorGroup1 = sceneFour.querySelector(".so-gen-group.is-no-1");
                 const generatorGroup2 = sceneFour.querySelector(".so-gen-group.is-no-2");
                 const generatorGroup3 = sceneFour.querySelector(".so-gen-group.is-no-3");
@@ -1848,73 +1848,89 @@
 
             script();
         },
+
         heroWithGallery() {
             const script = () => {
                 const els = document.querySelectorAll("section.hero-with-gallery");
                 if (!els.length) return;
 
-                const handleAnimation = (self) => {
-                    const container = self.querySelector(".hwg-imgs");
-                    const imgsInner = self.querySelector(".hwg-imgs-inner");
-
-                    if (!container || !imgsInner) return;
-
-                    gsap.set(imgsInner, { x: 0 });
-
-                    const moveX = Math.max(0, imgsInner.scrollWidth - container.clientWidth);
-
-                    gsap.to(imgsInner, {
-                        x: -moveX,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: container,
-                            start: "top 65%",
-                            end: "bottom center",
-                            scrub: 1.5,
-                            invalidateOnRefresh: true
-                        },
-                    });
-                }
-
                 els.forEach(self => {
-                    ScrollTrigger.addEventListener("refreshInit", () => handleAnimation(self));
                     handleAnimation(self);
-                    ScrollTrigger.refresh();
                 });
+            };
+
+            const handleAnimation = (self) => {
+                const container = self.querySelector(".hwg-imgs");
+                const imgsInner = self.querySelector(".hwg-imgs-inner");
+
+                if (!container || !imgsInner) return;
+
+                gsap.to(imgsInner, {
+                    x: () => moveX(imgsInner, container),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: self,
+                        start: "top top",
+                        end: "bottom 40%",
+                        scrub: 1,
+                        invalidateOnRefresh: true
+                    },
+                });
+            }
+
+            const moveX = (imgsInner, container) => {
+                const val = Math.max(0, imgsInner.scrollWidth - container.clientWidth);
+                return val * -1;
             };
 
             script();
         },
+
         largeText() {
             const script = () => {
                 const els = document.querySelectorAll("section.large-text");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const text = self.querySelector(".lt-para");
-                    SplitText.create(text, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            gsap.set(split.words, { yPercent: 110 });
+                    handleTextAnim(self);
+                });
+            };
+            
+            const handleTextAnim = (self) => {
+                const text = self.querySelector(".lt-para");
+                if (!text) return;
 
-                            const tl = gsap.timeline({
+                SplitText.create(text, {
+                    type: "words",
+                    mask: "words",
+                    autoSplit: true,
+                    onSplit(split) {
+                        text.style.visibility = "visible";
+                        text.style.opacity = "1";
+
+                        gsap.set(split.words, { willChange: "transform" });
+
+                        return gsap.fromTo(
+                            split.words,
+                            {
+                                y: "100%",
+                            },
+                            {
+                                y: "-5%",
+                                duration: 0.8,
+                                ease: "power3.out",
+                                stagger: 0.06,
                                 scrollTrigger: {
-                                    trigger: self,
-                                    start: "top top",
-                                    end: "+=250%",
-                                    scrub: 1,
-                                    pin: true,
-                                    invalidateOnRefresh: true
+                                    trigger: text,
+                                    start: baunfire.anim.start,
+                                    once: true,
                                 },
-                            });
-
-                            tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
-
-                            return tl;
-                        },
-                    });
+                                onComplete: () => {
+                                    gsap.set(split.words, { willChange: "auto" });
+                                },
+                            }
+                        );
+                    },
                 });
             };
 
