@@ -6,26 +6,32 @@
                 return;
             }
 
+            document.addEventListener('click', (e) => {
+                if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                const a = e.target.closest('a[href]');
+                if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
+                const url = new URL(a.href, location.href);
+                if (url.hash) return;
+                if (this.isSamePage(a.href)) e.preventDefault();
+            }, true);
+
             barba.init({
                 timeout: 7000,
-                transitions: [this.fade()],
+                prevent: ({ href }) => this.isSamePage(href),
+                transitions: [this.reveal()],
+            });
+
+            barba.hooks.beforeLeave(() => {
             });
 
             barba.hooks.before(() => {
                 baunfire.Global.siteScrolling(false);
             });
 
-            barba.hooks.afterLeave(() => {
-                baunfire.unmount();
-            });
-
             barba.hooks.beforeEnter((data) => {
+                baunfire.unmount();
                 this.syncWebflowState(data.next);
                 baunfire.lenis?.scrollTo(0, { immediate: true, force: true });
-                gsap.set(data.next.container, { opacity: 0 });
-            });
-
-            barba.hooks.afterEnter((data) => {
                 baunfire.mount(data.next.container);
                 this.reinitWebflow();
                 this.updateNavState();
@@ -38,27 +44,76 @@
             });
         },
 
-        fade() {
+        reveal() {
+            const self = this;
             return {
-                name: 'fade',
-                leave(data) {
-                    return gsap.to(data.current.container, {
-                        opacity: 0,
-                        duration: 0.4,
-                        ease: 'power2.out',
-                    });
+                name: 'reveal',
+                leave() {
+                    return self.coverIn();
                 },
                 enter(data) {
-                    return gsap.to(data.next.container, {
-                        opacity: 1,
-                        duration: 0.4,
-                        ease: 'power2.out',
-                    });
+                    data.current?.container.remove();
+                    return self.coverOut();
                 },
                 once(data) {
                     baunfire.mount(data.next.container);
                 },
             };
+        },
+
+        isSamePage(href) {
+            try {
+                const url = new URL(href, location.href);
+                if (url.origin !== location.origin) return false;
+                const here = location.pathname.replace(/\/$/, '') || '/';
+                const there = url.pathname.replace(/\/$/, '') || '/';
+                return here === there;
+            } catch {
+                return false;
+            }
+        },
+
+        els() {
+            const panel = document.querySelector('.page-reveal');
+            if (!panel) return null;
+            return {
+                panel,
+                inner: panel.querySelector('.page-reveal-inner'),
+                logo: panel.querySelector('.page-reveal-logo svg'),
+            };
+        },
+
+        coverIn() {
+            const e = this.els();
+            if (!e) return;
+
+            const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
+
+            tl.set(e.panel, { visibility: 'visible', yPercent: 100 });
+            if (e.inner) tl.set(e.inner, { yPercent: -100 }, 0);
+            if (e.logo) tl.set(e.logo, { yPercent: 100 }, 0);
+
+            tl.to(e.panel, { yPercent: 0 }, 0);
+            if (e.inner) tl.to(e.inner, { yPercent: 0 }, 0);
+            if (e.logo) tl.to(e.logo, { yPercent: 0 }, 0);
+
+            return tl;
+        },
+
+        coverOut() {
+            const e = this.els();
+            if (!e) return;
+
+            const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
+
+            tl.to(e.panel, { yPercent: -100 }, 0);
+            if (e.inner) tl.to(e.inner, { yPercent: 100 }, 0);
+            if (e.logo) tl.to(e.logo, { yPercent: -100 }, 0);
+
+            tl.set(e.panel, { visibility: 'hidden' })
+                .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
+
+            return tl;
         },
 
         syncWebflowState(next) {
@@ -71,6 +126,21 @@
 
             const title = dom.querySelector('title');
             if (title) document.title = title.textContent;
+
+            this.syncHeader(dom);
+        },
+
+        syncHeader(dom) {
+            const nextHeader = dom.querySelector('header');
+            const liveHeader = document.querySelector('header');
+            if (!nextHeader || !liveHeader) return;
+
+            const variant = nextHeader.getAttribute('data-wf--header--variant');
+            if (variant) liveHeader.setAttribute('data-wf--header--variant', variant);
+
+            liveHeader.innerHTML = nextHeader.innerHTML;
+
+            if (baunfire.Animation) baunfire.Animation._navBound = false;
         },
 
         reinitWebflow() {

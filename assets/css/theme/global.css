@@ -1,4 +1,7 @@
 html {
+    scrollbar-gutter: stable;
+    background-color: #171615;
+
 	&.disable-scrolling,
 	&:has(dialog[open]) {
 		@apply overflow-hidden;

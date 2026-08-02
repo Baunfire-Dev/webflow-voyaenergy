@@ -168,6 +168,8 @@
                 const els = document.querySelectorAll("section.hero-homepage");
                 if (!els.length) return;
 
+                console.log('eyy');
+
                 els.forEach(self => {
                     handleEntrance(self);
                     handleScroll(self);
@@ -175,9 +177,9 @@
             }
 
             const handleEntrance = (self) => {
-                const pageReveal = document.querySelector(".page-reveal");
+                // const pageReveal = document.querySelector(".page-reveal");
                 // const pageMark = pageReveal.querySelector(".page-mark");
-                const pageSlats = pageReveal.querySelectorAll(".page-slat");
+                // const pageSlats = pageReveal.querySelectorAll(".page-slat");
 
                 const nav = document.querySelector("nav");
                 const pageControls = document.querySelector(".section-controls");
@@ -232,24 +234,24 @@
                     }
                 });
 
-                if (pageReveal) {
-                    // introTL.fromTo(pageMark,
-                    //     { autoAlpha: 1, },
-                    //     { autoAlpha: 0, yPercent: -10, duration: timings.reveal.markFade.duration, ease: "power1.out" }
-                    // );
+                // if (pageReveal) {
+                //     // introTL.fromTo(pageMark,
+                //     //     { autoAlpha: 1, },
+                //     //     { autoAlpha: 0, yPercent: -10, duration: timings.reveal.markFade.duration, ease: "power1.out" }
+                //     // );
 
-                    introTL.fromTo(pageSlats,
-                        { yPercent: 0 },
-                        {
-                            yPercent: -102,
-                            duration: timings.reveal.slat.duration,
-                            ease: "power3.inOut",
-                            stagger: timings.reveal.slat.stagger,
-                            onComplete: () => pageReveal.remove(),
-                        },
-                        // timings.reveal.slat.position
-                    );
-                }
+                //     // introTL.fromTo(pageSlats,
+                //     //     { yPercent: 0 },
+                //     //     {
+                //     //         yPercent: -102,
+                //     //         duration: timings.reveal.slat.duration,
+                //     //         ease: "power3.inOut",
+                //     //         stagger: timings.reveal.slat.stagger,
+                //     //         onComplete: () => pageReveal.remove(),
+                //     //     },
+                //     //     // timings.reveal.slat.position
+                //     // );
+                // }
 
                 if (mainImage) {
                     introTL.fromTo(mainImage,
@@ -288,17 +290,17 @@
 
                 introTL.addLabel("nav_controls", timings.navControls.position)
 
-                introTL.fromTo(nav,
-                    {
-                        yPercent: -100,
-                    },
-                    {
-                        yPercent: 0,
-                        duration: timings.navControls.duration,
-                        ease: "power2.out"
-                    },
-                    "nav_controls"
-                );
+                // introTL.fromTo(nav,
+                //     {
+                //         yPercent: -100,
+                //     },
+                //     {
+                //         yPercent: 0,
+                //         duration: timings.navControls.duration,
+                //         ease: "power2.out"
+                //     },
+                //     "nav_controls"
+                // );
 
                 introTL.fromTo(pageControls,
                     {

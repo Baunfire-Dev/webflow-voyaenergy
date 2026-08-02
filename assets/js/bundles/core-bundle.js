@@ -3,10 +3,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from 'gsap/SplitText';
 import { Flip } from 'gsap/Flip';
+import { CustomEase } from 'gsap/CustomEase';
+
 import Lenis from 'lenis';
 import barba from '@barba/core';
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip, CustomEase);
+
+CustomEase.create('pageReveal', 'M0,0 C0.77,0 0.175,1 1,1');
 
 const lenis = new Lenis({
     anchors: true,
