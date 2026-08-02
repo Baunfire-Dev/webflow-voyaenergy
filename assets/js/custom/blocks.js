@@ -14,8 +14,16 @@
         },
 
         sectionControls() {
+            const script = () => {
+                const el = document.querySelector(".section-controls");
+                if (!el) return;
+
+                handleCTAHover(el);
+                handleScrollIndicator(el);
+            };
+
             const handleCTAHover = (self) => {
-                const trigger = document.querySelector(".sc-anchors");
+                const trigger = self.querySelector(".sc-anchors");
                 const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
                 const items = trigger.querySelectorAll(".sc-anchor-item");
@@ -65,12 +73,12 @@
 
                 trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
                 trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
-            }
+            };
 
-            const handleScrollIndicator = () => {
-                const svg = document.getElementById('indicator');
-                const line = document.getElementById('dline');
-                const head = document.getElementById('dhead');
+            const handleScrollIndicator = (self) => {
+                const svg = self.querySelector('#indicator');
+                const line = self.querySelector('#dline');
+                const head = self.querySelector('#dhead');
                 const len = line.getTotalLength();
 
                 const arrowTL = gsap.timeline({
@@ -137,8 +145,7 @@
                 }, { passive: true });
             };
 
-            handleCTAHover();
-            handleScrollIndicator();
+            script();
         },
 
         heroHomepage() {
