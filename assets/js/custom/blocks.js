@@ -9,6 +9,9 @@
             this.contentGridItems();
             this.contactBanner();
             this.wideImageBanner();
+            
+            this.heroWithGallery();
+            this.largeText();
 
             baunfire.Global.screenSizeChange();
         },
@@ -1841,6 +1844,78 @@
                         "<0.4"
                     );
                 }
+            };
+
+            script();
+        },
+        heroWithGallery() {
+            const script = () => {
+                const els = document.querySelectorAll("section.hero-with-gallery");
+                if (!els.length) return;
+
+                const handleAnimation = (self) => {
+                    const container = self.querySelector(".hwg-imgs");
+                    const imgsInner = self.querySelector(".hwg-imgs-inner");
+
+                    if (!container || !imgsInner) return;
+
+                    gsap.set(imgsInner, { x: 0 });
+
+                    const moveX = Math.max(0, imgsInner.scrollWidth - container.clientWidth);
+
+                    gsap.to(imgsInner, {
+                        x: -moveX,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: container,
+                            start: "top 65%",
+                            end: "bottom center",
+                            scrub: 1.5,
+                            invalidateOnRefresh: true
+                        },
+                    });
+                }
+
+                els.forEach(self => {
+                    ScrollTrigger.addEventListener("refreshInit", () => handleAnimation(self));
+                    handleAnimation(self);
+                    ScrollTrigger.refresh();
+                });
+            };
+
+            script();
+        },
+        largeText() {
+            const script = () => {
+                const els = document.querySelectorAll("section.large-text");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    const text = self.querySelector(".lt-para");
+                    SplitText.create(text, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            gsap.set(split.words, { yPercent: 110 });
+
+                            const tl = gsap.timeline({
+                                scrollTrigger: {
+                                    trigger: self,
+                                    start: "top top",
+                                    end: "+=250%",
+                                    scrub: 1,
+                                    pin: true,
+                                    invalidateOnRefresh: true
+                                },
+                            });
+
+                            tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
+
+                            return tl;
+                        },
+                    });
+                });
             };
 
             script();
