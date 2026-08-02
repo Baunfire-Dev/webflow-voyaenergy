@@ -2,35 +2,64 @@
     'use strict';
 
     const baunfire = {
-        initialized: false,
+        booted: false,
         modules: [],
         anim: {
             start: "top 60%"
         },
         lenis: null,
-        init() {
-            if (this.initialized) return;
-            this.initialized = true;
+        ctx: null,
+        _once: new Set(),
 
-            this.modules.forEach(mod => {
-                if (mod.selector && !document.querySelector(mod.selector)) return;
-                if (typeof mod.init === 'function') mod.init(baunfire);
-            });
+        boot() {
+            if (this.booted) return;
+            this.booted = true;
+            this.smoothScroll();
+            this.load();
+        },
+
+        mount(container) {
+            container = container
+                || document.querySelector('[data-barba="container"]')
+                || document.querySelector('main')
+                || document.body;
+
+            this.ctx = gsap.context(() => {
+                this.modules.forEach(mod => {
+                    if (mod.once && this._once.has(mod)) return;
+                    if (mod.selector && !container.querySelector(mod.selector)) return;
+                    if (typeof mod.init === 'function') mod.init(baunfire, container);
+                    if (mod.once) this._once.add(mod);
+                });
+            }, container);
 
             document.dispatchEvent(new CustomEvent('baunfire:ready'));
         },
+
+        unmount() {
+            this.modules.forEach(mod => {
+                if (mod.once) return;
+                if (typeof mod.destroy === 'function') mod.destroy();
+            });
+            this.ctx?.revert();
+            this.ctx = null;
+        },
+
         addModule(mod) {
             this.modules.push(mod);
         },
+
         load() {
             console.log('Baunfire loaded');
         },
+
         smoothScroll() {
             this.lenis = window.__lenis;
         },
+
         ready(callback) {
-            baunfire.smoothScroll();
-            baunfire.init();
+            this.boot();
+            this.mount();
             if (typeof callback === 'function') callback(baunfire);
         }
     };

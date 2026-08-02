@@ -16,6 +16,17 @@
             baunfire.Global.screenSizeChange();
         },
 
+        destroy() {
+            if (this._scHandler) {
+                removeEventListener('scroll', this._scHandler);
+                this._scHandler = null;
+            }
+            if (this._hiwRefresh) {
+                ScrollTrigger.removeEventListener("refreshInit", this._hiwRefresh);
+                this._hiwRefresh = null;
+            }
+        },
+
         sectionControls() {
             const script = () => {
                 const el = document.querySelector(".section-controls");
@@ -132,7 +143,7 @@
                         y: -4
                     })
 
-                addEventListener('scroll', () => {
+                this._scHandler = () => {
                     if (fadeOut) return;
 
                     fadeOut = true;
@@ -145,7 +156,8 @@
                         duration: 0.5,
                         ease: 'power3.in'
                     });
-                }, { passive: true });
+                };
+                addEventListener('scroll', this._scHandler, { passive: true });
             };
 
             script();
@@ -659,7 +671,8 @@
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    ScrollTrigger.addEventListener("refreshInit", () => handleVisualBalance(self));
+                    this._hiwRefresh = () => handleVisualBalance(self);
+                    ScrollTrigger.addEventListener("refreshInit", this._hiwRefresh);
                     handleVisualBalance(self);
                     ScrollTrigger.refresh();
 

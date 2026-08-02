@@ -1,3 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    window.baunfire.ready();
+    window.baunfire.boot();
+    window.baunfire.Transitions.init();
 });

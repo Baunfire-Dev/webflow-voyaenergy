@@ -4,6 +4,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from 'gsap/SplitText';
 import { Flip } from 'gsap/Flip';
 import Lenis from 'lenis';
+import barba from '@barba/core';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
@@ -23,5 +24,6 @@ window.ScrollToPlugin = ScrollToPlugin;
 window.SplitText = SplitText;
 window.Flip = Flip;
 window.__lenis = lenis;
+window.barba = barba;
 
-export { gsap, ScrollTrigger, ScrollToPlugin, SplitText, Flip, Lenis };
+export { gsap, ScrollTrigger, ScrollToPlugin, SplitText, Flip, Lenis, barba };

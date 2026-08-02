@@ -8,13 +8,12 @@
         handleNav() {
             const nav = document.querySelector("header");
             if (!nav) return;
+            if (this._navBound) return;
+            this._navBound = true;
 
             let lastScrollY = window.scrollY;
             let isScrolled = false;
             let scrollDirection = null;
-
-            const parents = nav.querySelectorAll(".nav-item.is-parent");
-            const allNavItems = nav.querySelectorAll(".nav-item");
 
             const updateNavScroll = () => {
                 const currentScrollY = window.scrollY;
@@ -34,164 +33,6 @@
 
                 lastScrollY = currentScrollY;
             };
-
-            // const desktopDDPanel = () => {
-            //     let activeDropdown = null;
-            //     let hideTimeout = null;
-            //     let timeoutDuration = 300;
-
-            //     const isBigScreen = () => window.matchMedia("(min-width: 992px)").matches;
-
-            //     parents.forEach(function (el) {
-            //         const ddItems = el.querySelectorAll(".nav-dd-item");
-
-            //         el.addEventListener('mouseenter', function () {
-            //             if (!isBigScreen()) return;
-
-            //             clearTimeout(hideTimeout);
-
-            //             if (activeDropdown && activeDropdown !== el) {
-            //                 activeDropdown.classList.remove('open');
-            //             }
-
-            //             el.classList.add('open');
-            //             activeDropdown = el;
-
-            //             animateDDItems(ddItems);
-            //         });
-
-            //         el.addEventListener('mouseleave', function () {
-            //             if (!isBigScreen()) return;
-
-            //             hideTimeout = setTimeout(() => {
-            //                 el.classList.remove('open');
-            //                 if (activeDropdown === el) activeDropdown = null;
-            //             }, timeoutDuration);
-            //         });
-            //     });
-
-            //     allNavItems.forEach(function (el) {
-            //         if (el.classList.contains('is-parent')) return;
-
-            //         el.addEventListener('mouseenter', function () {
-            //             if (!isBigScreen()) return;
-            //             clearTimeout(hideTimeout);
-
-            //             if (activeDropdown) {
-            //                 activeDropdown.classList.remove('open');
-            //                 activeDropdown = null;
-            //             }
-            //         });
-            //     });
-            // };
-
-            // const mobileDDPanel = () => {
-            //     const navPanel = nav.querySelector(".nav-panel-inner");
-
-            //     parents.forEach(function (el) {
-            //         const inner = el.querySelector(".nav-item-inner");
-            //         const ddItems = el.querySelectorAll(".nav-dd-item");
-
-            //         inner.addEventListener('click', function () {
-            //             if (!window.matchMedia("(max-width: 992px)").matches) return;
-
-            //             if (el.classList.contains("mob-open")) {
-            //                 el.classList.remove("mob-open");
-            //             } else {
-            //                 parents.forEach(p => p.classList.remove("mob-open"));
-            //                 el.classList.add("mob-open");
-
-            //                 const elTop = el.getBoundingClientRect().top + navPanel.scrollTop - navPanel.getBoundingClientRect().top - 40;
-
-            //                 gsap.to(navPanel, {
-            //                     duration: 0.6,
-            //                     scrollTo: { y: elTop, autoKill: true },
-            //                     ease: "power2.inOut",
-            //                     overwrite: true
-            //                 });
-
-            //                 animateDDItems(ddItems);
-            //             }
-            //         });
-            //     });
-            // };
-
-            // const animateDDItems = (els) => {
-            //     gsap.fromTo(els,
-            //         {
-            //             x: 16,
-            //             autoAlpha: 0
-            //         },
-            //         {
-            //             autoAlpha: 1,
-            //             x: 0,
-            //             duration: 0.4,
-            //             ease: "power2.out",
-            //             overwrite: true,
-            //             stagger: { each: 0.08 }
-            //         }
-            //     );
-            // };
-
-            // const burgerEvent = () => {
-            //     const burger = nav.querySelector(".nav-burger");
-
-            //     let mm = gsap.matchMedia();
-
-            //     mm.add(
-            //         {
-            //             isDesktop: `(min-width: 992px)`,
-            //             isMobile: `(max-width: 991.98px)`,
-            //         },
-            //         (context) => {
-            //             let { isDesktop, isMobile } = context.conditions;
-
-            //             if (isDesktop) {
-            //                 parents.forEach(p => p.classList.remove("open"));
-            //             }
-
-            //             if (isMobile) {
-            //                 parents.forEach(p => p.classList.remove("mob-open"));
-            //             }
-
-            //             if (isDesktop) {
-            //                 nav.classList.remove("mob-active");
-            //                 baunfire.Global.siteScrolling();
-
-            //                 burger.removeEventListener("click", burgerClickHandler);
-            //             }
-
-            //             if (isMobile) {
-            //                 burger.addEventListener("click", burgerClickHandler);
-            //             }
-
-            //             return () => { };
-            //         }
-            //     );
-            // };
-
-            // const burgerClickHandler = () => {
-            //     if (!nav.classList.contains("mob-active")) {
-            //         showMobileNav();
-            //     } else {
-            //         hideMobileNav();
-            //     }
-            // };
-
-            // const showMobileNav = () => {
-            //     nav.classList.add("mob-active");
-            //     baunfire.Global.siteScrolling(false);
-            // };
-
-            // const hideMobileNav = () => {
-            //     nav.classList.remove("mob-active");
-            //     baunfire.Global.siteScrolling();
-            //     parents.forEach(p => p.classList.remove("open"));
-            // };
-
-            // burgerEvent();
-            // desktopDDPanel();
-            // mobileDDPanel();
 
             document.addEventListener("scroll", updateNavScroll);
             window.addEventListener("load", updateNavScroll);
