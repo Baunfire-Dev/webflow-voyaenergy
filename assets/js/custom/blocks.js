@@ -168,8 +168,6 @@
                 const els = document.querySelectorAll("section.hero-homepage");
                 if (!els.length) return;
 
-                console.log('eyy');
-
                 els.forEach(self => {
                     handleEntrance(self);
                     handleScroll(self);
