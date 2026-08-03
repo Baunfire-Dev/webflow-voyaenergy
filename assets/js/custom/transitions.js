@@ -27,12 +27,17 @@
 
             barba.hooks.beforeEnter((data) => {
                 baunfire.unmount();
+                
+                data.current?.container?.remove();
                 this.syncWebflowState(data.next);
+
                 baunfire.lenis?.scrollTo(0, { immediate: true, force: true });
                 baunfire.mount(data.next.container);
+
                 this.holdTriggers();
                 this.reinitWebflow();
                 this.updateNavState();
+
                 baunfire.Global.screenSizeChange();
             });
 
@@ -45,6 +50,7 @@
 
         holdTriggers() {
             this._held = ScrollTrigger.getAll();
+            console.log('entering, total triggers:', this._held.length);
             this._held.forEach(st => st.disable(false));
         },
 
@@ -62,8 +68,7 @@
                 leave() {
                     return self.coverIn();
                 },
-                enter(data) {
-                    data.current?.container.remove();
+                enter() {
                     return self.coverOut();
                 },
                 once(data) {
@@ -116,6 +121,7 @@
 
         coverOut() {
             const e = this.els();
+
             if (!e) {
                 this.releaseTriggers();
                 return;
