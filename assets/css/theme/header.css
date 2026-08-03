@@ -32,28 +32,21 @@ header {
 	}
 
 	@media (min-width: 62rem) {
-		/* .nav {
-        &-item {
-            &:hover {
-                .nav-item-text {
-                    color: var(--_colors---green);
-                }
-            }
-        }
+		.nav {
+			&-item {
+				&.w--current:not([href="#"]) {
+					.nav-item-inner {
+						@apply items-center gap-[0.5rem];
 
-        &-dd-item {
-            &:hover {
-                .nav-dd-item-text {
-                    color: var(--_colors---green);
-                }
-            }
-        }
-
-        &-item-text,
-        &-dd-item-text  {
-            @apply transition-colors duration-300 ease-out;
-        }
-    } */
+                        &::before {
+                            content: '';
+                            @apply size-[0.375rem] rounded-full;
+                            background: var(--_colors---impact-yellow);
+                        }
+					}
+				}
+			}
+		}
 	}
 
 	@media not all and (min-width: 62rem) {
