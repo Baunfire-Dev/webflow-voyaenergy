@@ -68,6 +68,9 @@
                 },
                 once(data) {
                     baunfire.mount(data.next.container);
+                    self.holdTriggers();
+                    self._intro = true;
+                    return self.coverOut();
                 },
             };
         },
@@ -118,15 +121,18 @@
                 return;
             }
 
+            const HOLD = this._intro ? 0.3 : 0;
+            this._intro = false;
+
             const HANDOFF = 0.4;
 
             const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
 
-            tl.to(e.panel, { yPercent: -100 }, 0);
-            if (e.inner) tl.to(e.inner, { yPercent: 100 }, 0);
-            if (e.logo) tl.to(e.logo, { yPercent: -100 }, 0);
+            tl.to(e.panel, { yPercent: -100 }, HOLD);
+            if (e.inner) tl.to(e.inner, { yPercent: 100 }, HOLD);
+            if (e.logo) tl.to(e.logo, { yPercent: -100 }, HOLD);
 
-            tl.call(() => this.releaseTriggers(), null, HANDOFF);
+            tl.call(() => this.releaseTriggers(), null, HOLD + HANDOFF);
 
             tl.set(e.panel, { visibility: 'hidden' })
                 .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });

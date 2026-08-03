@@ -252,10 +252,7 @@
                 // }
 
                 if (mainImage) {
-                    introTL.fromTo(mainImage,
-                        {
-                            scale: 1.3,
-                        },
+                    introTL.to(mainImage,
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
