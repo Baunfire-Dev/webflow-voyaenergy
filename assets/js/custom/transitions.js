@@ -27,7 +27,7 @@
 
             barba.hooks.beforeEnter((data) => {
                 baunfire.unmount();
-                
+
                 data.current?.container?.remove();
                 this.syncWebflowState(data.next);
 
@@ -50,7 +50,6 @@
 
         holdTriggers() {
             this._held = ScrollTrigger.getAll();
-            console.log('entering, total triggers:', this._held.length);
             this._held.forEach(st => st.disable(false));
         },
 
