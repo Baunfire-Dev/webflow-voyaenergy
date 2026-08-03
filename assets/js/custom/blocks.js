@@ -1846,7 +1846,7 @@
                     scrollTrigger: {
                         trigger: self,
                         start: "top top",
-                        end: "bottom 40%",
+                        end: "bottom 20%",
                         scrub: 1,
                         invalidateOnRefresh: true
                     },
