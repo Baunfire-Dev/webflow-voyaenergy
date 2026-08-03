@@ -53,7 +53,7 @@
         },
 
         load() {
-            console.log('Baunfire loaded');
+            baunfire.Global.fancyLog('Baunfire loaded');
         },
 
         smoothScroll() {

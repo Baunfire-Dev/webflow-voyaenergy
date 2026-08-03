@@ -42,22 +42,25 @@
             });
 
             barba.hooks.after(() => {
-                baunfire.Global.siteScrolling(true);
                 this.releaseTriggers();
-                ScrollTrigger.refresh();
+                baunfire.Global.siteScrolling(true);
             });
         },
 
         holdTriggers() {
-            this._held = ScrollTrigger.getAll();
+            const vh = window.innerHeight;
+            this._held = ScrollTrigger.getAll().filter(st => {
+                const el = st.trigger;
+                if (!el) return false;
+                const r = el.getBoundingClientRect();
+                return r.top < vh && r.bottom > 0;
+            });
             this._held.forEach(st => st.disable(false));
         },
-
         releaseTriggers() {
             if (!this._held) return;
             this._held.forEach(st => st.enable());
             this._held = null;
-            ScrollTrigger.refresh();
         },
 
         reveal() {
@@ -139,8 +142,9 @@
 
             tl.call(() => this.releaseTriggers(), null, HOLD + HANDOFF);
 
-            tl.set(e.panel, { visibility: 'hidden' })
-                .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
+            tl
+            .set(e.panel, { visibility: 'hidden' })
+            .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
 
             return tl;
         },

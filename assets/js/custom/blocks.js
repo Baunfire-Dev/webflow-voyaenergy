@@ -175,10 +175,6 @@
             }
 
             const handleEntrance = (self) => {
-                // const pageReveal = document.querySelector(".page-reveal");
-                // const pageMark = pageReveal.querySelector(".page-mark");
-                // const pageSlats = pageReveal.querySelectorAll(".page-slat");
-
                 const nav = document.querySelector("nav");
                 const pageControls = document.querySelector(".section-controls");
 
@@ -187,7 +183,7 @@
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const timings = {
-                    callDelay: 0,
+                    callDelay: 0.5,
                     reveal: {
                         markFade: {
                             duration: 0.6,
@@ -232,25 +228,6 @@
                     }
                 });
 
-                // if (pageReveal) {
-                //     // introTL.fromTo(pageMark,
-                //     //     { autoAlpha: 1, },
-                //     //     { autoAlpha: 0, yPercent: -10, duration: timings.reveal.markFade.duration, ease: "power1.out" }
-                //     // );
-
-                //     // introTL.fromTo(pageSlats,
-                //     //     { yPercent: 0 },
-                //     //     {
-                //     //         yPercent: -102,
-                //     //         duration: timings.reveal.slat.duration,
-                //     //         ease: "power3.inOut",
-                //     //         stagger: timings.reveal.slat.stagger,
-                //     //         onComplete: () => pageReveal.remove(),
-                //     //     },
-                //     //     // timings.reveal.slat.position
-                //     // );
-                // }
-
                 if (mainImage) {
                     introTL.to(mainImage,
                         {
@@ -284,18 +261,6 @@
                 }
 
                 introTL.addLabel("nav_controls", timings.navControls.position)
-
-                // introTL.fromTo(nav,
-                //     {
-                //         yPercent: -100,
-                //     },
-                //     {
-                //         yPercent: 0,
-                //         duration: timings.navControls.duration,
-                //         ease: "power2.out"
-                //     },
-                //     "nav_controls"
-                // );
 
                 introTL.fromTo(pageControls,
                     {
