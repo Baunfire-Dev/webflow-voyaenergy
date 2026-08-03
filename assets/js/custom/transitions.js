@@ -38,25 +38,20 @@
                 this.reinitWebflow();
                 this.updateNavState();
 
+                this.releaseTriggers();
                 baunfire.Global.screenSizeChange();
+                baunfire.Global.siteScrolling(true);
             });
 
             barba.hooks.after(() => {
-                this.releaseTriggers();
-                baunfire.Global.siteScrolling(true);
             });
         },
 
         holdTriggers() {
-            const vh = window.innerHeight;
-            this._held = ScrollTrigger.getAll().filter(st => {
-                const el = st.trigger;
-                if (!el) return false;
-                const r = el.getBoundingClientRect();
-                return r.top < vh && r.bottom > 0;
-            });
+            this._held = ScrollTrigger.getAll();
             this._held.forEach(st => st.disable(false));
         },
+
         releaseTriggers() {
             if (!this._held) return;
             this._held.forEach(st => st.enable());
@@ -142,9 +137,8 @@
 
             tl.call(() => this.releaseTriggers(), null, HOLD + HANDOFF);
 
-            tl
-            .set(e.panel, { visibility: 'hidden' })
-            .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
+            tl.set(e.panel, { visibility: 'hidden' })
+                .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
 
             return tl;
         },

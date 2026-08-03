@@ -13,7 +13,7 @@
             this.heroWithGallery();
             this.largeText();
 
-            baunfire.Global.screenSizeChange();
+            // baunfire.Global.screenSizeChange();
         },
 
         destroy() {
