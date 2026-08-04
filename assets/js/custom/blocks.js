@@ -183,27 +183,13 @@
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const timings = {
-                    callDelay: 0.5,
-                    reveal: {
-                        markFade: {
-                            duration: 0.6,
-                        },
-                        slat: {
-                            duration: 0.7,
-                            stagger: 0.08,
-                            position: "<",
-                        },
-                    },
+                    callDelay: 0,
                     mainImage: {
-                        duration: 2.5,
-                        position: "<-0.02"
+                        duration: 2,
+                        position: "<-0.2"
                     },
                     mainHeading: {
                         position: "<0.6"
-                    },
-                    navControls: {
-                        duration: 0.6,
-                        position: "<0.4"
                     },
                     mainPara: {
                         position: "<0.3"
@@ -233,7 +219,7 @@
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
-                            ease: "power2.out",
+                            ease: "power2.inOut",
                         },
                         timings.mainImage.position
                     );
@@ -251,7 +237,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
-                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger,
+                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.inOut", stagger: splitTextsProps.stagger,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
                                 timings.mainHeading.position
@@ -259,20 +245,6 @@
                         },
                     });
                 }
-
-                introTL.addLabel("nav_controls", timings.navControls.position)
-
-                introTL.fromTo(pageControls,
-                    {
-                        y: 100,
-                    },
-                    {
-                        y: 0,
-                        duration: timings.navControls.duration,
-                        ease: "power2.out"
-                    },
-                    "nav_controls"
-                );
 
                 if (mainPara) {
                     SplitText.create(mainPara, {
@@ -286,7 +258,7 @@
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
-                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.out", stagger: splitTextsProps.stagger,
+                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.inOut", stagger: splitTextsProps.stagger,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
                                 timings.mainPara.position
@@ -1893,10 +1865,10 @@
                             {
                                 y: "-5%",
                                 duration: 0.8,
-                                ease: "power3.out",
-                                stagger: 0.06,
+                                ease: "power2.inOut",
+                                stagger: { amount: 0.6, from: "start" },
                                 scrollTrigger: {
-                                    trigger: text,
+                                    trigger: self,
                                     start: baunfire.anim.start,
                                     once: true,
                                 },

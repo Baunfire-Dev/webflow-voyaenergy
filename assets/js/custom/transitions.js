@@ -124,10 +124,11 @@
                 return;
             }
 
-            const HOLD = this._intro ? 0.3 : 0;
+            // const HOLD = this._intro ? 0.3 : 0;
+            const HOLD = 0.3;
             this._intro = false;
 
-            const HANDOFF = 0.4;
+            const HANDOFF = 0;
 
             const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
 

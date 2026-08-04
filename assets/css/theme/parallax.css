@@ -19,6 +19,16 @@
 	view-timeline-axis: block;
 }
 
+[class*="plx-"]:is(img) {
+    min-width: 120%;
+    min-height: 120%;
+    right: auto;
+    bottom: auto;
+    left: -10%;
+    top: -10%;
+    position: absolute;
+}
+
 @keyframes plx {
 	from { transform: translateY(calc(var(--s) *  8vh)); }
 	to   { transform: translateY(calc(var(--s) * -8vh)); }
