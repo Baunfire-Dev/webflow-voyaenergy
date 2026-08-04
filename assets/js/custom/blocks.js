@@ -1,4 +1,14 @@
+const theme = require("../../../config.json");
+
 (function () {
+    const COLLECTION_ENDPOINTS = {
+        resources: {
+            dataURL: `${theme.pages}/api/collection?name=resources`,
+            slug: 'resource',
+            data: []
+        }
+    };
+
     baunfire.Blocks = {
         init() {
             this.sectionControls();
@@ -12,6 +22,8 @@
 
             this.heroWithGallery();
             this.largeText();
+            
+            this.resourcesGrid();
 
             // baunfire.Global.screenSizeChange();
         },
@@ -1842,7 +1854,7 @@
                     handleTextAnim(self);
                 });
             };
-            
+
             const handleTextAnim = (self) => {
                 const text = self.querySelector(".lt-para");
                 if (!text) return;
@@ -1883,8 +1895,208 @@
 
             script();
         },
+
+        resourcesGrid() {
+            let dataPromise;
+
+            const fetchData = () => dataPromise ??= fetch(COLLECTION_ENDPOINTS.resources.dataURL).then((res) => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            });
+
+            const script = () => {
+                const els = document.querySelectorAll("section.resources-grid");
+                if (!els.length) return;
+
+                els.forEach((self) => {
+                    const container = self.querySelector(".cl-container");
+                    const grid = container?.querySelector(".cl-c-inner");
+
+                    if (!grid) return;
+
+                    const resData = {
+                        parent: self,
+                        container: container,
+                        grid: grid,
+                        items: [],
+                        tabs: self.querySelectorAll(".rg-tab"),
+                        loadMore: self.querySelector(".rg-load-more"),
+                        emptyText: self.querySelector(".cl-empty"),
+                        activeCategory: null,
+                        itemsPerPage: 3,
+                        currentPage: 1,
+                    };
+
+                    container.classList.add("is-loading");
+
+                    getData(resData);
+                });
+            };
+
+            const getData = (resData) => {
+                const { container } = resData;
+                container.classList.add("is-loading");
+
+                if (COLLECTION_ENDPOINTS.resources.data) {
+                    fetchData()
+                        .then((data) => {
+                            COLLECTION_ENDPOINTS.resources.data = data;
+                            container.classList.remove("is-loading");
+
+                            console.log(data);
+
+                            renderGrid(resData, data);
+                            initializeFilter(resData);
+                            initializeLoadMore(resData);
+                            applyFilter(resData);
+                            updateDisplay(resData, true);
+                        })
+                        .catch((err) => {
+                            console.error("load failed", err);
+                            container.classList.remove("is-loading");
+                        });
+                } else {
+                    const data = COLLECTION_ENDPOINTS.resources.data;
+                    renderGrid(resData, data);
+                    initializeFilter(resData);
+                    initializeLoadMore(resData);
+                    applyFilter(resData);
+                    updateDisplay(resData, true);
+                }
+            };
+
+            const generateCard = (d) => `
+                <div class="rg-card">
+                    <a href="#" class="rg-card-inner w-inline-block">
+                        <div class="rg-img-c">
+                            <img loading="lazy" data-src="" alt="resource-card-image" class="rg-img">
+                        </div>
+
+                        <div class="rg-content">
+                            <div class="rg-c-inner">
+                                <div class="rg-title-c">
+                                    <p class="rg-eyebrow g-eyebrow">Eyebrow</p>
+                                    <p class="rg-title g-p-lg">Title</p>
+                                </div>
+                                <p class="rg-c-para g-p-sm">
+                                    Paragraph
+                                </p>
+                            </div>
+
+                            <div class="rg-cta-c">
+                                <div class="g-btn">
+                                    <div class="g-btn-inner">
+                                        <div class="g-btn-text">Read more</div>
+                                        <div class="g-btn-arrows">
+                                            <div class="g-btn-arrow w-embed">
+                                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0.717547 10L0 9.28245L8.26763 1.01482L2.89597 1.0149V7.90008e-07H9.99989V7.10392H8.98499V1.73225L0.717547 10Z" fill="#f1b510"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `;
+
+            const renderGrid = (resData, data) => {
+                const { grid } = resData;
+                grid.innerHTML = data.map(generateCard).join("");
+                resData.items = Array.from(grid.querySelectorAll(".rg-card"));
+            };
+
+            const initializeFilter = (resData) => {
+                const { tabs } = resData;
+                if (!tabs.length) return;
+
+                tabs.forEach((tab) => {
+                    tab.addEventListener("click", () => {
+                        const category = tab.dataset.category;
+
+                        tabs.forEach((t) => t.classList.toggle("is-list-active", t === tab));
+
+                        resData.activeCategory = category !== "all" ? category : null;
+                        resData.currentPage = 1;
+                        applyFilter(resData);
+                        updateDisplay(resData);
+                    });
+                });
+            };
+
+            const applyFilter = (resData) => {
+                const { items, activeCategory } = resData;
+
+                items.forEach((item) => {
+                    const matchesFilter = !activeCategory || item.dataset.category === activeCategory;
+                    item.classList.toggle("in-listing", matchesFilter);
+                });
+            };
+
+            const initializeLoadMore = (resData) => {
+                const { loadMore } = resData;
+                if (!loadMore) return;
+
+                loadMore.addEventListener("click", () => {
+                    resData.currentPage++;
+                    updateDisplay(resData);
+                });
+            };
+
+            const updateDisplay = (resData, isInitial = false) => {
+                const { items, itemsPerPage, currentPage, emptyText } = resData;
+
+                const filteredItems = items.filter((item) => item.classList.contains("in-listing"));
+                const totalItems = filteredItems.length;
+
+                emptyText?.classList.remove("active");
+                items.forEach((item) => item.classList.remove("is-active"));
+
+                if (totalItems === 0) {
+                    emptyText?.classList.add("active");
+                    hideLoadMore(resData);
+                    baunfire.Global.screenSizeChange();
+                    return;
+                }
+
+                const visibleCount = Math.min(currentPage * itemsPerPage, totalItems);
+                const visibleItems = filteredItems.slice(0, visibleCount);
+                visibleItems.forEach((item) => item.classList.add("is-active"));
+
+                if (visibleCount < totalItems) {
+                    showLoadMore(resData);
+                } else {
+                    hideLoadMore(resData);
+                }
+
+                baunfire.Global.screenSizeChange();
+
+                loadImages(visibleItems);
+            };
+
+            const loadImages = (items) => {
+                items.forEach((item) => {
+                    const image = item.querySelector(".rg-img[data-src]");
+                    if (!image) return;
+                    image.src = image.dataset.src;
+                    image.removeAttribute("data-src");
+                    image.closest(".rg-img-c")?.classList.add("active");
+                });
+            };
+
+            const showLoadMore = (resData) => {
+                if (resData.loadMore) resData.loadMore.classList.add("active");
+            };
+
+            const hideLoadMore = (resData) => {
+                if (resData.loadMore) resData.loadMore.classList.remove("active");
+            };
+
+            script();
+        },
     };
 
     baunfire.addModule(baunfire.Blocks);
-    
 })();

@@ -1,0 +1,9 @@
+section.resources-grid {
+	.rg {
+		&-load-more {
+			&.active {
+				@apply flex;
+			}
+		}
+	}
+}
