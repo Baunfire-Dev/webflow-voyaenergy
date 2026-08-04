@@ -1886,4 +1886,5 @@
     };
 
     baunfire.addModule(baunfire.Blocks);
+    
 })();
