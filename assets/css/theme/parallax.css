@@ -35,15 +35,13 @@
 }
 
 @supports (animation-timeline: view()) {
-	@media (prefers-reduced-motion: no-preference) {
-		[class*="plx-"]:not(.plx-wrap) {
-			animation: plx linear both;
-			animation-timeline: view();
-			animation-range: cover;
-		}
-        
-		.plx-clip {
-			animation-timeline: --plx;
-		}
-	}
+    [class*="plx-"]:not(.plx-wrap) {
+        animation: plx linear both;
+        animation-timeline: view();
+        animation-range: cover;
+    }
+    
+    .plx-clip {
+        animation-timeline: --plx;
+    }
 }

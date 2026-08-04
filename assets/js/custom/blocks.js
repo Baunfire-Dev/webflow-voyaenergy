@@ -1552,7 +1552,7 @@
             }
 
             const handleEntrance = (self, activePanel) => {
-                const heading = self.querySelector(".cgi-title");
+                const heading = self.querySelector(".cgi-heading");
                 const para = self.querySelector(".cgi-para");
                 const tabContainer = self.querySelector(".cgi-tabs");
                 const panelsContainer = self.querySelector(".cgi-panels");
