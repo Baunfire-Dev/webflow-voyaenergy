@@ -106,6 +106,74 @@ dialog {
 	}
 }
 
+section.team-carousel {
+	.swiper {
+		&-nav-container {
+			@apply flex gap-[0.375rem];
+		}
+
+		&-button-prev,
+		&-button-next {
+			@apply !static !flex !items-center !justify-center;
+			@apply !m-0 !p-0 !w-[2.5rem] !h-[2.5rem] !rounded-[100%] shrink-0;
+			background-color: var(--_colors---impact-yellow);
+			border: 1px solid var(--_colors---impact-yellow);
+
+			svg {
+				path {
+					@apply fill-[var(--\_colors---white)];
+				}
+			}
+
+			&.swiper-button-disabled {
+				@apply bg-transparent border-[var(--\_colors---white)] !opacity-[1];
+				svg {
+					path {
+						@apply fill-[var(--\_colors---white)];
+					}
+				}
+			}
+
+			.swiper-navigation-icon {
+				@apply hidden;
+			}
+
+			&,
+			svg path {
+				@apply transition-all duration-500 ease-out;
+			}
+		}
+
+		&-button-prev {
+			svg {
+				margin-right: 0.125rem;
+			}
+		}
+
+		&-button-next {
+			svg {
+				margin-left: 0.125rem;
+			}
+		}
+
+		&-pagination {
+			@apply !static hidden md:flex gap-[0.5rem] !w-auto;
+		}
+
+		&-pagination-bullet {
+			@apply !m-0 !h-[0.25rem] !rounded-[0.25rem] !opacity-[1];
+			@apply transition-all duration-500 ease-out;
+
+			width: clamp(2.25rem, 2.8169vw + 1.5898rem, 4.125rem);
+			background: var(--_colors---white) !important;
+
+			&.swiper-pagination-bullet-active {
+				background: var(--_colors---impact-yellow) !important;
+			}
+		}
+	}
+}
+
 .cl {
 	&-container {
 		&.is-rg {

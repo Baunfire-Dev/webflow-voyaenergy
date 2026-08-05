@@ -9,7 +9,7 @@ section.team-grid {
                 }
 
                 &-img {
-                    @apply opacity-0 rounded-[0.5rem] transition-[opacity] duration-300 ease-in-out;
+                    @apply opacity-0 rounded-[0.5rem] transition-[opacity] duration-300 ease-in-out overflow-hidden;
                     background-color: var(--_colors---sky-gray);
 
                     img {
