@@ -16,6 +16,7 @@ const theme = require("../../../config.json");
             this.heroHomepage();
             this.heroFiftyFifty();
             this.heroWithGallery();
+            this.heroContact();
 
             this.bridgeEBTL();
             this.howItWorks();
@@ -378,52 +379,6 @@ const theme = require("../../../config.json");
                         invalidateOnRefresh: true,
                     },
                 });
-            };
-
-            script();
-        },
-
-        heroFiftyFifty() {
-            const script = () => {
-                const els = document.querySelectorAll("section.hero-fifty-fifty");
-                if (!els.length) return;
-
-                els.forEach(self => {
-                    handleEntrance(self);
-                });
-            }
-
-            const handleEntrance = (self) => {
-                const mainHeading = self.querySelector(".g-heading");
-
-                const splitTextsProps = {
-                    duration: 0.8,
-                    stagger: 0.06
-                }
-                
-                if (mainHeading) {
-                    SplitText.create(mainHeading, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            mainHeading.style.visibility = "visible";
-                            mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
-                            return gsap.fromTo(split.words,
-                                { y: "100%" },
-                                {
-                                    y: "-5%",
-                                    delay: 0.5,
-                                    duration: splitTextsProps.duration, 
-                                    ease: "power2.inOut", 
-                                    stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
-                                }
-                            );
-                        },
-                    });
-                }
             };
 
             script();
@@ -1924,6 +1879,98 @@ const theme = require("../../../config.json");
             const moveX = (imgsInner, container) => {
                 const val = Math.max(0, imgsInner.scrollWidth - container.clientWidth);
                 return val * -1;
+            };
+
+            script();
+        },
+
+        heroFiftyFifty() {
+            const script = () => {
+                const els = document.querySelectorAll("section.hero-fifty-fifty");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".g-heading");
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.5,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
+            };
+
+            script();
+        },
+
+        heroContact() {
+            const script = () => {
+                const els = document.querySelectorAll("section.hero-contact");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".g-heading");
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.5,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
             };
 
             script();
