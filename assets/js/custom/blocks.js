@@ -12,7 +12,11 @@ const theme = require("../../../config.json");
     baunfire.Blocks = {
         init() {
             this.sectionControls();
+
             this.heroHomepage();
+            this.heroFiftyFifty();
+            this.heroWithGallery();
+
             this.bridgeEBTL();
             this.howItWorks();
             this.systemOverview();
@@ -20,7 +24,6 @@ const theme = require("../../../config.json");
             this.contactBanner();
             this.wideImageBanner();
 
-            this.heroWithGallery();
             this.largeText();
 
             this.resourcesGrid();
@@ -375,6 +378,52 @@ const theme = require("../../../config.json");
                         invalidateOnRefresh: true,
                     },
                 });
+            };
+
+            script();
+        },
+
+        heroFiftyFifty() {
+            const script = () => {
+                const els = document.querySelectorAll("section.hero-fifty-fifty");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".g-heading");
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.5,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
             };
 
             script();
@@ -1814,11 +1863,46 @@ const theme = require("../../../config.json");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    handleAnimation(self);
+                    handleEntrance(self);
+                    handleImages(self);
                 });
             };
 
-            const handleAnimation = (self) => {
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".g-heading");
+                if (!mainHeading) return;
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.5,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
+            };
+
+            const handleImages = (self) => {
                 const container = self.querySelector(".hwg-imgs");
                 const imgsInner = self.querySelector(".hwg-imgs-inner");
 
