@@ -58,6 +58,7 @@ header {
 	@media not all and (min-width: 62rem) {
         &.nav-scrolled {
             background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 
             .nav {
                 &-logo,
