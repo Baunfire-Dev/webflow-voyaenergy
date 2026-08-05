@@ -1,6 +1,6 @@
 html {
-    scrollbar-gutter: stable;
-    background-color: #171615;
+	scrollbar-gutter: stable;
+	background-color: #171615;
 
 	&.disable-scrolling,
 	&:has(dialog[open]) {
@@ -52,39 +52,42 @@ html {
 			.cl-c-inner {
 				@apply mx-[-0.75rem];
 
-				.g {
-					&-card-outer {
+				.rg {
+					&-card {
 						@apply basis-full md:basis-[50%] lg:basis-[33.33%];
 
-                        &.is-active {
-							@apply mb-[1.5rem];
+						&.is-active {
+							@apply px-[0.75rem] mb-[1.5rem];
 						}
-					}
-
-					&-card {
-						@apply px-[0.75rem];
 					}
 				}
 			}
 		}
 
-		&.is-loading {
+		&.loaded {
 			.cl-skeletons-c {
-				@apply block;
+				@apply hidden;
 			}
 		}
 	}
 
 	&-c-inner {
+		@apply flex flex-wrap;
+
 		.rg {
 			&-card {
-				@apply overflow-hidden;
+                @apply h-auto;
 
 				&.is-active {
 					.rg-card-inner {
 						@apply visible opacity-100 delay-200 duration-700;
 						transform: translateY(0);
-						transition-timing-function: cubic-bezier(0.25,1,0.5,1);
+						transition-timing-function: cubic-bezier(
+							0.25,
+							1,
+							0.5,
+							1
+						);
 						will-change: transform;
 						transition-property: opacity, transform;
 					}
@@ -95,7 +98,7 @@ html {
 				}
 
 				&:hover {
-					.g-c-img {
+					.rg-img {
 						transform: scale(1);
 					}
 				}
@@ -127,27 +130,27 @@ html {
 			@apply flex;
 		}
 	}
-}
 
-.skeleton {
-	@apply relative overflow-hidden;
+	&-skeleton {
+		@apply relative overflow-hidden;
 
-	&::after {
-		content: "";
-		@apply inset-0 absolute;
-		transform: translateX(-100%);
-		background: linear-gradient(
-			90deg,
-			hsla(0, 0%, 100%, 0),
-			hsl(255.19deg 72.48% 57.25% / 14%) 50%,
-			hsla(0, 0%, 100%, 0)
-		);
-		animation: shimmer 1.4s ease infinite;
-	}
+		&::after {
+			content: "";
+			@apply inset-0 absolute;
+			transform: translateX(-100%);
+			background: linear-gradient(
+				90deg,
+				hsla(0, 0%, 100%, 0),
+				#f1b51045 50%,
+				hsla(0, 0%, 100%, 0)
+			);
+			animation: shimmer 1.4s ease infinite;
+		}
 
-	@keyframes shimmer {
-		100% {
-			transform: translateX(100%);
+		@keyframes shimmer {
+			100% {
+				transform: translateX(100%);
+			}
 		}
 	}
 }

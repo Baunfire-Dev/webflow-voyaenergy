@@ -1,8 +1,24 @@
 section.resources-grid {
 	.rg {
+		&-body {
+			@apply mb-[-1.5rem];
+		}
+
 		&-load-more {
 			&.active {
 				@apply flex;
+			}
+		}
+
+		&-tab {
+			&.active {
+				@apply items-center gap-[0.5rem];
+
+				&::before {
+					content: "";
+					@apply size-[0.375rem] rounded-full;
+					background: var(--_colors---impact-yellow);
+				}
 			}
 		}
 	}

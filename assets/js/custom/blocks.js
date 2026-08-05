@@ -22,7 +22,7 @@ const theme = require("../../../config.json");
 
             this.heroWithGallery();
             this.largeText();
-            
+
             this.resourcesGrid();
 
             // baunfire.Global.screenSizeChange();
@@ -1927,8 +1927,6 @@ const theme = require("../../../config.json");
                         currentPage: 1,
                     };
 
-                    container.classList.add("is-loading");
-
                     getData(resData);
                 });
             };
@@ -1941,9 +1939,7 @@ const theme = require("../../../config.json");
                     fetchData()
                         .then((data) => {
                             COLLECTION_ENDPOINTS.resources.data = data;
-                            container.classList.remove("is-loading");
-
-                            console.log(data);
+                            container.classList.add("loaded");
 
                             renderGrid(resData, data);
                             initializeFilter(resData);
@@ -1953,7 +1949,7 @@ const theme = require("../../../config.json");
                         })
                         .catch((err) => {
                             console.error("load failed", err);
-                            container.classList.remove("is-loading");
+                            container.classList.add("loaded");
                         });
                 } else {
                     const data = COLLECTION_ENDPOINTS.resources.data;
@@ -1966,21 +1962,19 @@ const theme = require("../../../config.json");
             };
 
             const generateCard = (d) => `
-                <div class="rg-card">
-                    <a href="#" class="rg-card-inner w-inline-block">
+                <div class="rg-card" data-category="${d.categorySlug}">
+                    <a href="${window.location.origin}/${COLLECTION_ENDPOINTS.resources.slug}/${d.slug || '#'}" class="rg-card-inner w-inline-block">
                         <div class="rg-img-c">
-                            <img loading="lazy" data-src="" alt="resource-card-image" class="rg-img">
+                            <img loading="lazy" data-src="${d.image}" alt="resource-card-image" class="rg-img">
                         </div>
 
                         <div class="rg-content">
                             <div class="rg-c-inner">
                                 <div class="rg-title-c">
-                                    <p class="rg-eyebrow g-eyebrow">Eyebrow</p>
-                                    <p class="rg-title g-p-lg">Title</p>
+                                    <p class="rg-eyebrow g-eyebrow">${d.categoryName}</p>
+                                    <p class="rg-title g-p-lg">${d.name}</p>
                                 </div>
-                                <p class="rg-c-para g-p-sm">
-                                    Paragraph
-                                </p>
+                                <p class="rg-c-para g-p-sm">${d.excerpt}</p>
                             </div>
 
                             <div class="rg-cta-c">
@@ -2012,11 +2006,13 @@ const theme = require("../../../config.json");
                 const { tabs } = resData;
                 if (!tabs.length) return;
 
+                tabs[0].classList.add("active");
+
                 tabs.forEach((tab) => {
                     tab.addEventListener("click", () => {
                         const category = tab.dataset.category;
 
-                        tabs.forEach((t) => t.classList.toggle("is-list-active", t === tab));
+                        tabs.forEach((t) => t.classList.toggle("active", t === tab));
 
                         resData.activeCategory = category !== "all" ? category : null;
                         resData.currentPage = 1;
