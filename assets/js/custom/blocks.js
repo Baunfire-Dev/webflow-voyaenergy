@@ -31,6 +31,8 @@ const theme = require("../../../config.json");
 
             this.resourcesGrid();
 
+            this.teamGrid();
+
             // baunfire.Global.screenSizeChange();
         },
 
@@ -2312,6 +2314,107 @@ const theme = require("../../../config.json");
                         },
                     });
                 }
+            };
+
+            script();
+        },
+        teamGrid() {
+            const script = () => {
+                const els = document.querySelectorAll("section.team-grid");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    const cards = self.querySelectorAll(".tg-card");
+                    const data = readData(self);
+
+                    cards.forEach((card, i) => {
+                        const dialog = createDialog(data[i]);
+                        card.append(dialog);
+
+                        const trigger = card.querySelector(".team-popup-trigger");
+                        const close = dialog.querySelector(".team-popup-close");
+
+                        trigger?.addEventListener("click", () => {
+                            baunfire.Global.siteScrolling(false);
+                            loadImage(card);
+                            dialog.showModal();
+                        });
+
+                        close?.addEventListener("click", () => {
+                            baunfire.Global.siteScrolling(true);
+                            dialog.close();
+                        });
+                    });
+                });
+            };
+
+            const readData = (self) => {
+                return [...self.querySelectorAll(".tg-card")].map((item) => ({
+                    img: item.querySelector(".tg-c-img")?.src ?? "",
+                    name: item.querySelector(".tg-c-name")?.textContent.trim() ?? "",
+                    position: item.querySelector(".tg-c-position")?.textContent.trim() ?? "",
+                    linkedin: item.querySelector(".tg-shadow-linkedin")?.textContent.trim() ?? "",
+                    bio: item.querySelector(".tg-shadow-bio")?.innerHTML.trim() ?? "",
+                    tags: item.querySelector(".tg-shadow-tags")?.textContent.split(",").map(tag => tag.trim()).filter(Boolean) ?? []
+                }));
+            };
+
+            const createDialog = (d) => {
+                const dialog = document.createElement("dialog");
+
+                dialog.innerHTML = `
+                    <div class="team-popup">
+                        <button type="button" class="team-popup-close" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M0.0229858 11.1601L11.1599 0.023202L13.0393 1.90256L1.90234 13.0395L0.0229858 11.1601ZM-0.000215885 1.90256L1.90234 1.25234e-08L13.0393 11.1369L11.1367 13.0395L-0.000215885 1.90256Z" fill="black"/>
+                            </svg>
+                        </button>
+
+                        <div class="team-popup-inner" data-lenis-prevent>
+                            <div class="team-popup-img">
+                                ${d.img ? `<img loading="lazy" decoding="async" data-src="${d.img}" alt="${d.name}">` : ''}
+                            </div>
+
+                            <div class="team-popup-content">
+                                <div class="team-popup-head">
+                                    <p class="team-popup-name">${d.name}</p>
+                                    ${d.position ? `<p class="team-popup-position">${d.position}</p>` : ""}
+                                </div>
+
+                                <div class="team-popup-bio">
+                                    <div class="team-popup-rich-txt">
+                                        ${d.bio}
+                                    </div>
+
+                                    ${d.tags.length ? `
+                                        <div class="team-popup-tags">
+                                            ${d.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+                                        </div>
+                                    ` : ""}
+
+                                    ${d.linkedin ? `
+                                        <a href="${d.linkedin}" target="_blank" rel="noopener">
+                                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="30" height="30" rx="3" fill="#1A1A1A"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.7008 22H19.2972V17.0784C19.2972 15.7902 18.7648 14.9108 17.594 14.9108C16.6985 14.9108 16.2005 15.5043 15.9687 16.0762C15.8818 16.2815 15.8954 16.5675 15.8954 16.8534V22H12.5235C12.5235 22 12.5669 13.2819 12.5235 12.4895H15.8954V13.9821C16.0946 13.3295 17.1721 12.398 18.8915 12.398C21.0248 12.398 22.7008 13.766 22.7008 16.7118V22ZM9.1135 11.2999H9.09178C8.00523 11.2999 7.30078 10.5728 7.30078 9.65127C7.30078 8.71178 8.02605 8 9.13433 8C10.2417 8 10.9226 8.71 10.9443 9.64859C10.9443 10.5702 10.2417 11.2999 9.1135 11.2999ZM7.68921 12.4895H10.6908V22H7.68921V12.4895Z" fill="white"/>
+                                            </svg>
+                                        </a>
+                                    ` : ""}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                return dialog;
+            };
+
+            const loadImage = (item) => {
+                const image = item.querySelector("[data-src]");
+                if (!image) return;
+                image.src = image.dataset.src;
+                image.removeAttribute("data-src");
+                image.parentElement.classList.add("active");
             };
 
             script();
