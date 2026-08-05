@@ -17,6 +17,8 @@ const theme = require("../../../config.json");
             this.heroFiftyFifty();
             this.heroWithGallery();
             this.heroContact();
+            this.richtextContent();
+            this.resourcesDetailPage();
 
             this.bridgeEBTL();
             this.howItWorks();
@@ -1845,7 +1847,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.5,
+                                    delay: 0.6,
                                     duration: splitTextsProps.duration, 
                                     ease: "power2.inOut", 
                                     stagger: splitTextsProps.stagger,
@@ -1915,7 +1917,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.5,
+                                    delay: 0.6,
                                     duration: splitTextsProps.duration, 
                                     ease: "power2.inOut", 
                                     stagger: splitTextsProps.stagger,
@@ -1961,7 +1963,53 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.5,
+                                    delay: 0.6,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
+            };
+
+            script();
+        },
+
+        richtextContent() {
+            const script = () => {
+                const els = document.querySelectorAll("section.rich-text-content");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".g-heading");
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.6,
                                     duration: splitTextsProps.duration, 
                                     ease: "power2.inOut", 
                                     stagger: splitTextsProps.stagger,
@@ -2218,6 +2266,52 @@ const theme = require("../../../config.json");
 
             const hideLoadMore = (resData) => {
                 if (resData.loadMore) resData.loadMore.classList.remove("active");
+            };
+
+            script();
+        },
+
+        resourcesDetailPage() {
+            const script = () => {
+                const els = document.querySelectorAll("section.res-container");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            }
+
+            const handleEntrance = (self) => {
+                const mainHeading = self.querySelector(".res-title");
+
+                const splitTextsProps = {
+                    duration: 0.8,
+                    stagger: 0.06
+                }
+                
+                if (mainHeading) {
+                    SplitText.create(mainHeading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mainHeading.style.visibility = "visible";
+                            mainHeading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return gsap.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%",
+                                    delay: 0.6,
+                                    duration: splitTextsProps.duration, 
+                                    ease: "power2.inOut", 
+                                    stagger: splitTextsProps.stagger,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                }
+                            );
+                        },
+                    });
+                }
             };
 
             script();
