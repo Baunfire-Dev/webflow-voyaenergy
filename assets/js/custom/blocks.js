@@ -1933,7 +1933,6 @@ const theme = require("../../../config.json");
 
             const getData = (resData) => {
                 const { container } = resData;
-                container.classList.add("is-loading");
 
                 if (COLLECTION_ENDPOINTS.resources.data) {
                     fetchData()
