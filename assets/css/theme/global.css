@@ -76,7 +76,7 @@ html {
 
 		.rg {
 			&-card {
-                @apply h-auto;
+				@apply h-auto;
 
 				&.is-active {
 					.rg-card-inner {
@@ -96,12 +96,6 @@ html {
 				&:not(.is-active) {
 					@apply w-0 h-0 !flex-none overflow-hidden;
 				}
-
-				&:hover {
-					.rg-img {
-						transform: scale(1);
-					}
-				}
 			}
 
 			&-img-c {
@@ -113,8 +107,6 @@ html {
 			}
 
 			&-img {
-				transform: scale(1.05);
-				@apply transition-all duration-500 ease-out;
 				@apply invisible opacity-0;
 			}
 
@@ -151,6 +143,24 @@ html {
 			100% {
 				transform: translateX(100%);
 			}
+		}
+	}
+}
+
+.cl-c-inner,
+.rs-body {
+	.rg {
+		&-card {
+			&:hover {
+				.rg-img {
+					transform: scale(1);
+				}
+			}
+		}
+
+		&-img {
+			transform: scale(1.05);
+			@apply transition-all duration-500 ease-out;
 		}
 	}
 }
