@@ -13,16 +13,23 @@
 
             let lastScrollY = window.scrollY;
             let isScrolled = false;
+            let isOpaqued = false;
             let scrollDirection = null;
 
             const updateNavScroll = () => {
                 const currentScrollY = window.scrollY;
                 const direction = currentScrollY > lastScrollY ? "down" : currentScrollY < lastScrollY ? "up" : null;
                 const scrolled = currentScrollY > 20;
+                const opaqued = currentScrollY > 300;
 
                 if (scrolled !== isScrolled) {
                     nav.classList.toggle("nav-scrolled", scrolled);
                     isScrolled = scrolled;
+                }
+
+                if (opaqued !== isOpaqued) {
+                    nav.classList.toggle("nav-opaqued", opaqued);
+                    isOpaqued = opaqued;
                 }
 
                 if (direction && direction !== scrollDirection) {

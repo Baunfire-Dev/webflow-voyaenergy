@@ -21,6 +21,11 @@ module.exports = {
         extend: {
             fontFamily: {
                 'sohne': ['Sohne', 'Arial', 'sans-serif'],
+            },
+            transitionTimingFunction: {
+                'power2-out': 'cubic-bezier(0.25, 1, 0.5, 1)',
+                'power3-out': 'cubic-bezier(0.19, 1, 0.22, 1)',
+                'reveal': 'cubic-bezier(0.77, 0, 0.175, 1)',
             }
         },
     },

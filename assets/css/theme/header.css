@@ -1,8 +1,8 @@
 header {
-	@apply transition-all duration-700 ease-out;
+	@apply transition-all duration-700 ease-reveal;
 
 	.nav {
-		/* @apply transition-all duration-500 ease-out; */
+		@apply transition-all duration-500 ease-power2-out;
 
 		/* &-burger {
 			svg {
@@ -56,44 +56,43 @@ header {
 	}
 
 	@media not all and (min-width: 62rem) {
-        &.nav-scrolled {
-            background-color: white;
-            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+		&.nav-scrolled {
+			background-color: white;
+			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 
-            .nav {
-                &-logo,
-                &-burger {
-                    svg path[fill="white"] {
-                        fill: var(--_colors---carbon-black);
-                    }
-                }
+			.nav {
+				&-logo,
+				&-burger {
+					svg path[fill="white"] {
+						fill: var(--_colors---carbon-black);
+					}
+				}
 
-                &-burger {
-                    svg line[stroke="white"] {
-                        stroke: var(--_colors---carbon-black);
-                    }
-                }
-            }
-        }
+				&-burger {
+					svg line[stroke="white"] {
+						stroke: var(--_colors---carbon-black);
+					}
+				}
+			}
+		}
 
 		.nav {
-			
 		}
 	}
 
 	&:has(.nav-item.open),
-	&.nav-scrolled,
-	&.mob-active {
-		/* background-color: white;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-
+	&.mob-active,
+	&.nav-scrolled {
 		.nav {
+			background-color: white;
+			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+
 			&-logo {
 				svg path[fill="white"] {
 					fill: var(--_colors---carbon-black);
 				}
 			}
-		} */
+		}
 	}
 
 	&.mob-active {
@@ -127,8 +126,10 @@ header {
 		} */
 	}
 
-	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(:has(.nav-item.open)) {
+	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(
+			:has(.nav-item.open)
+		) {
 		@apply pointer-events-none;
-		transform: translateY(-100%);
+		transform: translateY(-120%);
 	}
 }
