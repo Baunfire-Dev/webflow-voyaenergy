@@ -32,6 +32,10 @@ const theme = require("../../../config.json");
             this.teamGrid();
             this.teamCarousel();
 
+            this.teamGrid();
+
+            this.teamCarousel();
+
             // baunfire.Global.screenSizeChange();
         },
 

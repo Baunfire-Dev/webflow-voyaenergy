@@ -1,0 +1,32 @@
+.g-btn {
+	.g-btn-inner,
+	.g-btn-text,
+	svg path,
+    .g-btn-arrow {
+		@apply duration-[400ms] transition-all ease-power2-out;
+    }
+
+	&:hover {
+		/* &[data-wf--cta--variant="primary-purple"] {
+			.g-btn-inner {
+				background: #5b34e6;
+			}
+		}
+
+		&[data-wf--cta--variant="primary-white"],
+		&[data-wf--cta--variant="primary-bordered"] {
+			.g-btn-inner {
+				background: #f3f4f6;
+			}
+
+			svg path {
+				fill: var(--_colors---pink) !important;
+			}
+		} */
+ 
+        .g-btn-arrow {
+            @apply will-change-transform;
+            transform: rotate(45deg);
+        }
+	}
+}
