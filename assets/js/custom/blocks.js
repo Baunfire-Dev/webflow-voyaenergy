@@ -469,15 +469,17 @@ const theme = require("../../../config.json");
             };
 
             const handleEntrance = (self) => {
+                const contentInner = self.querySelector(".eb-content-inner");
                 const logo = self.querySelector(".eb-icon");
                 const heading = self.querySelector(".eb-title");
                 const para = self.querySelector(".eb-para");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
-                        trigger: sectionParent,
+                        trigger: contentInner,
                         start: baunfire.anim.start,
                         once: true,
+                        // markers: true,
                     }
                 });
 
@@ -503,7 +505,7 @@ const theme = require("../../../config.json");
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
-                                "<0.2"
+                                "<-0.2"
                             );
                         },
                     });
@@ -709,7 +711,7 @@ const theme = require("../../../config.json");
                     scrollTrigger: {
                         trigger: self,
                         start: "top 90%",
-                        markers: true
+                        // markers: true
                     }
                 });
 
