@@ -332,9 +332,21 @@ const theme = require("../../../config.json");
                     },
                 });
 
-                tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1.4 }, 0);
-                tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1.4 }, "<");
-                tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1.4 }, "<");
+                tl.to(sectionOne, { yPercent: -100, ease: "power1.out", duration: 1.8 }, 0);
+                tl.to(sectionOneImage, { yPercent: 40, ease: "power1.out", duration: 1.8 }, "<");
+                tl.to(sectionTwo, { yPercent: 0, ease: "power1.out", duration: 1.8 }, "<");
+                tl.fromTo(sectionTwoImage, 
+                    {
+                        scale: 1.2
+                    },
+                    {
+                        scale: 1.06,
+                        ease: "power1.out",
+                        duration: 1.8,
+                        transformOrigin: "center center"
+                    },
+                    "<"
+                );
 
                 tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
                 tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
@@ -410,8 +422,6 @@ const theme = require("../../../config.json");
                     },
                 });
 
-                gsap.set(sectionTwoImage, { scale: 1.06, transformOrigin: "center center" });
-
                 gsap.to(sectionTwoImage, {
                     yPercent: 14,
                     ease: "none",
@@ -477,7 +487,7 @@ const theme = require("../../../config.json");
                 const introTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: contentInner,
-                        start: baunfire.anim.start,
+                        start: "top 70%",
                         once: true,
                         // markers: true,
                     }
@@ -523,17 +533,15 @@ const theme = require("../../../config.json");
             const handleParallax = (self) => {
                 const bgImage = self.querySelector(".eb-bg-img");
 
-                gsap.set(bgImage, {
-                    scale: 1.15,
-                    transformOrigin: "top center"
-                })
-
                 gsap.fromTo(bgImage,
                     {
+                        scale: 1.25,
                         yPercent: 0,
                     },
                     {
+                        scale: 1.15,
                         yPercent: -6,
+                        transformOrigin: "top center",
                         ease: "none",
                         scrollTrigger: {
                             trigger: self,
@@ -627,19 +635,19 @@ const theme = require("../../../config.json");
                     duration: 0.05,
                     ease: "none",
                     stagger: { each: 0.02, from: "start" },
-                }, isFirst ? "-=0.8" : "<0.2");
+                }, isFirst ? "-=0.8" : "<0.1");
 
                 if (isLast && imagesInner) {
                     ebTL.to(imagesInner, {
                         xPercent: 0,
                         ease: "none",
-                        duration: 1.6,
+                        duration: 2,
                     }, "<");
 
                     ebTL.to(imagesInner, {
                         autoAlpha: 1,
                         ease: "none",
-                        duration: 0.6,
+                        duration: 0.8,
                     }, "<0.2");
                 }
 
