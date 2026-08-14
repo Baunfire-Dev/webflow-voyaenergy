@@ -8,7 +8,7 @@ import { CustomEase } from 'gsap/CustomEase';
 import Lenis from 'lenis';
 import barba from '@barba/core';
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip, CustomEase);
+gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin, Flip, CustomEase);
 
 CustomEase.create('pageReveal', 'M0,0 C0.77,0 0.175,1 1,1');
 

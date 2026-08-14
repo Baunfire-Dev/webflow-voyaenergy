@@ -1,10 +1,21 @@
 .g-btn {
+	svg path,
 	.g-btn-inner,
 	.g-btn-text,
-	svg path,
-    .g-btn-arrow {
-		@apply duration-[400ms] transition-all ease-power2-out;
-    }
+	.g-btn-arrow,
+	.g-btn-inner::before {
+		@apply duration-500 transition-all ease-power2-out;
+	}
+
+	.g-btn-inner {
+		@apply relative;
+
+		&::before {
+			content: "";
+			@apply absolute inset-0 z-[-1];
+			@apply h-full w-full rounded-[inherit] bg-inherit;
+		}
+	}
 
 	&:hover {
 		/* &[data-wf--cta--variant="primary-purple"] {
@@ -23,10 +34,14 @@
 				fill: var(--_colors---pink) !important;
 			}
 		} */
- 
-        .g-btn-arrow {
-            @apply will-change-transform;
-            transform: rotate(45deg);
+
+        .g-btn-inner::before {
+            transform: scale(1.04);
         }
+
+		.g-btn-arrow {
+			@apply will-change-transform;
+			transform: rotate(45deg);
+		}
 	}
 }

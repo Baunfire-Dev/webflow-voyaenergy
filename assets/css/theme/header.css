@@ -138,7 +138,7 @@ header {
 			}
 		}
 
-		&:not[data-wf--header--variant="light-surface"] {
+		&[data-wf--header--variant="dark-surface"] {
 			.nav {
 				&-anmt-inner {
 					border-color: #cecece;

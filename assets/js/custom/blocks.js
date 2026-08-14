@@ -32,10 +32,6 @@ const theme = require("../../../config.json");
             this.teamGrid();
             this.teamCarousel();
 
-            this.teamGrid();
-
-            this.teamCarousel();
-
             // baunfire.Global.screenSizeChange();
         },
 
@@ -320,56 +316,97 @@ const theme = require("../../../config.json");
                     return `inset(${y} ${x} ${y} ${x} round ${r})`;
                 };
 
+                gsap.set(sectionOneImage, { yPercent: 0 });
+                gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
+                gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
+                gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: heroInner,
+                        start: "top top",
+                        end: "+=140%",
+                        scrub: 1,
+                        pin: true,
+                        invalidateOnRefresh: true,
+                    },
+                });
+
+                tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1.4 }, 0);
+                tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1.4 }, "<");
+                tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1.4 }, "<");
+
+                tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
+                tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
+
+                const PIN_TAIL = 1;
+                
+                tl.addLabel("reveal2", ">+0.2");
+                
+                tl.to({}, { duration: PIN_TAIL }, 0);
+
+                tl.to({}, { duration: 1 });
+
+                tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
+
+                tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
+
+                tl.to({}, { duration: 0.5 });
+
+                const masterST = tl.scrollTrigger;
+
+                let revealed = false;
+                let reveal2TL = null;
+                let reveal2ST = null;
+
                 SplitText.create(secondaryPara, {
                     type: "words",
                     mask: "words",
                     autoSplit: true,
                     onSplit(split) {
-                        gsap.set(split.words, { yPercent: 110 });
+                        reveal2TL?.kill();
+                        reveal2ST?.kill();
 
-                        gsap.set(sectionOneImage, { yPercent: 0 });
+                        if (revealed) {
+                            gsap.set(sectionTwoLogo, { autoAlpha: 1, y: 0 });
+                            gsap.set(split.words, { yPercent: 0 });
+                            return;
+                        }
 
-                        gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
+                        gsap.set(sectionTwoLogo, { autoAlpha: 0, y: 40 });
+                        gsap.set(split.words, { y: "110%" });
+                        gsap.set(split.words, { willChange: "transform" });
 
-                        gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
-                        gsap.set(sectionTwoLogo, { autoAlpha: 0, y: "2rem" });
+                        reveal2TL = gsap.timeline({ paused: true });
 
-                        gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
+                        reveal2TL.to(sectionTwoLogo, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0);
 
-                        const tl = gsap.timeline({
-                            scrollTrigger: {
-                                trigger: heroInner,
-                                start: "top top",
-                                end: "+=250%",
-                                scrub: 1,
-                                pin: true,
-                                // anticipatePin: 1,
-                                invalidateOnRefresh: true,
+                        reveal2TL.to(
+                            split.words,
+                            {
+                                y: "-5%",
+                                duration: 0.8,
+                                ease: "pageReveal",
+                                stagger: { amount: 0.6, from: "start" },
+                                scrollTrigger: {
+                                    trigger: self,
+                                    start: baunfire.anim.start,
+                                    once: true,
+                                },
+                                onComplete: () => {
+                                    gsap.set(split.words, { willChange: "auto" });
+                                },
                             },
+                            "<-0.2"
+                        );
+
+                        reveal2ST = ScrollTrigger.create({
+                            trigger: heroInner,
+                            start: () => masterST.labelToScroll("reveal2"),
+                            once: true,
+                            refreshPriority: -1,
+                            onEnter: () => { revealed = true; reveal2TL.play(); },
                         });
-
-                        tl.to(sectionOne, { yPercent: -100, ease: "none", duration: 1.4 }, 0);
-                        tl.to(sectionOneImage, { yPercent: 40, ease: "none", duration: 1.4 }, "<");
-                        tl.to(sectionTwo, { yPercent: 0, ease: "none", duration: 1.4 }, "<");
-
-                        tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
-                        tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
-
-                        tl.to(sectionTwoLogo, { autoAlpha: 1, y: 0, ease: "none", duration: 0.6 }, 0.9);
-                        tl.to(split.words, { yPercent: 0, ease: "none", stagger: 0.1, duration: 0.6 }, "<0.1");
-
-                        tl.to({}, { duration: 1 });
-
-                        tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
-
-                        tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
-
-                        tl.call(() => siteAnchors.classList.remove("dark"), null, ">");
-                        tl.call(() => siteAnchors.classList.add("dark"), null, "<");
-
-                        tl.to({}, { duration: 0.5 });
-
-                        return tl;
                     },
                 });
 
@@ -463,7 +500,7 @@ const theme = require("../../../config.json");
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
-                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
                                 "<0.2"
@@ -578,7 +615,7 @@ const theme = require("../../../config.json");
                     const inner = item.querySelector(".tl-text-c-inner");
                     ebTL.fromTo(inner,
                         { y: () => yPercentLift(inner) },
-                        { y: 0, ease: "none", duration: 1.6, immediateRender: false },
+                        { y: 0, ease: "none", duration: 1.2, immediateRender: false },
                         "<"
                     );
                 }
@@ -595,7 +632,7 @@ const theme = require("../../../config.json");
                         xPercent: 0,
                         ease: "none",
                         duration: 1.6,
-                    }, "<0.4");
+                    }, "<");
 
                     ebTL.to(imagesInner, {
                         autoAlpha: 1,
@@ -672,6 +709,7 @@ const theme = require("../../../config.json");
                     scrollTrigger: {
                         trigger: self,
                         start: "top 90%",
+                        markers: true
                     }
                 });
 
@@ -1854,7 +1892,7 @@ const theme = require("../../../config.json");
                                     y: "-5%",
                                     delay: 0.6,
                                     duration: splitTextsProps.duration,
-                                    ease: "power2.inOut",
+                                    ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 }
@@ -1924,7 +1962,7 @@ const theme = require("../../../config.json");
                                     y: "-5%",
                                     delay: 0.6,
                                     duration: splitTextsProps.duration,
-                                    ease: "power2.inOut",
+                                    ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 }
@@ -1970,7 +2008,7 @@ const theme = require("../../../config.json");
                                     y: "-5%",
                                     delay: 0.6,
                                     duration: splitTextsProps.duration,
-                                    ease: "power2.inOut",
+                                    ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 }
@@ -2061,7 +2099,7 @@ const theme = require("../../../config.json");
                             {
                                 y: "-5%",
                                 duration: 0.8,
-                                ease: "power2.inOut",
+                                ease: "pageReveal",
                                 stagger: { amount: 0.6, from: "start" },
                                 scrollTrigger: {
                                     trigger: self,
@@ -2321,7 +2359,7 @@ const theme = require("../../../config.json");
 
             script();
         },
-        
+
         teamGrid() {
             const script = () => {
                 const els = document.querySelectorAll("section.team-grid");
@@ -2423,7 +2461,7 @@ const theme = require("../../../config.json");
 
             script();
         },
-        
+
         teamCarousel() {
             const script = () => {
                 const els = document.querySelectorAll("section.team-carousel");
