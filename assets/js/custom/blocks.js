@@ -32,7 +32,7 @@ const theme = require("../../../config.json");
             this.teamGrid();
             this.teamCarousel();
 
-            // baunfire.Global.screenSizeChange();
+            baunfire.Global.screenSizeChange();
         },
 
         destroy() {
@@ -335,7 +335,7 @@ const theme = require("../../../config.json");
                 tl.to(sectionOne, { yPercent: -100, ease: "power1.out", duration: 1.8 }, 0);
                 tl.to(sectionOneImage, { yPercent: 40, ease: "power1.out", duration: 1.8 }, "<");
                 tl.to(sectionTwo, { yPercent: 0, ease: "power1.out", duration: 1.8 }, "<");
-                tl.fromTo(sectionTwoImage, 
+                tl.fromTo(sectionTwoImage,
                     {
                         scale: 1.2
                     },
@@ -352,9 +352,9 @@ const theme = require("../../../config.json");
                 tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
 
                 const PIN_TAIL = 1;
-                
+
                 tl.addLabel("reveal2", ">+0.2");
-                
+
                 tl.to({}, { duration: PIN_TAIL }, 0);
 
                 tl.to({}, { duration: 1 });
@@ -409,7 +409,7 @@ const theme = require("../../../config.json");
                                     gsap.set(split.words, { willChange: "auto" });
                                 },
                             },
-                            "<-0.2"
+                            "<-0.1"
                         );
 
                         reveal2ST = ScrollTrigger.create({
@@ -515,7 +515,7 @@ const theme = require("../../../config.json");
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
-                                "<-0.2"
+                                "<-0.1"
                             );
                         },
                     });
@@ -646,7 +646,7 @@ const theme = require("../../../config.json");
 
                     ebTL.to(imagesInner, {
                         autoAlpha: 1,
-                        ease: "none",
+                        ease: "power1.out",
                         duration: 0.8,
                     }, "<0.2");
                 }
@@ -966,7 +966,7 @@ const theme = require("../../../config.json");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const PX_PER_SEC = 600;
+                    const PX_PER_SEC = 550;
                     const soTL = gsap.timeline();
 
                     const sceneContainer = self.querySelector(".so-scenes");
@@ -976,7 +976,7 @@ const theme = require("../../../config.json");
                     handleSceneTwo(self, soTL);
                     handleSceneThree(self, soTL);
                     handleSceneFour(self, soTL);
-                    handleSceneFive(self, soTL);
+                    // handleSceneFive(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
@@ -1025,10 +1025,10 @@ const theme = require("../../../config.json");
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
-                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
-                                "<0.2"
+                                "<-0.1"
                             );
                         },
                     });
@@ -1083,7 +1083,7 @@ const theme = require("../../../config.json");
 
                 soTL.add(
                     Flip.fit(generatorMain, generatorShadow1, {
-                        duration: 1.4,
+                        duration: 1.2,
                         ease: "power1.out",
                     }),
                     "<0.3"
@@ -1158,7 +1158,8 @@ const theme = require("../../../config.json");
                 const generator4 = sceneTwo.querySelector(".so-gen.is-s2.is-no-4");
                 const generator5 = sceneTwo.querySelector(".so-gen.is-s2.is-no-5");
 
-                const generatorContainer = sceneTwo.querySelector(".so-gens.is-s2");
+                const generatorContainer = sceneTwo.querySelector(".so-gens.is-s2.is-main");
+                const generatorContainerShadow = sceneTwo.querySelector(".so-gens.is-s2.is-shadow");
 
                 const generatorS2250kwMain = sceneTwo.querySelector(".so-gen2.is-s2.is-main");
                 const generatorS2250kwShadow = sceneTwo.querySelector(".so-gen2.is-s2.is-shadow");
@@ -1191,7 +1192,7 @@ const theme = require("../../../config.json");
 
                 soTL.add(
                     Flip.to(secondaryGenStates, {
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power1.out",
                         scale: true,
                     }),
@@ -1204,14 +1205,14 @@ const theme = require("../../../config.json");
                     {
                         autoAlpha: 0,
                         ease: "power1.out",
-                        duration: 1,
+                        duration: 0.8,
                     },
                     "<0.4"
                 );
 
                 soTL.add(
                     Flip.to(tertiaryGenStates, {
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power1.out",
                         scale: true,
                     }),
@@ -1225,7 +1226,7 @@ const theme = require("../../../config.json");
                     {
                         autoAlpha: 0,
                         ease: "power1.out",
-                        duration: 1,
+                        duration: 0.8,
                     },
                     "<0.4"
                 );
@@ -1248,12 +1249,12 @@ const theme = require("../../../config.json");
 
                 soTL.to({}, { duration: 0.2 });
 
-                soTL.to(generatorContainer,
-                    {
-                        scale: 0.4,
-                        ease: "power1.out",
+                soTL.add(
+                    Flip.fit(generatorContainer, generatorContainerShadow, {
                         duration: 0.8,
-                    },
+                        ease: "power1.out",
+                        scale: true,
+                    })
                 );
 
                 if (text) {
@@ -1271,9 +1272,9 @@ const theme = require("../../../config.json");
                     {
                         autoAlpha: 1,
                         ease: "power1.out",
-                        duration: 0.6,
+                        duration: 0.8,
                     },
-                    "<0.2"
+                    "<0.1"
                 );
 
                 soTL.add(
@@ -1282,7 +1283,7 @@ const theme = require("../../../config.json");
                         ease: "power1.out",
                         scale: true
                     }),
-                    "<0.2"
+                    "<"
                 );
 
                 soTL.set(sceneTwo, { autoAlpha: 0, pointerEvents: "none" })
@@ -1293,16 +1294,7 @@ const theme = require("../../../config.json");
                 const sceneThree = self.querySelector(".so-scene.is-s3");
 
                 const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s3.is-main");
-                const generatorS3Shadow = sceneThree.querySelector(".so-gen2.is-s3.is-shadow");
                 const panel = sceneThree.querySelector(".so-panel");
-
-                soTL.add(
-                    Flip.fit(generatorS3Main, generatorS3Shadow, {
-                        duration: 0.8,
-                        ease: "power1.out",
-                        scale: true
-                    })
-                );
 
                 if (panel) {
                     soTL.fromTo(panel,
@@ -1319,11 +1311,11 @@ const theme = require("../../../config.json");
                                 baunfire.Global.handleTextCount(panel);
                             }
                         },
-                        "<0.4"
+                        "<"
                     );
                 }
 
-                soTL.to({}, { duration: 1 });
+                soTL.to({}, { duration: 0.5 });
 
                 soTL.to(generatorS3Main,
                     {
@@ -1348,85 +1340,98 @@ const theme = require("../../../config.json");
             };
 
             const handleSceneFour = (self, soTL) => {
-                const sceneThree = self.querySelector(".so-scene.is-s3");
                 const sceneFour = self.querySelector(".so-scene.is-s4");
-                const sceneFive = self.querySelector(".so-scene.is-s5");
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
                 const text = sceneFour.querySelector(".so-scene-para");
                 const panel = sceneFour.querySelector(".so-panel");
 
-                const generatorContainer = sceneFour.querySelector(".so-gens.is-s4");
-                const generatorContainerShadow = sceneFour.querySelector(".so-gens-shadow");
-
-                const generatorGroup1 = sceneFour.querySelector(".so-gen-group.is-no-1");
-                const generatorGroup2 = sceneFour.querySelector(".so-gen-group.is-no-2");
-                const generatorGroup3 = sceneFour.querySelector(".so-gen-group.is-no-3");
-                const generatorGroup4 = sceneFour.querySelector(".so-gen-group.is-no-4");
+                const generatorColMain = sceneFour.querySelector(".so-gen-col.is-main");
+                const generatorColShadow = sceneFour.querySelector(".so-gen-col.is-shadow");
+                const generatorColShadow2 = sceneFour.querySelector(".so-gen-col.is-shadow-2");
 
                 const generator2MWMain = sceneFour.querySelector(".so-gen3.is-main");
-                const generator2MWShadow1 = sceneFour.querySelector(".so-gen3.is-shadow-1");
-                const generator2MWShadow2 = sceneFour.querySelector(".so-gen3.is-shadow-2");
+                const generator2MWShadow = sceneFour.querySelector(".so-gen3.is-shadow");
 
-                const generatorS5Main = sceneFive.querySelector(".so-gen4");
+                const CELL_DUR = 0.8;
 
-                const secondaryGenerators = [generatorGroup1, generatorGroup4];
-                const secondaryOverlays = [generatorGroup1.querySelector(".so-gen-overlay"), generatorGroup4.querySelector(".so-gen-overlay")];
-
-                const generatorContainerState = Flip.getState(generatorContainer, {
-                    props: "transform,opacity",
-                });
-
-                const secondaryStates = Flip.getState(secondaryGenerators, {
-                    props: "transform,opacity",
-                });
-
-                Flip.fit(generatorGroup1, generatorGroup2, { scale: true });
-                Flip.fit(generatorGroup4, generatorGroup3, { scale: true });
-
-                gsap.set([generatorGroup1, generatorGroup4, generatorContainer], { opacity: 0 });
-
-                soTL.add(
-                    Flip.fit(generatorContainer, generatorContainerShadow, {
+                const fitToShadow = (mainEl, shadowEl, vars = {}) =>
+                    Flip.fit(mainEl, shadowEl, {
                         duration: 0.8,
-                        opacity: 1,
                         ease: "power1.out",
-                        scale: true
-                    }),
-                    "<0.2"
-                );
+                        scale: true,
+                        ...vars
+                    });
 
-                soTL.set(sceneThree, { autoAlpha: 0, pointerEvents: "none" })
+                const animateCell = (mainEl, shadowEl, pos) => {
+                    const overlay = mainEl.querySelector(".so-gen-overlay");
+                    soTL.add(fitToShadow(mainEl, shadowEl, { duration: CELL_DUR }), pos);
+                    soTL.fromTo(mainEl,
+                        { autoAlpha: 0 },
+                        { autoAlpha: 1, duration: CELL_DUR, ease: "power1.out" },
+                        "<"
+                    );
 
-                soTL.add(
-                    Flip.to(secondaryStates, {
-                        duration: 1,
-                        ease: "power1.out",
-                    }),
-                    "<-0.8"
-                );
-
-                soTL.fromTo(secondaryOverlays,
-                    {
-                        autoAlpha: 1
-                    },
-                    {
-                        autoAlpha: 0,
-                        ease: "power1.out",
-                        duration: 1,
-                    },
-                    "<0.4"
-                );
-
-                soTL.to(generatorContainer,
-                    {
-                        scale: 1,
-                        x: 0,
-                        y: 0,
-                        ease: "power1.out",
-                        duration: 0.6,
+                    if (overlay) {
+                        soTL.fromTo(overlay,
+                            { autoAlpha: 1 },
+                            { autoAlpha: 0, duration: CELL_DUR, ease: "power4.in" },
+                            "<"
+                        );
                     }
-                );
+                };
+
+                const collapseRowCells = (row, pos) => {
+                    const cellMain = (n) => row.querySelector(`.so-gen-cell.is-no-${n}.is-main`);
+                    const cellShadow = (n) => row.querySelector(`.so-gen-cell.is-no-${n}.is-shadow`);
+
+                    animateCell(cellMain(3), cellShadow(3), pos);
+                    animateCell(cellMain(2), cellShadow(2), "<0.15");
+                    animateCell(cellMain(10), cellShadow(10), "<");
+                    animateCell(cellMain(1), cellShadow(1), "<0.15");
+                    animateCell(cellMain(9), cellShadow(9), "<");
+                };
+
+                const ROW_GAP = 0.04;
+                const CELL_LEAD = 0.15;
+                const CASCADE_START = 0.3;
+                const PHASE_GAP = -0.3;
+                const CELL_ROW_GAP = 0.15;
+
+                const s1 = "s1GenStart";
+                const SCENE_OVERLAP = "<1";
+                soTL.addLabel(s1, SCENE_OVERLAP);
+
+                soTL.add(fitToShadow(generatorColMain, generatorColShadow, { duration: 0.8 }), s1);
+
+                const rows = [1, 2, 3, 4].map((n) => ({
+                    main: sceneFour.querySelector(`.so-gens-row.is-no-${n}.is-main`),
+                    shadow: sceneFour.querySelector(`.so-gens-row.is-no-${n}.is-shadow`)
+                }));
+
+                let rowsEnd = CASCADE_START;
+
+                rows.forEach((row, i) => {
+                    const rowAt = CASCADE_START + ROW_GAP * i;
+
+                    if (row.shadow) {
+                        soTL.add(fitToShadow(row.main, row.shadow), `${s1}+=${rowAt}`);
+                        soTL.fromTo(row.main,
+                            { autoAlpha: 0 },
+                            { autoAlpha: 1, duration: 0.6, ease: "power1.out" },
+                            "<"
+                        );
+                    }
+
+                    rowsEnd = rowAt + 0.6;
+                });
+
+                const cellsStart = rowsEnd + PHASE_GAP;
+
+                rows.forEach((row, i) => {
+                    const cellsAt = cellsStart + CELL_ROW_GAP * i;
+                    collapseRowCells(row.main, `${s1}+=${cellsAt}`);
+                });
 
                 if (text) {
                     soTL.fromTo(text,
@@ -1440,11 +1445,19 @@ const theme = require("../../../config.json");
                             ease: "power1.out",
                             duration: 0.6,
                         },
-                        "<0.2"
+                        "<0.4"
                     );
                 }
 
                 soTL.to({}, { duration: 0.5 });
+
+                soTL.add(
+                    Flip.fit(generatorColMain, generatorColShadow2, {
+                        duration: 0.8,
+                        ease: "power1.out",
+                        scale: true
+                    })
+                );
 
                 if (text) {
                     soTL.to(text,
@@ -1453,6 +1466,7 @@ const theme = require("../../../config.json");
                             ease: "power1.out",
                             duration: 0.6
                         },
+                        "<0.2"
                     );
                 }
 
@@ -1466,22 +1480,12 @@ const theme = require("../../../config.json");
                 );
 
                 soTL.add(
-                    Flip.fit(generator2MWMain, generator2MWShadow1, {
+                    Flip.fit(generator2MWMain, generator2MWShadow, {
                         duration: 1,
                         ease: "power1.out",
                         scale: true
                     }),
                     "<0.2"
-                );
-
-                soTL.set(generatorContainer, { autoAlpha: 0 })
-
-                soTL.add(
-                    Flip.fit(generator2MWMain, generator2MWShadow2, {
-                        duration: 0.6,
-                        ease: "power1.out",
-                        scale: true
-                    }),
                 );
 
                 if (panel) {
@@ -1505,10 +1509,11 @@ const theme = require("../../../config.json");
 
                 soTL.to({}, { duration: 0.5 });
 
+                soTL.set(generatorColMain, { autoAlpha: 0 });
+
                 if (panel) {
                     soTL.to(panel,
                         {
-                            yPercent: 180,
                             autoAlpha: 0,
                             ease: "power1.out",
                             duration: 0.8,
@@ -1516,17 +1521,16 @@ const theme = require("../../../config.json");
                     );
                 }
 
-                soTL.add(
-                    Flip.fit(generator2MWMain, generatorS5Main, {
-                        duration: 0.8,
-                        ease: "power1.out",
-                        scale: true
-                    }),
-                    "<0.2"
-                );
+                // soTL.to(generator2MWMain,
+                //     {
+                //         autoAlpha: 0,
+                //         ease: "power1.out",
+                //         duration: 0.6,
+                //     },
+                //     "<0.2"
+                // );
 
-                soTL.set(sceneFour, { autoAlpha: 0, pointerEvents: "none" })
-                soTL.set(sceneFive, { autoAlpha: 1 })
+                // soTL.set(sceneFive, { autoAlpha: 1 })
             };
 
             const handleSceneFive = (self, soTL) => {
