@@ -22,6 +22,7 @@ const theme = require("../../../config.json");
 
             this.bridgeEBTL();
             this.howItWorks();
+            this.advanceTechnology();
             this.systemOverview();
             this.contentGridItems();
             this.contactBanner();
@@ -955,6 +956,122 @@ const theme = require("../../../config.json");
                         duration: 0.6,
                         ease: "power2.out"
                     }, "<");
+            };
+
+            script();
+        },
+
+        advanceTechnology() {
+            const script = () => {
+                const els = document.querySelectorAll("section.advance-technology");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleTransitions(self);
+                });
+            };
+
+            const handleTransitions = (self) => {
+                const body = self.querySelector(".at-inner");
+                const bg = self.querySelector(".at-bg");
+                const cardsContainer = self.querySelector(".at-cards");
+                const cards = self.querySelectorAll(".at-cards .at-card");
+
+                if (!body || !bg || !cardsContainer || !cards.length) return;
+
+                const mm = gsap.matchMedia();
+                
+                mm.add("(min-width: 768px)", () => {
+                    const singleCardHeight = cards[0].offsetHeight;
+
+                    gsap.set(cardsContainer, { height: 0 });
+                    gsap.set(cards, { y: "100vh" });
+
+                    const BG_DUR = 1;
+                    const CONTAINER_DUR = 1;
+                    const CARD_DUR = 1;
+                    const TOTAL_CARDS_DUR = cards.length * CARD_DUR;
+                    const HOLD_DUR = 1.5;
+                    const TOTAL_DURATION = BG_DUR + CONTAINER_DUR + TOTAL_CARDS_DUR + HOLD_DUR;
+
+                    const tl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: body,
+                            start: "center center",
+                            end: () => "+=" + (TOTAL_DURATION * singleCardHeight),
+                            pin: true,
+                            pinSpacing: true,
+                            scrub: 1,
+                            invalidateOnRefresh: true,
+                            // markers: true
+                        }
+                    });
+
+                    tl.to(bg, {
+                        scale: 1.3,
+                        borderRadius: 0,
+                        duration: BG_DUR,
+                        ease: "power1.out"
+                    })
+                    .to(cardsContainer, {
+                        height: "auto",
+                        overflow: "visible",
+                        duration: CONTAINER_DUR,
+                        ease: "power1.out"
+                    })
+                    .to(cards, {
+                        y: 0,
+                        duration: CARD_DUR,
+                        stagger: CARD_DUR,
+                        ease: "power1.out"
+                    })
+                    .to({}, { duration: HOLD_DUR });
+                });
+                
+                mm.add("(max-width: 767px)", () => {
+                    const BG_DUR = 0.5;
+                    const CARDS_DUR = 0.8;
+                    const HOLD_DUR = 0.25;
+                    
+                    const TOTAL_MOBILE_DURATION = BG_DUR + CARDS_DUR + HOLD_DUR;
+                    
+                    gsap.set(cardsContainer, { 
+                        position: 'absolute', 
+                        padding: 0,
+                        bottom: 0, 
+                        left: 0, 
+                        width: '100%',
+                        yPercent: 100
+                    });
+
+                    const mobileTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: body,
+                            start: "center center",
+                            end: () => "+=" + (TOTAL_MOBILE_DURATION * cardsContainer.offsetHeight),
+                            pin: true,
+                            pinSpacing: true,
+                            scrub: 1,
+                            invalidateOnRefresh: true,
+                            // markers: true
+                        }
+                    });
+                    
+                    mobileTl.to(bg, {
+                        scale: 1.3,
+                        borderRadius: 0,
+                        duration: BG_DUR,
+                        ease: "power1.out"
+                    })
+                    
+                    .to(cardsContainer, {
+                        yPercent: -10,
+                        duration: CARDS_DUR,
+                        ease: "power1.out"
+                    })
+                    
+                    .to({}, { duration: HOLD_DUR });
+                });
             };
 
             script();
