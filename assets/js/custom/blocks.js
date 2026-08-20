@@ -32,6 +32,7 @@ const theme = require("../../../config.json");
             this.resourcesGrid();
             this.teamGrid();
             this.teamCarousel();
+            this.scrollingTimeline();
 
             baunfire.Global.screenSizeChange();
         },
@@ -2744,6 +2745,77 @@ const theme = require("../../../config.json");
 
             script();
         },
+
+        scrollingTimeline() {
+            const script = () => {
+                const els = document.querySelectorAll("section.scrolling-timeline");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleAnimation(self);
+                });
+            };
+
+            const handleAnimation = (self) => {
+                const itemsWrapper = self.querySelector(".st-items");
+                const inner = self.querySelector(".st-items-inner");
+                const items = self.querySelectorAll(".st-item");
+
+                const progressFill = self.querySelector(".st-progress-fill");
+                const progressIndicator = self.querySelector(".st-progress-indicator");
+
+                if (!itemsWrapper || !inner || !items.length) return;
+
+                const firstItem = items[0];
+                const lastItem = items[items.length - 1];
+
+                const wrapperWidth = itemsWrapper.offsetWidth;
+                const firstItemWidth = firstItem.offsetWidth;
+                const lastItemWidth = lastItem.offsetWidth;
+
+                const initialX = (wrapperWidth / 2) - (firstItemWidth / 2);
+
+                const finalX =
+                    (wrapperWidth / 2) -
+                    (lastItem.offsetLeft + lastItemWidth / 2);
+
+                gsap.set(inner, {
+                    x: initialX
+                });
+
+                const master = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: "top top",
+                        end: () => `+=${Math.abs(finalX - initialX)}`,
+                        pin: self,
+                        scrub: true,
+                        invalidateOnRefresh: true
+                    }
+                });
+
+                master.to(inner, {
+                    x: finalX,
+                    ease: "none"
+                });
+
+                if (progressFill) {
+                    master.to(progressFill, {
+                        width: "100%",
+                        ease: "none"
+                    }, "<");
+                }
+
+                if (progressIndicator) {
+                    master.to(progressIndicator, {
+                        left: "100%",
+                        ease: "none"
+                    }, "<");
+                }
+            };
+
+            script();
+        }
     };
 
     baunfire.addModule(baunfire.Blocks);
