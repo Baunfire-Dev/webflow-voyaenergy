@@ -2789,6 +2789,7 @@ const theme = require("../../../config.json");
                         start: "top top",
                         end: () => `+=${Math.abs(finalX - initialX)}`,
                         pin: self,
+                        anticipatePin: 1,
                         scrub: true,
                         invalidateOnRefresh: true
                     }
