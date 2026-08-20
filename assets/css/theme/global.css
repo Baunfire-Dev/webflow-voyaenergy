@@ -157,7 +157,7 @@ section.team-carousel {
 		}
 
 		&-pagination {
-			@apply !static hidden md:flex gap-[0.5rem] !w-auto;
+			@apply !static flex gap-[0.5rem] !w-auto;
 		}
 
 		&-pagination-bullet {

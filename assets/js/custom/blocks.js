@@ -1008,7 +1008,7 @@ const theme = require("../../../config.json");
                         }
                     });
                     
-                    tl.fromTo(bg, { clipPath: "inset(5.125rem 4rem 5.125rem 4rem round 0.5rem)"}, {
+                    tl.fromTo(bg, { clipPath: "inset(5rem 4rem 5rem 4rem round 0.5rem)"}, {
                         clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
                         duration: BG_DUR,
                         ease: "power1.out"
