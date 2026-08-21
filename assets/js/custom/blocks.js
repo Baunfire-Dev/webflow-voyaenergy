@@ -2100,9 +2100,6 @@ const theme = require("../../../config.json");
                         { autoAlpha: 0 },
                         {
                             autoAlpha: 1, duration: 0.6, ease: "power3.out",
-                            onStart: () => {
-                                animateItems(activePanel);
-                            }
                         },
                         "<0.1"
                     );
