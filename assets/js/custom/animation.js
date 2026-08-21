@@ -58,6 +58,7 @@
                         autoSplit: true,
                         onSplit(self) {
                             el.style.opacity = "1";
+                            gsap.set(self.words, { y: "100%" });
 
                             const props = {
                                 y: "-5%",

@@ -6,4 +6,4 @@ document.addEventListener('DOMContentLoaded', function () {
 const settle = () => window.baunfire.Transitions.settle();
 
 window.addEventListener('load', settle);
-document.fonts?.ready.then(settle);
+// document.fonts?.ready.then(settle);

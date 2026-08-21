@@ -1,0 +1,33 @@
+section.how-it-works {
+	.hiw {
+		&-slide {
+			&:not(:first-child) {
+				.hiw-cover {
+					transform: translate(-50%, -50%) scale(1.4);
+				}
+			}
+
+			&:last-child {
+				@media not all and (min-width: 62rem) {
+					@apply pb-[4rem];
+				}
+			}
+		}
+	}
+}
+
+main {
+	&.is-hiw-dark {
+		background-color: var(--_colors---carbon-black);
+
+		.tl-text,
+		.hiw-title {
+			@apply text-white;
+		}
+	}
+
+    .tl-text,
+    .hiw-title {
+        @apply transition-colors duration-700 ease-out;
+    }
+}

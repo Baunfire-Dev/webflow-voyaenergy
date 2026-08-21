@@ -14,12 +14,6 @@ const theme = require("../../../config.json");
             this.sectionControls();
 
             this.heroHomepage();
-            this.heroFiftyFifty();
-            this.heroWithGallery();
-            this.heroContact();
-            this.richtextContent();
-            this.resourcesDetailPage();
-
             this.bridgeEBTL();
             this.howItWorks();
             this.advanceTechnology();
@@ -29,11 +23,18 @@ const theme = require("../../../config.json");
             this.contactBanner();
             this.wideImageBanner();
 
+            this.heroFiftyFifty();
+            this.heroWithGallery();
+            this.heroContact();
+            this.richtextContent();
+            this.resourcesDetailPage();
+            
+            this.scrollingTimeline();
+
             this.largeText();
             this.resourcesGrid();
             this.teamGrid();
             this.teamCarousel();
-            this.scrollingTimeline();
         },
 
         destroy() {
@@ -252,7 +253,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -545,7 +546,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -731,6 +732,9 @@ const theme = require("../../../config.json");
         },
 
         howItWorks() {
+            const INTRO_DUR = 0.3;
+            const isDesktop = () => window.matchMedia("(min-width: 992px)").matches;
+
             const script = () => {
                 const els = document.querySelectorAll("section.how-it-works");
                 if (!els.length) return;
@@ -743,7 +747,16 @@ const theme = require("../../../config.json");
 
                     handleEntrance(self);
                     handleBGSwitch(self);
-                    handleSlides(self);
+
+                    const mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", () => {
+                        handleSlides(self);
+                    });
+
+                    mm.add("(max-width: 991px)", () => {
+                        handleMobileSlides(self);
+                    });
                 });
             };
 
@@ -779,8 +792,7 @@ const theme = require("../../../config.json");
                 const introTL = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        start: "top 90%",
-                        // markers: true
+                        start: "top 60%",
                     }
                 });
 
@@ -791,7 +803,7 @@ const theme = require("../../../config.json");
                     onSplit(split) {
                         heading.style.visibility = "visible";
                         heading.style.opacity = "1";
-                        gsap.set(split.words, { willChange: "transform" });
+                        gsap.set(split.words, { y: "100%", willChange: "transform" });
                         return introTL.fromTo(split.words,
                             { y: "100%" },
                             {
@@ -805,40 +817,23 @@ const theme = require("../../../config.json");
 
             const handleBGSwitch = (self) => {
                 const head = self.querySelector(".hiw-head");
-                if (!head) return;
+                const body = self.querySelector(".hiw-body");
+                const panels = gsap.utils.toArray(".hiw-slide", self.querySelector(".hiw-slides"));
+                if (!head || !body || !panels.length) return;
 
-                const switchTL = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: head,
-                        start: "top 90%",
-                        end: "top 70%",
-                        scrub: 1,
-                    }
-                });
-
-                const title = head.querySelector(".hiw-title");
-                const dots = head.querySelectorAll("svg path");
                 const main = document.querySelector("main.g-main");
+                if (!main) return;
 
-                switchTL.addLabel("color-transition")
-
-                if (title) {
-                    switchTL.to(title, {
-                        color: "#fff",
-                        ease: "none"
-                    }, "color-transition");
-                }
-
-                switchTL.to(dots, {
-                    fill: "#BCBCBC",
-                    ease: "none"
-                }, "color-transition");
-
-                switchTL.fromTo(main,
-                    { backgroundColor: "#fff" },
-                    { backgroundColor: "#1a1a1a", ease: "none", immediateRender: true, overwrite: true },
-                    "color-transition"
-                );
+                ScrollTrigger.create({
+                    trigger: head,
+                    start: "top 60%",
+                    endTrigger: body,
+                    end: () => isDesktop()
+                        ? "top top-=" + INTRO_DUR * panels[0].offsetWidth
+                        : "bottom bottom",
+                    invalidateOnRefresh: true,
+                    onToggle: ({ isActive }) => main.classList.toggle("is-hiw-dark", isActive),
+                });
             };
 
             const animateFirstSlide = (panel) => {
@@ -864,143 +859,184 @@ const theme = require("../../../config.json");
                 );
             };
 
+            const handleMobileSlides = (self) => {
+                const slides = self.querySelector(".hiw-slides");
+                if (!slides) return;
+
+                const panels = gsap.utils.toArray(".hiw-slide", slides);
+                if (!panels.length) return;
+
+                panels.forEach(panel => {
+                    const els = [
+                        panel.querySelector(".hiw-c-brow"),
+                        panel.querySelector(".hiw-c-title"),
+                        panel.querySelector(".hiw-para"),
+                    ].filter(Boolean);
+
+                    if (!els.length) return;
+
+                    gsap.fromTo(els,
+                        { y: 40, autoAlpha: 0 },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            duration: 0.8,
+                            ease: "power3.out",
+                            stagger: 0.08,
+                            scrollTrigger: {
+                                trigger: panel,
+                                start: baunfire.anim.startMobile,
+                            }
+                        }
+                    );
+                });
+
+                const cover = panels[0].querySelector(".hiw-cover") || self.querySelector(".hiw-cover");
+                if (!cover) return;
+
+                gsap.fromTo(cover,
+                    { scale: 1 },
+                    {
+                        scale: 1.4,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: panels[0],
+                            start: "top bottom",
+                            end: "top 10%",
+                            scrub: 1,
+                        }
+                    }
+                );
+            };
+
             const handleSlides = (self) => {
                 const body = self.querySelector(".hiw-body");
                 if (!body) return;
 
-                const main = document.querySelector("main.g-main");
                 const slides = self.querySelector(".hiw-slides");
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
                 const dotContainer = self.querySelector(".hiw-pagination");
                 const dots = dotContainer.querySelectorAll("svg circle");
                 if (!panels.length) return;
 
-                gsap.matchMedia().add("(min-width: 768px)", () => {
-                    const INTRO_DUR = 0.3;
-                    const H_START = INTRO_DUR;
-                    const H_DUR = panels.length - 1;
+                const H_START = INTRO_DUR;
+                const H_DUR = panels.length - 1;
 
-                    const covers = self.querySelectorAll(".hiw-cover");
-                    const firstImg = panels[0].querySelector(".hiw-img");
+                const cover = panels[0].querySelector(".hiw-cover") || self.querySelector(".hiw-cover");
+                const firstImg = panels[0].querySelector(".hiw-img");
 
-                    const master = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: body,
-                            start: "top top",
-                            end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
-                            scrub: 1,
-                            pin: body,
-                            invalidateOnRefresh: true,
-                            pinSpacing: true,
-                        }
-                    });
+                const master = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: body,
+                        start: "top top",
+                        end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
+                        scrub: 1,
+                        pin: body,
+                        invalidateOnRefresh: true,
+                        pinSpacing: true,
+                    }
+                });
 
-                    master.to(covers, {
+                if (cover) {
+                    master.to(cover, {
                         scale: 1.4,
                         ease: "none",
                         duration: INTRO_DUR,
                     }, 0);
+                }
 
-                    master.fromTo(dotContainer,
-                        {
-                            autoAlpha: 0,
-                            scale: 0,
-                            rotate: '45deg',
-                        },
-                        {
-                            scale: 1,
-                            rotate: 0,
-                            autoAlpha: 1,
-                            ease: "none",
-                            duration: 0.4
-                        },
-                        "<"
-                    );
-
-                    master.to(panels, {
-                        xPercent: -100 * (panels.length - 1),
+                master.fromTo(dotContainer,
+                    {
+                        autoAlpha: 0,
+                        scale: 0,
+                        rotate: '45deg',
+                    },
+                    {
+                        scale: 1,
+                        rotate: 0,
+                        autoAlpha: 1,
                         ease: "none",
-                        duration: H_DUR,
-                        onReverseComplete: () => gsap.set(main, { backgroundColor: "#1a1a1a" }),
-                    }, H_START);
+                        duration: 0.4
+                    },
+                    "<"
+                );
 
-                    master.fromTo(main,
-                        { backgroundColor: "#1a1a1a" },
-                        { backgroundColor: "#fff", ease: "none", duration: 0.05, immediateRender: false },
+                master.to(panels, {
+                    xPercent: -100 * (panels.length - 1),
+                    ease: "none",
+                    duration: H_DUR,
+                }, H_START);
+
+                if (firstImg) {
+                    master.fromTo(firstImg,
+                        { xPercent: 0 },
+                        { xPercent: 14, ease: "none", duration: 1 },
                         H_START
                     );
+                }
 
-                    if (firstImg) {
-                        master.fromTo(firstImg,
-                            { xPercent: 0 },
-                            { xPercent: 14, ease: "none", duration: 1 },
-                            H_START
+                animateFirstSlide(panels[0]);
+
+                panels.slice(1).forEach((panel, index, arr) => {
+                    const isLast = index === arr.length - 1;
+
+                    const contentContainer = panel.querySelector(".hiw-content");
+                    const brow = panel.querySelector(".hiw-c-brow");
+                    const title = panel.querySelector(".hiw-c-title");
+                    const para = panel.querySelector(".hiw-para");
+                    const img = panel.querySelector(".hiw-img");
+
+                    const dot = dots[index + 1];
+
+                    const enterTL = gsap.timeline({ paused: true });
+
+                    enterTL
+                        .fromTo([brow, title, para],
+                            { x: 60, autoAlpha: 0 },
+                            {
+                                x: 0,
+                                autoAlpha: 1,
+                                duration: 1,
+                                ease: "power3.out",
+                                stagger: 0.08,
+                            }
                         );
+
+                    ScrollTrigger.create({
+                        trigger: contentContainer,
+                        containerAnimation: master,
+                        start: "left 60%",
+                        end: "right center",
+                        animation: enterTL,
+                    });
+
+                    if (dot) {
+                        ScrollTrigger.create({
+                            trigger: panel,
+                            containerAnimation: master,
+                            start: "left center",
+                            end: "right center",
+                            onEnter: () => activateDot(dot),
+                            onLeaveBack: () => activateDot(dot, false),
+                        });
                     }
 
-                    animateFirstSlide(panels[0]);
-
-                    panels.slice(1).forEach((panel, index, arr) => {
-                        const isLast = index === arr.length - 1;
-
-                        const contentContainer = panel.querySelector(".hiw-content");
-                        const brow = panel.querySelector(".hiw-c-brow");
-                        const title = panel.querySelector(".hiw-c-title");
-                        const para = panel.querySelector(".hiw-para");
-                        const img = panel.querySelector(".hiw-img");
-
-                        const dot = dots[index + 1];
-
-                        const enterTL = gsap.timeline({ paused: true });
-
-                        enterTL
-                            .fromTo([brow, title, para],
-                                { x: 60, autoAlpha: 0 },
-                                {
-                                    x: 0,
-                                    autoAlpha: 1,
-                                    duration: 1,
-                                    ease: "power3.out",
-                                    stagger: 0.08,
+                    if (img) {
+                        gsap.fromTo(img,
+                            { xPercent: 0 },
+                            {
+                                xPercent: 14,
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: panel,
+                                    containerAnimation: master,
+                                    start: "left center",
+                                    end: isLast ? "right right" : "right 10%",
+                                    scrub: 1
                                 }
-                            );
-
-                        ScrollTrigger.create({
-                            trigger: contentContainer,
-                            containerAnimation: master,
-                            start: "left 60%",
-                            end: "right center",
-                            animation: enterTL,
-                        });
-
-                        if (dot) {
-                            ScrollTrigger.create({
-                                trigger: panel,
-                                containerAnimation: master,
-                                start: "left center",
-                                end: "right center",
-                                onEnter: () => activateDot(dot),
-                                onLeaveBack: () => activateDot(dot, false),
-                            });
-                        }
-
-                        if (img) {
-                            gsap.fromTo(img,
-                                { xPercent: 0 },
-                                {
-                                    xPercent: 14,
-                                    ease: "none",
-                                    scrollTrigger: {
-                                        trigger: panel,
-                                        containerAnimation: master,
-                                        start: "left center",
-                                        end: isLast ? "right right" : "right 10%",
-                                        scrub: 1
-                                    }
-                                }
-                            );
-                        }
-                    });
+                            }
+                        );
+                    }
                 });
             };
 
@@ -1195,7 +1231,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -1736,7 +1772,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return soTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -1825,7 +1861,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -1941,7 +1977,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2057,7 +2093,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2120,7 +2156,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2172,7 +2208,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return gsap.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2242,7 +2278,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return gsap.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2288,7 +2324,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return gsap.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2334,7 +2370,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return gsap.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2376,7 +2412,7 @@ const theme = require("../../../config.json");
                         text.style.visibility = "visible";
                         text.style.opacity = "1";
 
-                        gsap.set(split.words, { willChange: "transform" });
+                        gsap.set(split.words, { y: "100%", willChange: "transform" });
 
                         return gsap.fromTo(
                             split.words,
@@ -2627,7 +2663,7 @@ const theme = require("../../../config.json");
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
                             return gsap.fromTo(split.words,
                                 { y: "100%" },
                                 {
@@ -2941,6 +2977,7 @@ const theme = require("../../../config.json");
                 const master = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
+                        markers: true,
                         start: "top top",
                         end: () => `+=${Math.abs(finalX - initialX)}`,
                         pin: self,
