@@ -1950,31 +1950,11 @@ const theme = require("../../../config.json");
 
                     tab.classList.add('active');
                     activePanel.classList.add('active');
-                    animateItems(activePanel);
 
                     baunfire.Global.screenSizeChange();
                 };
 
                 return panels[0];
-            };
-
-            const animateItems = (panel) => {
-                const items = panel.querySelectorAll(".cgi-card");
-
-                gsap.fromTo(items,
-                    {
-                        autoAlpha: 0,
-                        rotateX: "-96deg"
-                    },
-                    {
-                        autoAlpha: 1,
-                        rotateX: 0,
-                        stagger: 0.14,
-                        ease: "power2.out",
-                        duration: 0.8,
-                        overwrite: true
-                    }
-                )
             };
 
             script();
