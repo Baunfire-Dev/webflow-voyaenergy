@@ -2948,6 +2948,7 @@ const theme = require("../../../config.json");
             };
 
             const handleAnimation = (self) => {
+                const innerContainer = self.querySelector(".st-inner");
                 const itemsWrapper = self.querySelector(".st-items");
                 const inner = self.querySelector(".st-items-inner");
                 const items = self.querySelectorAll(".st-item");
@@ -2977,10 +2978,10 @@ const theme = require("../../../config.json");
                 const master = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        markers: true,
+                        // markers: true,
                         start: "top top",
                         end: () => `+=${Math.abs(finalX - initialX)}`,
-                        pin: self,
+                        pin: innerContainer,
                         scrub: true,
                         invalidateOnRefresh: true
                     }

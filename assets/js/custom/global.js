@@ -3,28 +3,6 @@
 
     baunfire.Global = {
         init() {
-            // this.refreshOnImagesLoaded(document.querySelector("main"));
-        },
-
-        refreshOnImagesLoaded(container = document) {
-            const images = container.querySelectorAll("img");
-            const promises = [...images].map(img => {
-                if (img.complete) {
-                    return img.decode?.().catch(() => { });
-                }
-
-                return new Promise(resolve => {
-                    img.addEventListener("load", () => {
-                        img.decode?.().catch(() => { }).finally(resolve);
-                    }, { once: true });
-
-                    img.addEventListener("error", resolve, { once: true });
-                });
-            });
-
-            Promise.all(promises).then(() => {
-                this.screenSizeChange();
-            });
         },
 
         debounce(func, delay = 300) {
@@ -36,7 +14,7 @@
         },
 
         screenSizeChange() {
-            ScrollTrigger.refresh();
+            ScrollTrigger.refresh(true);
             baunfire.lenis?.resize();
         },
 
