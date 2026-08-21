@@ -1870,12 +1870,9 @@ const theme = require("../../../config.json");
                             pin: true,
                             pinSpacing: true,
                             scrub: 1,
-                            invalidateOnRefresh: true,
-                            markers: true
+                            invalidateOnRefresh: true
                         }
                     });
-
-                    // Title + cards wrapper
                     tl.to(title, {
                         y: "-2rem",
                         autoAlpha: 0,
