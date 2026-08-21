@@ -3,7 +3,7 @@ section.hero-homepage {
 		&.two {
 			will-change: clip-path;
 			--frame-y: 5rem;
-			--frame-x: 4rem;
+			--frame-x: var(--global--container-padding);
 			--frame-r: 0.5rem;
 		}
 	}

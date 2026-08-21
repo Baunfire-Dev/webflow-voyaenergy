@@ -201,7 +201,6 @@ const theme = require("../../../config.json");
                 const pageControls = document.querySelector(".section-controls");
 
                 const mainHeading = self.querySelector(".hh-section.one .hh-heading");
-                const mainPara = self.querySelector(".hh-section.one .hh-para");
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
                 const timings = {
@@ -267,27 +266,6 @@ const theme = require("../../../config.json");
                         },
                     });
                 }
-
-                if (mainPara) {
-                    SplitText.create(mainPara, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            mainPara.style.visibility = "visible";
-                            mainPara.style.opacity = "1";
-                            gsap.set(split.words, { willChange: "transform" });
-                            return introTL.fromTo(split.words,
-                                { y: "100%" },
-                                {
-                                    y: "-5%", duration: splitTextsProps.duration, ease: "power2.inOut", stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
-                                },
-                                timings.mainPara.position
-                            );
-                        },
-                    });
-                }
             };
 
             const handleScroll = (self) => {
@@ -319,122 +297,168 @@ const theme = require("../../../config.json");
                     return `inset(${y} ${x} ${y} ${x} round ${r})`;
                 };
 
-                gsap.set(sectionOneImage, { yPercent: 0 });
-                gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
-                gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
-                gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
+                const mm = gsap.matchMedia();
 
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: heroInner,
-                        start: "top top",
-                        end: "+=140%",
-                        scrub: 1,
-                        pin: true,
-                        invalidateOnRefresh: true,
-                    },
-                });
+                mm.add("(min-width: 992px)", () => {
+                    gsap.set(sectionOneImage, { yPercent: 0 });
+                    gsap.set([mainHeading, mainPara], { yPercent: 0, autoAlpha: 1 });
+                    gsap.set(sectionTwo, { clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)", yPercent: 40 });
+                    gsap.set([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 1 });
 
-                tl.to(sectionOne, { yPercent: -100, ease: "power1.out", duration: 1.8 }, 0);
-                tl.to(sectionOneImage, { yPercent: 40, ease: "power1.out", duration: 1.8 }, "<");
-                tl.to(sectionTwo, { yPercent: 0, ease: "power1.out", duration: 1.8 }, "<");
-                tl.fromTo(sectionTwoImage,
-                    {
-                        scale: 1.2
-                    },
-                    {
-                        scale: 1.06,
-                        ease: "power1.out",
-                        duration: 1.8,
-                        transformOrigin: "center center"
-                    },
-                    "<"
-                );
+                    const tl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: heroInner,
+                            start: "top top",
+                            end: "+=140%",
+                            scrub: 1,
+                            pin: true,
+                            invalidateOnRefresh: true,
+                        },
+                    });
 
-                tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
-                tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
+                    tl.to(sectionOne, { yPercent: -100, ease: "power1.out", duration: 1.8 }, 0);
+                    tl.to(sectionOneImage, { yPercent: 40, ease: "power1.out", duration: 1.8 }, "<");
+                    tl.to(sectionTwo, { yPercent: 0, ease: "power1.out", duration: 1.8 }, "<");
+                    tl.fromTo(sectionTwoImage,
+                        {
+                            scale: 1.2
+                        },
+                        {
+                            scale: 1.06,
+                            ease: "power1.out",
+                            duration: 1.8,
+                            transformOrigin: "center center"
+                        },
+                        "<"
+                    );
 
-                const PIN_TAIL = 1;
+                    tl.to(mainHeading, { yPercent: -140, autoAlpha: 0, ease: "none", duration: 0.85 }, "<");
+                    tl.to(mainPara, { yPercent: -110, autoAlpha: 0, ease: "none", duration: 1.0 }, "<0.08");
 
-                tl.addLabel("reveal2", ">+0.2");
+                    const PIN_TAIL = 1;
 
-                tl.to({}, { duration: PIN_TAIL }, 0);
+                    tl.addLabel("reveal2", ">+0.2");
 
-                tl.to({}, { duration: 1 });
+                    tl.to({}, { duration: PIN_TAIL }, 0);
 
-                tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
+                    tl.to({}, { duration: 1 });
 
-                tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
+                    tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
 
-                tl.to({}, { duration: 0.5 });
+                    tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
 
-                const masterST = tl.scrollTrigger;
+                    tl.to({}, { duration: 0.5 });
 
-                let revealed = false;
-                let reveal2TL = null;
-                let reveal2ST = null;
+                    const masterST = tl.scrollTrigger;
 
-                SplitText.create(secondaryPara, {
-                    type: "words",
-                    mask: "words",
-                    autoSplit: true,
-                    onSplit(split) {
+                    let revealed = false;
+                    let reveal2TL = null;
+                    let reveal2ST = null;
+
+                    const split = SplitText.create(secondaryPara, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            reveal2TL?.kill();
+                            reveal2ST?.kill();
+
+                            if (revealed) {
+                                gsap.set(sectionTwoLogo, { autoAlpha: 1, y: 0 });
+                                gsap.set(split.words, { yPercent: 0 });
+                                return;
+                            }
+
+                            gsap.set(sectionTwoLogo, { autoAlpha: 0, y: 40 });
+                            gsap.set(split.words, { y: "110%" });
+                            gsap.set(split.words, { willChange: "transform" });
+
+                            reveal2TL = gsap.timeline({ paused: true });
+
+                            reveal2TL.to(sectionTwoLogo, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0);
+
+                            reveal2TL.to(
+                                split.words,
+                                {
+                                    y: "-5%",
+                                    duration: 0.8,
+                                    ease: "pageReveal",
+                                    stagger: { amount: 0.6, from: "start" },
+                                    onComplete: () => {
+                                        gsap.set(split.words, { willChange: "auto" });
+                                    },
+                                },
+                                "<-0.1"
+                            );
+
+                            reveal2ST = ScrollTrigger.create({
+                                trigger: heroInner,
+                                start: () => masterST.labelToScroll("reveal2"),
+                                once: true,
+                                refreshPriority: -1,
+                                onEnter: () => { revealed = true; reveal2TL.play(); },
+                            });
+                        },
+                    });
+
+                    gsap.to(sectionTwoImage, {
+                        yPercent: 14,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: heroInner,
+                            start: "bottom bottom",
+                            end: "bottom top",
+                            scrub: true,
+                            invalidateOnRefresh: true,
+                        },
+                    });
+
+                    return () => {
                         reveal2TL?.kill();
                         reveal2ST?.kill();
+                        split?.revert();
+                    };
+                });
 
-                        if (revealed) {
-                            gsap.set(sectionTwoLogo, { autoAlpha: 1, y: 0 });
-                            gsap.set(split.words, { yPercent: 0 });
-                            return;
-                        }
+                mm.add("(max-width: 991px)", () => {
+                    let mobileTL = null;
 
-                        gsap.set(sectionTwoLogo, { autoAlpha: 0, y: 40 });
-                        gsap.set(split.words, { y: "110%" });
-                        gsap.set(split.words, { willChange: "transform" });
+                    const split = SplitText.create(secondaryPara, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            mobileTL?.kill();
 
-                        reveal2TL = gsap.timeline({ paused: true });
+                            gsap.set(sectionTwoLogo, { autoAlpha: 0, y: 40 });
+                            gsap.set(split.words, { y: "110%", willChange: "transform" });
 
-                        reveal2TL.to(sectionTwoLogo, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0);
+                            mobileTL = gsap.timeline({
+                                scrollTrigger: {
+                                    trigger: sectionTwoContent,
+                                    start: baunfire.anim.startMobile,
+                                    once: true,
+                                },
+                            });
 
-                        reveal2TL.to(
-                            split.words,
-                            {
+                            mobileTL.to(sectionTwoLogo, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0);
+
+                            mobileTL.to(split.words, {
                                 y: "-5%",
                                 duration: 0.8,
                                 ease: "pageReveal",
                                 stagger: { amount: 0.6, from: "start" },
-                                scrollTrigger: {
-                                    trigger: self,
-                                    start: baunfire.anim.start,
-                                    once: true,
-                                },
-                                onComplete: () => {
-                                    gsap.set(split.words, { willChange: "auto" });
-                                },
-                            },
-                            "<-0.1"
-                        );
+                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                            }, "<-0.1");
 
-                        reveal2ST = ScrollTrigger.create({
-                            trigger: heroInner,
-                            start: () => masterST.labelToScroll("reveal2"),
-                            once: true,
-                            refreshPriority: -1,
-                            onEnter: () => { revealed = true; reveal2TL.play(); },
-                        });
-                    },
-                });
+                            return mobileTL;
+                        },
+                    });
 
-                gsap.to(sectionTwoImage, {
-                    yPercent: 14,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: heroInner,
-                        start: "bottom bottom",
-                        end: "bottom top",
-                        scrub: true,
-                        invalidateOnRefresh: true,
-                    },
+                    return () => {
+                        mobileTL?.kill();
+                        split?.revert();
+                    };
                 });
             };
 

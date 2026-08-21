@@ -5,7 +5,8 @@
         booted: false,
         modules: [],
         anim: {
-            start: "top 60%"
+            start: "top 60%",
+            startMobile: "top 70%"
         },
         lenis: null,
         ctx: null,
