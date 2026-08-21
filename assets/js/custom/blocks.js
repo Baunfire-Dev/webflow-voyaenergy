@@ -1887,32 +1887,23 @@ const theme = require("../../../config.json");
                         duration: 1,
                         ease: "power2.out"
                     }, "<");
-
-                    // First card content fades out
                     tl.to(contents[0], {
                         y: "-2rem",
                         autoAlpha: 0,
                         duration: 1,
                         ease: "power2.out"
                     });
-
-                    // Cards
                     for (let i = 1; i < cards.length; i++) {
-                        // Crossfade cards
                         tl.to(cards[i], {
                             autoAlpha: 1,
                             duration: 1,
                             ease: "power2.inOut"
                         }, "<");
-
-                        // Fade previous card out
                         tl.to(cards[i - 1], {
                             autoAlpha: 0,
                             duration: 1,
                             ease: "power2.inOut"
                         }, "<");
-
-                        // Fade new content up
                         tl.to(contents[i], {
                             y: 0,
                             autoAlpha: 1,
@@ -1922,7 +1913,6 @@ const theme = require("../../../config.json");
                     }
                 });
             };
-
             script();
         },
 
