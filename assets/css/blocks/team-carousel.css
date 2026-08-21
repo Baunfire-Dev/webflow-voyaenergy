@@ -3,9 +3,10 @@ section.team-carousel {
         @apply w-full overflow-visible;
 
         .swiper-wrapper {
+            @apply items-stretch;
 
             .swiper-slide {
-                @apply ~max-w-[19.5rem]/[22.5rem];
+                @apply ~max-w-[19.5rem]/[22.5rem] h-auto;
 
                 .tc-card {
                     .tc-c-tags {
