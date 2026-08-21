@@ -22,8 +22,18 @@ section.system-detail-popup {
 			@apply relative flex;
 			@apply max-w-full overflow-hidden;
 
+			&:has(.sdp-dialog-inner[data-key="indu-gen"].active) {
+				.sdp-dialog-inner[data-key="com-gen"] {
+					transform: translateX(20%);
+				}
+			}
+
 			&:has(.sdp-dialog-inner[data-key="com-gen"].active) {
-				.sdp-dialog-inner {
+				.sdp-dialog-inner[data-key="indu-gen"] {
+					transform: translateX(-120%);
+				}
+
+				.sdp-dialog-inner[data-key="com-gen"] {
 					transform: translateX(-100%);
 				}
 			}
@@ -31,7 +41,7 @@ section.system-detail-popup {
 			.sdp {
 				&-dialog-inner {
 					@apply min-w-full;
-					@apply transition-[transform,opacity] duration-500 ease-power2-out;
+					@apply transition-[transform,opacity] duration-700 ease-power2-out;
 
 					&:not(.active) {
 						@apply opacity-0 max-h-full;
@@ -67,32 +77,32 @@ section.system-detail-popup {
 				@apply sticky bottom-0 bg-white;
 			}
 
-            &-dialog-combo,
+			&-dialog-combo,
 			&-dialog-outer {
 				@apply h-full;
+			}
+
+			&-dialog-combo {
+				.sdp {
+					&-dialog-inner {
+						@apply duration-300;
+					}
+				}
 			}
 		}
 	}
 
 	dialog {
-		animation: dialogFadeOut 0.8s forwards;
+		animation: none;
 
 		&[open] {
 			animation: dialogFadeIn 0.8s forwards;
-		}
-
-		&:not([open]),
-		&[open] {
 			animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-		}
-
-		@media not all and (min-width: 48rem) {
-			@apply items-start;
 		}
 
 		@keyframes dialogFadeIn {
 			from {
-				transform: translateY(2.5rem);
+				transform: translateY(3.75rem);
 			}
 
 			to {
@@ -100,13 +110,21 @@ section.system-detail-popup {
 			}
 		}
 
-		@keyframes dialogFadeOut {
-			from {
-				transform: translateY(0%);
+		@media not all and (min-width: 48rem) {
+			@apply items-start;
+
+			&[open] {
+				animation: dialogFadeIn 0.5s forwards;
 			}
 
-			to {
-				transform: translateY(2.5rem);
+			@keyframes dialogFadeIn {
+				from {
+					transform: translateY(1.25rem);
+				}
+
+				to {
+					transform: translateY(0%);
+				}
 			}
 		}
 	}

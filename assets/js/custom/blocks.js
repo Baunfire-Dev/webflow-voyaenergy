@@ -1815,6 +1815,7 @@ const theme = require("../../../config.json");
                         deactivateInners();
                         baunfire.Global.handleTextCount(num);
                         dialogInner.classList.add("active");
+                        dialogInner.scrollTop = 0;
                     });
                 });
 
