@@ -34,8 +34,6 @@ const theme = require("../../../config.json");
             this.teamGrid();
             this.teamCarousel();
             this.scrollingTimeline();
-
-            baunfire.Global.screenSizeChange();
         },
 
         destroy() {
@@ -473,35 +471,47 @@ const theme = require("../../../config.json");
                 els.forEach(self => {
                     const inner = self.querySelector(".sb-inner");
 
-                    const ebTL = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: self,
-                            pin: inner,
-                            start: "top top",
-                            end: "+=400%",
-                            pinSpacing: true,
-                            scrub: true,
-                            invalidateOnRefresh: true,
-                        }
+                    const mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", () => {
+                        const ebTL = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: self,
+                                pin: inner,
+                                start: "top top",
+                                end: "+=400%",
+                                pinSpacing: true,
+                                scrub: true,
+                                invalidateOnRefresh: true,
+                            }
+                        });
+
+                        this.energyBottleNeck(self, ebTL, true);
+                        this.transitionLine(self, ebTL, true);
                     });
 
-                    this.energyBottleNeck(self, ebTL);
-                    this.transitionLine(self, ebTL);
+                    mm.add("(max-width: 991px)", () => {
+                        this.energyBottleNeck(self, null, false);
+                        this.transitionLine(self, null, false);
+                    });
                 });
             };
 
             script();
         },
 
-        energyBottleNeck(sectionParent, ebTL) {
+        energyBottleNeck(sectionParent, ebTL, isDesktop) {
             const script = () => {
                 const els = sectionParent.querySelectorAll("section.energy-bottleneck");
                 if (!els.length) return;
 
                 els.forEach(self => {
                     handleEntrance(self);
-                    handleParallax(self);
-                    handleExit(self, ebTL);
+
+                    if (isDesktop) {
+                        handleParallax(self);
+                        handleExit(self, ebTL);
+                    }
                 });
             };
 
@@ -516,7 +526,7 @@ const theme = require("../../../config.json");
                         trigger: contentInner,
                         start: "top 70%",
                         once: true,
-                        // markers: true,
+
                     }
                 });
 
@@ -596,24 +606,43 @@ const theme = require("../../../config.json");
             script();
         },
 
-        transitionLine(parent, ebTL) {
+        transitionLine(parent, ebTL, isDesktop) {
             const RESTING_COLOR = "#EBEBEB";
-            const LIFT_OFFSET = 80;
+            const MOBILE_END = "+=200%";
 
             const script = () => {
                 const els = parent.querySelectorAll("section.transition-line");
                 if (!els.length) return;
 
-                els.forEach(self => handleTexts(self, ebTL));
+                els.forEach(self => {
+
+                    let tl = ebTL;
+
+                    if (!isDesktop) {
+                        tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: self,
+                                pin: true,
+                                start: "top top",
+                                end: MOBILE_END,
+                                pinSpacing: true,
+                                scrub: true,
+                                invalidateOnRefresh: true,
+                            }
+                        });
+                    }
+
+                    handleTexts(self, tl);
+                });
             };
 
-            const handleTexts = (self, ebTL) => {
+            const handleTexts = (self, tl) => {
                 const items = [...self.querySelectorAll(".tl-text-c")];
                 if (!items.length) return;
 
                 const lines = items.map((item, i) => setupTextGroup(self, item, i, items.length));
 
-                lines.forEach(line => textGroupAnim(line, ebTL));
+                lines.forEach(line => textGroupAnim(line, tl));
             };
 
             const setupTextGroup = (self, item, i, total) => {
@@ -639,25 +668,25 @@ const theme = require("../../../config.json");
                 return { item, split, imagesInner, isFirst, isLast };
             };
 
-            const textGroupAnim = (line, ebTL) => {
+            const textGroupAnim = (line, tl) => {
                 const { item, split, imagesInner, isFirst, isLast } = line;
 
                 if (isFirst) {
-                    ebTL.set(item, { autoAlpha: 1 }, 0);
+                    tl.set(item, { autoAlpha: 1 }, 0);
                 } else {
-                    ebTL.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+                    tl.to(item, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
                 }
 
                 if (isLast) {
                     const inner = item.querySelector(".tl-text-c-inner");
-                    ebTL.fromTo(inner,
-                        { y: () => yPercentLift(inner) },
+                    tl.fromTo(inner,
+                        { y: () => yLift(inner) },
                         { y: 0, ease: "none", duration: 1.2, immediateRender: false },
                         "<"
                     );
                 }
 
-                ebTL.to(split.chars, {
+                tl.to(split.chars, {
                     color: (idx, target) => target.dataset.fill,
                     duration: 0.05,
                     ease: "none",
@@ -665,32 +694,37 @@ const theme = require("../../../config.json");
                 }, isFirst ? "-=0.8" : "<0.1");
 
                 if (isLast && imagesInner) {
-                    ebTL.to(imagesInner, {
-                        xPercent: 0,
-                        ease: "none",
-                        duration: 2,
-                    }, "<");
-
-                    ebTL.to(imagesInner, {
+                    tl.to(imagesInner, {
                         autoAlpha: 1,
                         ease: "power1.out",
                         duration: 0.8,
-                    }, "<0.2");
+                    }, "<0.4");
+
+                    tl.to(imagesInner, {
+                        xPercent: 0,
+                        ease: "none",
+                        duration: 2,
+                    }, "<0.1");
                 }
 
-                ebTL.to({}, { duration: 0.3 });
+                tl.to({}, { duration: 0.3 });
 
                 if (!isLast) {
-                    ebTL.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
+                    tl.to(item, { autoAlpha: 0, duration: 0.3, ease: "power2.in" });
                 }
             };
 
-            const yPercentLift = (inner) => {
+            const yLift = (inner) => {
                 const tc = inner.closest(".tl-text-c");
-                const outer = inner.closest(".tl-text-c-outer");
-                const tcCenter = tc.offsetHeight / 2;
-                const outerCenter = outer.offsetTop + outer.offsetHeight / 2;
-                return (tcCenter - outerCenter) - LIFT_OFFSET;
+                const images = tc.querySelector(".tl-images");
+                if (!images) return 0;
+
+                const cs = getComputedStyle(tc);
+                const gap = parseFloat(cs.rowGap) || 0;
+                const padTop = parseFloat(cs.paddingTop) || 0;
+                const padBottom = parseFloat(cs.paddingBottom) || 0;
+
+                return (images.offsetHeight + gap) / 2 - (padTop - padBottom) / 2;
             };
 
             script();

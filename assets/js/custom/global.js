@@ -36,8 +36,8 @@
         },
 
         screenSizeChange() {
-            baunfire.lenis?.resize();
             ScrollTrigger.refresh();
+            baunfire.lenis?.resize();
         },
 
         siteScrolling(enabled = true) {

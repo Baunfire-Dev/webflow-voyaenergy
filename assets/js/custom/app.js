@@ -42,6 +42,7 @@
                 if (mod.once) return;
                 if (typeof mod.destroy === 'function') mod.destroy();
             });
+            
             this.ctx?.revert();
             this.ctx = null;
 

@@ -1,8 +1,6 @@
 section.section-bridge-eb-tl {
-	.sb {
-		&-sections {
-			@apply h-screen;
-		}
+	.sb-sections {
+		@apply h-svh;
 	}
 
 	section.energy-bottleneck {
@@ -14,7 +12,7 @@ section.section-bridge-eb-tl {
 
 		.tl {
 			&-texts-c {
-				@apply h-screen flex items-center;
+				@apply h-svh flex items-center;
 			}
 
 			&-texts {
@@ -26,8 +24,8 @@ section.section-bridge-eb-tl {
 				transform: translateY(-50%);
 
 				&.has-images {
-					@apply pt-[8.75rem] pb-[6.25rem] min-h-[100vh];
-					@apply flex flex-col justify-center;
+					@apply pt-[8.75rem] pb-[6.25rem] min-h-svh;
+					@apply flex flex-col justify-center gap-[4.25rem];
 
 					.tl {
 						&-text-c-outer,
@@ -41,18 +39,46 @@ section.section-bridge-eb-tl {
 						}
 
 						&-images-inner {
-							@apply flex min-w-fit translate-x-[100%] opacity-0;
+							@apply flex min-w-fit opacity-0;
 						}
-
-						/* &-image-item {
-							@apply w-auto h-[21.125rem] aspect-[506/338];
-						} */
 
 						&-image-item {
 							@apply w-auto h-full;
-							@apply min-h-[21.125rem] aspect-[506/338];
+							@apply ~min-h-[13rem]/[21.125rem] aspect-[506/338];
 						}
 					}
+				}
+			}
+		}
+	}
+
+	@media not all and (min-width: 62rem) {
+		.sb-sections {
+			@apply h-auto;
+		}
+
+		section.energy-bottleneck {
+			@apply pointer-events-auto;
+
+			.eb {
+				&-inner {
+					@apply pb-0;
+				}
+			}
+		}
+
+		section.transition-line {
+			@apply relative;
+
+			.tl {
+				&-text-c {
+					&:first-child {
+                        @apply opacity-100;
+                    }
+
+                    br {
+                        @apply hidden;
+                    }
 				}
 			}
 		}

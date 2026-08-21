@@ -54,8 +54,14 @@
 
         releaseTriggers() {
             if (!this._held) return;
-            this._held.forEach(st => st.enable());
+            this._held.forEach(st => st.enable(false, false));
             this._held = null;
+            baunfire.Global.screenSizeChange();
+        },
+
+        settle() {
+            if (this._held) return;
+            baunfire.Global.screenSizeChange();
         },
 
         reveal() {
