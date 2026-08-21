@@ -18,6 +18,7 @@ const theme = require("../../../config.json");
             this.howItWorks();
             this.advanceTechnology();
             this.systemOverview();
+            this.densePower();
             this.systemDetailPopup();
             this.contentGridItems();
             this.contactBanner();
@@ -1818,6 +1819,108 @@ const theme = require("../../../config.json");
                 }
 
                 soTL.to({}, { duration: 0.5 });
+            };
+
+            script();
+        },
+
+        densePower() {
+            const script = () => {
+                const els = document.querySelectorAll("section.dense-power");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleAnimation(self);
+                });
+            };
+
+            const handleAnimation = (self) => {
+                const body = self.querySelector(".dp-content-inner");
+                const title = self.querySelector(".dp-c-title");
+                const cardsWrapper = self.querySelector(".dp-cards-wrapper");
+                const cards = self.querySelectorAll(".dp-card");
+
+                if (!body || !title || !cardsWrapper || !cards.length) return;
+
+                const mm = gsap.matchMedia();
+
+                mm.add("(min-width: 768px)", () => {
+                    const contents = Array.from(cards).map(card =>
+                        card.querySelector(".dp-c-content")
+                    );
+
+                    gsap.set(cards, {
+                        autoAlpha: 0
+                    });
+
+                    gsap.set(cards[0], {
+                        autoAlpha: 1
+                    });
+
+                    gsap.set(contents.slice(1), {
+                        y: "2rem",
+                        autoAlpha: 0
+                    });
+
+                    const tl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: body,
+                            start: "top top",
+                            end: "+=400%",
+                            pin: true,
+                            pinSpacing: true,
+                            scrub: 1,
+                            invalidateOnRefresh: true,
+                            markers: true
+                        }
+                    });
+
+                    // Title + cards wrapper
+                    tl.to(title, {
+                        y: "-2rem",
+                        autoAlpha: 0,
+                        duration: 1,
+                        ease: "power2.out"
+                    })
+                    .to(cardsWrapper, {
+                        y: -64,
+                        duration: 1,
+                        ease: "power2.out"
+                    }, "<");
+
+                    // First card content fades out
+                    tl.to(contents[0], {
+                        y: "-2rem",
+                        autoAlpha: 0,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+
+                    // Cards
+                    for (let i = 1; i < cards.length; i++) {
+                        // Crossfade cards
+                        tl.to(cards[i], {
+                            autoAlpha: 1,
+                            duration: 1,
+                            ease: "power2.inOut"
+                        }, "<");
+
+                        // Fade previous card out
+                        tl.to(cards[i - 1], {
+                            autoAlpha: 0,
+                            duration: 1,
+                            ease: "power2.inOut"
+                        }, "<");
+
+                        // Fade new content up
+                        tl.to(contents[i], {
+                            y: 0,
+                            autoAlpha: 1,
+                            duration: 0.75,
+                            ease: "power2.out"
+                        });
+                    }
+                });
             };
 
             script();

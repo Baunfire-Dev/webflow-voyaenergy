@@ -1,0 +1,19 @@
+section.dense-power {
+    .dp-inner {
+        .dp-content {
+            .dp-content-inner {
+                @apply lg:h-[100svh] overflow-hidden;
+
+                .dp-cards-wrapper {
+                    @apply relative w-full;
+
+                    @screen lg {
+                        .dp-card {
+                            @apply absolute opacity-0 top-0 left-0 right-0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
