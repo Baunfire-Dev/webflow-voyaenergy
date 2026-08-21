@@ -1009,9 +1009,8 @@ const theme = require("../../../config.json");
                         }
                     });
 
-                    tl.to(bg, {
-                        scale: 1.3,
-                        borderRadius: 0,
+                    tl.fromTo(bg, { clipPath: "inset(5rem 4rem 5rem 4rem round 0.5rem)" }, {
+                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
                         duration: BG_DUR,
                         ease: "power1.out"
                     })
@@ -1024,7 +1023,7 @@ const theme = require("../../../config.json");
                         .to(cards, {
                             y: 0,
                             duration: CARD_DUR,
-                            stagger: CARD_DUR,
+                            stagger: 0.2,
                             ease: "power1.out"
                         })
                         .to({}, { duration: HOLD_DUR });
@@ -1059,9 +1058,8 @@ const theme = require("../../../config.json");
                         }
                     });
 
-                    mobileTl.to(bg, {
-                        scale: 1.3,
-                        borderRadius: 0,
+                    mobileTl.fromTo(bg, { clipPath: "inset(4rem 1.5rem 4rem 1.5rem round 0.5rem)" }, {
+                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
                         duration: BG_DUR,
                         ease: "power1.out"
                     })
@@ -1095,7 +1093,6 @@ const theme = require("../../../config.json");
                     handleSceneTwo(self, soTL);
                     handleSceneThree(self, soTL);
                     handleSceneFour(self, soTL);
-                    // handleSceneFive(self, soTL);
 
                     ScrollTrigger.create({
                         animation: soTL,
