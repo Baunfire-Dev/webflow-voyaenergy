@@ -8,7 +8,7 @@ html {
 }
 
 dialog {
-	@apply w-full h-full max-w-full max-h-full;
+	@apply w-screen h-full max-w-full max-h-full;
 	@apply p-0 m-0 border-none outline-none bg-none;
 	border: none;
 	outline: none;
@@ -24,7 +24,7 @@ dialog {
 	}
 
 	&::backdrop {
-		background: rgba(0,0,0,0.25);
+		background: rgba(0, 0, 0, 0.25);
 	}
 
 	@keyframes dialogFadeIn {
@@ -50,22 +50,22 @@ dialog {
 	@media (max-width: 767px) {
 		@keyframes dialogFadeIn {
 			from {
-			transform: translateY(50%);
+				transform: translateY(50%);
 			}
 			to {
-			transform: translateY(0);
+				transform: translateY(0);
 			}
 		}
 
 		@keyframes dialogFadeOut {
 			from {
-			transform: translateY(0);
+				transform: translateY(0);
 			}
 			to {
-			transform: translateY(50%);
+				transform: translateY(50%);
 			}
 		}
-		}
+	}
 }
 
 .hide-scrollbar {

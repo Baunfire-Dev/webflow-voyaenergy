@@ -24,6 +24,7 @@ const theme = require("../../../config.json");
             this.howItWorks();
             this.advanceTechnology();
             this.systemOverview();
+            this.systemDetailPopup();
             this.contentGridItems();
             this.contactBanner();
             this.wideImageBanner();
@@ -981,7 +982,7 @@ const theme = require("../../../config.json");
                 if (!body || !bg || !cardsContainer || !cards.length) return;
 
                 const mm = gsap.matchMedia();
-                
+
                 mm.add("(min-width: 768px)", () => {
                     const singleCardHeight = cards[0].offsetHeight;
 
@@ -1014,33 +1015,33 @@ const theme = require("../../../config.json");
                         duration: BG_DUR,
                         ease: "power1.out"
                     })
-                    .to(cardsContainer, {
-                        height: "auto",
-                        overflow: "visible",
-                        duration: CONTAINER_DUR,
-                        ease: "power1.out"
-                    })
-                    .to(cards, {
-                        y: 0,
-                        duration: CARD_DUR,
-                        stagger: CARD_DUR,
-                        ease: "power1.out"
-                    })
-                    .to({}, { duration: HOLD_DUR });
+                        .to(cardsContainer, {
+                            height: "auto",
+                            overflow: "visible",
+                            duration: CONTAINER_DUR,
+                            ease: "power1.out"
+                        })
+                        .to(cards, {
+                            y: 0,
+                            duration: CARD_DUR,
+                            stagger: CARD_DUR,
+                            ease: "power1.out"
+                        })
+                        .to({}, { duration: HOLD_DUR });
                 });
-                
+
                 mm.add("(max-width: 767px)", () => {
                     const BG_DUR = 0.5;
                     const CARDS_DUR = 0.8;
                     const HOLD_DUR = 0.25;
-                    
+
                     const TOTAL_MOBILE_DURATION = BG_DUR + CARDS_DUR + HOLD_DUR;
-                    
-                    gsap.set(cardsContainer, { 
-                        position: 'absolute', 
+
+                    gsap.set(cardsContainer, {
+                        position: 'absolute',
                         padding: 0,
-                        bottom: 0, 
-                        left: 0, 
+                        bottom: 0,
+                        left: 0,
                         width: '100%',
                         yPercent: 100
                     });
@@ -1057,21 +1058,21 @@ const theme = require("../../../config.json");
                             // markers: true
                         }
                     });
-                    
+
                     mobileTl.to(bg, {
                         scale: 1.3,
                         borderRadius: 0,
                         duration: BG_DUR,
                         ease: "power1.out"
                     })
-                    
-                    .to(cardsContainer, {
-                        yPercent: -10,
-                        duration: CARDS_DUR,
-                        ease: "power1.out"
-                    })
-                    
-                    .to({}, { duration: HOLD_DUR });
+
+                        .to(cardsContainer, {
+                            yPercent: -10,
+                            duration: CARDS_DUR,
+                            ease: "power1.out"
+                        })
+
+                        .to({}, { duration: HOLD_DUR });
                 });
             };
 
@@ -1726,6 +1727,124 @@ const theme = require("../../../config.json");
                 }
 
                 soTL.to({}, { duration: 0.5 });
+            };
+
+            script();
+        },
+
+        systemDetailPopup() {
+            const script = () => {
+                const els = document.querySelectorAll("section.system-detail-popup");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                    handleDialogs(self);
+                });
+            };
+
+            const handleEntrance = (self) => {
+                const logo = self.querySelector(".sdp-icon");
+                const heading = self.querySelector(".sdp-title");
+                const para = self.querySelector(".sdp-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: self,
+                        start: baunfire.anim.start,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<-0.1"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+            };
+
+            const handleDialogs = (self) => {
+                const triggers = self.querySelectorAll(".sdp-trigger");
+                const dialogInners = self.querySelectorAll(".sdp-dialog-inner");
+                if (!triggers.length || !dialogInners.length) return;
+
+                const deactivateInners = () => {
+                    dialogInners.forEach(inner => inner.classList.remove("active"));
+                };
+
+                const tabs = self.querySelectorAll(".sdp-l-tab");
+                const tabByKey = new Map();
+                tabs.forEach(tab => tabByKey.set(tab.dataset.key, tab));
+
+                const innerByKey = new Map();
+                dialogInners.forEach(inner => innerByKey.set(inner.dataset.key, inner));
+
+                tabs.forEach(tab => {
+                    const dialogInner = innerByKey.get(tab.dataset.key);
+                    if (!dialogInner) return;
+
+                    const num = dialogInner.querySelector(".sdp-stat-num");
+
+                    tab.addEventListener('click', () => {
+                        deactivateInners();
+                        baunfire.Global.handleTextCount(num);
+                        dialogInner.classList.add("active");
+                    });
+                });
+
+                triggers.forEach(trigger => {
+                    const rawKey = trigger.dataset.key;
+                    const isGen = rawKey.includes('gen');
+                    const key = isGen ? 'generator' : rawKey;
+
+                    const dialog = self.querySelector(`dialog[data-key='${key}']`);
+                    if (!dialog) return;
+
+                    const close = dialog.querySelector(".sdp-dialog-close");
+
+                    trigger.addEventListener('click', () => {
+                        if (isGen) {
+                            tabByKey.get(rawKey)?.click();
+                        }
+
+                        baunfire.Global.siteScrolling(false);
+                        dialog.showModal();
+                    });
+
+                    close?.addEventListener('click', () => {
+                        dialog.close();
+                        baunfire.Global.siteScrolling(true);
+                    });
+                });
             };
 
             script();
@@ -2789,7 +2908,6 @@ const theme = require("../../../config.json");
                         start: "top top",
                         end: () => `+=${Math.abs(finalX - initialX)}`,
                         pin: self,
-                        anticipatePin: 1,
                         scrub: true,
                         invalidateOnRefresh: true
                     }

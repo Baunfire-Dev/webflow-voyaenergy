@@ -5,17 +5,22 @@
 	.g-btn-arrow,
 	.g-btn-inner::before {
 		@apply duration-500 transition-all ease-power2-out;
-	}
+    }
 
 	.g-btn-inner {
 		@apply relative;
 
 		&::before {
 			content: "";
-			@apply absolute inset-0 z-[-1];
+			@apply absolute inset-0 z-[1];
 			@apply h-full w-full rounded-[inherit] bg-inherit;
 		}
 	}
+
+    .g-btn-text,
+	.g-btn-arrows {
+        @apply relative z-[2];
+    }
 
 	&:hover {
 		/* &[data-wf--cta--variant="primary-purple"] {
@@ -35,9 +40,9 @@
 			}
 		} */
 
-        .g-btn-inner::before {
-            transform: scale(1.04);
-        }
+		.g-btn-inner::before {
+			transform: scale(1.04);
+		}
 
 		.g-btn-arrow {
 			@apply will-change-transform;

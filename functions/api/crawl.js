@@ -44,7 +44,7 @@ async function getCookie(forceRefresh = false) {
     return cachedCookie;
 }
 
-export async function onRequestGet({ request, env }) {
+async function handleCrawl({ request, env }) {
     const u = new URL(request.url);
 
     const name = u.searchParams.get('name');
@@ -116,6 +116,9 @@ export async function onRequestGet({ request, env }) {
         count: all.length,
     });
 }
+
+export const onRequestGet = handleCrawl;
+export const onRequestPost = handleCrawl;
 
 function decode(str = '') {
     return str
