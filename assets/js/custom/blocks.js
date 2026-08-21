@@ -1813,7 +1813,7 @@ const theme = require("../../../config.json");
 
                     tab.addEventListener('click', () => {
                         deactivateInners();
-                        baunfire.Global.handleTextCount(num);
+                        baunfire.Global.handleTextCount(num, 0.6);
                         dialogInner.classList.add("active");
                         dialogInner.scrollTop = 0;
                     });
