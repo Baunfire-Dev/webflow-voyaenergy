@@ -29,7 +29,7 @@ const theme = require("../../../config.json");
             this.heroContact();
             this.richtextContent();
             this.resourcesDetailPage();
-            
+
             this.scrollingTimeline();
 
             this.largeText();
@@ -46,6 +46,10 @@ const theme = require("../../../config.json");
             if (this._hiwRefresh) {
                 ScrollTrigger.removeEventListener("refreshInit", this._hiwRefresh);
                 this._hiwRefresh = null;
+            }
+            if (this._soResize) {
+                removeEventListener('resize', this._soResize);
+                this._soResize = null;
             }
         },
 
@@ -1059,17 +1063,74 @@ const theme = require("../../../config.json");
         },
 
         advanceTechnology() {
+            const PX_PER_SEC_DESKTOP = 400;
+            const PX_PER_SEC_MOBILE = 300;
+
             const script = () => {
                 const els = document.querySelectorAll("section.advance-technology");
                 if (!els.length) return;
 
                 els.forEach(self => {
+                    handleEntrance(self);
                     handleTransitions(self);
                 });
             };
 
+            const handleEntrance = (self) => {
+                const header = self.querySelector(".at-header");
+                if (!header) return;
+
+                const logo = header.querySelector(".at-icon");
+                const heading = header.querySelector(".at-title");
+                const para = header.querySelector(".at-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: header,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<-0.1"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+            };
+
             const handleTransitions = (self) => {
-                const body = self.querySelector(".at-inner");
+                const body = self.querySelector(".at-outer");
                 const bg = self.querySelector(".at-bg");
                 const cardsContainer = self.querySelector(".at-cards");
                 const cards = self.querySelectorAll(".at-cards .at-card");
@@ -1079,23 +1140,22 @@ const theme = require("../../../config.json");
                 const mm = gsap.matchMedia();
 
                 mm.add("(min-width: 768px)", () => {
-                    const singleCardHeight = cards[0].offsetHeight;
 
                     gsap.set(cardsContainer, { height: 0 });
                     gsap.set(cards, { y: "100vh" });
 
-                    const BG_DUR = 1;
-                    const CONTAINER_DUR = 1;
-                    const CARD_DUR = 1;
+                    const BG_DUR = 0.8;
+                    const CONTAINER_DUR = 0.8;
+                    const CARD_DUR = 1.4;
                     const TOTAL_CARDS_DUR = cards.length * CARD_DUR;
-                    const HOLD_DUR = 1.5;
+                    const HOLD_DUR = 0.5 * 2;
                     const TOTAL_DURATION = BG_DUR + CONTAINER_DUR + TOTAL_CARDS_DUR + HOLD_DUR;
 
                     const tl = gsap.timeline({
                         scrollTrigger: {
                             trigger: body,
                             start: "center center",
-                            end: () => "+=" + (TOTAL_DURATION * singleCardHeight),
+                            end: () => "+=" + (TOTAL_DURATION * PX_PER_SEC_DESKTOP),
                             pin: true,
                             pinSpacing: true,
                             scrub: 1,
@@ -1104,30 +1164,35 @@ const theme = require("../../../config.json");
                         }
                     });
 
-                    tl.fromTo(bg, { clipPath: "inset(5rem 4rem 5rem 4rem round 0.5rem)" }, {
-                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
+                    tl.fromTo(bg, { "--frame-p": 1 }, {
+                        "--frame-p": 0,
                         duration: BG_DUR,
+                        ease: "none"
+                    })
+
+                    tl.to({}, { duration: HOLD_DUR });
+
+                    tl.to(cardsContainer, {
+                        height: "auto",
+                        overflow: "visible",
+                        duration: CONTAINER_DUR,
                         ease: "power1.out"
                     })
-                        .to(cardsContainer, {
-                            height: "auto",
-                            overflow: "visible",
-                            duration: CONTAINER_DUR,
-                            ease: "power1.out"
-                        })
-                        .to(cards, {
-                            y: 0,
-                            duration: CARD_DUR,
-                            stagger: 0.2,
-                            ease: "power1.out"
-                        })
-                        .to({}, { duration: HOLD_DUR });
+
+                    tl.to(cards, {
+                        y: 0,
+                        duration: CARD_DUR,
+                        stagger: 0.2,
+                        ease: "power1.out"
+                    }, "<0.2");
+
+                    tl.to({}, { duration: HOLD_DUR });
                 });
 
                 mm.add("(max-width: 767px)", () => {
-                    const BG_DUR = 0.5;
-                    const CARDS_DUR = 0.8;
-                    const HOLD_DUR = 0.25;
+                    const BG_DUR = 0.8;
+                    const CARDS_DUR = 3;
+                    const HOLD_DUR = 0.5;
 
                     const TOTAL_MOBILE_DURATION = BG_DUR + CARDS_DUR + HOLD_DUR;
 
@@ -1140,32 +1205,31 @@ const theme = require("../../../config.json");
                         yPercent: 100
                     });
 
-                    const mobileTl = gsap.timeline({
+                    const tl = gsap.timeline({
                         scrollTrigger: {
                             trigger: body,
                             start: "center center",
-                            end: () => "+=" + (TOTAL_MOBILE_DURATION * cardsContainer.offsetHeight),
+                            end: () => "+=" + (TOTAL_MOBILE_DURATION * PX_PER_SEC_MOBILE),
                             pin: true,
                             pinSpacing: true,
                             scrub: 1,
                             invalidateOnRefresh: true,
-                            // markers: true
                         }
                     });
 
-                    mobileTl.fromTo(bg, { clipPath: "inset(4rem 1.5rem 4rem 1.5rem round 0.5rem)" }, {
-                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
+                    tl.fromTo(bg, { "--frame-p": 1 }, {
+                        "--frame-p": 0,
                         duration: BG_DUR,
                         ease: "power1.out"
                     })
 
-                        .to(cardsContainer, {
-                            yPercent: -10,
-                            duration: CARDS_DUR,
-                            ease: "power1.out"
-                        })
+                    tl.to({}, { duration: HOLD_DUR });
 
-                        .to({}, { duration: HOLD_DUR });
+                    tl.to(cardsContainer, {
+                        yPercent: -10,
+                        duration: CARDS_DUR,
+                        ease: "power1.out"
+                    }, "<0.2");
                 });
             };
 
@@ -1173,33 +1237,71 @@ const theme = require("../../../config.json");
         },
 
         systemOverview() {
+            const PX_PER_SEC_DESKTOP = 550;
+            const PX_PER_SEC_MOBILE = 280;
+
             const script = () => {
                 const els = document.querySelectorAll("section.system-overview");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const PX_PER_SEC = 550;
-                    const soTL = gsap.timeline();
-
-                    const sceneContainer = self.querySelector(".so-scenes");
-
                     handleEntrance(self);
-                    handleSceneOne(self, soTL);
-                    handleSceneTwo(self, soTL);
-                    handleSceneThree(self, soTL);
-                    handleSceneFour(self, soTL);
 
-                    ScrollTrigger.create({
-                        animation: soTL,
-                        trigger: sceneContainer,
-                        pin: sceneContainer,
-                        start: "top top",
-                        end: () => "+=" + soTL.duration() * PX_PER_SEC,
-                        pinSpacing: true,
-                        scrub: 1,
-                        invalidateOnRefresh: true,
-                    });
+                    const mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", () => buildScenes(self, PX_PER_SEC_DESKTOP));
+                    mm.add("(max-width: 991px)", () => buildScenes(self, PX_PER_SEC_MOBILE));
                 });
+            };
+
+            const buildScenes = (self, pxPerSec) => {
+                const sceneContainer = self.querySelector(".so-scenes");
+                if (!sceneContainer) return;
+
+                let ctx = null;
+                let lastWidth = window.innerWidth;
+
+                const create = () => {
+                    ctx?.revert();
+
+                    ctx = gsap.context(() => {
+                        const soTL = gsap.timeline();
+
+                        handleSceneOne(self, soTL);
+                        handleSceneTwo(self, soTL);
+                        handleSceneThree(self, soTL);
+                        handleSceneFour(self, soTL);
+
+                        ScrollTrigger.create({
+                            animation: soTL,
+                            trigger: sceneContainer,
+                            pin: sceneContainer,
+                            start: "top top",
+                            end: () => "+=" + soTL.duration() * pxPerSec,
+                            pinSpacing: true,
+                            scrub: 1,
+                            invalidateOnRefresh: true,
+                        });
+                    }, self);
+                };
+
+                create();
+
+                const handler = baunfire.Global.callAfterResize(() => {
+                    if (window.innerWidth === lastWidth) return;
+
+                    lastWidth = window.innerWidth;
+                    create();
+                    baunfire.Global.screenSizeChange();
+                });
+
+                this._soResize = handler;
+
+                return () => {
+                    removeEventListener("resize", handler);
+                    if (this._soResize === handler) this._soResize = null;
+                    ctx?.revert();
+                };
             };
 
             const handleEntrance = (self) => {
@@ -1272,12 +1374,12 @@ const theme = require("../../../config.json");
 
                 soTL.fromTo(box,
                     {
-                        clipPath: "inset(5rem 4rem 5rem 4rem round 0.5rem)",
+                        "--frame-p": 1,
                     },
                     {
-                        clipPath: "inset(0rem 0rem 0rem 0rem round 0rem)",
+                        "--frame-p": 0,
                         duration: 0.8,
-                        ease: "none"
+                        ease: "none",
                     }
                 );
 
@@ -1479,6 +1581,8 @@ const theme = require("../../../config.json");
                     );
                 }
 
+                gsap.set(generatorS2250kwMain, { y: 0, yPercent: 100 });
+
                 soTL.to(generatorS2250kwMain,
                     {
                         autoAlpha: 1,
@@ -1507,6 +1611,8 @@ const theme = require("../../../config.json");
                 const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s3.is-main");
                 const panel = sceneThree.querySelector(".so-panel");
 
+                gsap.set(generatorS3Main, { y: 0, yPercent: -50 });
+
                 if (panel) {
                     soTL.fromTo(panel,
                         {
@@ -1530,7 +1636,7 @@ const theme = require("../../../config.json");
 
                 soTL.to(generatorS3Main,
                     {
-                        yPercent: -200,
+                        yPercent: -300,
                         autoAlpha: 0,
                         ease: "power1.out",
                         duration: 2,
@@ -1744,83 +1850,6 @@ const theme = require("../../../config.json");
                 // soTL.set(sceneFive, { autoAlpha: 1 })
             };
 
-            const handleSceneFive = (self, soTL) => {
-                const sceneFive = self.querySelector(".so-scene.is-s5");
-
-                const contentContainer = sceneFive.querySelector(".so-scene-c");
-
-                const logo = sceneFive.querySelector(".so-s-icon");
-                const heading = sceneFive.querySelector(".so-s-title");
-                const para = sceneFive.querySelector(".so-s-para");
-
-                const fuelImg = sceneFive.querySelector(".so-fuel-img");
-                const bpImg = sceneFive.querySelector(".so-bp-img");
-
-                const actions = sceneFive.querySelectorAll(".so-action-c");
-
-                if (logo) {
-                    soTL.fromTo(logo,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
-                    );
-                }
-
-                if (heading) {
-                    SplitText.create(heading, {
-                        type: "words",
-                        mask: "words",
-                        autoSplit: true,
-                        onSplit(split) {
-                            heading.style.visibility = "visible";
-                            heading.style.opacity = "1";
-                            gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return soTL.fromTo(split.words,
-                                { y: "100%" },
-                                {
-                                    y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
-                                },
-                                "<0.2"
-                            );
-                        },
-                    });
-                }
-
-                if (para) {
-                    soTL.fromTo(para,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
-                        "<0.4"
-                    );
-                }
-
-                if (fuelImg) {
-                    soTL.fromTo(fuelImg,
-                        { autoAlpha: 0, y: 60 },
-                        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power1.out" },
-                        "<0.4"
-                    );
-                }
-
-                if (bpImg) {
-                    soTL.fromTo(bpImg,
-                        { autoAlpha: 0, y: 60 },
-                        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power1.out" },
-                        "<0.2"
-                    );
-                }
-
-                if (actions) {
-                    soTL.fromTo(actions,
-                        { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.14, ease: "power1.out" },
-                        "<0.2"
-                    );
-                }
-
-                soTL.to({}, { duration: 0.5 });
-            };
-
             script();
         },
 
@@ -1879,11 +1908,11 @@ const theme = require("../../../config.json");
                         duration: 1,
                         ease: "power2.out"
                     })
-                    .to(cardsWrapper, {
-                        y: -64,
-                        duration: 1,
-                        ease: "power2.out"
-                    }, "<");
+                        .to(cardsWrapper, {
+                            y: -64,
+                            duration: 1,
+                            ease: "power2.out"
+                        }, "<");
                     tl.to(contents[0], {
                         y: "-2rem",
                         autoAlpha: 0,

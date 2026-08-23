@@ -19,10 +19,6 @@ section.system-overview {
             &.is-s4 {
                 @apply z-[2];
             }
-
-            &.is-s5 {
-                @apply z-[1];
-            }
         }
     }
 }
