@@ -1,19 +1,74 @@
 section.dense-power {
-    .dp-inner {
-        .dp-content {
-            .dp-content-inner {
-                @apply lg:h-[100svh] overflow-hidden;
+	.dp {
+		&-content-inner {
+			@apply justify-center;
+			min-height: 100vh;
+		}
 
-                .dp-cards-wrapper {
-                    @apply relative w-full;
+		&-cards-wrapper {
+			@media (min-width: 62rem) {
+				@apply grid;
 
-                    @screen lg {
-                        .dp-card {
-                            @apply absolute opacity-0 top-0 left-0 right-0;
-                        }
-                    }
-                }
+				.dp-card {
+					grid-area: 1 / 1;
+				}
+			}
+		}
+
+		&-c-img {
+			@apply object-contain;
+		}
+
+		&-c-img-wrap {
+			@media (min-width: 62rem) {
+				max-height: 44vh;
+			}
+		}
+
+		@media (min-width: 62rem) and (max-height: 50rem) {
+			&-c-title {
+				@apply pt-[2rem] pb-[1.5rem];
+			}
+
+			&-c-img-wrap {
+				max-height: 38vh;
+			}
+
+			&-c-media-wrap {
+				height: 8rem;
+			}
+
+			&-c-para {
+				@apply text-[0.8125rem] leading-[135%];
+			}
+		}
+
+		@media not all and (min-width: 62rem) {
+			&-c-content,
+            &-c-content-inner,
+            &-c-text-wrap {
+                @apply contents;
             }
-        }
-    }
+
+            &-c-subtitle {
+                @apply order-1;
+            }
+
+            &-c-img-wrap {
+                @apply order-2;
+            }
+
+            &-c-media-wrap {
+                @apply order-3;
+            }
+
+            &-c-para {
+                @apply order-4;
+            }
+
+            &-metrics {
+                @apply order-5;
+            }
+		}
+	}
 }

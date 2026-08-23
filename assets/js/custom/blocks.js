@@ -54,20 +54,100 @@ const theme = require("../../../config.json");
         },
 
         sectionControls() {
+            const SCROLL_PX_PER_SEC = 12000;
+            const SCROLL_MIN_DUR = 0.8;
+            const SCROLL_MAX_DUR = 2.4;
+            const SCROLL_OFFSETS = {
+                "how-it-works": -300,
+            };
+
+            let items = [];
+
+            const setActive = (item) => {
+                items.forEach(i => i.classList.toggle("active", i === item));
+            };
+
+            const resolve = (item) => {
+                const hash = (item.getAttribute("href") || "").trim();
+                if (hash.length < 2 || !hash.startsWith("#")) return null;
+
+                const id = hash.slice(1);
+                const target = document.getElementById(id);
+
+                return target ? { id, target } : null;
+            };
+
             const script = () => {
                 const el = document.querySelector(".section-controls");
                 if (!el) return;
 
-                handleCTAHover(el);
+                items = [...el.querySelectorAll(".sc-anchor-item")];
+
+                const hoverTL = handleCTAHover(el);
+                handleAnchorClicks(el, hoverTL);
+                handleActiveState();
                 handleScrollIndicator(el);
+            };
+
+            const handleActiveState = () => {
+                const pairs = items.map(item => {
+                    const resolved = resolve(item);
+                    return resolved ? { item, target: resolved.target } : null;
+                }).filter(Boolean);
+
+                if (!pairs.length) return;
+
+                setActive(pairs[0].item);
+
+                pairs.forEach(({ item, target }) => {
+                    ScrollTrigger.create({
+                        trigger: target,
+                        start: "top center",
+                        end: "bottom center",
+                        onEnter: () => setActive(item),
+                        onEnterBack: () => setActive(item),
+                    });
+                });
+            };
+
+            const handleAnchorClicks = (self, hoverTL) => {
+                if (!items.length) return;
+
+                self.addEventListener("click", (e) => {
+                    const item = e.target.closest(".sc-anchor-item");
+                    if (!item) return;
+
+                    const resolved = resolve(item);
+                    if (!resolved) return;
+
+                    const { id, target } = resolved;
+
+                    e.preventDefault();
+
+                    setActive(item);
+
+                    hoverTL?.timeScale(1.4).reverse();
+
+                    const offset = SCROLL_OFFSETS[id] || 0;
+                    const targetY = target.getBoundingClientRect().top + window.scrollY + offset;
+                    const distance = Math.abs(targetY - window.scrollY);
+                    const duration = gsap.utils.clamp(
+                        SCROLL_MIN_DUR,
+                        SCROLL_MAX_DUR,
+                        distance / SCROLL_PX_PER_SEC
+                    );
+
+                    baunfire.lenis?.scrollTo(targetY, {
+                        duration,
+                        easing: t => 1 - Math.pow(1 - t, 3),
+                    });
+                });
             };
 
             const handleCTAHover = (self) => {
                 const trigger = self.querySelector(".sc-anchors");
                 const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
-                const items = trigger.querySelectorAll(".sc-anchor-item");
-                items[0].classList.add("active");
 
                 const hoverTL = gsap.timeline({ paused: true });
 
@@ -113,6 +193,8 @@ const theme = require("../../../config.json");
 
                 trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
                 trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
+
+                return hoverTL;
             };
 
             const handleScrollIndicator = (self) => {
@@ -1063,7 +1145,7 @@ const theme = require("../../../config.json");
         },
 
         advanceTechnology() {
-            const PX_PER_SEC_DESKTOP = 400;
+            const PX_PER_SEC_DESKTOP = 350;
             const PX_PER_SEC_MOBILE = 300;
 
             const script = () => {
@@ -1140,7 +1222,6 @@ const theme = require("../../../config.json");
                 const mm = gsap.matchMedia();
 
                 mm.add("(min-width: 768px)", () => {
-
                     gsap.set(cardsContainer, { height: 0 });
                     gsap.set(cards, { y: "100vh" });
 
@@ -1154,7 +1235,7 @@ const theme = require("../../../config.json");
                     const tl = gsap.timeline({
                         scrollTrigger: {
                             trigger: body,
-                            start: "center center",
+                            start: "top top",
                             end: () => "+=" + (TOTAL_DURATION * PX_PER_SEC_DESKTOP),
                             pin: true,
                             pinSpacing: true,
@@ -1854,91 +1935,162 @@ const theme = require("../../../config.json");
         },
 
         densePower() {
+            const PX_PER_SEC_DESKTOP = 620;
+            const LEAD_DUR = 0.6;
+            const SWAP_DUR = 1;
+            const STEP_HOLD = 0.5;
+            const HOLD_DUR = 0.6;
+            const LIFT = 32;
+            const WRAPPER_SHIFT = -64;
+
             const script = () => {
                 const els = document.querySelectorAll("section.dense-power");
                 if (!els.length) return;
 
                 els.forEach(self => {
+                    handleEntrance(self);
                     handleAnimation(self);
                 });
+            };
+
+            const handleEntrance = (self) => {
+                const header = self.querySelector(".dp-header");
+                if (!header) return;
+
+                const logo = header.querySelector(".dp-icon");
+                const heading = header.querySelector(".dp-title");
+                const para = header.querySelector(".dp-head-para");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: header,
+                        start: baunfire.anim.start,
+                        once: true,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        autoSplit: true,
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
+                            return introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<-0.1"
+                            );
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
             };
 
             const handleAnimation = (self) => {
                 const body = self.querySelector(".dp-content-inner");
                 const title = self.querySelector(".dp-c-title");
                 const cardsWrapper = self.querySelector(".dp-cards-wrapper");
-                const cards = self.querySelectorAll(".dp-card");
+                const cards = gsap.utils.toArray(".dp-card", self);
 
-                if (!body || !title || !cardsWrapper || !cards.length) return;
+                if (!body || !title || !cardsWrapper || cards.length < 2) return;
 
                 const mm = gsap.matchMedia();
 
-                mm.add("(min-width: 768px)", () => {
-                    const contents = Array.from(cards).map(card =>
-                        card.querySelector(".dp-c-content")
-                    );
+                mm.add("(min-width: 992px)", () => {
+                    const images = cards.map(card => card.querySelector(".dp-c-img-wrap"));
+                    const contents = cards.map(card => card.querySelector(".dp-c-content"));
 
-                    gsap.set(cards, {
-                        autoAlpha: 0
-                    });
+                    gsap.set(cards, { autoAlpha: 1 });
+                    gsap.set(images.slice(1), { autoAlpha: 0 });
+                    gsap.set(contents.slice(1), { autoAlpha: 0, y: LIFT });
+                    gsap.set(cardsWrapper, { y: 0 });
 
-                    gsap.set(cards[0], {
-                        autoAlpha: 1
-                    });
+                    const dpTL = gsap.timeline();
 
-                    gsap.set(contents.slice(1), {
-                        y: "2rem",
-                        autoAlpha: 0
-                    });
+                    dpTL.to({}, { duration: LEAD_DUR });
 
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: body,
-                            start: "top top",
-                            end: "+=400%",
-                            pin: true,
-                            pinSpacing: true,
-                            scrub: 1,
-                            invalidateOnRefresh: true
-                        }
-                    });
-                    tl.to(title, {
-                        y: "-2rem",
+                    let at = LEAD_DUR;
+
+                    dpTL.to([title, contents[0]], {
+                        y: -LIFT,
                         autoAlpha: 0,
-                        duration: 1,
-                        ease: "power2.out"
-                    })
-                        .to(cardsWrapper, {
-                            y: -64,
-                            duration: 1,
-                            ease: "power2.out"
-                        }, "<");
-                    tl.to(contents[0], {
-                        y: "-2rem",
-                        autoAlpha: 0,
-                        duration: 1,
-                        ease: "power2.out"
-                    });
+                        duration: SWAP_DUR * 0.5,
+                        ease: "power2.out",
+                    }, at);
+
+                    dpTL.to(cardsWrapper, {
+                        y: WRAPPER_SHIFT,
+                        duration: SWAP_DUR,
+                        ease: "power2.out",
+                    }, at);
+
                     for (let i = 1; i < cards.length; i++) {
-                        tl.to(cards[i], {
+                        dpTL.to(images[i], {
                             autoAlpha: 1,
-                            duration: 1,
-                            ease: "power2.inOut"
-                        }, "<");
-                        tl.to(cards[i - 1], {
+                            duration: SWAP_DUR * 0.6,
+                            ease: "power1.inOut",
+                        }, at);
+
+                        dpTL.to(images[i - 1], {
                             autoAlpha: 0,
-                            duration: 1,
-                            ease: "power2.inOut"
-                        }, "<");
-                        tl.to(contents[i], {
+                            duration: SWAP_DUR * 0.6,
+                            ease: "power1.inOut",
+                        }, at);
+
+                        if (i > 1) {
+                            dpTL.to(contents[i - 1], {
+                                y: -LIFT,
+                                autoAlpha: 0,
+                                duration: SWAP_DUR * 0.4,
+                                ease: "power2.out",
+                            }, at);
+                        }
+
+                        dpTL.to(contents[i], {
                             y: 0,
                             autoAlpha: 1,
-                            duration: 0.75,
-                            ease: "power2.out"
-                        });
+                            duration: SWAP_DUR * 0.6,
+                            ease: "power2.out",
+                        }, at + SWAP_DUR * 0.4);
+
+                        at += SWAP_DUR + STEP_HOLD;
                     }
+
+                    dpTL.to({}, { duration: HOLD_DUR }, at);
+
+                    ScrollTrigger.create({
+                        animation: dpTL,
+                        trigger: body,
+                        start: "top top",
+                        end: () => "+=" + dpTL.duration() * PX_PER_SEC_DESKTOP,
+                        pin: true,
+                        pinSpacing: true,
+                        scrub: 1,
+                        invalidateOnRefresh: true,
+                    });
                 });
             };
+            
             script();
         },
 
