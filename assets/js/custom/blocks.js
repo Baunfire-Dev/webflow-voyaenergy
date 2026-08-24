@@ -897,7 +897,6 @@ const theme = require("../../../config.json");
                     this._hiwRefresh = () => handleVisualBalance(self);
                     ScrollTrigger.addEventListener("refreshInit", this._hiwRefresh);
                     handleVisualBalance(self);
-                    ScrollTrigger.refresh();
 
                     handleEntrance(self);
                     handleBGSwitch(self);
@@ -2327,8 +2326,6 @@ const theme = require("../../../config.json");
                     const activePanel = handleTabs(self);
                     handleEntrance(self, activePanel);
                 });
-
-                baunfire.Global.screenSizeChange();
             }
 
             const handleEntrance = (self, activePanel) => {
@@ -2420,7 +2417,7 @@ const theme = require("../../../config.json");
                     tab.classList.add('active');
                     activePanel.classList.add('active');
 
-                    baunfire.Global.screenSizeChange();
+                    baunfire.Global.queueScreenSizeChange();
                 };
 
                 return panels[0];
@@ -2974,7 +2971,7 @@ const theme = require("../../../config.json");
                 if (totalItems === 0) {
                     emptyText?.classList.add("active");
                     hideLoadMore(resData);
-                    baunfire.Global.screenSizeChange();
+                    baunfire.Global.queueScreenSizeChange();
                     return;
                 }
 
@@ -2988,7 +2985,7 @@ const theme = require("../../../config.json");
                     hideLoadMore(resData);
                 }
 
-                baunfire.Global.screenSizeChange();
+                baunfire.Global.queueScreenSizeChange();
 
                 loadImages(visibleItems);
             };
@@ -3233,7 +3230,7 @@ const theme = require("../../../config.json");
                     },
                     on: {
                         afterInit: function () {
-                            baunfire.Global.screenSizeChange();
+                            baunfire.Global.queueScreenSizeChange();
                             swiperEl.classList.add('is-ready');
                         },
                     }

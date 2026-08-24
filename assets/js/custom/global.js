@@ -18,6 +18,19 @@
             baunfire.lenis?.resize();
         },
 
+        queueScreenSizeChange(delay = 0.1) {
+            this._queuedRefresh?.kill();
+            this._queuedRefresh = gsap.delayedCall(delay, () => {
+                this._queuedRefresh = null;
+                this.screenSizeChange();
+            });
+        },
+
+        destroy() {
+            this._queuedRefresh?.kill();
+            this._queuedRefresh = null;
+        },
+
         siteScrolling(enabled = true) {
             if (enabled) {
                 document.documentElement.classList.remove('disable-scrolling');

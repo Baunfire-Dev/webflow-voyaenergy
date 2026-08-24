@@ -40,33 +40,15 @@
                 baunfire.lenis?.scrollTo(0, { immediate: true, force: true });
                 baunfire.mount(data.next.container);
 
-                this.holdTriggers();
                 this.reinitWebflow();
                 this.updateNavState();
 
-                this.releaseTriggers();
                 baunfire.Global.screenSizeChange();
                 baunfire.Global.siteScrolling(true);
             });
-
-            barba.hooks.after(() => {
-            });
-        },
-
-        holdTriggers() {
-            this._held = ScrollTrigger.getAll();
-            this._held.forEach(st => st.disable(false));
-        },
-
-        releaseTriggers() {
-            if (!this._held) return;
-            this._held.forEach(st => st.enable(false, false));
-            this._held = null;
-            baunfire.Global.screenSizeChange();
         },
 
         settle() {
-            if (this._held) return;
             baunfire.Global.screenSizeChange();
         },
 
@@ -82,8 +64,6 @@
                 },
                 once(data) {
                     baunfire.mount(data.next.container);
-                    self.holdTriggers();
-                    self._intro = true;
                     return self.coverOut();
                 },
             };
@@ -130,25 +110,15 @@
 
         coverOut() {
             const e = this.els();
+            if (!e) return;
 
-            if (!e) {
-                this.releaseTriggers();
-                return;
-            }
-
-            // const HOLD = this._intro ? 0.3 : 0;
             const HOLD = 0.3;
-            this._intro = false;
-
-            const HANDOFF = 0;
 
             const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
 
             tl.to(e.panel, { yPercent: -100 }, HOLD);
             if (e.inner) tl.to(e.inner, { yPercent: 100 }, HOLD);
             if (e.logo) tl.to(e.logo, { yPercent: -100 }, HOLD);
-
-            tl.call(() => this.releaseTriggers(), null, HOLD + HANDOFF);
 
             tl.set(e.panel, { visibility: 'hidden' })
                 .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
