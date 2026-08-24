@@ -62,6 +62,32 @@
                 baunfire.Global.siteScrolling();
             };
 
+            const navPrefetch = () => {
+                if (this._prefetched) return;
+                this._prefetched = true;
+
+                const idle = window.requestIdleCallback || (cb => setTimeout(cb, 1200));
+
+                idle(() => {
+                    const seen = new Set([location.pathname.replace(/\/$/, "") || "/"]);
+
+                    nav.querySelectorAll("a[href]").forEach(a => {
+                        const url = new URL(a.href, location.href);
+                        if (url.origin !== location.origin) return;
+
+                        const path = url.pathname.replace(/\/$/, "") || "/";
+                        if (seen.has(path)) return;
+                        seen.add(path);
+
+                        const link = document.createElement("link");
+                        link.rel = "prefetch";
+                        link.as = "document";
+                        link.href = url.href;
+                        document.head.appendChild(link);
+                    });
+                });
+            };
+
             const navLinks = () => {
                 const links = nav.querySelectorAll(".nav-item, .nav-anmt");
 
@@ -119,6 +145,7 @@
             burgerEvent();
             navExtras();
             navLinks();
+            navPrefetch();
 
             document.addEventListener("scroll", updateNavScroll);
             window.addEventListener("load", updateNavScroll);
