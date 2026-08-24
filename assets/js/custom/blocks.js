@@ -380,7 +380,7 @@ const theme = require("../../../config.json");
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: splitTextsProps.duration, ease: "power2.inOut", stagger: splitTextsProps.stagger,
@@ -388,6 +388,7 @@ const theme = require("../../../config.json");
                                 },
                                 timings.mainHeading.position
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -673,7 +674,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
@@ -681,6 +682,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<-0.1"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -911,9 +913,14 @@ const theme = require("../../../config.json");
                 const paddingTop = gap < minSpacing ? minSpacing - gap : 0;
                 const paddingBottom = Math.max(gap, minSpacing);
 
+                const nextTop = `${(paddingTop / rootFontSize).toFixed(3)}rem`;
+                const nextBottom = `${(paddingBottom / rootFontSize).toFixed(3)}rem`;
+
+                if (head.style.paddingTop === nextTop && head.style.paddingBottom === nextBottom) return;
+
                 gsap.set(head, {
-                    paddingTop: `${paddingTop / rootFontSize}rem`,
-                    paddingBottom: `${paddingBottom / rootFontSize}rem`,
+                    paddingTop: nextTop,
+                    paddingBottom: nextBottom,
                 });
             };
 
@@ -936,13 +943,14 @@ const theme = require("../../../config.json");
                         heading.style.visibility = "visible";
                         heading.style.opacity = "1";
                         gsap.set(split.words, { y: "100%", willChange: "transform" });
-                        return introTL.fromTo(split.words,
+                        introTL.fromTo(split.words,
                             { y: "100%" },
                             {
                                 y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.08,
                                 onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                             },
                         );
+                        return introTL.recent();
                     },
                 });
             };
@@ -1235,7 +1243,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
@@ -1243,6 +1251,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<-0.1"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -1461,7 +1470,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
@@ -1469,6 +1478,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<-0.1"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -2030,7 +2040,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
@@ -2038,6 +2048,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<-0.1"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -2178,7 +2189,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
@@ -2186,6 +2197,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<-0.1"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -2294,13 +2306,14 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -2407,7 +2420,7 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
@@ -2415,6 +2428,7 @@ const theme = require("../../../config.json");
                                 },
                                 "<0.2"
                             );
+                            return introTL.recent();
                         },
                     });
                 }
@@ -2470,13 +2484,14 @@ const theme = require("../../../config.json");
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
                             gsap.set(split.words, { y: "100%", willChange: "transform" });
-                            return introTL.fromTo(split.words,
+                            introTL.fromTo(split.words,
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
                                     onComplete: () => gsap.set(split.words, { willChange: "auto" }),
                                 },
                             );
+                            return introTL.recent();
                         },
                     });
                 }
