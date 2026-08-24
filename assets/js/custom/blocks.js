@@ -1212,7 +1212,7 @@ const theme = require("../../../config.json");
             };
 
             const handleTransitions = (self) => {
-                const body = self.querySelector(".at-inner");
+                const body = self.querySelector(".at-outer");
                 const bg = self.querySelector(".at-bg");
                 const cardsContainer = self.querySelector(".at-cards");
                 const cards = self.querySelectorAll(".at-cards .at-card");
@@ -1223,7 +1223,7 @@ const theme = require("../../../config.json");
 
                 mm.add("(min-width: 768px)", () => {
                     gsap.set(cardsContainer, { height: 0 });
-                    gsap.set(cards, { y: "100svh" });
+                    gsap.set(cards, { y: "100vh" });
 
                     const BG_DUR = 0.8;
                     const CONTAINER_DUR = 0.8;
