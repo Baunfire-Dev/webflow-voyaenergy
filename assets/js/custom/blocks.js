@@ -3246,9 +3246,10 @@ const theme = require("../../../config.json");
                 const master = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        // markers: true,
+                        markers: true,
                         start: "top top",
                         end: () => `+=${Math.abs(finalX - initialX)}`,
+                        // end: "bottom 25%",
                         pin: innerContainer,
                         scrub: true,
                         invalidateOnRefresh: true
@@ -3273,6 +3274,10 @@ const theme = require("../../../config.json");
                         ease: "none"
                     }, "<");
                 }
+
+                master.to({}, {
+                    duration: 0.1
+                });
             };
 
             script();
