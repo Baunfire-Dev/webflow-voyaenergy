@@ -51,6 +51,10 @@ const theme = require("../../../config.json");
                 removeEventListener('resize', this._soResize);
                 this._soResize = null;
             }
+            if (this._scOutside) {
+                document.removeEventListener('click', this._scOutside);
+                this._scOutside = null;
+            }
         },
 
         sectionControls() {
@@ -83,10 +87,22 @@ const theme = require("../../../config.json");
 
                 items = [...el.querySelectorAll(".sc-anchor-item")];
 
-                const hoverTL = handleCTAHover(el);
-                handleAnchorClicks(el, hoverTL);
+                const menu = handleCTAToggle(el);
+                handleAnchorClicks(el, menu);
                 handleActiveState();
+                handleStickyEnd(el);
                 handleScrollIndicator(el);
+            };
+
+            const handleStickyEnd = (self) => {
+                const footer = document.querySelector("footer.footer");
+                if (!footer) return;
+
+                ScrollTrigger.create({
+                    trigger: footer,
+                    start: "top bottom",
+                    onToggle: ({ isActive }) => self.classList.toggle("is-unstuck", isActive),
+                });
             };
 
             const handleActiveState = () => {
@@ -110,7 +126,7 @@ const theme = require("../../../config.json");
                 });
             };
 
-            const handleAnchorClicks = (self, hoverTL) => {
+            const handleAnchorClicks = (self, menu) => {
                 if (!items.length) return;
 
                 self.addEventListener("click", (e) => {
@@ -126,7 +142,7 @@ const theme = require("../../../config.json");
 
                     setActive(item);
 
-                    hoverTL?.timeScale(1.4).reverse();
+                    menu?.close();
 
                     const offset = SCROLL_OFFSETS[id] || 0;
                     const targetY = target.getBoundingClientRect().top + window.scrollY + offset;
@@ -144,7 +160,7 @@ const theme = require("../../../config.json");
                 });
             };
 
-            const handleCTAHover = (self) => {
+            const handleCTAToggle = (self) => {
                 const trigger = self.querySelector(".sc-anchors");
                 const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
@@ -191,10 +207,33 @@ const theme = require("../../../config.json");
                         "<0.2"
                     )
 
-                trigger.addEventListener("mouseenter", () => hoverTL.timeScale(1).play());
-                trigger.addEventListener("mouseleave", () => hoverTL.timeScale(1.4).reverse());
+                let isOpen = false;
 
-                return hoverTL;
+                const open = () => {
+                    if (isOpen) return;
+                    isOpen = true;
+                    hoverTL.timeScale(1).play();
+                };
+
+                const close = () => {
+                    if (!isOpen) return;
+                    isOpen = false;
+                    hoverTL.timeScale(1.4).reverse();
+                };
+
+                cta.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    isOpen ? close() : open();
+                });
+
+                this._scOutside = (e) => {
+                    if (!isOpen || trigger.contains(e.target)) return;
+                    close();
+                };
+
+                document.addEventListener("click", this._scOutside);
+
+                return { close };
             };
 
             const handleScrollIndicator = (self) => {
@@ -740,7 +779,13 @@ const theme = require("../../../config.json");
                 const text = item.querySelector(".tl-text");
                 const split = SplitText.create(text, { type: "chars, words", autoSplit: false });
 
+                const main = document.querySelector("main.g-main");
+                const wasDark = main?.classList.contains("is-hiw-dark");
+
+                if (wasDark) main.classList.remove("is-hiw-dark");
                 split.chars.forEach(c => (c.dataset.fill = getComputedStyle(c).color));
+                if (wasDark) main.classList.add("is-hiw-dark");
+
                 gsap.set(split.chars, { color: RESTING_COLOR });
 
                 let imagesInner = null;

@@ -69,3 +69,14 @@
 		}
 	}
 }
+
+main.g-main {
+	@apply relative;
+}
+
+.section-controls {
+	&.is-unstuck {
+		@apply absolute;
+		bottom: 1.875rem;
+	}
+}
