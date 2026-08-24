@@ -2,7 +2,7 @@ section.dense-power {
 	.dp {
 		&-content-inner {
 			@apply justify-center;
-			min-height: 100vh;
+			min-height: 100svh;
 		}
 
 		&-cards-wrapper {
@@ -21,7 +21,7 @@ section.dense-power {
 
 		&-c-img-wrap {
 			@media (min-width: 62rem) {
-				max-height: 44vh;
+				max-height: 44svh;
 			}
 		}
 
@@ -31,7 +31,7 @@ section.dense-power {
 			}
 
 			&-c-img-wrap {
-				max-height: 38vh;
+				max-height: 38svh;
 			}
 
 			&-c-media-wrap {
