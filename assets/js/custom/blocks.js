@@ -11,31 +11,42 @@ const theme = require("../../../config.json");
 
     baunfire.Blocks = {
         init() {
-            this.sectionControls();
+            const blocks = [
+                "sectionControls",
 
-            this.heroHomepage();
-            this.bridgeEBTL();
-            this.howItWorks();
-            this.advanceTechnology();
-            this.systemOverview();
-            this.densePower();
-            this.systemDetailPopup();
-            this.contentGridItems();
-            this.contactBanner();
-            this.wideImageBanner();
+                "heroHomepage",
+                "bridgeEBTL",
+                "howItWorks",
+                "advanceTechnology",
+                "systemOverview",
+                "densePower",
+                "systemDetailPopup",
+                "contentGridItems",
+                "contactBanner",
+                "wideImageBanner",
 
-            this.heroFiftyFifty();
-            this.heroWithGallery();
-            this.heroContact();
-            this.richtextContent();
-            this.resourcesDetailPage();
+                "heroFiftyFifty",
+                "heroWithGallery",
+                "heroContact",
+                "richtextContent",
+                "resourcesDetailPage",
 
-            this.scrollingTimeline();
+                "scrollingTimeline",
 
-            this.largeText();
-            this.resourcesGrid();
-            this.teamGrid();
-            this.teamCarousel();
+                "largeText",
+                "resourcesGrid",
+                "teamGrid",
+                "teamCarousel",
+            ];
+
+            blocks.forEach(name => {
+                try {
+                    this[name]();
+                } catch (err) {
+                    baunfire.Global.fancyLog(`Blocks.${name}() failed: ${err.message}`, "error");
+                    console.error(err);
+                }
+            });
         },
 
         destroy() {
@@ -166,8 +177,11 @@ const theme = require("../../../config.json");
 
             const handleCTAToggle = (self) => {
                 const trigger = self.querySelector(".sc-anchors");
+                if (!trigger) return null;
+
                 const cta = trigger.querySelector(".sc-anchor-cta");
                 const itemsContainer = trigger.querySelector(".sc-anchor-items-c");
+                if (!cta || !itemsContainer) return null;
 
                 const hoverTL = gsap.timeline({ paused: true });
 
@@ -244,6 +258,8 @@ const theme = require("../../../config.json");
                 const svg = self.querySelector('#indicator');
                 const line = self.querySelector('#dline');
                 const head = self.querySelector('#dhead');
+                if (!svg || !line || !head) return;
+
                 const len = line.getTotalLength();
 
                 const arrowTL = gsap.timeline({
@@ -402,22 +418,22 @@ const theme = require("../../../config.json");
                 const siteAnchors = document.querySelector(".sc-anchors");
 
                 const heroInner = self.querySelector(".hh-inner");
-
                 const sectionOne = self.querySelector(".hh-section.one");
+                const sectionTwo = self.querySelector(".hh-section.two");
+
+                if (!heroInner || !sectionOne || !sectionTwo) return;
+
                 const sectionOneImage = sectionOne.querySelector(".hh-bg-img-outer");
 
                 const mainHeading = sectionOne.querySelector(".hh-heading");
                 const mainPara = sectionOne.querySelector(".hh-para");
 
-                const sectionTwo = self.querySelector(".hh-section.two");
                 const sectionTwoLogo = sectionTwo.querySelector(".hh-logo");
                 const sectionTwoImage = sectionTwo.querySelector(".hh-bg-img");
                 const sectionTwoContent = sectionTwo.querySelector(".hh-content.two");
                 const sectionTwoBGOverlay = sectionTwo.querySelector(".hh-bg-overlay");
 
                 const secondaryPara = sectionTwo.querySelector(".hh-long-para");
-
-                if (!heroInner || !sectionOne || !sectionTwo) return;
 
                 const imageMask = () => {
                     const s = getComputedStyle(sectionTwo);
@@ -550,7 +566,7 @@ const theme = require("../../../config.json");
                     };
                 });
 
-                mm.add("(max-width: 991px)", () => {
+                mm.add("(max-width: 991.98px)", () => {
                     let mobileTL = null;
 
                     const split = SplitText.create(secondaryPara, {
@@ -622,7 +638,7 @@ const theme = require("../../../config.json");
                         this.transitionLine(self, ebTL, true);
                     });
 
-                    mm.add("(max-width: 991px)", () => {
+                    mm.add("(max-width: 991.98px)", () => {
                         this.energyBottleNeck(self, null, false);
                         this.transitionLine(self, null, false);
                     });
@@ -892,7 +908,7 @@ const theme = require("../../../config.json");
                         handleSlides(self);
                     });
 
-                    mm.add("(max-width: 991px)", () => {
+                    mm.add("(max-width: 991.98px)", () => {
                         handleMobileSlides(self);
                     });
                 });
@@ -985,7 +1001,9 @@ const theme = require("../../../config.json");
                     panel.querySelector(".hiw-c-brow"),
                     panel.querySelector(".hiw-c-title"),
                     panel.querySelector(".hiw-para"),
-                ];
+                ].filter(Boolean);
+
+                if (!els.length) return;
 
                 return gsap.fromTo(els,
                     { y: 40, autoAlpha: 0 },
@@ -1058,10 +1076,13 @@ const theme = require("../../../config.json");
                 if (!body) return;
 
                 const slides = self.querySelector(".hiw-slides");
+                if (!slides) return;
+
                 const panels = gsap.utils.toArray(".hiw-slide", slides);
-                const dotContainer = self.querySelector(".hiw-pagination");
-                const dots = dotContainer.querySelectorAll("svg circle");
                 if (!panels.length) return;
+
+                const dotContainer = self.querySelector(".hiw-pagination");
+                const dots = dotContainer ? dotContainer.querySelectorAll("svg circle") : [];
 
                 const H_START = INTRO_DUR;
                 const H_DUR = panels.length - 1;
@@ -1089,21 +1110,23 @@ const theme = require("../../../config.json");
                     }, 0);
                 }
 
-                master.fromTo(dotContainer,
-                    {
-                        autoAlpha: 0,
-                        scale: 0,
-                        rotate: '45deg',
-                    },
-                    {
-                        scale: 1,
-                        rotate: 0,
-                        autoAlpha: 1,
-                        ease: "none",
-                        duration: 0.4
-                    },
-                    "<"
-                );
+                if (dotContainer) {
+                    master.fromTo(dotContainer,
+                        {
+                            autoAlpha: 0,
+                            scale: 0,
+                            rotate: '45deg',
+                        },
+                        {
+                            scale: 1,
+                            rotate: 0,
+                            autoAlpha: 1,
+                            ease: "none",
+                            duration: 0.4
+                        },
+                        "<"
+                    );
+                }
 
                 master.to(panels, {
                     xPercent: -100 * (panels.length - 1),
@@ -1135,7 +1158,7 @@ const theme = require("../../../config.json");
                     const enterTL = gsap.timeline({ paused: true });
 
                     enterTL
-                        .fromTo([brow, title, para],
+                        .fromTo([brow, title, para].filter(Boolean),
                             { x: 60, autoAlpha: 0 },
                             {
                                 x: 0,
@@ -1328,7 +1351,7 @@ const theme = require("../../../config.json");
                     tl.to({}, { duration: HOLD_DUR });
                 });
 
-                mm.add("(max-width: 767px)", () => {
+                mm.add("(max-width: 767.98px)", () => {
                     const BG_DUR = 0.8;
                     const CARDS_DUR = 3;
                     const HOLD_DUR = 0.5;
@@ -1389,7 +1412,7 @@ const theme = require("../../../config.json");
                     const mm = gsap.matchMedia();
 
                     mm.add("(min-width: 992px)", () => buildScenes(self, PX_PER_SEC_DESKTOP));
-                    mm.add("(max-width: 991px)", () => buildScenes(self, PX_PER_SEC_MOBILE));
+                    mm.add("(max-width: 991.98px)", () => buildScenes(self, PX_PER_SEC_MOBILE));
                 });
             };
 
@@ -1445,6 +1468,8 @@ const theme = require("../../../config.json");
 
             const handleEntrance = (self) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
+                if (!sceneOne) return;
+
                 const contentContainer = sceneOne.querySelector(".so-content");
 
                 const logo = sceneOne.querySelector(".so-icon");
@@ -1499,6 +1524,7 @@ const theme = require("../../../config.json");
             const handleSceneOne = (self, soTL) => {
                 const sceneOne = self.querySelector(".so-scene.is-s1");
                 const sceneTwo = self.querySelector(".so-scene.is-s2");
+                if (!sceneOne || !sceneTwo) return;
 
                 const box = sceneOne.querySelector(".so-box");
                 const contentContainer = sceneOne.querySelector(".so-content");
@@ -1604,6 +1630,7 @@ const theme = require("../../../config.json");
             const handleSceneTwo = (self, soTL) => {
                 const sceneTwo = self.querySelector(".so-scene.is-s2");
                 const sceneThree = self.querySelector(".so-scene.is-s3");
+                if (!sceneTwo || !sceneThree) return;
 
                 const generator1 = sceneTwo.querySelector(".so-gen.is-s2.is-no-1");
                 const generator2 = sceneTwo.querySelector(".so-gen.is-s2.is-no-2");
@@ -1618,13 +1645,17 @@ const theme = require("../../../config.json");
                 const generatorS2250kwShadow = sceneTwo.querySelector(".so-gen2.is-s2.is-shadow");
                 const generatorS3250kw = sceneThree.querySelector(".so-gen2.is-s3");
 
+                if (!generator1 || !generator2 || !generator3 || !generator4 || !generator5) return;
+                if (!generatorContainer || !generatorContainerShadow) return;
+                if (!generatorS2250kwMain || !generatorS2250kwShadow) return;
+
                 const subGenerators = [generator1, generator2, generator4, generator5];
 
                 const secondaryGenerators = [generator2, generator4];
-                const secondaryOverlays = [generator2.querySelector(".so-gen-overlay"), generator4.querySelector(".so-gen-overlay")];
+                const secondaryOverlays = [generator2.querySelector(".so-gen-overlay"), generator4.querySelector(".so-gen-overlay")].filter(Boolean);
 
                 const tertiaryGenerators = [generator1, generator5];
-                const tertiaryOverlays = [generator1.querySelector(".so-gen-overlay"), generator5.querySelector(".so-gen-overlay")];
+                const tertiaryOverlays = [generator1.querySelector(".so-gen-overlay"), generator5.querySelector(".so-gen-overlay")].filter(Boolean);
 
                 const text = sceneTwo.querySelector(".so-scene-para");
 
@@ -1747,9 +1778,11 @@ const theme = require("../../../config.json");
 
             const handleSceneThree = (self, soTL) => {
                 const sceneThree = self.querySelector(".so-scene.is-s3");
+                if (!sceneThree) return;
 
                 const generatorS3Main = sceneThree.querySelector(".so-gen2.is-s3.is-main");
                 const panel = sceneThree.querySelector(".so-panel");
+                if (!generatorS3Main) return;
 
                 gsap.set(generatorS3Main, { y: 0, yPercent: -50 });
 
@@ -1798,6 +1831,8 @@ const theme = require("../../../config.json");
 
             const handleSceneFour = (self, soTL) => {
                 const sceneFour = self.querySelector(".so-scene.is-s4");
+                if (!sceneFour) return;
+
                 gsap.set(sceneFour, { autoAlpha: 1 });
 
                 const text = sceneFour.querySelector(".so-scene-para");
@@ -1810,6 +1845,9 @@ const theme = require("../../../config.json");
                 const generator2MWMain = sceneFour.querySelector(".so-gen3.is-main");
                 const generator2MWShadow = sceneFour.querySelector(".so-gen3.is-shadow");
 
+                if (!generatorColMain || !generatorColShadow || !generatorColShadow2) return;
+                if (!generator2MWMain || !generator2MWShadow) return;
+
                 const CELL_DUR = 0.8;
 
                 const fitToShadow = (mainEl, shadowEl, vars = {}) =>
@@ -1821,6 +1859,8 @@ const theme = require("../../../config.json");
                     });
 
                 const animateCell = (mainEl, shadowEl, pos) => {
+                    if (!mainEl || !shadowEl) return;
+
                     const overlay = mainEl.querySelector(".so-gen-overlay");
                     soTL.add(fitToShadow(mainEl, shadowEl, { duration: CELL_DUR }), pos);
                     soTL.fromTo(mainEl,
@@ -1839,6 +1879,8 @@ const theme = require("../../../config.json");
                 };
 
                 const collapseRowCells = (row, pos) => {
+                    if (!row) return;
+
                     const cellMain = (n) => row.querySelector(`.so-gen-cell.is-no-${n}.is-main`);
                     const cellShadow = (n) => row.querySelector(`.so-gen-cell.is-no-${n}.is-shadow`);
 
@@ -1871,7 +1913,7 @@ const theme = require("../../../config.json");
                 rows.forEach((row, i) => {
                     const rowAt = CASCADE_START + ROW_GAP * i;
 
-                    if (row.shadow) {
+                    if (row.main && row.shadow) {
                         soTL.add(fitToShadow(row.main, row.shadow), `${s1}+=${rowAt}`);
                         soTL.fromTo(row.main,
                             { autoAlpha: 0 },
@@ -2077,8 +2119,10 @@ const theme = require("../../../config.json");
                 const mm = gsap.matchMedia();
 
                 mm.add("(min-width: 992px)", () => {
-                    const images = cards.map(card => card.querySelector(".dp-c-img-wrap"));
-                    const contents = cards.map(card => card.querySelector(".dp-c-content"));
+                    const images = cards.map(card => card.querySelector(".dp-c-img-wrap")).filter(Boolean);
+                    const contents = cards.map(card => card.querySelector(".dp-c-content")).filter(Boolean);
+
+                    if (images.length !== cards.length || contents.length !== cards.length) return;
 
                     gsap.set(cards, { autoAlpha: 1 });
                     gsap.set(images.slice(1), { autoAlpha: 0 });
@@ -2353,6 +2397,7 @@ const theme = require("../../../config.json");
             const handleTabs = (self) => {
                 const tabs = [...self.querySelectorAll('.cgi-tab[target]')];
                 const panels = [...self.querySelectorAll('.cgi-panel[panel-key]')];
+                if (!tabs.length || !panels.length) return null;
 
                 tabs[0].classList.add("active");
                 panels[0].classList.add("active");
@@ -3133,16 +3178,19 @@ const theme = require("../../../config.json");
                     cards.forEach((card, i) => {
                         const dialog = createDialog(data[i]);
                         const tagsContainer = card.querySelector(".tc-c-tags");
-                        const tags = tagsContainer.textContent.split(",").map(tag => tag.trim()).filter(Boolean);
 
-                        tagsContainer.innerHTML = "";
+                        if (tagsContainer) {
+                            const tags = tagsContainer.textContent.split(",").map(tag => tag.trim()).filter(Boolean);
 
-                        tags.forEach(tag => {
-                            const span = document.createElement("span");
-                            span.className = "tag";
-                            span.textContent = tag;
-                            tagsContainer.appendChild(span);
-                        });
+                            tagsContainer.innerHTML = "";
+
+                            tags.forEach(tag => {
+                                const span = document.createElement("span");
+                                span.className = "tag";
+                                span.textContent = tag;
+                                tagsContainer.appendChild(span);
+                            });
+                        }
 
                         card.append(dialog);
 
