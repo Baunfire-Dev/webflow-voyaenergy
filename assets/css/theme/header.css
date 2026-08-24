@@ -14,10 +14,6 @@ header {
 			}
 		}
 
-        &-logo-c {
-            @apply relative z-[2];
-        }
-
 		&-logo {
 			svg path {
 				@apply transition-all duration-700 ease-out;

@@ -60,7 +60,16 @@
             const hideMobileNav = () => {
                 nav.classList.remove("mob-active");
                 baunfire.Global.siteScrolling();
-                stateReset();
+            };
+
+            const navLinks = () => {
+                const links = nav.querySelectorAll(".nav-item, .nav-anmt");
+
+                links.forEach(link => {
+                    link.addEventListener("click", () => {
+                        if (nav.classList.contains("mob-active")) hideMobileNav();
+                    });
+                });
             };
 
             const updateNavScroll = () => {
@@ -109,6 +118,7 @@
 
             burgerEvent();
             navExtras();
+            navLinks();
 
             document.addEventListener("scroll", updateNavScroll);
             window.addEventListener("load", updateNavScroll);
