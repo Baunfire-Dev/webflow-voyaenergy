@@ -15,6 +15,12 @@
                 if (this.isSamePage(a.href)) e.preventDefault();
             }, true);
 
+            if (typeof barbaPrefetch !== 'undefined') {
+                barba.use(barbaPrefetch, {
+                    root: document.querySelector('header') || document.body,
+                });
+            }
+
             barba.init({
                 timeout: 7000,
                 prevent: ({ href }) => this.isSamePage(href),

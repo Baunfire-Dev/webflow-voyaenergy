@@ -7,6 +7,7 @@ import { CustomEase } from 'gsap/CustomEase';
 
 import Lenis from 'lenis';
 import barba from '@barba/core';
+import barbaPrefetch from '@barba/prefetch';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin, Flip, CustomEase);
 
@@ -29,5 +30,6 @@ window.SplitText = SplitText;
 window.Flip = Flip;
 window.__lenis = lenis;
 window.barba = barba;
+window.barbaPrefetch = barbaPrefetch;
 
-export { gsap, ScrollTrigger, ScrollToPlugin, SplitText, Flip, Lenis, barba };
+export { gsap, ScrollTrigger, ScrollToPlugin, SplitText, Flip, Lenis, barba, barbaPrefetch };

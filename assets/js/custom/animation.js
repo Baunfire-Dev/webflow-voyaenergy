@@ -14,6 +14,7 @@
 
             let lastScrollY = window.scrollY;
             let isScrolled = false;
+            let isOpaque = false;
             let scrollDirection = null;
 
             const burgerEvent = () => {
@@ -62,32 +63,6 @@
                 baunfire.Global.siteScrolling();
             };
 
-            const navPrefetch = () => {
-                if (this._prefetched) return;
-                this._prefetched = true;
-
-                const idle = window.requestIdleCallback || (cb => setTimeout(cb, 1200));
-
-                idle(() => {
-                    const seen = new Set([location.pathname.replace(/\/$/, "") || "/"]);
-
-                    nav.querySelectorAll("a[href]").forEach(a => {
-                        const url = new URL(a.href, location.href);
-                        if (url.origin !== location.origin) return;
-
-                        const path = url.pathname.replace(/\/$/, "") || "/";
-                        if (seen.has(path)) return;
-                        seen.add(path);
-
-                        const link = document.createElement("link");
-                        link.rel = "prefetch";
-                        link.as = "document";
-                        link.href = url.href;
-                        document.head.appendChild(link);
-                    });
-                });
-            };
-
             const navLinks = () => {
                 const links = nav.querySelectorAll(".nav-item, .nav-anmt");
 
@@ -102,10 +77,16 @@
                 const currentScrollY = window.scrollY;
                 const direction = currentScrollY > lastScrollY ? "down" : currentScrollY < lastScrollY ? "up" : null;
                 const scrolled = currentScrollY > 20;
+                const opaqued = currentScrollY > 600;
 
                 if (scrolled !== isScrolled) {
                     nav.classList.toggle("nav-scrolled", scrolled);
                     isScrolled = scrolled;
+                }
+
+                if (opaqued !== isOpaque) {
+                    nav.classList.toggle("nav-opaqued", opaqued);
+                    isOpaque = opaqued;
                 }
 
                 if (direction && direction !== scrollDirection) {
@@ -145,7 +126,6 @@
             burgerEvent();
             navExtras();
             navLinks();
-            navPrefetch();
 
             document.addEventListener("scroll", updateNavScroll);
             window.addEventListener("load", updateNavScroll);

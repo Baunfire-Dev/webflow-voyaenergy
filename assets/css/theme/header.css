@@ -84,26 +84,6 @@ header {
 	}
 
 	@media not all and (min-width: 62rem) {
-		&.nav-scrolled {
-			background-color: white;
-			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-
-			.nav {
-				&-logo,
-				&-burger {
-					svg path[fill="white"] {
-						fill: var(--_colors---carbon-black);
-					}
-				}
-
-				&-burger {
-					svg line[stroke="white"] {
-						stroke: var(--_colors---carbon-black);
-					}
-				}
-			}
-		}
-
 		.nav {
 			&-inner {
 				@apply static;
@@ -187,7 +167,7 @@ header {
 
 	&:has(.nav-item.open),
 	&.mob-active,
-	&.nav-scrolled {
+	&.nav-opaqued {
 		.nav {
 			background-color: white;
 			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
@@ -245,9 +225,7 @@ header {
 		}
 	}
 
-	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(
-			:has(.nav-item.open)
-		) {
+	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(:has(.nav-item.open)) {
 		@apply pointer-events-none ease-reveal;
 		transform: translateY(-120%);
 	}
