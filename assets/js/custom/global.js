@@ -44,8 +44,13 @@
         callAfterResize(func, delay = 0.2) {
             const dc = gsap.delayedCall(delay, func).pause();
             const handler = () => dc.restart(true);
+
             window.addEventListener("resize", handler);
-            return handler;
+
+            return () => {
+                window.removeEventListener("resize", handler);
+                dc.kill();
+            };
         },
 
         refreshScrollTriggers() {
@@ -169,7 +174,9 @@
         },
 
         handleTextCount(el, duration = 0.8, withTrigger = false, parent) {
-            const counter = el.querySelector("[data-amount]");
+            const counter = el?.querySelector("[data-amount]");
+            if (!counter) return;
+
             const rawAmount = counter.dataset.amount.toString();
             const clean = v => (v + "").replace(/[^\d\.-]/gi, "");
             const num = clean(rawAmount);

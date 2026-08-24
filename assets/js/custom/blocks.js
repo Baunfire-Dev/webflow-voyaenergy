@@ -55,11 +55,11 @@ const theme = require("../../../config.json");
                 this._scHandler = null;
             }
             if (this._hiwRefresh) {
-                ScrollTrigger.removeEventListener("refreshInit", this._hiwRefresh);
+                this._hiwRefresh.forEach(fn => ScrollTrigger.removeEventListener("refreshInit", fn));
                 this._hiwRefresh = null;
             }
             if (this._soResize) {
-                removeEventListener('resize', this._soResize);
+                this._soResize();
                 this._soResize = null;
             }
             if (this._scOutside) {
@@ -316,13 +316,17 @@ const theme = require("../../../config.json");
                     fadeOut = true;
                     arrowTL.pause();
 
-                    gsap.to(svg, {
+                    removeEventListener('scroll', this._scHandler);
+
+                    const build = () => gsap.to(svg, {
                         autoAlpha: 0,
                         y: 14,
                         scale: 0.85,
                         duration: 0.5,
                         ease: 'power3.in'
                     });
+
+                    baunfire.ctx ? baunfire.ctx.add(build) : build();
                 };
                 addEventListener('scroll', this._scHandler, { passive: true });
             };
@@ -894,8 +898,10 @@ const theme = require("../../../config.json");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    this._hiwRefresh = () => handleVisualBalance(self);
-                    ScrollTrigger.addEventListener("refreshInit", this._hiwRefresh);
+                    const refresh = () => handleVisualBalance(self);
+
+                    (this._hiwRefresh ||= []).push(refresh);
+                    ScrollTrigger.addEventListener("refreshInit", refresh);
                     handleVisualBalance(self);
 
                     handleEntrance(self);
@@ -1207,17 +1213,21 @@ const theme = require("../../../config.json");
             };
 
             const activateDot = (dot, active = true) => {
-                gsap.timeline()
-                    .to(dot.parentElement, {
-                        rotation: active ? "-=72" : "+=72",
-                        duration: 0.6,
-                        ease: "power2.out"
-                    })
-                    .to(dot, {
-                        fill: active ? "#f1b510" : "#c7c7c7",
-                        duration: 0.6,
-                        ease: "power2.out"
-                    }, "<");
+                const build = () => {
+                    gsap.timeline()
+                        .to(dot.parentElement, {
+                            rotation: active ? "-=72" : "+=72",
+                            duration: 0.6,
+                            ease: "power2.out"
+                        })
+                        .to(dot, {
+                            fill: active ? "#f1b510" : "#c7c7c7",
+                            duration: 0.6,
+                            ease: "power2.out"
+                        }, "<");
+                };
+
+                baunfire.ctx ? baunfire.ctx.add(build) : build();
             };
 
             script();
@@ -1418,6 +1428,12 @@ const theme = require("../../../config.json");
                 });
             };
 
+            const countOnce = (panel) => {
+                if (!panel || panel.dataset.counted) return;
+                panel.dataset.counted = "1";
+                baunfire.Global.handleTextCount(panel);
+            };
+
             const buildScenes = (self, pxPerSec) => {
                 const sceneContainer = self.querySelector(".so-scenes");
                 if (!sceneContainer) return;
@@ -1451,7 +1467,7 @@ const theme = require("../../../config.json");
 
                 create();
 
-                const handler = baunfire.Global.callAfterResize(() => {
+                const dispose = baunfire.Global.callAfterResize(() => {
                     if (window.innerWidth === lastWidth) return;
 
                     lastWidth = window.innerWidth;
@@ -1459,11 +1475,11 @@ const theme = require("../../../config.json");
                     baunfire.Global.screenSizeChange();
                 });
 
-                this._soResize = handler;
+                this._soResize = dispose;
 
                 return () => {
-                    removeEventListener("resize", handler);
-                    if (this._soResize === handler) this._soResize = null;
+                    dispose();
+                    if (this._soResize === dispose) this._soResize = null;
                     ctx?.revert();
                 };
             };
@@ -1590,7 +1606,7 @@ const theme = require("../../../config.json");
                             ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
-                                baunfire.Global.handleTextCount(panel);
+                                countOnce(panel);
                             }
                         },
                         "<0.4"
@@ -1800,7 +1816,7 @@ const theme = require("../../../config.json");
                             ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
-                                baunfire.Global.handleTextCount(panel);
+                                countOnce(panel);
                             }
                         },
                         "<"
@@ -2001,7 +2017,7 @@ const theme = require("../../../config.json");
                             ease: "power1.out",
                             duration: 0.6,
                             onStart: () => {
-                                baunfire.Global.handleTextCount(panel);
+                                countOnce(panel);
                             }
                         },
                         "<"
