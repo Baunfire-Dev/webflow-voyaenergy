@@ -22,12 +22,6 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
-ScrollTrigger.normalizeScroll({
-  type: "touch,wheel,pointer",
-  allowNestedScroll: true,
-  lockAxis: true,
-});
-
 window.gsap = gsap;
 window.ScrollTrigger = ScrollTrigger;
 window.ScrollToPlugin = ScrollToPlugin;

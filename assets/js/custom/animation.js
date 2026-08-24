@@ -8,12 +8,60 @@
         handleNav() {
             const nav = document.querySelector("header");
             if (!nav) return;
+            
             if (this._navBound) return;
             this._navBound = true;
 
             let lastScrollY = window.scrollY;
             let isScrolled = false;
             let scrollDirection = null;
+
+            const burgerEvent = () => {
+                const burger = nav.querySelector(".nav-burger");
+                let mm = gsap.matchMedia();
+
+                mm.add(
+                    {
+                        isDesktop: `(min-width: 992px)`,
+                        isMobile: `(max-width: 991.98px)`,
+                    },
+                    (context) => {
+                        let { isDesktop, isMobile } = context.conditions;
+
+                        if (isDesktop) {
+                            nav.classList.remove("mob-active");
+                            baunfire.Global.siteScrolling();
+
+                            burger.removeEventListener("click", burgerClickHandler);
+                        }
+
+                        if (isMobile) {
+                            burger.addEventListener("click", burgerClickHandler);
+                        }
+
+                        return () => { };
+                    }
+                );
+            };
+
+            const burgerClickHandler = () => {
+                if (!nav.classList.contains("mob-active")) {
+                    showMobileNav();
+                } else {
+                    hideMobileNav();
+                }
+            };
+
+            const showMobileNav = () => {
+                nav.classList.add("mob-active");
+                baunfire.Global.siteScrolling(false);
+            };
+
+            const hideMobileNav = () => {
+                nav.classList.remove("mob-active");
+                baunfire.Global.siteScrolling();
+                stateReset();
+            };
 
             const updateNavScroll = () => {
                 const currentScrollY = window.scrollY;
@@ -33,6 +81,34 @@
 
                 lastScrollY = currentScrollY;
             };
+
+            const navExtras = () => {
+                const panel = nav.querySelector(".nav-panel-inner");
+                if (!panel) return;
+
+                panel.querySelector(".nav-extras")?.remove();
+
+                const sources = [
+                    document.querySelector(".footer-socials"),
+                    document.querySelector(".footer-address"),
+                    document.querySelector(".footer-credits-c"),
+                ].filter(Boolean);
+
+                if (!sources.length) return;
+
+                const extras = document.createElement("div");
+                extras.className = "nav-extras";
+
+                sources.forEach(el => extras.appendChild(el.cloneNode(true)));
+
+                const year = extras.querySelector(".footer-credits.year");
+                if (year) year.textContent = new Date().getFullYear();
+
+                panel.appendChild(extras);
+            };
+
+            burgerEvent();
+            navExtras();
 
             document.addEventListener("scroll", updateNavScroll);
             window.addEventListener("load", updateNavScroll);
