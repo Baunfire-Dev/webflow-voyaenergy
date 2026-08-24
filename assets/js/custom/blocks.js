@@ -796,7 +796,15 @@ const theme = require("../../../config.json");
                 const wasDark = main?.classList.contains("is-hiw-dark");
 
                 if (wasDark) main.classList.remove("is-hiw-dark");
-                split.chars.forEach(c => (c.dataset.fill = getComputedStyle(c).color));
+
+                const fills = new Map();
+
+                split.chars.forEach(c => {
+                    const parent = c.parentElement;
+                    if (!fills.has(parent)) fills.set(parent, getComputedStyle(c).color);
+                    c.dataset.fill = fills.get(parent);
+                });
+
                 if (wasDark) main.classList.add("is-hiw-dark");
 
                 gsap.set(split.chars, { color: RESTING_COLOR });
@@ -878,7 +886,8 @@ const theme = require("../../../config.json");
 
         howItWorks() {
             const INTRO_DUR = 0.3;
-            const isDesktop = () => window.matchMedia("(min-width: 992px)").matches;
+            const desktopMQ = window.matchMedia("(min-width: 992px)");
+            const isDesktop = () => desktopMQ.matches;
 
             const script = () => {
                 const els = document.querySelectorAll("section.how-it-works");
