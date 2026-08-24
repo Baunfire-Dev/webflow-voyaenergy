@@ -30,9 +30,5 @@ section.content-grid-items {
 			@apply opacity-0;
             transform: translateY(0.625rem);
 		}
-
-		&-card {
-			@apply will-change-transform;
-		}
 	}
 }

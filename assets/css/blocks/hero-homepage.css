@@ -1,10 +1,13 @@
 section.hero-homepage {
 	.hh-section {
 		&.two {
-			will-change: clip-path;
 			--frame-y: 5rem;
 			--frame-x: var(--global--container-padding);
 			--frame-r: 0.5rem;
+
+			@media (min-width: 62rem) {
+				will-change: clip-path;
+			}
 		}
 	}
 }

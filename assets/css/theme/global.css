@@ -167,7 +167,7 @@ section.team-carousel {
 
 		&-pagination-bullet {
 			@apply !m-0 !h-[0.25rem] !rounded-[0.25rem] !opacity-[1];
-			@apply transition-all duration-500 ease-out;
+			@apply transition-[background-color,width] duration-500 ease-out;
 
 			width: clamp(2.25rem, 2.8169vw + 1.5898rem, 4.125rem);
 			background: var(--_colors---white) !important;
@@ -221,7 +221,6 @@ section.team-carousel {
 							0.5,
 							1
 						);
-						will-change: transform;
 						transition-property: opacity, transform;
 					}
 				}

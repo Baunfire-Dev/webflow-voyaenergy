@@ -1,4 +1,9 @@
 .section-controls {
+	&.is-unstuck {
+		@apply absolute;
+		bottom: 1.875rem;
+	}
+
 	.sc {
 		&-anchors {
 			&.dark {
@@ -29,7 +34,7 @@
 
         &-anchor-text,
 		&-anchor-text-c {
-			@apply transition-all duration-300 ease-in-out;
+			@apply transition-[opacity,transform] duration-300 ease-in-out;
 		}
 
 		&-anchor-item {
@@ -72,11 +77,4 @@
 
 main.g-main {
 	@apply relative;
-}
-
-.section-controls {
-	&.is-unstuck {
-		@apply absolute;
-		bottom: 1.875rem;
-	}
 }

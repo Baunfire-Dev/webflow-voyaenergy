@@ -51,7 +51,6 @@ header {
 			}
 
 			&-item-inner {
-				@apply will-change-[padding-left];
 				@apply transition-all duration-700 ease-power2-out;
 			}
 

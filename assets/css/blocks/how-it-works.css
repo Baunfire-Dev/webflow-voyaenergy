@@ -16,7 +16,7 @@ section.how-it-works {
 	}
 }
 
-main {
+main.g-main {
 	&.is-hiw-dark {
 		background-color: var(--_colors---carbon-black);
 
