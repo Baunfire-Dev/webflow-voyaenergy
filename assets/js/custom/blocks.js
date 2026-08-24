@@ -489,7 +489,7 @@ const theme = require("../../../config.json");
 
                     tl.to({}, { duration: 1 });
 
-                    tl.to(sectionTwo, { clipPath: imageMask(), ease: "none", duration: 0.8 });
+                    tl.to(sectionTwo, { clipPath: () => imageMask(), ease: "none", duration: 0.8 });
 
                     tl.to([sectionTwoContent, sectionTwoBGOverlay], { autoAlpha: 0, ease: "none", duration: 0.6 }, "<");
 
@@ -1303,7 +1303,6 @@ const theme = require("../../../config.json");
 
                 mm.add("(min-width: 768px)", () => {
                     gsap.set(cardsContainer, { height: 0 });
-                    gsap.set(cards, { y: "100vh" });
 
                     const BG_DUR = 0.8;
                     const CONTAINER_DUR = 0.8;
@@ -1340,12 +1339,16 @@ const theme = require("../../../config.json");
                         ease: "power1.out"
                     })
 
-                    tl.to(cards, {
-                        y: 0,
-                        duration: CARD_DUR,
-                        stagger: 0.2,
-                        ease: "power1.out"
-                    }, "<0.2");
+                    tl.fromTo(cards,
+                        { y: () => window.innerHeight },
+                        {
+                            y: 0,
+                            duration: CARD_DUR,
+                            stagger: 0.2,
+                            ease: "power1.out"
+                        },
+                        "<0.2"
+                    );
 
                     tl.to({}, { duration: HOLD_DUR });
                 });
@@ -3335,37 +3338,28 @@ const theme = require("../../../config.json");
                 const firstItem = items[0];
                 const lastItem = items[items.length - 1];
 
-                const wrapperWidth = itemsWrapper.offsetWidth;
-                const firstItemWidth = firstItem.offsetWidth;
-                const lastItemWidth = lastItem.offsetWidth;
+                const initialX = () =>
+                    (itemsWrapper.offsetWidth / 2) - (firstItem.offsetWidth / 2);
 
-                const initialX = (wrapperWidth / 2) - (firstItemWidth / 2);
-
-                const finalX =
-                    (wrapperWidth / 2) -
-                    (lastItem.offsetLeft + lastItemWidth / 2);
-
-                gsap.set(inner, {
-                    x: initialX
-                });
+                const finalX = () =>
+                    (itemsWrapper.offsetWidth / 2) -
+                    (lastItem.offsetLeft + lastItem.offsetWidth / 2);
 
                 const master = gsap.timeline({
                     scrollTrigger: {
                         trigger: self,
-                        // markers: true,
                         start: "top top",
-                        end: () => `+=${Math.abs(finalX - initialX)}`,
-                        // end: "bottom 25%",
+                        end: () => `+=${Math.abs(finalX() - initialX())}`,
                         pin: innerContainer,
                         scrub: true,
                         invalidateOnRefresh: true
                     }
                 });
 
-                master.to(inner, {
-                    x: finalX,
-                    ease: "none"
-                });
+                master.fromTo(inner,
+                    { x: initialX },
+                    { x: finalX, ease: "none" }
+                );
 
                 if (progressFill) {
                     master.to(progressFill, {
