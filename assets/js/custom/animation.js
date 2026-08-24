@@ -8,9 +8,6 @@
         handleNav() {
             const nav = document.querySelector("header");
             if (!nav) return;
-            
-            if (this._navBound) return;
-            this._navBound = true;
 
             let lastScrollY = window.scrollY;
             let isScrolled = false;
@@ -123,13 +120,26 @@
                 panel.appendChild(extras);
             };
 
+            this.destroy();
+
+            this._navScroll = updateNavScroll;
+            document.addEventListener("scroll", updateNavScroll, { passive: true });
+            window.addEventListener("load", updateNavScroll);
+            updateNavScroll();
+
+            if (this._navBound) return;
+            this._navBound = true;
+
             burgerEvent();
             navExtras();
             navLinks();
+        },
 
-            document.addEventListener("scroll", updateNavScroll);
-            window.addEventListener("load", updateNavScroll);
-            updateNavScroll();
+        destroy() {
+            if (!this._navScroll) return;
+            document.removeEventListener("scroll", this._navScroll);
+            window.removeEventListener("load", this._navScroll);
+            this._navScroll = null;
         },
 
         handleTransitions() {

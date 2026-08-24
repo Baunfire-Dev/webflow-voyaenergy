@@ -55,6 +55,10 @@ const theme = require("../../../config.json");
                 document.removeEventListener('click', this._scOutside);
                 this._scOutside = null;
             }
+            if (this._swipers) {
+                this._swipers.forEach(s => s.destroy?.(true, true));
+                this._swipers = null;
+            }
         },
 
         sectionControls() {
@@ -3118,13 +3122,11 @@ const theme = require("../../../config.json");
                 const els = document.querySelectorAll("section.team-carousel");
                 if (!els.length) return;
 
-                els.forEach(self => {
-                    baunfire.Global.importSwiperScript(() => {
-                        els.forEach((self) => {
-                            handleCarousel(self);
-                        });
-                    });
+                baunfire.Global.importSwiperScript(() => {
+                    els.forEach((self) => handleCarousel(self));
+                });
 
+                els.forEach(self => {
                     const cards = self.querySelectorAll(".tc-card");
                     const data = readData(self);
 
@@ -3165,7 +3167,7 @@ const theme = require("../../../config.json");
                 const swiperEl = self.querySelector(".swiper.tc-carousel");
                 if (!swiperEl) return;
 
-                new Swiper(swiperEl, {
+                const instance = new Swiper(swiperEl, {
                     slidesPerView: 'auto',
                     spaceBetween: 24,
                     breakpoints: {
@@ -3186,11 +3188,10 @@ const theme = require("../../../config.json");
                             baunfire.Global.screenSizeChange();
                             swiperEl.classList.add('is-ready');
                         },
-                        resize: function () {
-                            baunfire.Global.screenSizeChange();
-                        },
                     }
                 });
+
+                (this._swipers ||= []).push(instance);
             };
 
             const readData = (self) => {
