@@ -1212,7 +1212,7 @@ const theme = require("../../../config.json");
             };
 
             const handleTransitions = (self) => {
-                const body = self.querySelector(".at-outer");
+                const body = self.querySelector(".at-inner");
                 const bg = self.querySelector(".at-bg");
                 const cardsContainer = self.querySelector(".at-cards");
                 const cards = self.querySelectorAll(".at-cards .at-card");
