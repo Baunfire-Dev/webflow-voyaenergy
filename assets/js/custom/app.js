@@ -47,7 +47,6 @@
             this.ctx = null;
 
             ScrollTrigger.getAll().forEach(st => st.kill());
-            SplitText.getAll?.().forEach(s => s.revert());
         },
 
         addModule(mod) {

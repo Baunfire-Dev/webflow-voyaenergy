@@ -2,17 +2,6 @@
     const templateURL = 'https://webflow-voyaenergy.pages.dev';
 
     baunfire.Global = {
-        init() {
-        },
-
-        debounce(func, delay = 300) {
-            let timeout;
-            return (...args) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(null, args), delay);
-            };
-        },
-
         screenSizeChange() {
             ScrollTrigger.refresh();
             baunfire.lenis?.resize();
@@ -51,14 +40,6 @@
                 window.removeEventListener("resize", handler);
                 dc.kill();
             };
-        },
-
-        refreshScrollTriggers() {
-            const triggers = ScrollTrigger.getAll();
-
-            triggers.forEach((trigger) => {
-                trigger.refresh(true);
-            });
         },
 
         fancyLog(message, type = "info") {

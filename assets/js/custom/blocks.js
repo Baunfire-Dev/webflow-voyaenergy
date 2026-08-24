@@ -269,7 +269,6 @@ const theme = require("../../../config.json");
 
                 let fadeOut = false;
 
-                const mm = gsap.matchMedia();
 
                 gsap.set(line, {
                     strokeDasharray: len,
@@ -346,9 +345,6 @@ const theme = require("../../../config.json");
             }
 
             const handleEntrance = (self) => {
-                const nav = document.querySelector("nav");
-                const pageControls = document.querySelector(".section-controls");
-
                 const mainHeading = self.querySelector(".hh-section.one .hh-heading");
                 const mainImage = self.querySelector(".hh-section.one .hh-bg-img-outer");
 
@@ -360,9 +356,6 @@ const theme = require("../../../config.json");
                     },
                     mainHeading: {
                         position: "<0.6"
-                    },
-                    mainPara: {
-                        position: "<0.3"
                     },
                 }
 
@@ -399,7 +392,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
@@ -419,8 +411,6 @@ const theme = require("../../../config.json");
             };
 
             const handleScroll = (self) => {
-                const siteAnchors = document.querySelector(".sc-anchors");
-
                 const heroInner = self.querySelector(".hh-inner");
                 const sectionOne = self.querySelector(".hh-section.one");
                 const sectionTwo = self.querySelector(".hh-section.two");
@@ -508,7 +498,6 @@ const theme = require("../../../config.json");
                     const split = SplitText.create(secondaryPara, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             reveal2TL?.kill();
                             reveal2ST?.kill();
@@ -576,7 +565,6 @@ const theme = require("../../../config.json");
                     const split = SplitText.create(secondaryPara, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mobileTL?.kill();
 
@@ -693,7 +681,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -963,7 +950,6 @@ const theme = require("../../../config.json");
                 SplitText.create(heading, {
                     type: "words",
                     mask: "words",
-                    autoSplit: true,
                     onSplit(split) {
                         heading.style.visibility = "visible";
                         heading.style.opacity = "1";
@@ -1274,7 +1260,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -1512,7 +1497,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -1661,7 +1645,6 @@ const theme = require("../../../config.json");
 
                 const generatorS2250kwMain = sceneTwo.querySelector(".so-gen2.is-s2.is-main");
                 const generatorS2250kwShadow = sceneTwo.querySelector(".so-gen2.is-s2.is-shadow");
-                const generatorS3250kw = sceneThree.querySelector(".so-gen2.is-s3");
 
                 if (!generator1 || !generator2 || !generator3 || !generator4 || !generator5) return;
                 if (!generatorContainer || !generatorContainerShadow) return;
@@ -1910,7 +1893,6 @@ const theme = require("../../../config.json");
                 };
 
                 const ROW_GAP = 0.04;
-                const CELL_LEAD = 0.15;
                 const CASCADE_START = 0.3;
                 const PHASE_GAP = -0.3;
                 const CELL_ROW_GAP = 0.15;
@@ -2099,7 +2081,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -2250,7 +2231,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -2342,12 +2322,12 @@ const theme = require("../../../config.json");
                 if (!els.length) return;
 
                 els.forEach(self => {
-                    const activePanel = handleTabs(self);
-                    handleEntrance(self, activePanel);
+                    handleTabs(self);
+                    handleEntrance(self);
                 });
             }
 
-            const handleEntrance = (self, activePanel) => {
+            const handleEntrance = (self) => {
                 const heading = self.querySelector(".cgi-heading");
                 const para = self.querySelector(".cgi-para");
                 const tabContainer = self.querySelector(".cgi-tabs");
@@ -2365,7 +2345,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -2438,8 +2417,6 @@ const theme = require("../../../config.json");
 
                     baunfire.Global.queueScreenSizeChange();
                 };
-
-                return panels[0];
             };
 
             script();
@@ -2480,7 +2457,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -2544,7 +2520,6 @@ const theme = require("../../../config.json");
                     SplitText.create(heading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             heading.style.visibility = "visible";
                             heading.style.opacity = "1";
@@ -2597,7 +2572,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
@@ -2667,7 +2641,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
@@ -2713,7 +2686,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
@@ -2759,7 +2731,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";
@@ -2800,7 +2771,6 @@ const theme = require("../../../config.json");
                 SplitText.create(text, {
                     type: "words",
                     mask: "words",
-                    autoSplit: true,
                     onSplit(split) {
                         text.style.visibility = "visible";
                         text.style.opacity = "1";
@@ -2872,30 +2842,21 @@ const theme = require("../../../config.json");
             const getData = (resData) => {
                 const { container } = resData;
 
-                if (COLLECTION_ENDPOINTS.resources.data) {
-                    fetchData()
-                        .then((data) => {
-                            COLLECTION_ENDPOINTS.resources.data = data;
-                            container.classList.add("loaded");
+                fetchData()
+                    .then((data) => {
+                        COLLECTION_ENDPOINTS.resources.data = data;
+                        container.classList.add("loaded");
 
-                            renderGrid(resData, data);
-                            initializeFilter(resData);
-                            initializeLoadMore(resData);
-                            applyFilter(resData);
-                            updateDisplay(resData, true);
-                        })
-                        .catch((err) => {
-                            console.error("load failed", err);
-                            container.classList.add("loaded");
-                        });
-                } else {
-                    const data = COLLECTION_ENDPOINTS.resources.data;
-                    renderGrid(resData, data);
-                    initializeFilter(resData);
-                    initializeLoadMore(resData);
-                    applyFilter(resData);
-                    updateDisplay(resData, true);
-                }
+                        renderGrid(resData, data);
+                        initializeFilter(resData);
+                        initializeLoadMore(resData);
+                        applyFilter(resData);
+                        updateDisplay(resData, true);
+                    })
+                    .catch((err) => {
+                        console.error("load failed", err);
+                        container.classList.add("loaded");
+                    });
             };
 
             const generateCard = (d) => `
@@ -3052,7 +3013,6 @@ const theme = require("../../../config.json");
                     SplitText.create(mainHeading, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(split) {
                             mainHeading.style.visibility = "visible";
                             mainHeading.style.opacity = "1";

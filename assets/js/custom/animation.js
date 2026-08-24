@@ -158,7 +158,6 @@
                     SplitText.create(el, {
                         type: "words",
                         mask: "words",
-                        autoSplit: true,
                         onSplit(self) {
                             el.style.opacity = "1";
                             gsap.set(self.words, { y: "100%" });
