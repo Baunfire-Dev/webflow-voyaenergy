@@ -1223,7 +1223,7 @@ const theme = require("../../../config.json");
 
                 mm.add("(min-width: 768px)", () => {
                     gsap.set(cardsContainer, { height: 0 });
-                    gsap.set(cards, { y: "100vh" });
+                    gsap.set(cards, { y: "100svh" });
 
                     const BG_DUR = 0.8;
                     const CONTAINER_DUR = 0.8;
