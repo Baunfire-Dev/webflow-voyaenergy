@@ -1289,7 +1289,7 @@ const theme = require("../../../config.json");
                     const tl = gsap.timeline({
                         scrollTrigger: {
                             trigger: body,
-                            start: "center center",
+                            start: "top top",
                             end: () => "+=" + (TOTAL_MOBILE_DURATION * PX_PER_SEC_MOBILE),
                             pin: true,
                             pinSpacing: true,
