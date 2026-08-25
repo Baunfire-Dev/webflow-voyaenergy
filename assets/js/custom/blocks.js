@@ -322,15 +322,13 @@ const theme = require("../../../config.json");
 
                     removeEventListener('scroll', this.scrollCueHandler);
 
-                    const build = () => gsap.to(svg, {
+                    gsap.to(svg, {
                         autoAlpha: 0,
                         y: 14,
                         scale: 0.85,
                         duration: 0.5,
                         ease: 'power3.in'
                     });
-
-                    baunfire.ctx ? baunfire.ctx.add(build) : build();
                 };
                 addEventListener('scroll', this.scrollCueHandler, { passive: true });
             };
@@ -1203,21 +1201,17 @@ const theme = require("../../../config.json");
             };
 
             const activateDot = (dot, active = true) => {
-                const build = () => {
-                    gsap.timeline()
-                        .to(dot.parentElement, {
-                            rotation: active ? "-=72" : "+=72",
-                            duration: 0.6,
-                            ease: "power2.out"
-                        })
-                        .to(dot, {
-                            fill: active ? "#f1b510" : "#c7c7c7",
-                            duration: 0.6,
-                            ease: "power2.out"
-                        }, "<");
-                };
-
-                baunfire.ctx ? baunfire.ctx.add(build) : build();
+                gsap.timeline()
+                    .to(dot.parentElement, {
+                        rotation: active ? "-=72" : "+=72",
+                        duration: 0.6,
+                        ease: "power2.out"
+                    })
+                    .to(dot, {
+                        fill: active ? "#f1b510" : "#c7c7c7",
+                        duration: 0.6,
+                        ease: "power2.out"
+                    }, "<");
             };
 
             script();
