@@ -1,18 +1,17 @@
 import theme from "../../config.json";
 
-const WEBFLOW_ORIGIN = theme.url;
 const SITE_PASSWORD = theme.password;
 
-let cachedCookie = null;
+const GATE = /action=["'][^"']*\.wf_auth/i;
 
-async function authenticateAndGetCookie() {
+async function authenticate(origin) {
     const formBody = new URLSearchParams({
         pass: SITE_PASSWORD,
         path: '/index.html',
         page: '',
     });
 
-    const res = await fetch(`${WEBFLOW_ORIGIN}/.wf_auth`, {
+    const res = await fetch(`${origin}/.wf_auth`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -24,7 +23,7 @@ async function authenticateAndGetCookie() {
     const setCookie = res.headers.get('set-cookie');
 
     if (!setCookie) {
-        throw new Error(`No Set-Cookie header. Status: ${res.status}`);
+        throw new Error(`No Set-Cookie from ${origin}/.wf_auth (status ${res.status})`);
     }
 
     const match = setCookie.match(/wf_auth=[^;]+/);
@@ -36,12 +35,20 @@ async function authenticateAndGetCookie() {
     return match[0];
 }
 
-async function getCookie(forceRefresh = false) {
-    if (!cachedCookie || forceRefresh) {
-        cachedCookie = await authenticateAndGetCookie();
+async function fetchHTML(url, state) {
+    const res = await fetch(url, {
+        headers: state.cookie ? { Cookie: state.cookie } : {},
+        redirect: 'follow',
+        cf: {
+            cacheTtl: 0,
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch ${url}: ${res.status}`);
     }
 
-    return cachedCookie;
+    return { html: await res.text(), origin: new URL(res.url).origin };
 }
 
 async function handleCrawl({ request, env }) {
@@ -57,41 +64,18 @@ async function handleCrawl({ request, env }) {
     }
 
     const all = [];
+    const state = { cookie: null };
 
     for (let page = 1; page <= 200; page++) {
-        const url = `${dataURL}?${param}=${page}`;
+        const pageURL = new URL(dataURL);
+        pageURL.searchParams.set(param, String(page));
 
-        let cookie = await getCookie();
+        let { html, origin } = await fetchHTML(pageURL, state);
 
-        let res = await fetch(url, {
-            headers: {
-                Cookie: cookie,
-            },
-            redirect: 'manual',
-            cf: {
-                cacheTtl: 0,
-            },
-        });
-
-        if (res.status >= 300 && res.status < 400) {
-            cookie = await getCookie(true);
-
-            res = await fetch(url, {
-                headers: {
-                    Cookie: cookie,
-                },
-                redirect: 'manual',
-                cf: {
-                    cacheTtl: 0,
-                },
-            });
+        if (GATE.test(html)) {
+            state.cookie = await authenticate(origin);
+            ({ html } = await fetchHTML(pageURL, state));
         }
-
-        if (!res.ok) {
-            throw new Error(`Failed to fetch page ${page}: ${res.status}`);
-        }
-
-        const html = await res.text();
 
         const items = parse(html);
 

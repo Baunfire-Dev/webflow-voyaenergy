@@ -1,6 +1,6 @@
 import theme from "../../config.json";
 
-const ALLOWED = new Set(theme.origins || [theme.url]);
+const ALLOWED = new Set(theme.origins);
 
 export async function onRequest(context) {
     const { request, next } = context;

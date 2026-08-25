@@ -1,9 +1,9 @@
 {
-    "url": "https://voyaenergy.webflow.io",
     "pages": "https://webflow-voyaenergy.pages.dev",
     "password": "bf2026",
     "origins": [
         "https://voyaenergy.webflow.io",
-        "https://voyaenergy.com"
+        "https://voya.energy",
+        "https://www.voya.energy"
     ]
 }
