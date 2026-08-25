@@ -54,18 +54,22 @@ const theme = require("../../../config.json");
                 removeEventListener('scroll', this.scrollCueHandler);
                 this.scrollCueHandler = null;
             }
+            
             if (this.balanceRefreshHandlers) {
                 this.balanceRefreshHandlers.forEach(fn => ScrollTrigger.removeEventListener("refreshInit", fn));
                 this.balanceRefreshHandlers = null;
             }
+            
             if (this.sceneResizeDisposer) {
                 this.sceneResizeDisposer();
                 this.sceneResizeDisposer = null;
             }
+            
             if (this.controlsOutsideClick) {
                 document.removeEventListener('click', this.controlsOutsideClick);
                 this.controlsOutsideClick = null;
             }
+            
             if (this.swiperInstances) {
                 this.swiperInstances.forEach(s => s.destroy?.(true, true));
                 this.swiperInstances = null;
@@ -749,6 +753,8 @@ const theme = require("../../../config.json");
         transitionLine(parent, ebTL, isDesktop) {
             const RESTING_COLOR = "#EBEBEB";
             const MOBILE_END = "+=200%";
+            const IMAGES_START_DESKTOP = "<0.4";
+            const IMAGES_START_MOBILE = ">-0.3";
 
             const script = () => {
                 const els = parent.querySelectorAll("section.transition-line");
@@ -852,7 +858,7 @@ const theme = require("../../../config.json");
                         autoAlpha: 1,
                         ease: "power1.out",
                         duration: 0.8,
-                    }, "<0.4");
+                    }, isDesktop ? IMAGES_START_DESKTOP : IMAGES_START_MOBILE);
 
                     tl.to(imagesInner, {
                         xPercent: 0,
