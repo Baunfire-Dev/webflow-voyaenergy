@@ -150,7 +150,7 @@
 
             liveHeader.innerHTML = nextHeader.innerHTML;
 
-            if (baunfire.Animation) baunfire.Animation._navBound = false;
+            if (baunfire.Animation) baunfire.Animation.navSetupDone = false;
         },
 
         reinitWebflow() {

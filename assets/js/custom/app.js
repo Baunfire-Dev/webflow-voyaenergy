@@ -10,7 +10,7 @@
         },
         lenis: null,
         ctx: null,
-        _once: new Set(),
+        initializedOnce: new Set(),
 
         boot() {
             if (this.booted) return;
@@ -27,10 +27,10 @@
 
             this.ctx = gsap.context(() => {
                 this.modules.forEach(mod => {
-                    if (mod.once && this._once.has(mod)) return;
+                    if (mod.once && this.initializedOnce.has(mod)) return;
                     if (mod.selector && !container.querySelector(mod.selector)) return;
                     if (typeof mod.init === 'function') mod.init(baunfire, container);
-                    if (mod.once) this._once.add(mod);
+                    if (mod.once) this.initializedOnce.add(mod);
                 });
             }, container);
 

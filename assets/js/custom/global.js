@@ -8,16 +8,16 @@
         },
 
         queueScreenSizeChange(delay = 0.1) {
-            this._queuedRefresh?.kill();
-            this._queuedRefresh = gsap.delayedCall(delay, () => {
-                this._queuedRefresh = null;
+            this.pendingRefresh?.kill();
+            this.pendingRefresh = gsap.delayedCall(delay, () => {
+                this.pendingRefresh = null;
                 this.screenSizeChange();
             });
         },
 
         destroy() {
-            this._queuedRefresh?.kill();
-            this._queuedRefresh = null;
+            this.pendingRefresh?.kill();
+            this.pendingRefresh = null;
         },
 
         siteScrolling(enabled = true) {
@@ -77,14 +77,14 @@
                 return;
             }
 
-            if (this._splideLoading) {
-                this._splideQueue = this._splideQueue || [];
-                this._splideQueue.push(callback);
+            if (this.splideLoading) {
+                this.splideCallbacks = this.splideCallbacks || [];
+                this.splideCallbacks.push(callback);
                 return;
             }
 
-            this._splideLoading = true;
-            this._splideQueue = [];
+            this.splideLoading = true;
+            this.splideCallbacks = [];
 
             this.fancyLog('Loading Splide...');
 
@@ -99,14 +99,14 @@
 
             script.onload = () => {
                 this.fancyLog('Splide loaded.');
-                this._splideLoading = false;
+                this.splideLoading = false;
                 callback?.();
-                this._splideQueue.forEach(cb => cb?.());
-                this._splideQueue = [];
+                this.splideCallbacks.forEach(cb => cb?.());
+                this.splideCallbacks = [];
             };
 
             script.onerror = () => {
-                this._splideLoading = false;
+                this.splideLoading = false;
                 console.error('Failed to load Splide script.');
             };
 
@@ -119,13 +119,14 @@
                 return;
             }
 
-            if (this._swiperLoading) {
-                this._swiperQueue.push(callback);
+            if (this.swiperLoading) {
+                this.swiperCallbacks = this.swiperCallbacks || [];
+                this.swiperCallbacks.push(callback);
                 return;
             }
 
-            this._swiperLoading = true;
-            this._swiperQueue = [];
+            this.swiperLoading = true;
+            this.swiperCallbacks = [];
 
             this.fancyLog('Loading Swiper...');
 
@@ -140,14 +141,14 @@
 
             script.onload = () => {
                 this.fancyLog('Swiper loaded.');
-                this._swiperLoading = false;
+                this.swiperLoading = false;
                 callback?.();
-                this._swiperQueue.forEach(cb => cb?.());
-                this._swiperQueue = [];
+                this.swiperCallbacks.forEach(cb => cb?.());
+                this.swiperCallbacks = [];
             };
 
             script.onerror = () => {
-                this._swiperLoading = false;
+                this.swiperLoading = false;
                 console.error('Failed to load Swiper script.');
             };
 

@@ -122,13 +122,13 @@
 
             this.destroy();
 
-            this._navScroll = updateNavScroll;
+            this.navScrollHandler = updateNavScroll;
             document.addEventListener("scroll", updateNavScroll, { passive: true });
             window.addEventListener("load", updateNavScroll);
             updateNavScroll();
 
-            if (this._navBound) return;
-            this._navBound = true;
+            if (this.navSetupDone) return;
+            this.navSetupDone = true;
 
             burgerEvent();
             navExtras();
@@ -136,10 +136,10 @@
         },
 
         destroy() {
-            if (!this._navScroll) return;
-            document.removeEventListener("scroll", this._navScroll);
-            window.removeEventListener("load", this._navScroll);
-            this._navScroll = null;
+            if (!this.navScrollHandler) return;
+            document.removeEventListener("scroll", this.navScrollHandler);
+            window.removeEventListener("load", this.navScrollHandler);
+            this.navScrollHandler = null;
         },
 
         handleTransitions() {

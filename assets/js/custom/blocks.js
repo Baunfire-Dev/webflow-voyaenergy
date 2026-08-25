@@ -50,25 +50,25 @@ const theme = require("../../../config.json");
         },
 
         destroy() {
-            if (this._scHandler) {
-                removeEventListener('scroll', this._scHandler);
-                this._scHandler = null;
+            if (this.scrollCueHandler) {
+                removeEventListener('scroll', this.scrollCueHandler);
+                this.scrollCueHandler = null;
             }
-            if (this._hiwRefresh) {
-                this._hiwRefresh.forEach(fn => ScrollTrigger.removeEventListener("refreshInit", fn));
-                this._hiwRefresh = null;
+            if (this.balanceRefreshHandlers) {
+                this.balanceRefreshHandlers.forEach(fn => ScrollTrigger.removeEventListener("refreshInit", fn));
+                this.balanceRefreshHandlers = null;
             }
-            if (this._soResize) {
-                this._soResize();
-                this._soResize = null;
+            if (this.sceneResizeDisposer) {
+                this.sceneResizeDisposer();
+                this.sceneResizeDisposer = null;
             }
-            if (this._scOutside) {
-                document.removeEventListener('click', this._scOutside);
-                this._scOutside = null;
+            if (this.controlsOutsideClick) {
+                document.removeEventListener('click', this.controlsOutsideClick);
+                this.controlsOutsideClick = null;
             }
-            if (this._swipers) {
-                this._swipers.forEach(s => s.destroy?.(true, true));
-                this._swipers = null;
+            if (this.swiperInstances) {
+                this.swiperInstances.forEach(s => s.destroy?.(true, true));
+                this.swiperInstances = null;
             }
         },
 
@@ -244,12 +244,12 @@ const theme = require("../../../config.json");
                     isOpen ? close() : open();
                 });
 
-                this._scOutside = (e) => {
+                this.controlsOutsideClick = (e) => {
                     if (!isOpen || trigger.contains(e.target)) return;
                     close();
                 };
 
-                document.addEventListener("click", this._scOutside);
+                document.addEventListener("click", this.controlsOutsideClick);
 
                 return { close };
             };
@@ -309,13 +309,13 @@ const theme = require("../../../config.json");
                         y: -4
                     })
 
-                this._scHandler = () => {
+                this.scrollCueHandler = () => {
                     if (fadeOut) return;
 
                     fadeOut = true;
                     arrowTL.pause();
 
-                    removeEventListener('scroll', this._scHandler);
+                    removeEventListener('scroll', this.scrollCueHandler);
 
                     const build = () => gsap.to(svg, {
                         autoAlpha: 0,
@@ -327,7 +327,7 @@ const theme = require("../../../config.json");
 
                     baunfire.ctx ? baunfire.ctx.add(build) : build();
                 };
-                addEventListener('scroll', this._scHandler, { passive: true });
+                addEventListener('scroll', this.scrollCueHandler, { passive: true });
             };
 
             script();
@@ -896,7 +896,7 @@ const theme = require("../../../config.json");
                 els.forEach(self => {
                     const refresh = () => handleVisualBalance(self);
 
-                    (this._hiwRefresh ||= []).push(refresh);
+                    (this.balanceRefreshHandlers ||= []).push(refresh);
                     ScrollTrigger.addEventListener("refreshInit", refresh);
                     handleVisualBalance(self);
 
@@ -1469,11 +1469,11 @@ const theme = require("../../../config.json");
                     baunfire.Global.screenSizeChange();
                 });
 
-                this._soResize = dispose;
+                this.sceneResizeDisposer = dispose;
 
                 return () => {
                     dispose();
-                    if (this._soResize === dispose) this._soResize = null;
+                    if (this.sceneResizeDisposer === dispose) this.sceneResizeDisposer = null;
                     ctx?.revert();
                 };
             };
@@ -3224,7 +3224,7 @@ const theme = require("../../../config.json");
                     }
                 });
 
-                (this._swipers ||= []).push(instance);
+                (this.swiperInstances ||= []).push(instance);
             };
 
             const readData = (self) => {
