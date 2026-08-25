@@ -85,6 +85,7 @@ const theme = require("../../../config.json");
             const SCROLL_OFFSETS = {
                 "how-it-works": -300,
             };
+            const MENU_CLOSE_DUR = 0.3;
 
             let items = [];
 
@@ -194,11 +195,9 @@ const theme = require("../../../config.json");
                 hoverTL
                     .fromTo(cta,
                         {
-                            scale: 1,
                             autoAlpha: 1,
                         },
                         {
-                            scale: 0.4,
                             autoAlpha: 0,
                             transformOrigin: "bottom left",
                             duration: 0.4,
@@ -232,17 +231,44 @@ const theme = require("../../../config.json");
                     )
 
                 let isOpen = false;
+                let closeTL = null;
 
                 const open = () => {
                     if (isOpen) return;
                     isOpen = true;
-                    hoverTL.timeScale(1).play();
+
+                    closeTL?.kill();
+                    closeTL = null;
+
+                    gsap.set(itemsContainer, { autoAlpha: 1 });
+                    hoverTL.play(0);
                 };
 
                 const close = () => {
                     if (!isOpen) return;
                     isOpen = false;
-                    hoverTL.timeScale(1.4).reverse();
+
+                    hoverTL.pause();
+
+                    closeTL = gsap.timeline({
+                        onComplete: () => {
+                            hoverTL.pause(0);
+                            gsap.set(itemsContainer, { autoAlpha: 1 });
+                            closeTL = null;
+                        }
+                    });
+
+                    closeTL
+                        .to(itemsContainer, {
+                            autoAlpha: 0,
+                            duration: MENU_CLOSE_DUR,
+                            ease: "power2.out"
+                        }, 0)
+                        .to(cta, {
+                            autoAlpha: 1,
+                            duration: MENU_CLOSE_DUR,
+                            ease: "power2.out"
+                        }, 0);
                 };
 
                 cta.addEventListener("click", (e) => {
