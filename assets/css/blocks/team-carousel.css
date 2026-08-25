@@ -30,11 +30,11 @@ section.team-carousel {
 		}
 
 		&-img {
-			@apply opacity-0 rounded-[0.5rem] transition-[opacity] duration-300 ease-in-out overflow-hidden;
+			@apply opacity-0 rounded-[0.5rem] aspect-[292/195] shrink-0 transition-[opacity] duration-300 ease-in-out overflow-hidden;
 			background-color: var(--_colors---sky-gray);
 
 			img {
-				@apply w-full aspect-[292/195] object-cover;
+				@apply w-full h-full object-cover;
 			}
 
 			&.active {
@@ -98,7 +98,7 @@ section.team-carousel {
 	@screen md {
 		dialog {
 			&[open] {
-				animation: dialogSlideIn 0.3s ease forwards;
+				animation: dialogSlideIn 0.3s ease forwards !important;
 			}
 
 			@keyframes dialogSlideIn {
