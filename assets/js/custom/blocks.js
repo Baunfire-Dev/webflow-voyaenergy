@@ -2117,7 +2117,7 @@ const theme = require("../../../config.json");
             const STEP_PX = 880;
             const STEP_DUR = 0.7;
             const LIFT = 32;
-            const WRAPPER_SHIFT = -64;
+            const WRAPPER_SHIFT = -100;
 
             const script = () => {
                 const els = document.querySelectorAll("section.dense-power");
