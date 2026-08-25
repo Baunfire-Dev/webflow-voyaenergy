@@ -9,6 +9,11 @@
             const nav = document.querySelector("header");
             if (!nav) return;
 
+            const ANMT_OPEN_DUR = 0.4;
+            const ANMT_CLOSE_DUR = 0.3;
+            const ANMT_CLIP_CLOSED = "inset(0% 0% 100% 100% round 0.5rem)";
+            const ANMT_CLIP_OPEN = "inset(0% 0% 0% 0% round 0.5rem)";
+
             let lastScrollY = window.scrollY;
             let isScrolled = false;
             let isOpaque = false;
@@ -120,6 +125,112 @@
                 panel.appendChild(extras);
             };
 
+            const anmtHover = () => {
+                const anmt = nav.querySelector(".nav-anmt");
+                if (!anmt) return;
+
+                const cta = anmt.querySelector(".nav-anmt-cta");
+                const content = anmt.querySelector(".nav-anmt-content");
+                const txt = anmt.querySelector(".nav-anmt-content-txt");
+
+                if (!cta || !content) return;
+
+                const mm = gsap.matchMedia();
+
+                mm.add("(min-width: 992px)", () => {
+                    const hoverTL = gsap.timeline({ paused: true });
+
+                    hoverTL
+                        .fromTo(cta,
+                            {
+                                autoAlpha: 1,
+                            },
+                            {
+                                autoAlpha: 0,
+                                duration: ANMT_OPEN_DUR,
+                                ease: "power2.out"
+                            }
+                        )
+                        .fromTo(content,
+                            {
+                                clipPath: ANMT_CLIP_CLOSED,
+                            },
+                            {
+                                clipPath: ANMT_CLIP_OPEN,
+                                duration: ANMT_OPEN_DUR,
+                                ease: "power2.out"
+                            },
+                            "<0.2"
+                        );
+
+                    if (txt) {
+                        hoverTL.fromTo(txt,
+                            {
+                                y: 10,
+                                autoAlpha: 0,
+                            },
+                            {
+                                y: 0,
+                                autoAlpha: 1,
+                                duration: ANMT_OPEN_DUR,
+                                ease: "power2.out"
+                            },
+                            "<0.2"
+                        );
+                    }
+
+                    let isOpen = false;
+                    let closeTL = null;
+
+                    const open = () => {
+                        if (isOpen) return;
+                        isOpen = true;
+
+                        closeTL?.kill();
+                        closeTL = null;
+
+                        gsap.set(content, { autoAlpha: 1 });
+                        hoverTL.play(0);
+                    };
+
+                    const close = () => {
+                        if (!isOpen) return;
+                        isOpen = false;
+
+                        hoverTL.pause();
+
+                        closeTL = gsap.timeline({
+                            onComplete: () => {
+                                hoverTL.pause(0);
+                                gsap.set(content, { autoAlpha: 1 });
+                                closeTL = null;
+                            }
+                        });
+
+                        closeTL
+                            .to(content, {
+                                autoAlpha: 0,
+                                duration: ANMT_CLOSE_DUR,
+                                ease: "power2.out"
+                            }, 0)
+                            .to(cta, {
+                                autoAlpha: 1,
+                                duration: ANMT_CLOSE_DUR,
+                                ease: "power2.out"
+                            }, 0);
+                    };
+
+                    anmt.addEventListener("mouseenter", open);
+                    anmt.addEventListener("mouseleave", close);
+
+                    return () => {
+                        closeTL?.kill();
+                        anmt.removeEventListener("mouseenter", open);
+                        anmt.removeEventListener("mouseleave", close);
+                    };
+                });
+            };
+
             this.destroy();
 
             nav.classList.remove("nav-scrolled", "nav-opaqued", "nav-scrolling-down", "nav-scrolling-up");
@@ -135,6 +246,7 @@
             burgerEvent();
             navExtras();
             navLinks();
+            anmtHover();
         },
 
         destroy() {

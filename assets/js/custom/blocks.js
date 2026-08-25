@@ -146,7 +146,6 @@ const theme = require("../../../config.json");
                 });
             };
 
-
             const handleAnchorClicks = (self, menu) => {
                 if (!items.length) return;
 
