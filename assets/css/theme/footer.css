@@ -1,24 +1,21 @@
 .footer {
-	/* &-social {
-		@apply border border-solid border-transparent rounded-[0.25rem];
+	&-social {
 		@apply transition-colors duration-500 ease-out;
 
 		&:hover {
-			border-color: var(--_colors---purple);
-			background: rgba(0, 0, 0, 0);
-			box-shadow: 0 4px 8px 0 rgba(123, 66, 188, 0.25);
+			background: var(--_colors---impact-yellow);
 		}
 	}
 
 	&-item {
         &:hover {
             .footer-item-text {
-                color: var(--_colors---green);
+                color: var(--_colors---impact-yellow);
             }
         }
 	}
 
 	&-item-text {
 		@apply transition-colors duration-300 ease-out;
-	} */
+	}
 }

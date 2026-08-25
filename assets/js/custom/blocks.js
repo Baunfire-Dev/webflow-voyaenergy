@@ -2352,9 +2352,13 @@ const theme = require("../../../config.json");
             };
 
             const handleTriggers = (self) => {
+                let played = false;
+
                 const mm = gsap.matchMedia();
 
                 mm.add("(min-width: 992px)", () => {
+                    if (played) return;
+
                     const container = self.querySelector(".sdp-triggers");
                     if (!container) return;
 
@@ -2374,6 +2378,7 @@ const theme = require("../../../config.json");
                                 trigger: container,
                                 once: true,
                                 start: baunfire.anim.start,
+                                onEnter: () => { played = true; },
                             },
                         }
                     );
