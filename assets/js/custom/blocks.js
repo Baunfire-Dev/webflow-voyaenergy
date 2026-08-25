@@ -1225,6 +1225,14 @@ const theme = require("../../../config.json");
         advanceTechnology() {
             const PX_PER_SEC_DESKTOP = 350;
             const PX_PER_SEC_MOBILE = 300;
+            
+            const HEADER_LIFT = 30;
+
+            const HEADER_DUR_DESKTOP = 0.8;
+            const HEADER_DUR_MOBILE = 0.6;
+
+            const HEADER_AT_DESKTOP = "<-0.2";
+            const HEADER_AT_MOBILE = "<-0.4";
 
             const script = () => {
                 const els = document.querySelectorAll("section.advance-technology");
@@ -1292,10 +1300,23 @@ const theme = require("../../../config.json");
             const handleTransitions = (self) => {
                 const body = self.querySelector(".at-outer");
                 const bg = self.querySelector(".at-bg");
+                const header = self.querySelector(".at-header");
                 const cardsContainer = self.querySelector(".at-cards");
                 const cards = self.querySelectorAll(".at-cards .at-card");
 
                 if (!body || !bg || !cardsContainer || !cards.length) return;
+
+                const headerExit = (tl, duration, position) => {
+                    if (!header) return;
+
+                    tl.to(header, {
+                        y: -HEADER_LIFT,
+                        autoAlpha: 0,
+                        marginTop: () => -header.offsetHeight,
+                        duration,
+                        ease: "power2.in",
+                    }, position);
+                };
 
                 const mm = gsap.matchMedia();
 
@@ -1306,8 +1327,9 @@ const theme = require("../../../config.json");
                     const CONTAINER_DUR = 0.8;
                     const CARD_DUR = 1.4;
                     const TOTAL_CARDS_DUR = cards.length * CARD_DUR;
-                    const HOLD_DUR = 0.5 * 2;
-                    const TOTAL_DURATION = BG_DUR + CONTAINER_DUR + TOTAL_CARDS_DUR + HOLD_DUR;
+                    const HOLD_DUR_1 = 0.3;
+                    const HOLD_DUR_2 = 0.5;
+                    const TOTAL_DURATION = BG_DUR + CONTAINER_DUR + TOTAL_CARDS_DUR + HOLD_DUR_1 + HOLD_DUR_2;
 
                     const tl = gsap.timeline({
                         scrollTrigger: {
@@ -1328,7 +1350,8 @@ const theme = require("../../../config.json");
                         ease: "none"
                     })
 
-                    tl.to({}, { duration: HOLD_DUR });
+                    tl.to({}, { duration: HOLD_DUR_1 });
+
 
                     tl.to(cardsContainer, {
                         height: "auto",
@@ -1348,7 +1371,9 @@ const theme = require("../../../config.json");
                         "<0.2"
                     );
 
-                    tl.to({}, { duration: HOLD_DUR });
+                    headerExit(tl, HEADER_DUR_DESKTOP, HEADER_AT_DESKTOP);
+
+                    tl.to({}, { duration: HOLD_DUR_2 });
                 });
 
                 mm.add("(max-width: 767.98px)", () => {
@@ -1392,6 +1417,8 @@ const theme = require("../../../config.json");
                         duration: CARDS_DUR,
                         ease: "power1.out"
                     }, "<0.2");
+
+                    headerExit(tl, HEADER_DUR_MOBILE, HEADER_AT_MOBILE);
                 });
             };
 
