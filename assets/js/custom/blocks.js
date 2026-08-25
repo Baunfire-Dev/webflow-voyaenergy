@@ -939,12 +939,17 @@ const theme = require("../../../config.json");
 
                 if (!head || !hasImg || !images) return;
 
+                const firstSlide = self.querySelector(".hiw-slide");
+                const slidePadTop = firstSlide
+                    ? parseFloat(getComputedStyle(firstSlide).paddingTop) || 0
+                    : 0;
+
                 const gap =
                     hasImg.getBoundingClientRect().bottom -
                     images.getBoundingClientRect().bottom;
 
                 const paddingTop = gap < minSpacing ? minSpacing - gap : 0;
-                const paddingBottom = Math.max(gap, minSpacing);
+                const paddingBottom = Math.max(Math.max(gap, minSpacing) - slidePadTop, 0);
 
                 const nextTop = `${(paddingTop / rootFontSize).toFixed(3)}rem`;
                 const nextBottom = `${(paddingBottom / rootFontSize).toFixed(3)}rem`;
