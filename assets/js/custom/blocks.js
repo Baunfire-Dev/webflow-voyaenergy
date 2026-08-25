@@ -2291,10 +2291,6 @@ const theme = require("../../../config.json");
         },
 
         systemDetailPopup() {
-            const TRIGGER_LIFT = 40;
-            const TRIGGER_DUR = 0.6;
-            const TRIGGER_STAGGER = 0.1;
-
             const script = () => {
                 const els = document.querySelectorAll("section.system-detail-popup");
                 if (!els.length) return;
@@ -2303,34 +2299,6 @@ const theme = require("../../../config.json");
                     handleEntrance(self);
                     handleTriggers(self);
                     handleDialogs(self);
-                });
-            };
-
-            const handleTriggers = (self) => {
-                const container = self.querySelector(".sdp-triggers");
-                if (!container) return;
-
-                const triggers = gsap.utils.toArray(".sdp-trigger", container);
-                if (!triggers.length) return;
-
-                const mm = gsap.matchMedia();
-
-                mm.add("(min-width: 992px)", () => {
-                    gsap.fromTo(triggers,
-                        { autoAlpha: 0, y: TRIGGER_LIFT },
-                        {
-                            autoAlpha: 1,
-                            y: 0,
-                            duration: TRIGGER_DUR,
-                            ease: "power3.out",
-                            stagger: TRIGGER_STAGGER,
-                            scrollTrigger: {
-                                trigger: container,
-                                start: baunfire.anim.start,
-                                once: true,
-                            }
-                        }
-                    );
                 });
             };
 
@@ -2381,6 +2349,35 @@ const theme = require("../../../config.json");
                         "<0.4"
                     );
                 }
+            };
+
+            const handleTriggers = (self) => {
+                const mm = gsap.matchMedia();
+
+                mm.add("(min-width: 992px)", () => {
+                    const container = self.querySelector(".sdp-triggers");
+                    if (!container) return;
+
+                    const triggers = gsap.utils.toArray(".sdp-trigger", container);
+                    if (!triggers.length) return;
+
+                    gsap.fromTo(triggers,
+                        { autoAlpha: 0, y: 40 },
+                        {
+                            autoAlpha: 1,
+                            delay: 0.4,
+                            y: 0,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.14,
+                            scrollTrigger: {
+                                trigger: container,
+                                once: true,
+                                start: baunfire.anim.start,
+                            },
+                        }
+                    );
+                });
             };
 
             const handleDialogs = (self) => {
