@@ -924,6 +924,8 @@ const theme = require("../../../config.json");
             const ENTER_STAGGER = 0.08;
             const EXIT_START = "left 10%";
             const EXIT_END = "left left";
+            const FIRST_EXIT_START = "left 5%";
+            const FIRST_EXIT_END = "left left";
             const MARKERS = false;
 
             const desktopMQ = window.matchMedia("(min-width: 992px)");
@@ -1142,7 +1144,6 @@ const theme = require("../../../config.json");
                     pin: body,
                     pinSpacing: true,
                     invalidateOnRefresh: true,
-                    refreshPriority: 1,
                     markers: MARKERS,
                 });
 
@@ -1238,8 +1239,8 @@ const theme = require("../../../config.json");
                             scrollTrigger: {
                                 trigger: contentContainer,
                                 containerAnimation: master,
-                                start: EXIT_START,
-                                end: EXIT_END,
+                                start: isFirst ? FIRST_EXIT_START : EXIT_START,
+                                end: isFirst ? FIRST_EXIT_END : EXIT_END,
                                 scrub: true,
                                 markers: MARKERS,
                             }
