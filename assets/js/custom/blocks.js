@@ -2698,7 +2698,7 @@ const theme = require("../../../config.json");
                 const logo = self.querySelector(".fwc-icon");
                 const heading = self.querySelector(".g-heading");
                 const para = self.querySelector(".fwc-para");
-                const cta = self.querySelector(".g-btn");
+                const cta = self.querySelector(".fwc-cta");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
