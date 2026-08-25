@@ -1075,8 +1075,9 @@ const theme = require("../../../config.json");
                     if (!els.length) return;
 
                     gsap.fromTo(els,
-                        { y: 40, autoAlpha: 0 },
+                        { x: 0, y: 40, autoAlpha: 0 },
                         {
+                            x: 0,
                             y: 0,
                             autoAlpha: 1,
                             duration: 0.8,
@@ -3537,6 +3538,25 @@ const theme = require("../../../config.json");
 
                 els.forEach(self => {
                     handleAnimation(self);
+                    handleVideo(self);
+                });
+            };
+
+            const handleVideo = (self) => {
+                const video = self.querySelector(".st-bg video");
+                if (!video) return;
+
+                ScrollTrigger.create({
+                    trigger: self,
+                    start: "top bottom",
+                    end: "bottom top",
+                    onToggle: ({ isActive }) => {
+                        if (isActive) {
+                            video.play().catch(() => { });
+                        } else {
+                            video.pause();
+                        }
+                    },
                 });
             };
 
