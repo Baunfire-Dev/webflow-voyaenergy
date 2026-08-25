@@ -122,6 +122,8 @@
 
             this.destroy();
 
+            nav.classList.remove("nav-scrolled", "nav-opaqued", "nav-scrolling-down", "nav-scrolling-up");
+
             this.navScrollHandler = updateNavScroll;
             document.addEventListener("scroll", updateNavScroll, { passive: true });
             window.addEventListener("load", updateNavScroll);
