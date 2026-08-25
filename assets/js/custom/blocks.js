@@ -919,11 +919,12 @@ const theme = require("../../../config.json");
         howItWorks() {
             const INTRO_DUR = 0.3;
             const COVER_HOLD = 0.1;
-            const ENTER_AT = -0.6;
-            const ENTER_DUR = 0.5;
+            const ENTER_START = "left 85%";
+            const ENTER_END = "left 45%";
             const ENTER_STAGGER = 0.08;
-            const EXIT_AT = -0.1;
-            const EXIT_DUR = 0.2;
+            const EXIT_START = "left 10%";
+            const EXIT_END = "left left";
+            const MARKERS = false;
 
             const desktopMQ = window.matchMedia("(min-width: 992px)");
             const isDesktop = () => desktopMQ.matches;
@@ -1128,25 +1129,35 @@ const theme = require("../../../config.json");
                 const dotContainer = self.querySelector(".hiw-pagination");
                 const dots = dotContainer ? dotContainer.querySelectorAll("svg circle") : [];
 
-                const H_START = INTRO_DUR + COVER_HOLD;
-                const H_DUR = panels.length - 1;
-
                 const cover = panels[0].querySelector(".hiw-cover") || self.querySelector(".hiw-cover");
 
-                const master = gsap.timeline({
+                const panelW = () => panels[0].offsetWidth;
+                const introPx = () => (INTRO_DUR + COVER_HOLD) * panelW();
+                const horizPx = () => (panels.length - 1) * panelW();
+
+                const pinST = ScrollTrigger.create({
+                    trigger: body,
+                    start: "top top",
+                    end: () => "+=" + (introPx() + horizPx()),
+                    pin: body,
+                    pinSpacing: true,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 1,
+                    markers: MARKERS,
+                });
+
+                const introTL = gsap.timeline({
                     scrollTrigger: {
-                        trigger: body,
-                        start: "top top",
-                        end: () => "+=" + (H_START + H_DUR) * panels[0].offsetWidth,
+                        start: () => pinST.start,
+                        end: () => pinST.start + introPx(),
                         scrub: 1,
-                        pin: body,
                         invalidateOnRefresh: true,
-                        pinSpacing: true,
+                        markers: MARKERS,
                     }
                 });
 
                 if (cover) {
-                    master.to(cover, {
+                    introTL.to(cover, {
                         scale: 1.4,
                         ease: "none",
                         duration: INTRO_DUR,
@@ -1154,7 +1165,7 @@ const theme = require("../../../config.json");
                 }
 
                 if (dotContainer) {
-                    master.fromTo(dotContainer,
+                    introTL.fromTo(dotContainer,
                         {
                             autoAlpha: 0,
                             scale: 0,
@@ -1171,11 +1182,17 @@ const theme = require("../../../config.json");
                     );
                 }
 
-                master.to(panels, {
+                const master = gsap.to(panels, {
                     xPercent: -100 * (panels.length - 1),
                     ease: "none",
-                    duration: H_DUR,
-                }, H_START);
+                    scrollTrigger: {
+                        start: () => pinST.start + introPx(),
+                        end: () => pinST.start + introPx() + horizPx(),
+                        scrub: 1,
+                        invalidateOnRefresh: true,
+                        markers: MARKERS,
+                    }
+                });
 
                 animateFirstSlide(panels[0]);
 
@@ -1183,7 +1200,6 @@ const theme = require("../../../config.json");
                     const contentContainer = panel.querySelector(".hiw-content");
                     if (!contentContainer) return;
 
-                    const at = H_START + index;
                     const isFirst = index === 0;
                     const isLast = index === panels.length - 1;
 
@@ -1195,26 +1211,39 @@ const theme = require("../../../config.json");
                         ].filter(Boolean);
 
                         if (els.length) {
-                            master.fromTo(els,
+                            gsap.fromTo(els,
                                 { x: 60, autoAlpha: 0 },
                                 {
                                     x: 0,
                                     autoAlpha: 1,
-                                    duration: ENTER_DUR,
                                     ease: "power3.out",
                                     stagger: ENTER_STAGGER,
-                                },
-                                at + ENTER_AT
+                                    scrollTrigger: {
+                                        trigger: contentContainer,
+                                        containerAnimation: master,
+                                        start: ENTER_START,
+                                        end: ENTER_END,
+                                        scrub: true,
+                                        markers: MARKERS,
+                                    }
+                                }
                             );
                         }
                     }
 
                     if (!isLast) {
-                        master.to(contentContainer, {
+                        gsap.to(contentContainer, {
                             autoAlpha: 0,
                             ease: "none",
-                            duration: EXIT_DUR,
-                        }, at + EXIT_AT);
+                            scrollTrigger: {
+                                trigger: contentContainer,
+                                containerAnimation: master,
+                                start: EXIT_START,
+                                end: EXIT_END,
+                                scrub: true,
+                                markers: MARKERS,
+                            }
+                        });
                     }
 
                     const dot = dots[index];
