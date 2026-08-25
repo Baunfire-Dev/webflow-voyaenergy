@@ -24,6 +24,7 @@ const theme = require("../../../config.json");
                 "contentGridItems",
                 "contactBanner",
                 "wideImageBanner",
+                "fullwidthCTA",
 
                 "heroFiftyFifty",
                 "heroWithGallery",
@@ -892,6 +893,13 @@ const theme = require("../../../config.json");
 
         howItWorks() {
             const INTRO_DUR = 0.3;
+            const COVER_HOLD = 0.1;
+            const ENTER_AT = -0.6;
+            const ENTER_DUR = 0.5;
+            const ENTER_STAGGER = 0.08;
+            const EXIT_AT = -0.1;
+            const EXIT_DUR = 0.2;
+
             const desktopMQ = window.matchMedia("(min-width: 992px)");
             const isDesktop = () => desktopMQ.matches;
 
@@ -1090,17 +1098,16 @@ const theme = require("../../../config.json");
                 const dotContainer = self.querySelector(".hiw-pagination");
                 const dots = dotContainer ? dotContainer.querySelectorAll("svg circle") : [];
 
-                const H_START = INTRO_DUR;
+                const H_START = INTRO_DUR + COVER_HOLD;
                 const H_DUR = panels.length - 1;
 
                 const cover = panels[0].querySelector(".hiw-cover") || self.querySelector(".hiw-cover");
-                const firstImg = panels[0].querySelector(".hiw-img");
 
                 const master = gsap.timeline({
                     scrollTrigger: {
                         trigger: body,
                         start: "top top",
-                        end: () => "+=" + (INTRO_DUR + H_DUR) * panels[0].offsetWidth,
+                        end: () => "+=" + (H_START + H_DUR) * panels[0].offsetWidth,
                         scrub: 1,
                         pin: body,
                         invalidateOnRefresh: true,
@@ -1140,50 +1147,49 @@ const theme = require("../../../config.json");
                     duration: H_DUR,
                 }, H_START);
 
-                if (firstImg) {
-                    master.fromTo(firstImg,
-                        { xPercent: 0 },
-                        { xPercent: 14, ease: "none", duration: 1 },
-                        H_START
-                    );
-                }
-
                 animateFirstSlide(panels[0]);
 
-                panels.slice(1).forEach((panel, index, arr) => {
-                    const isLast = index === arr.length - 1;
-
+                panels.forEach((panel, index) => {
                     const contentContainer = panel.querySelector(".hiw-content");
-                    const brow = panel.querySelector(".hiw-c-brow");
-                    const title = panel.querySelector(".hiw-c-title");
-                    const para = panel.querySelector(".hiw-para");
-                    const img = panel.querySelector(".hiw-img");
+                    if (!contentContainer) return;
 
-                    const dot = dots[index + 1];
+                    const at = H_START + index;
+                    const isFirst = index === 0;
+                    const isLast = index === panels.length - 1;
 
-                    const enterTL = gsap.timeline({ paused: true });
+                    if (!isFirst) {
+                        const els = [
+                            panel.querySelector(".hiw-c-brow"),
+                            panel.querySelector(".hiw-c-title"),
+                            panel.querySelector(".hiw-para"),
+                        ].filter(Boolean);
 
-                    enterTL
-                        .fromTo([brow, title, para].filter(Boolean),
-                            { x: 60, autoAlpha: 0 },
-                            {
-                                x: 0,
-                                autoAlpha: 1,
-                                duration: 1,
-                                ease: "power3.out",
-                                stagger: 0.08,
-                            }
-                        );
+                        if (els.length) {
+                            master.fromTo(els,
+                                { x: 60, autoAlpha: 0 },
+                                {
+                                    x: 0,
+                                    autoAlpha: 1,
+                                    duration: ENTER_DUR,
+                                    ease: "power3.out",
+                                    stagger: ENTER_STAGGER,
+                                },
+                                at + ENTER_AT
+                            );
+                        }
+                    }
 
-                    ScrollTrigger.create({
-                        trigger: contentContainer,
-                        containerAnimation: master,
-                        start: "left 60%",
-                        end: "right center",
-                        animation: enterTL,
-                    });
+                    if (!isLast) {
+                        master.to(contentContainer, {
+                            autoAlpha: 0,
+                            ease: "none",
+                            duration: EXIT_DUR,
+                        }, at + EXIT_AT);
+                    }
 
-                    if (dot) {
+                    const dot = dots[index];
+
+                    if (dot && !isFirst) {
                         ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: master,
@@ -1192,23 +1198,6 @@ const theme = require("../../../config.json");
                             onEnter: () => activateDot(dot),
                             onLeaveBack: () => activateDot(dot, false),
                         });
-                    }
-
-                    if (img) {
-                        gsap.fromTo(img,
-                            { xPercent: 0 },
-                            {
-                                xPercent: 14,
-                                ease: "none",
-                                scrollTrigger: {
-                                    trigger: panel,
-                                    containerAnimation: master,
-                                    start: "left center",
-                                    end: isLast ? "right right" : "right 10%",
-                                    scrub: 1
-                                }
-                            }
-                        );
                     }
                 });
             };
@@ -2302,6 +2291,8 @@ const theme = require("../../../config.json");
                     });
                 });
 
+                const bound = new Set();
+
                 triggers.forEach(trigger => {
                     const rawKey = trigger.dataset.key;
                     const isGen = rawKey.includes('gen');
@@ -2310,7 +2301,16 @@ const theme = require("../../../config.json");
                     const dialog = self.querySelector(`dialog[data-key='${key}']`);
                     if (!dialog) return;
 
-                    const close = dialog.querySelector(".sdp-dialog-close");
+                    if (!bound.has(dialog)) {
+                        bound.add(dialog);
+
+                        dialog.querySelector(".sdp-dialog-close")
+                            ?.addEventListener('click', () => dialog.close());
+
+                        dialog.addEventListener('close', () => {
+                            baunfire.Global.siteScrolling(true);
+                        });
+                    }
 
                     trigger.addEventListener('click', () => {
                         if (isGen) {
@@ -2319,11 +2319,6 @@ const theme = require("../../../config.json");
 
                         baunfire.Global.siteScrolling(false);
                         dialog.showModal();
-                    });
-
-                    close?.addEventListener('click', () => {
-                        dialog.close();
-                        baunfire.Global.siteScrolling(true);
                     });
                 });
             };
@@ -2556,6 +2551,79 @@ const theme = require("../../../config.json");
                         { autoAlpha: 0, y: 40 },
                         { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
                         "<0.4"
+                    );
+                }
+            };
+
+            script();
+        },
+
+        fullwidthCTA() {
+            const script = () => {
+                const els = document.querySelectorAll("section.fullwidth-cta");
+                if (!els.length) return;
+
+                els.forEach(self => {
+                    handleEntrance(self);
+                });
+            };
+
+            const handleEntrance = (self) => {
+                const contentInner = self.querySelector(".fwc-content");
+                const logo = self.querySelector(".fwc-icon");
+                const heading = self.querySelector(".g-heading");
+                const para = self.querySelector(".fwc-para");
+                const cta = self.querySelector(".g-btn");
+
+                const introTL = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: contentInner,
+                        start: "top 70%",
+                        once: true,
+                    }
+                });
+
+                if (logo) {
+                    introTL.fromTo(logo,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                    );
+                }
+
+                if (heading) {
+                    SplitText.create(heading, {
+                        type: "words",
+                        mask: "words",
+                        onSplit(split) {
+                            heading.style.visibility = "visible";
+                            heading.style.opacity = "1";
+                            gsap.set(split.words, { y: "100%", willChange: "transform" });
+                            introTL.fromTo(split.words,
+                                { y: "100%" },
+                                {
+                                    y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
+                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                },
+                                "<-0.1"
+                            );
+                            return introTL.recent();
+                        },
+                    });
+                }
+
+                if (para) {
+                    introTL.fromTo(para,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.4"
+                    );
+                }
+
+                if (cta) {
+                    introTL.fromTo(cta,
+                        { autoAlpha: 0, y: 40 },
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
+                        "<0.2"
                     );
                 }
             };
@@ -3078,9 +3146,10 @@ const theme = require("../../../config.json");
                             dialog.showModal();
                         });
 
-                        close?.addEventListener("click", () => {
+                        close?.addEventListener("click", () => dialog.close());
+
+                        dialog.addEventListener("close", () => {
                             baunfire.Global.siteScrolling(true);
-                            dialog.close();
                         });
                     });
                 });
@@ -3199,9 +3268,10 @@ const theme = require("../../../config.json");
                             dialog.showModal();
                         });
 
-                        close?.addEventListener("click", () => {
+                        close?.addEventListener("click", () => dialog.close());
+
+                        dialog.addEventListener("close", () => {
                             baunfire.Global.siteScrolling(true);
-                            dialog.close();
                         });
                     });
                 });
