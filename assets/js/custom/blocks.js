@@ -24,7 +24,6 @@ const theme = require("../../../config.json");
                 "contentGridItems",
                 "contactBanner",
                 "wideImageBanner",
-                "fullwidthCTA",
 
                 "heroFiftyFifty",
                 "heroWithGallery",
@@ -38,6 +37,8 @@ const theme = require("../../../config.json");
                 "resourcesGrid",
                 "teamGrid",
                 "teamCarousel",
+                
+                "fullwidthCTA",
             ];
 
             blocks.forEach(name => {
