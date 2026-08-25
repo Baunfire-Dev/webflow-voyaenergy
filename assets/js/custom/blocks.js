@@ -3,8 +3,8 @@ const theme = require("../../../config.json");
 (function () {
     const COLLECTION_ENDPOINTS = {
         resources: {
-            dataURL: `${theme.pages}/api/collection?name=resources`,
-            slug: 'resource',
+            dataURL: `${theme.pages}/api/collection?name=news`,
+            slug: 'news',
             data: []
         }
     };
