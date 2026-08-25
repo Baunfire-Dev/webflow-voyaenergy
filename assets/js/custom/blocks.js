@@ -2093,11 +2093,8 @@ const theme = require("../../../config.json");
         },
 
         densePower() {
-            const PX_PER_SEC_DESKTOP = 620;
-            const LEAD_DUR = 0.6;
-            const SWAP_DUR = 1;
-            const STEP_HOLD = 0.5;
-            const HOLD_DUR = 0.6;
+            const STEP_PX = 880;
+            const STEP_DUR = 0.7;
             const LIFT = 32;
             const WRAPPER_SHIFT = -64;
 
@@ -2185,69 +2182,88 @@ const theme = require("../../../config.json");
                     gsap.set(contents.slice(1), { autoAlpha: 0, y: LIFT });
                     gsap.set(cardsWrapper, { y: 0 });
 
-                    const dpTL = gsap.timeline();
+                    let current = 0;
+                    let stepTL = null;
 
-                    dpTL.to({}, { duration: LEAD_DUR });
+                    const goToCard = (index) => {
+                        index = gsap.utils.clamp(0, cards.length - 1, index);
+                        if (index === current) return;
 
-                    let at = LEAD_DUR;
+                        stepTL?.kill();
 
-                    dpTL.to([title, contents[0]], {
-                        y: -LIFT,
-                        autoAlpha: 0,
-                        duration: SWAP_DUR * 0.5,
-                        ease: "power2.out",
-                    }, at);
+                        const from = current;
+                        const dir = index > from ? 1 : -1;
 
-                    dpTL.to(cardsWrapper, {
-                        y: WRAPPER_SHIFT,
-                        duration: SWAP_DUR,
-                        ease: "power2.out",
-                    }, at);
+                        current = index;
 
-                    for (let i = 1; i < cards.length; i++) {
-                        dpTL.to(images[i], {
-                            autoAlpha: 1,
-                            duration: SWAP_DUR * 0.6,
-                            ease: "power1.inOut",
-                        }, at);
+                        images.forEach((el, i) => {
+                            if (i !== from && i !== index) gsap.set(el, { autoAlpha: 0 });
+                        });
 
-                        dpTL.to(images[i - 1], {
-                            autoAlpha: 0,
-                            duration: SWAP_DUR * 0.6,
-                            ease: "power1.inOut",
-                        }, at);
+                        contents.forEach((el, i) => {
+                            if (i !== from && i !== index) gsap.set(el, { autoAlpha: 0, y: LIFT * dir });
+                        });
 
-                        if (i > 1) {
-                            dpTL.to(contents[i - 1], {
-                                y: -LIFT,
-                                autoAlpha: 0,
-                                duration: SWAP_DUR * 0.4,
-                                ease: "power2.out",
-                            }, at);
-                        }
+                        stepTL = gsap.timeline();
 
-                        dpTL.to(contents[i], {
-                            y: 0,
-                            autoAlpha: 1,
-                            duration: SWAP_DUR * 0.6,
+                        stepTL.to(title, {
+                            y: index === 0 ? 0 : -LIFT,
+                            autoAlpha: index === 0 ? 1 : 0,
+                            duration: STEP_DUR * 0.5,
                             ease: "power2.out",
-                        }, at + SWAP_DUR * 0.4);
+                        }, 0);
 
-                        at += SWAP_DUR + STEP_HOLD;
-                    }
+                        stepTL.to(cardsWrapper, {
+                            y: index === 0 ? 0 : WRAPPER_SHIFT,
+                            duration: STEP_DUR,
+                            ease: "power2.out",
+                        }, 0);
 
-                    dpTL.to({}, { duration: HOLD_DUR }, at);
+                        stepTL.to(images[from], {
+                            autoAlpha: 0,
+                            duration: STEP_DUR * 0.6,
+                            ease: "power1.inOut",
+                        }, 0);
+
+                        stepTL.to(images[index], {
+                            autoAlpha: 1,
+                            duration: STEP_DUR * 0.6,
+                            ease: "power1.inOut",
+                        }, 0);
+
+                        stepTL.to(contents[from], {
+                            y: -LIFT * dir,
+                            autoAlpha: 0,
+                            duration: STEP_DUR * 0.4,
+                            ease: "power2.out",
+                        }, 0);
+
+                        stepTL.fromTo(contents[index],
+                            { y: LIFT * dir, autoAlpha: 0 },
+                            {
+                                y: 0,
+                                autoAlpha: 1,
+                                duration: STEP_DUR * 0.6,
+                                ease: "power2.out",
+                            },
+                            STEP_DUR * 0.4
+                        );
+                    };
 
                     ScrollTrigger.create({
-                        animation: dpTL,
                         trigger: body,
                         start: "top top",
-                        end: () => "+=" + dpTL.duration() * PX_PER_SEC_DESKTOP,
+                        end: () => "+=" + cards.length * STEP_PX,
                         pin: true,
                         pinSpacing: true,
-                        scrub: 1,
                         invalidateOnRefresh: true,
+                        onUpdate: (st) => goToCard(Math.floor(st.progress * cards.length)),
                     });
+
+                    return () => {
+                        stepTL?.kill();
+                        stepTL = null;
+                    };
                 });
             };
             
