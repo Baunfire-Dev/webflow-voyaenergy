@@ -2564,6 +2564,11 @@ const theme = require("../../../config.json");
         },
 
         heroWithGallery() {
+            const END_DESKTOP = "bottom 70%";
+            const END_MOBILE = "bottom 50%";
+
+            const mobileMQ = window.matchMedia("(max-width: 991.98px)");
+
             const script = () => {
                 const els = document.querySelectorAll("section.hero-with-gallery");
                 if (!els.length) return;
@@ -2619,7 +2624,7 @@ const theme = require("../../../config.json");
                     scrollTrigger: {
                         trigger: self,
                         start: "top top",
-                        end: "bottom 20%",
+                        end: () => mobileMQ.matches ? END_MOBILE : END_DESKTOP,
                         scrub: 1,
                         invalidateOnRefresh: true
                     },
