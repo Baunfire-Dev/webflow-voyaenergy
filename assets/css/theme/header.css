@@ -225,7 +225,7 @@ header {
 	}
 
 	&.nav-scrolling-down.nav-scrolled:not(.mob-active):not(:has(.nav-item.open)) {
-		@apply pointer-events-none ease-reveal;
+		@apply pointer-events-none ease-power2-out;
 		transform: translateY(-120%);
 	}
 }
