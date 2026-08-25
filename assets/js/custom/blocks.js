@@ -3296,6 +3296,16 @@ const theme = require("../../../config.json");
 
                         close?.addEventListener("click", () => dialog.close());
 
+                        let pressedOutside = false;
+
+                        dialog.addEventListener("mousedown", (e) => {
+                            pressedOutside = !e.target.closest(".team-popup");
+                        });
+
+                        dialog.addEventListener("click", (e) => {
+                            if (pressedOutside && !e.target.closest(".team-popup")) dialog.close();
+                        });
+
                         dialog.addEventListener("close", () => {
                             baunfire.Global.siteScrolling(true);
                         });

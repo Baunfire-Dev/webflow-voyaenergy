@@ -1,86 +1,112 @@
 section.team-carousel {
-    .swiper.tc-carousel {
-        @apply w-full overflow-visible;
+	.tc {
+		&-carousel {
+			@apply w-full overflow-visible;
 
-        .swiper-wrapper {
-            @apply items-stretch;
+			.swiper-wrapper {
+				@apply items-stretch;
+			}
 
-            .swiper-slide {
-                @apply ~max-w-[19.5rem]/[22.5rem] h-auto;
+			.swiper-slide {
+				@apply ~max-w-[19.5rem]/[22.5rem] h-auto;
+			}
+		}
 
-                .tc-card {
-                    .tc-c-tags {
-                        @apply w-full flex flex-wrap gap-[0.5rem];
+		&-c-tags {
+			@apply w-full flex flex-wrap gap-[0.5rem];
+			` .tag {
+				@apply py-[0.25rem] px-[0.6875rem] rounded-[999px] text-[0.75rem] leading-[150%] tracking-[0.015rem];
+				background-color: var(--_colors---sky-gray);
+			}
+		}
+	}
 
-                        .tag {
-                            @apply py-[0.25rem] px-[0.6875rem] rounded-[999px] text-[0.75rem] leading-[150%] tracking-[0.015rem];
-                            background-color: var(--_colors---sky-gray);
-                        }
-                    }
+	.team-popup {
+		@apply relative bg-white h-[40.875rem] rounded-[0.5rem] md:rounded-[0] md:h-full mx-[0.75rem] md:mr-0 md:ml-auto w-full md:max-w-[39.375rem];
 
-                    dialog {
-                        .team-popup {
-                            @apply relative bg-white h-[40.875rem] rounded-[0.5rem] lg:rounded-[0] lg:h-full mx-[0.75rem] lg:mr-0 lg:ml-auto w-full lg:max-w-[39.375rem];
-                            
-                            &-inner {
-                                @apply flex flex-col ~gap-[1rem]/[2rem] h-full max-h-[100svh] overflow-y-auto overflow-x-hidden ~pt-[4.5rem]/[6rem] ~pb-[2.375rem]/[6rem] ~px-[1.25rem]/[4rem];
-                            }
+		&-inner {
+			@apply flex flex-col ~gap-[1rem]/[2rem] h-full max-h-[100svh] overflow-y-auto overflow-x-hidden ~pt-[4.5rem]/[6rem] ~pb-[2.375rem]/[6rem] ~px-[1.25rem]/[4rem];
+		}
 
-                            &-img {
-                                @apply opacity-0 rounded-[0.5rem] transition-[opacity] duration-300 ease-in-out overflow-hidden;
-                                background-color: var(--_colors---sky-gray);
+		&-img {
+			@apply opacity-0 rounded-[0.5rem] transition-[opacity] duration-300 ease-in-out overflow-hidden;
+			background-color: var(--_colors---sky-gray);
 
-                                img {
-                                    @apply w-full aspect-[292/195] object-cover;
-                                }
+			img {
+				@apply w-full aspect-[292/195] object-cover;
+			}
 
-                                &.active {
-                                    @apply opacity-100;
-                                }
-                            }
+			&.active {
+				@apply opacity-100;
+			}
+		}
 
-                            &-content {
-                                @apply flex flex-col items-start ~gap-[1rem]/[2rem] px-[0.75rem];
-                            }
+		&-content {
+			@apply flex flex-col items-start ~gap-[1rem]/[2rem] px-[0.75rem];
+		}
 
-                            &-head {
-                                @apply flex flex-col items-start gap-[0.5rem];
-                            }
+		&-head {
+			@apply flex flex-col items-start gap-[0.5rem];
+		}
 
-                            &-name {
-                                @apply ~text-[1.125rem]/[2rem] font-[600] leading-[120%] -tracking-[0.02rem];
-                            }
+		&-name {
+			@apply ~text-[1.125rem]/[2rem] font-[600] leading-[120%] -tracking-[0.02rem];
+		}
 
-                            &-position {
-                                @apply ~text-[0.625rem]/[1rem] font-[500] leading-[150%] tracking-[0.02rem];
-                            }
+		&-position {
+			@apply ~text-[0.625rem]/[1rem] font-[500] leading-[150%] tracking-[0.02rem];
+		}
 
-                            &-bio {
-                                @apply flex flex-col items-start gap-[1.5rem];
-                            }
+		&-bio {
+			@apply flex flex-col items-start gap-[1.5rem];
+		}
 
-                            &-rich-txt {
-                                p {
-                                    @apply ~text-[0.75rem]/[0.875rem];
-                                }
-                            }
+		&-rich-txt {
+			p {
+				@apply ~text-[0.75rem]/[0.875rem];
+			}
+		}
 
-                            &-tags {
-                                @apply w-full flex flex-wrap gap-[0.5rem];
-                                .tag {
-                                    @apply py-[0.25rem] px-[0.6875rem] rounded-[999px] ~text-[0.625rem]/[0.75rem] leading-[150%] tracking-[0.015rem];
-                                    background-color: var(--_colors---sky-gray);
-                                }
-                            }
+		&-tags {
+			@apply w-full flex flex-wrap gap-[0.5rem];
 
-                            &-close {
-                                @apply absolute flex items-center justify-center w-[2.625rem] h-[2.625rem] rounded-[100%] ~top-[1rem]/[1.25rem] ~right-[1rem]/[1.25rem];
-                                background-color: var(--_colors---impact-yellow);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+			.tag {
+				@apply py-[0.25rem] px-[0.6875rem] rounded-[999px] ~text-[0.625rem]/[0.75rem] leading-[150%] tracking-[0.015rem];
+				background-color: var(--_colors---sky-gray);
+			}
+		}
+
+		&-close {
+			@apply absolute flex items-center justify-center w-[2.625rem] h-[2.625rem] rounded-[100%] ~top-[1rem]/[1.25rem] ~right-[1rem]/[1.25rem];
+			background-color: var(--_colors---impact-yellow);
+		}
+
+		&-close,
+		&-trigger {
+			@apply cursor-pointer;
+			@apply transition-[transform] duration-500 ease-power2-out;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+
+	@screen md {
+		dialog {
+			&[open] {
+				animation: dialogSlideIn 0.3s ease forwards;
+			}
+
+			@keyframes dialogSlideIn {
+				from {
+					transform: translateX(50%);
+				}
+
+				to {
+					transform: translateX(0%);
+				}
+			}
+		}
+	}
 }

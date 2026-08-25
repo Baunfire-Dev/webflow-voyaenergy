@@ -34,11 +34,11 @@ dialog {
 
 	@keyframes dialogFadeIn {
 		from {
-			transform: translateX(50%);
+			transform: translateY(50%);
 		}
 
 		to {
-			transform: translateX(0%);
+			transform: translateY(0%);
 		}
 	}
 
@@ -49,26 +49,6 @@ dialog {
 
 		to {
 			transform: translateX(50%);
-		}
-	}
-
-	@media (max-width: 767px) {
-		@keyframes dialogFadeIn {
-			from {
-				transform: translateY(50%);
-			}
-			to {
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes dialogFadeOut {
-			from {
-				transform: translateY(0);
-			}
-			to {
-				transform: translateY(50%);
-			}
 		}
 	}
 }
