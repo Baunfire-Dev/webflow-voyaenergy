@@ -3396,8 +3396,12 @@ const theme = require("../../../config.json");
                     slidesPerView: 'auto',
                     spaceBetween: 24,
                     breakpoints: {
+                        0: {
+                            slidesPerGroup: 1,
+                        },
                         768: {
                             spaceBetween: 15,
+                            slidesPerGroup: 2
                         }
                     },
                     navigation: {
