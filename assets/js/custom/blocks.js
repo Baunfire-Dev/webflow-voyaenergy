@@ -37,7 +37,7 @@ const theme = require("../../../config.json");
                 "resourcesGrid",
                 "teamGrid",
                 "teamCarousel",
-                
+
                 "fullwidthCTA",
             ];
 
@@ -56,22 +56,22 @@ const theme = require("../../../config.json");
                 removeEventListener('scroll', this.scrollCueHandler);
                 this.scrollCueHandler = null;
             }
-            
+
             if (this.balanceRefreshHandlers) {
                 this.balanceRefreshHandlers.forEach(fn => ScrollTrigger.removeEventListener("refreshInit", fn));
                 this.balanceRefreshHandlers = null;
             }
-            
+
             if (this.sceneResizeDisposer) {
                 this.sceneResizeDisposer();
                 this.sceneResizeDisposer = null;
             }
-            
+
             if (this.controlsOutsideClick) {
                 document.removeEventListener('click', this.controlsOutsideClick);
                 this.controlsOutsideClick = null;
             }
-            
+
             if (this.swiperInstances) {
                 this.swiperInstances.forEach(s => s.destroy?.(true, true));
                 this.swiperInstances = null;
@@ -79,12 +79,10 @@ const theme = require("../../../config.json");
         },
 
         sectionControls() {
-            const SCROLL_PX_PER_SEC = 12000;
-            const SCROLL_MIN_DUR = 0.8;
-            const SCROLL_MAX_DUR = 2.4;
             const SCROLL_OFFSETS = {
                 "how-it-works": -300,
             };
+
             const MENU_CLOSE_DUR = 0.3;
 
             let items = [];
@@ -148,6 +146,7 @@ const theme = require("../../../config.json");
                 });
             };
 
+
             const handleAnchorClicks = (self, menu) => {
                 if (!items.length) return;
 
@@ -161,6 +160,7 @@ const theme = require("../../../config.json");
                     const { id, target } = resolved;
 
                     e.preventDefault();
+                    e.stopPropagation();
 
                     setActive(item);
 
@@ -168,17 +168,8 @@ const theme = require("../../../config.json");
 
                     const offset = SCROLL_OFFSETS[id] || 0;
                     const targetY = target.getBoundingClientRect().top + window.scrollY + offset;
-                    const distance = Math.abs(targetY - window.scrollY);
-                    const duration = gsap.utils.clamp(
-                        SCROLL_MIN_DUR,
-                        SCROLL_MAX_DUR,
-                        distance / SCROLL_PX_PER_SEC
-                    );
 
-                    baunfire.lenis?.scrollTo(targetY, {
-                        duration,
-                        easing: t => 1 - Math.pow(1 - t, 3),
-                    });
+                    baunfire.lenis?.scrollTo(targetY, { immediate: true, force: true });
                 });
             };
 
@@ -1282,7 +1273,7 @@ const theme = require("../../../config.json");
         advanceTechnology() {
             const PX_PER_SEC_DESKTOP = 350;
             const PX_PER_SEC_MOBILE = 300;
-            
+
             const HEADER_LIFT = 30;
 
             const HEADER_DUR_DESKTOP = 0.8;
@@ -2296,7 +2287,7 @@ const theme = require("../../../config.json");
                     };
                 });
             };
-            
+
             script();
         },
 
