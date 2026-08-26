@@ -15,11 +15,11 @@
                 if (this.isSamePage(a.href)) e.preventDefault();
             }, true);
 
-            if (typeof barbaPrefetch !== 'undefined') {
-                barba.use(barbaPrefetch, {
-                    root: document.querySelector('header') || document.body,
-                });
-            }
+            // if (typeof barbaPrefetch !== 'undefined') {
+            //     barba.use(barbaPrefetch, {
+            //         root: document.querySelector('header') || document.body,
+            //     });
+            // }
 
             barba.init({
                 timeout: 7000,
