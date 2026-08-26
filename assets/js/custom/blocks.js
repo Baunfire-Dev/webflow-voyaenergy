@@ -3158,7 +3158,7 @@ const theme = require("../../../config.json");
 
             const generateCard = (d) => `
                 <div class="rg-card" data-category="${d.categorySlug}">
-                    <a href="${window.location.origin}/${COLLECTION_ENDPOINTS.resources.slug}/${d.slug || '#'}" class="rg-card-inner w-inline-block">
+                    <a href="${generateCardURL(d)}" class="rg-card-inner w-inline-block">
                         <div class="rg-img-c">
                             <img loading="lazy" data-src="${d.image}" alt="resource-card-image" class="rg-img">
                         </div>
@@ -3190,6 +3190,16 @@ const theme = require("../../../config.json");
                     </a>
                 </div>
             `;
+
+            const generateCardURL = (d) => {
+                let url = `${window.location.origin}/${COLLECTION_ENDPOINTS.resources.slug}/${d.slug || '#'}`;
+
+                if (d.externalLink) {
+                    return d.externalLink;
+                }
+
+                return url;
+            };
 
             const renderGrid = (resData, data) => {
                 const { grid } = resData;
@@ -3614,7 +3624,6 @@ const theme = require("../../../config.json");
 
             script();
         },
-
 
         scrollingTimeline() {
             const script = () => {
