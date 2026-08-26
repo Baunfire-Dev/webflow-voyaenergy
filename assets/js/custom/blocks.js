@@ -2887,8 +2887,49 @@ const theme = require("../../../config.json");
                 els.forEach(self => {
                     handleEntrance(self);
                     handleCaptcha(self);
+                    handleForm(self);
                 });
             }
+
+            const handleForm = (self) => {
+                const captcha = self.querySelector(".g-recaptcha");
+                if (!captcha) return;
+
+                const form = captcha.closest("form");
+                if (!form) return;
+
+                const captchaError = form.querySelector(".captcha-error");
+                const captchaSettings = form.querySelector("[name='captcha_settings']");
+
+                const isCaptchaSolved = () => {
+                    return typeof grecaptcha !== "undefined" && grecaptcha.getResponse();
+                };
+
+                const showCaptchaError = (visible) => {
+                    if (!captchaError) return;
+
+                    captchaError.style.display = visible ? "block" : "none";
+                };
+
+                const refreshTimestamp = () => {
+                    if (!captchaSettings) return;
+
+                    const settings = JSON.parse(captchaSettings.value);
+                    settings.ts = JSON.stringify(new Date().getTime());
+                    captchaSettings.value = JSON.stringify(settings);
+                };
+
+                form.addEventListener("submit", (e) => {
+                    if (!isCaptchaSolved()) {
+                        e.preventDefault();
+                        showCaptchaError(true);
+                        return;
+                    }
+
+                    showCaptchaError(false);
+                    refreshTimestamp();
+                });
+            };
 
             const handleEntrance = (self) => {
                 const mainHeading = self.querySelector(".g-heading");
