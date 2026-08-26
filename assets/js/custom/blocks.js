@@ -2878,12 +2878,15 @@ const theme = require("../../../config.json");
         },
 
         heroContact() {
+            const RECAPTCHA_SRC = "https://www.google.com/recaptcha/api.js?onload=baunfireRecaptchaReady&render=explicit";
+
             const script = () => {
                 const els = document.querySelectorAll("section.hero-contact");
                 if (!els.length) return;
 
                 els.forEach(self => {
                     handleEntrance(self);
+                    handleCaptcha(self);
                 });
             }
 
@@ -2917,6 +2920,40 @@ const theme = require("../../../config.json");
                         },
                     });
                 }
+            };
+
+            const handleCaptcha = (self) => {
+                const captcha = self.querySelector(".g-recaptcha");
+                if (!captcha) return;
+
+                const sitekey = captcha.dataset.sitekey;
+                if (!sitekey || captcha.querySelector("iframe")) return;
+
+                const renderCaptcha = () => {
+                    grecaptcha.render(captcha, { sitekey: sitekey });
+                };
+
+                if (typeof grecaptcha !== "undefined") {
+                    renderCaptcha();
+                    return;
+                }
+
+                window.baunfireRecaptchaReady = renderCaptcha;
+
+                if (document.querySelector("script[data-recaptcha]")) return;
+
+                baunfire.Global.fancyLog("Loading reCAPTCHA...");
+
+                const script = document.createElement("script");
+                script.src = RECAPTCHA_SRC;
+                script.dataset.recaptcha = "";
+                script.defer = true;
+
+                script.onerror = () => {
+                    console.error("Failed to load reCAPTCHA script.");
+                };
+
+                document.body.appendChild(script);
             };
 
             script();
@@ -3530,6 +3567,7 @@ const theme = require("../../../config.json");
 
             script();
         },
+
 
         scrollingTimeline() {
             const script = () => {
