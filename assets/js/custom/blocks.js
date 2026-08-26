@@ -3158,7 +3158,7 @@ const theme = require("../../../config.json");
 
             const generateCard = (d) => `
                 <div class="rg-card" data-category="${d.categorySlug}">
-                    <a href="${generateCardURL(d)}" class="rg-card-inner w-inline-block">
+                    <a href="${generateCardURL(d)}" ${d.externalLink ? "target='_blank'" : ""} class="rg-card-inner w-inline-block">
                         <div class="rg-img-c">
                             <img loading="lazy" data-src="${d.image}" alt="resource-card-image" class="rg-img">
                         </div>
