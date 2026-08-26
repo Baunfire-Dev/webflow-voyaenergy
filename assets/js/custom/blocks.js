@@ -2913,10 +2913,14 @@ const theme = require("../../../config.json");
 
                 const refreshTimestamp = () => {
                     if (!captchaSettings) return;
-
-                    const settings = JSON.parse(captchaSettings.value);
-                    settings.ts = JSON.stringify(new Date().getTime());
-                    captchaSettings.value = JSON.stringify(settings);
+                    
+                    try {
+                        const settings = JSON.parse(captchaSettings.value);
+                        settings.ts = JSON.stringify(new Date().getTime());
+                        captchaSettings.value = JSON.stringify(settings);
+                    } catch (err) {
+                        baunfire.Global.fancyLog("captcha_settings parse failed", err);
+                    }
                 };
 
                 form.addEventListener("submit", (e) => {
