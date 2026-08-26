@@ -2933,7 +2933,7 @@ const theme = require("../../../config.json");
                     grecaptcha.render(captcha, { sitekey: sitekey });
                 };
 
-                if (typeof grecaptcha !== "undefined") {
+                if (typeof grecaptcha !== "undefined" && grecaptcha.render) {
                     renderCaptcha();
                     return;
                 }
