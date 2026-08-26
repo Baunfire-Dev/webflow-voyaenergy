@@ -2927,9 +2927,11 @@ const theme = require("../../../config.json");
                 if (!captcha) return;
 
                 const sitekey = captcha.dataset.sitekey;
-                if (!sitekey || captcha.querySelector("iframe")) return;
+                if (!sitekey || captcha.childElementCount) return;
 
                 const renderCaptcha = () => {
+                    if (captcha.childElementCount) return;
+
                     grecaptcha.render(captcha, { sitekey: sitekey });
                 };
 
