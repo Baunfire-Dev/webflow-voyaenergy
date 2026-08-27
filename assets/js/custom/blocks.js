@@ -1272,7 +1272,7 @@ const theme = require("../../../config.json");
 
         advanceTechnology() {
             const PX_PER_SEC_DESKTOP = 350;
-            const PX_PER_SEC_MOBILE = 300;
+            const PX_PER_SEC_MOBILE = 350;
 
             const HEADER_LIFT = 30;
 
