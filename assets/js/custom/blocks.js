@@ -2114,7 +2114,7 @@ const theme = require("../../../config.json");
         },
 
         densePower() {
-            const STEP_PX = 880;
+            const STEP_PX = 600;
             const STEP_DUR = 0.7;
             const LIFT = 32;
             const WRAPPER_SHIFT = -100;
