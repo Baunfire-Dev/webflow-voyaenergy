@@ -15,8 +15,17 @@ header {
 		}
 
 		&-logo {
+			@apply relative;
+
 			svg path {
 				@apply transition-all duration-700 ease-out;
+			}
+
+			&::before {
+				content: "";
+                @apply absolute top-1/2 left-0 w-full;
+				height: clamp(4rem, 2.9762vw + 2.5714rem, 5.25rem);
+				transform: translateY(-50%);
 			}
 		}
 	}
@@ -80,11 +89,10 @@ header {
 				@apply hidden;
 			}
 
-
 			&-anmt-content {
-                @apply opacity-100 h-auto;
+				@apply opacity-100 h-auto;
 				@apply w-[17.375rem] right-[-0.0625rem] top-0 rounded-[0.5rem] z-[2];
-                border-color: #cecece;
+				border-color: #cecece;
 			}
 		}
 
@@ -96,7 +104,7 @@ header {
 			}
 		}
 
-        &[data-wf--header--variant="light-surface"] {
+		&[data-wf--header--variant="light-surface"] {
 			.nav {
 				&-anmt-content {
 					background: var(--_colors---carbon-black);
