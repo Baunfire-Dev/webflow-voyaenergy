@@ -3166,7 +3166,10 @@ const theme = require("../../../config.json");
                         <div class="rg-content">
                             <div class="rg-c-inner">
                                 <div class="rg-title-c">
-                                    <p class="rg-eyebrow g-eyebrow">${d.categoryName}</p>
+                                    <div class="rg-brow">
+                                        <p class="rg-eyebrow g-eyebrow">${d.categoryName}</p>
+                                        <p class="rg-date g-eyebrow">${d.date}</p>
+                                    </div>
                                     <p class="rg-title g-p-lg">${d.name}</p>
                                 </div>
                                 <p class="rg-c-para g-p-sm">${d.excerpt}</p>
