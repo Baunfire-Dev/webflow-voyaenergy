@@ -3360,10 +3360,9 @@ const theme = require("../../../config.json");
                         const dialog = createDialog(data[i]);
                         dialogHost.append(dialog);
 
-                        const trigger = card.querySelector(".team-popup-trigger");
                         const close = dialog.querySelector(".team-popup-close");
 
-                        trigger?.addEventListener("click", () => {
+                        card.addEventListener("click", () => {
                             baunfire.Global.siteScrolling(false);
                             loadImage(dialog);
                             dialog.showModal();
@@ -3493,10 +3492,9 @@ const theme = require("../../../config.json");
 
                         dialogHost.append(dialog);
 
-                        const trigger = card.querySelector(".team-popup-trigger");
                         const close = dialog.querySelector(".team-popup-close");
 
-                        trigger?.addEventListener("click", () => {
+                        card.addEventListener("click", () => {
                             baunfire.Global.siteScrolling(false);
                             loadImage(dialog);
                             dialog.showModal();

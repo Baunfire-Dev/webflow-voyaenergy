@@ -95,6 +95,30 @@ section.team-carousel {
 		}
 	}
 
+    .tc {
+		&-card {
+			&:hover .tc-c-img {
+				transform: scale(0.95);
+			}
+		}
+
+        &-c-img {
+            @apply origin-bottom;
+        }
+	}
+
+	.tc-card .team-popup-trigger,
+	.team-popup-close,
+	.tc-c-img {
+		@apply cursor-pointer;
+		@apply transition-[transform] duration-500 ease-power2-out;
+	}
+
+	.tc-card:hover .team-popup-trigger,
+	.team-popup-close:hover {
+		transform: scale(1.1);
+	}
+
 	.swiper {
 		&-nav-container {
 			@apply flex gap-[0.375rem];
