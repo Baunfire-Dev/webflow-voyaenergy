@@ -9,6 +9,8 @@
             const nav = document.querySelector("header");
             if (!nav) return;
 
+            const HOME_NAMESPACE = "home";
+
             const ANMT_OPEN_DUR = 0.4;
             const ANMT_CLOSE_DUR = 0.3;
             const ANMT_CLIP_CLOSED = "inset(0% 0% 100% 100% round 0.5rem)";
@@ -72,6 +74,26 @@
                     link.addEventListener("click", () => {
                         if (nav.classList.contains("mob-active")) hideMobileNav();
                     });
+                });
+            };
+
+            const navLogo = () => {
+                const logo = nav.querySelector(".nav-logo-c");
+                if (!logo) return;
+
+                const isHomepage = () => {
+                    const container = document.querySelector("[data-barba-namespace]");
+                    return container && container.dataset.barbaNamespace === HOME_NAMESPACE;
+                };
+
+                logo.addEventListener("click", (e) => {
+                    if (!isHomepage()) return;
+
+                    e.preventDefault();
+
+                    if (nav.classList.contains("mob-active")) hideMobileNav();
+
+                    baunfire.lenis?.scrollTo(0, { immediate: true, force: true });
                 });
             };
 
@@ -246,6 +268,7 @@
             burgerEvent();
             navExtras();
             navLinks();
+            navLogo();
             anmtHover();
         },
 
