@@ -145,7 +145,7 @@ section.team-carousel {
 		}
 
 		&-pagination {
-			@apply hidden lg:block !static flex gap-[0.5rem] !w-auto;
+			@apply hidden lg:flex !static flex gap-[0.5rem] !w-auto;
 		}
 
 		&-pagination-bullet {
