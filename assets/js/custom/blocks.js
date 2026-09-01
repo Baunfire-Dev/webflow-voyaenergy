@@ -2723,6 +2723,7 @@ const theme = require("../../../config.json");
                 const heading = self.querySelector(".g-heading");
                 const para = self.querySelector(".fwc-para");
                 const cta = self.querySelector(".fwc-cta");
+                const image = self.querySelector(".fwc-image");
 
                 const introTL = gsap.timeline({
                     scrollTrigger: {
@@ -2732,10 +2733,28 @@ const theme = require("../../../config.json");
                     }
                 });
 
+                if (image) {
+                    gsap.fromTo(image,
+                        {
+                            scale: 1.2,
+                        },
+                        {
+                            scale: 1,
+                            duration: 2,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: self,
+                                start: "top 90%",
+                                once: true,
+                            }
+                        }
+                    );
+                }
+
                 if (logo) {
                     introTL.fromTo(logo,
                         { autoAlpha: 0, y: 40 },
-                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }
+                        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
                     );
                 }
 
@@ -2937,7 +2956,7 @@ const theme = require("../../../config.json");
 
                 const refreshTimestamp = () => {
                     if (!captchaSettings) return;
-                    
+
                     try {
                         const settings = JSON.parse(captchaSettings.value);
                         settings.ts = JSON.stringify(new Date().getTime());
