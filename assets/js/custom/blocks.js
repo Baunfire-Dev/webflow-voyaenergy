@@ -2353,6 +2353,10 @@ const theme = require("../../../config.json");
             };
 
             const handleTriggers = (self) => {
+                const TRIGGER_DELAY = 0.4;
+                const TRIGGER_STAGGER = 0.14;
+                const TITLE_AT = 0.3;
+
                 let played = false;
 
                 const mm = gsap.matchMedia();
@@ -2366,23 +2370,43 @@ const theme = require("../../../config.json");
                     const triggers = gsap.utils.toArray(".sdp-trigger", container);
                     if (!triggers.length) return;
 
-                    gsap.fromTo(triggers,
-                        { autoAlpha: 0, y: 40 },
-                        {
-                            autoAlpha: 1,
-                            delay: 0.4,
-                            y: 0,
-                            duration: 0.6,
-                            ease: "power2.out",
-                            stagger: 0.14,
-                            scrollTrigger: {
-                                trigger: container,
-                                once: true,
-                                start: baunfire.anim.start,
-                                onEnter: () => { played = true; },
+                    const introTL = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: container,
+                            once: true,
+                            start: baunfire.anim.start,
+                            onEnter: () => { played = true; },
+                        },
+                    });
+
+                    triggers.forEach((trigger, index) => {
+                        const title = trigger.querySelector(".sdp-t-title");
+                        const at = TRIGGER_DELAY + index * TRIGGER_STAGGER;
+
+                        introTL.fromTo(trigger,
+                            { scale: 0 },
+                            {
+                                scale: 1,
+                                duration: 0.5,
+                                ease: "back.out(1.6)",
+                                transformOrigin: "center center",
                             },
-                        }
-                    );
+                            at
+                        );
+
+                        if (!title) return;
+
+                        introTL.fromTo(title,
+                            { autoAlpha: 0, y: 20 },
+                            {
+                                autoAlpha: 1,
+                                y: 0,
+                                duration: 0.5,
+                                ease: "power2.out",
+                            },
+                            at + TITLE_AT
+                        );
+                    });
                 });
             };
 
