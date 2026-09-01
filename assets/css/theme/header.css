@@ -6,7 +6,7 @@ header {
 
 		&-burger {
 			svg {
-				@apply w-[1.5rem] h-auto overflow-visible;
+				@apply w-[2rem] h-auto overflow-visible;
 
 				line {
 					@apply transition-all ease-out duration-300;
