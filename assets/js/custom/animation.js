@@ -68,7 +68,7 @@
             };
 
             const navLinks = () => {
-                const links = nav.querySelectorAll(".nav-item, .nav-anmt");
+                const links = nav.querySelectorAll(".nav-item, .nav-anmt, .footer-item");
 
                 links.forEach(link => {
                     link.addEventListener("click", () => {
@@ -132,6 +132,7 @@
                     document.querySelector(".footer-socials"),
                     document.querySelector(".footer-address"),
                     document.querySelector(".footer-credits-c"),
+                    document.querySelector(".footer-items.is-sub-items"),
                 ].filter(Boolean);
 
                 if (!sources.length) return;
