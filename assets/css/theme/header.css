@@ -23,7 +23,7 @@ header {
 
 			&::before {
 				content: "";
-                @apply absolute top-1/2 left-0 w-full;
+				@apply absolute top-1/2 left-0 w-full;
 				height: clamp(4rem, 2.9762vw + 2.5714rem, 5.25rem);
 				transform: translateY(-50%);
 			}
@@ -229,12 +229,11 @@ header {
 					stroke: var(--_colors---impact-yellow) !important;
 
 					&:nth-child(1) {
-						transform: rotate(45deg) translate(0px, -0.375rem);
+						transform: rotate(45deg) translate(0px, -0.5rem);
 					}
 
 					&:nth-child(2) {
-						transform: rotate(-45deg)
-							translate(-0.4375rem, 0.1875rem);
+						transform: rotate(-45deg) translate(-0.5625rem, 0.4375rem);
 					}
 				}
 			}
