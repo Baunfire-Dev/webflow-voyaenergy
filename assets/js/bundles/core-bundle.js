@@ -19,6 +19,9 @@ const lenis = new Lenis({
     wheelMultiplier: 0.8,
 });
 
+ScrollTrigger.config({ ignoreMobileResize: true });
+ScrollTrigger.normalizeScroll(true);
+
 lenis.on('scroll', ScrollTrigger.update);
 ScrollTrigger.addEventListener('refresh', () => lenis.resize());
 gsap.ticker.add((time) => lenis.raf(time * 1000));
