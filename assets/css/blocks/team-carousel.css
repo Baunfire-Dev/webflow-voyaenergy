@@ -98,7 +98,9 @@ section.team-carousel {
     .tc {
 		&-card {
 			&:hover .tc-c-img {
-				transform: scale(0.95);
+                @screen lg {
+				    transform: scale(0.95);
+                }
 			}
 		}
 
