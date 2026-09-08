@@ -26,7 +26,7 @@ section.team-carousel {
 		@apply relative bg-white h-[40.875rem] rounded-[0.5rem] md:rounded-[0] md:h-full mx-[0.75rem] md:mr-0 md:ml-auto w-full md:max-w-[39.375rem];
 
 		&-inner {
-			@apply flex flex-col ~gap-[1rem]/[2rem] h-full max-h-[100svh] overflow-y-auto overflow-x-hidden ~pt-[4.5rem]/[6rem] ~pb-[2.375rem]/[6rem] ~px-[1.25rem]/[4rem];
+			@apply flex flex-col ~gap-[1rem]/[2rem] h-full max-h-[100svh] overflow-y-auto overflow-x-hidden ~pt-[4.5rem]/[6rem] pb-[6rem] ~px-[1.25rem]/[4rem];
 		}
 
 		&-img {
