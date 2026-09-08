@@ -20,7 +20,7 @@ const lenis = new Lenis({
 });
 
 ScrollTrigger.config({ ignoreMobileResize: true });
-ScrollTrigger.normalizeScroll(true);
+// ScrollTrigger.normalizeScroll(true);
 
 lenis.on('scroll', ScrollTrigger.update);
 ScrollTrigger.addEventListener('refresh', () => lenis.resize());

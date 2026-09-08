@@ -1,4 +1,9 @@
 (function () {
+    const COVER_IN_DUR = 1;
+    const COVER_OUT_DUR = 1;
+    const COVER_HOLD = 0.3;
+    const COVER_EASE = 'pageReveal';
+
     baunfire.Transitions = {
         init() {
             if (typeof barba === 'undefined') {
@@ -95,7 +100,7 @@
             const e = this.els();
             if (!e) return;
 
-            const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
+            const tl = gsap.timeline({ defaults: { duration: COVER_IN_DUR, ease: COVER_EASE } });
 
             tl.set(e.panel, { visibility: 'visible', yPercent: 100 });
             if (e.inner) tl.set(e.inner, { yPercent: -100 }, 0);
@@ -112,13 +117,11 @@
             const e = this.els();
             if (!e) return;
 
-            const HOLD = 0.3;
+            const tl = gsap.timeline({ defaults: { duration: COVER_OUT_DUR, ease: COVER_EASE } });
 
-            const tl = gsap.timeline({ defaults: { duration: 1.2, ease: 'pageReveal' } });
-
-            tl.to(e.panel, { yPercent: -100 }, HOLD);
-            if (e.inner) tl.to(e.inner, { yPercent: 100 }, HOLD);
-            if (e.logo) tl.to(e.logo, { yPercent: -100 }, HOLD);
+            tl.to(e.panel, { yPercent: -100 }, COVER_HOLD);
+            if (e.inner) tl.to(e.inner, { yPercent: 100 }, COVER_HOLD);
+            if (e.logo) tl.to(e.logo, { yPercent: -100 }, COVER_HOLD);
 
             tl.set(e.panel, { visibility: 'hidden' })
                 .set([e.panel, e.inner, e.logo].filter(Boolean), { clearProps: 'transform' });
