@@ -79,7 +79,7 @@ section.system-detail-popup {
 
 			&-dialog-combo,
 			&-dialog-outer {
-				@apply h-full;
+				@apply h-full bg-white;
 			}
 
 			&-dialog-combo {

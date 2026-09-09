@@ -1,6 +1,7 @@
 const theme = require("../../../config.json");
 
 (function () {
+    const HERO_DELAY = 0.3;
     const COLLECTION_ENDPOINTS = {
         resources: {
             dataURL: `${theme.pages}/api/collection?name=news`,
@@ -371,11 +372,12 @@ const theme = require("../../../config.json");
                 const timings = {
                     callDelay: 0,
                     mainImage: {
-                        duration: 2,
-                        position: "<-0.2"
+                        startScale: 1.15,
+                        duration: 1.8,
+                        position: 0
                     },
                     mainHeading: {
-                        position: "<0.6"
+                        position: "<0.25"
                     },
                 }
 
@@ -398,7 +400,8 @@ const theme = require("../../../config.json");
                 });
 
                 if (mainImage) {
-                    introTL.to(mainImage,
+                    introTL.fromTo(mainImage,
+                        { scale: timings.mainImage.startScale },
                         {
                             scale: 1,
                             duration: timings.mainImage.duration,
@@ -1461,7 +1464,7 @@ const theme = require("../../../config.json");
                             end: () => "+=" + (TOTAL_MOBILE_DURATION * PX_PER_SEC_MOBILE),
                             pin: true,
                             pinSpacing: true,
-                            scrub: 1,
+                            scrub: true,
                             invalidateOnRefresh: true,
                         }
                     });
@@ -2849,7 +2852,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.6,
+                                    delay: HERO_DELAY,
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
@@ -2918,7 +2921,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.6,
+                                    delay: HERO_DELAY,
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
@@ -3011,7 +3014,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.6,
+                                    delay: HERO_DELAY,
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
@@ -3092,7 +3095,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.6,
+                                    delay: HERO_DELAY,
                                     duration: splitTextsProps.duration,
                                     ease: "power2.inOut",
                                     stagger: splitTextsProps.stagger,
@@ -3385,7 +3388,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%",
-                                    delay: 0.6,
+                                    delay: HERO_DELAY,
                                     duration: splitTextsProps.duration,
                                     ease: "power2.inOut",
                                     stagger: splitTextsProps.stagger,

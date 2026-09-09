@@ -1,7 +1,7 @@
 (function () {
     const COVER_IN_DUR = 1;
     const COVER_OUT_DUR = 1;
-    const COVER_HOLD = 0.3;
+    const COVER_HOLD = 0.1;
     const COVER_EASE = 'pageReveal';
     const FIRST_REVEAL_WAIT = 300;
     const FIRST_REVEAL_CALM_FRAMES = 3;
