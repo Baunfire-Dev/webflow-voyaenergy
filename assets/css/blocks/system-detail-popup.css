@@ -82,6 +82,10 @@ section.system-detail-popup {
 				@apply h-full bg-white;
 			}
 
+            &-dialog-inner {
+                @apply min-h-[100dvh];
+            }
+
 			&-dialog-combo {
 				.sdp {
 					&-dialog-inner {
