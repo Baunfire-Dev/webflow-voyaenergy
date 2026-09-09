@@ -19,6 +19,8 @@
         "local": "npx serve . -l 3000",
         "js": "node build/compile-scripts.js --watch",
         "tw": "npx tailwindcss -i assets/css/theme/tailwind.css -o assets/css/bundles/styles.css --postcss --watch --poll --minify",
+        "tw:once": "npx tailwindcss -i assets/css/theme/tailwind.css -o assets/css/bundles/styles.css --postcss --minify",
+        "build": "node build/compile-scripts.js && npm run tw:once",
         "deploy:watch": "node build/cloudflare-watch.js",
         "deploy:watch:plain": "node build/cloudflare-watch.js --plain"
     },

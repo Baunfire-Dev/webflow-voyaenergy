@@ -420,7 +420,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: splitTextsProps.duration, ease: "power2.inOut", stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 timings.mainHeading.position
                             );
@@ -543,9 +543,7 @@ const theme = require("../../../config.json");
                                     duration: 0.8,
                                     ease: "pageReveal",
                                     stagger: { amount: 0.6, from: "start" },
-                                    onComplete: () => {
-                                        gsap.set(split.words, { willChange: "auto" });
-                                    },
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -606,7 +604,7 @@ const theme = require("../../../config.json");
                                 duration: 0.8,
                                 ease: "pageReveal",
                                 stagger: { amount: 0.6, from: "start" },
-                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                force3D: true,
                             }, "<-0.1");
 
                             return mobileTL;
@@ -709,7 +707,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -1004,7 +1002,7 @@ const theme = require("../../../config.json");
                             { y: "100%" },
                             {
                                 y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.08,
-                                onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                force3D: true,
                             },
                         );
                         return introTL.recent();
@@ -1327,7 +1325,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -1348,29 +1346,37 @@ const theme = require("../../../config.json");
             const handleTransitions = (self) => {
                 const body = self.querySelector(".at-outer");
                 const bg = self.querySelector(".at-bg");
+                const content = self.querySelector(".at-content");
                 const header = self.querySelector(".at-header");
                 const cardsContainer = self.querySelector(".at-cards");
                 const cards = self.querySelectorAll(".at-cards .at-card");
 
-                if (!body || !bg || !cardsContainer || !cards.length) return;
+                if (!body || !bg || !content || !cardsContainer || !cards.length) return;
 
-                const headerExit = (tl, duration, position) => {
+                const halfHeader = () => header.offsetHeight / 2;
+
+                const headerExit = (tl, duration, position, recenter) => {
                     if (!header) return;
 
+                    if (recenter) {
+                        tl.to(recenter, {
+                            y: () => -halfHeader(),
+                            duration,
+                            ease: "power2.in",
+                        }, position);
+                    }
+
                     tl.to(header, {
-                        y: -HEADER_LIFT,
+                        y: () => -(HEADER_LIFT + halfHeader()),
                         autoAlpha: 0,
-                        marginTop: () => -header.offsetHeight,
                         duration,
                         ease: "power2.in",
-                    }, position);
+                    }, recenter ? "<" : position);
                 };
 
                 const mm = gsap.matchMedia();
 
                 mm.add("(min-width: 768px)", () => {
-                    gsap.set(cardsContainer, { height: 0 });
-
                     const BG_DUR = 0.8;
                     const CONTAINER_DUR = 0.8;
                     const CARD_DUR = 1.4;
@@ -1378,6 +1384,12 @@ const theme = require("../../../config.json");
                     const HOLD_DUR_1 = 0.3;
                     const HOLD_DUR_2 = 0.5;
                     const TOTAL_DURATION = BG_DUR + CONTAINER_DUR + TOTAL_CARDS_DUR + HOLD_DUR_1 + HOLD_DUR_2;
+
+                    const halfCards = () => {
+                        const styles = getComputedStyle(cardsContainer);
+                        const padding = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+                        return (cardsContainer.clientHeight - padding) / 2;
+                    };
 
                     const tl = gsap.timeline({
                         scrollTrigger: {
@@ -1400,13 +1412,15 @@ const theme = require("../../../config.json");
 
                     tl.to({}, { duration: HOLD_DUR_1 });
 
+                    tl.fromTo(content,
+                        { y: halfCards },
+                        { y: 0, duration: CONTAINER_DUR, ease: "power1.out" }
+                    );
 
                     tl.to(cardsContainer, {
-                        height: "auto",
                         overflow: "visible",
                         duration: CONTAINER_DUR,
-                        ease: "power1.out"
-                    })
+                    }, "<");
 
                     tl.fromTo(cards,
                         { y: () => window.innerHeight },
@@ -1419,7 +1433,7 @@ const theme = require("../../../config.json");
                         "<0.2"
                     );
 
-                    headerExit(tl, HEADER_DUR_DESKTOP, HEADER_AT_DESKTOP);
+                    headerExit(tl, HEADER_DUR_DESKTOP, HEADER_AT_DESKTOP, cardsContainer);
 
                     tl.to({}, { duration: HOLD_DUR_2 });
                 });
@@ -1583,7 +1597,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -2164,7 +2178,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -2225,6 +2239,9 @@ const theme = require("../../../config.json");
                             if (i !== from && i !== index) gsap.set(el, { autoAlpha: 0, y: LIFT * dir });
                         });
 
+                        const incomingHidden = Number(gsap.getProperty(contents[index], "opacity")) === 0;
+                        if (incomingHidden) gsap.set(contents[index], { y: LIFT * dir });
+
                         stepTL = gsap.timeline();
 
                         stepTL.to(title, {
@@ -2259,16 +2276,12 @@ const theme = require("../../../config.json");
                             ease: "power2.out",
                         }, 0);
 
-                        stepTL.fromTo(contents[index],
-                            { y: LIFT * dir, autoAlpha: 0 },
-                            {
-                                y: 0,
-                                autoAlpha: 1,
-                                duration: STEP_DUR * 0.6,
-                                ease: "power2.out",
-                            },
-                            STEP_DUR * 0.4
-                        );
+                        stepTL.to(contents[index], {
+                            y: 0,
+                            autoAlpha: 1,
+                            duration: STEP_DUR * 0.6,
+                            ease: "power2.out",
+                        }, STEP_DUR * 0.4);
                     };
 
                     ScrollTrigger.create({
@@ -2334,7 +2347,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -2512,7 +2525,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                             );
                             return introTL.recent();
@@ -2624,7 +2637,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<0.2"
                             );
@@ -2687,7 +2700,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "power3.out", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                             );
                             return introTL.recent();
@@ -2770,7 +2783,7 @@ const theme = require("../../../config.json");
                                 { y: "100%" },
                                 {
                                     y: "-5%", duration: 0.8, ease: "pageReveal", stagger: 0.06,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 },
                                 "<-0.1"
                             );
@@ -2840,7 +2853,7 @@ const theme = require("../../../config.json");
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 }
                             );
                         },
@@ -2909,7 +2922,7 @@ const theme = require("../../../config.json");
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 }
                             );
                         },
@@ -3002,7 +3015,7 @@ const theme = require("../../../config.json");
                                     duration: splitTextsProps.duration,
                                     ease: "pageReveal",
                                     stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 }
                             );
                         },
@@ -3083,7 +3096,7 @@ const theme = require("../../../config.json");
                                     duration: splitTextsProps.duration,
                                     ease: "power2.inOut",
                                     stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 }
                             );
                         },
@@ -3132,9 +3145,7 @@ const theme = require("../../../config.json");
                                     start: baunfire.anim.start,
                                     once: true,
                                 },
-                                onComplete: () => {
-                                    gsap.set(split.words, { willChange: "auto" });
-                                },
+                                force3D: true,
                             }
                         );
                     },
@@ -3378,7 +3389,7 @@ const theme = require("../../../config.json");
                                     duration: splitTextsProps.duration,
                                     ease: "power2.inOut",
                                     stagger: splitTextsProps.stagger,
-                                    onComplete: () => gsap.set(split.words, { willChange: "auto" }),
+                                    force3D: true,
                                 }
                             );
                         },

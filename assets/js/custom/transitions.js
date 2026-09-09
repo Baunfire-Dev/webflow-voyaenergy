@@ -3,6 +3,9 @@
     const COVER_OUT_DUR = 1;
     const COVER_HOLD = 0.3;
     const COVER_EASE = 'pageReveal';
+    const FIRST_REVEAL_WAIT = 300;
+    const FIRST_REVEAL_CALM_FRAMES = 3;
+    const FIRST_REVEAL_CALM_MS = 24;
 
     baunfire.Transitions = {
         init() {
@@ -53,10 +56,6 @@
             });
         },
 
-        settle() {
-            baunfire.Global.screenSizeChange();
-        },
-
         reveal() {
             const self = this;
             return {
@@ -68,10 +67,39 @@
                     return self.coverOut();
                 },
                 once(data) {
-                    baunfire.mount(data.next.container);
-                    return self.coverOut();
+                    return self.whenReady().then(() => {
+                        baunfire.mount(data.next.container);
+                        return self.coverOut();
+                    });
                 },
             };
+        },
+
+        whenReady() {
+            return new Promise((resolve) => {
+                let settled = false;
+                let calm = 0;
+                let last = performance.now();
+
+                const proceed = () => {
+                    if (settled) return;
+                    settled = true;
+                    resolve();
+                };
+
+                const watch = (now) => {
+                    if (settled) return;
+
+                    calm = now - last < FIRST_REVEAL_CALM_MS ? calm + 1 : 0;
+                    last = now;
+
+                    if (calm >= FIRST_REVEAL_CALM_FRAMES) proceed();
+                    else requestAnimationFrame(watch);
+                };
+
+                requestAnimationFrame(watch);
+                setTimeout(proceed, FIRST_REVEAL_WAIT);
+            });
         },
 
         isSamePage(href) {

@@ -97,10 +97,12 @@ section.team-carousel {
 
     .tc {
 		&-card {
-			&:hover .tc-c-img {
-                @screen lg {
-				    transform: scale(0.95);
-                }
+			@media (hover: hover) {
+				&:hover .tc-c-img {
+					@screen lg {
+						transform: scale(0.95);
+					}
+				}
 			}
 		}
 
@@ -116,9 +118,11 @@ section.team-carousel {
 		@apply transition-[transform] duration-500 ease-power2-out;
 	}
 
-	.tc-card:hover .team-popup-trigger,
-	.team-popup-close:hover {
-		transform: scale(1.1);
+	@media (hover: hover) {
+		.tc-card:hover .team-popup-trigger,
+		.team-popup-close:hover {
+			transform: scale(1.1);
+		}
 	}
 
 	.swiper {
