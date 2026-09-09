@@ -15,7 +15,7 @@ section.system-detail-popup {
 		}
 
 		&-dialog-inner {
-			@apply max-h-svh overflow-y-auto;
+			@apply max-h-dvh overflow-y-auto;
 		}
 
 		&-dialog-combo {
