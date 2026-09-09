@@ -917,6 +917,8 @@ const theme = require("../../../config.json");
             const EXIT_END = "left left";
             const FIRST_EXIT_START = "left 5%";
             const FIRST_EXIT_END = "left left";
+            const IMAGE_EXIT_START = "left left";
+            const IMAGE_EXIT_END = "left left-=20%";
             const MARKERS = false;
 
             const desktopMQ = window.matchMedia("(min-width: 992px)");
@@ -1225,17 +1227,32 @@ const theme = require("../../../config.json");
                     }
 
                     if (!isLast) {
-                        gsap.to(contentContainer, {
-                            autoAlpha: 0,
-                            ease: "none",
-                            scrollTrigger: {
-                                trigger: contentContainer,
-                                containerAnimation: master,
+                        const exits = [
+                            {
+                                el: contentContainer,
                                 start: isFirst ? FIRST_EXIT_START : EXIT_START,
                                 end: isFirst ? FIRST_EXIT_END : EXIT_END,
-                                scrub: true,
-                                markers: MARKERS,
-                            }
+                            },
+                            {
+                                el: panel.querySelector(".hiw-image"),
+                                start: IMAGE_EXIT_START,
+                                end: IMAGE_EXIT_END,
+                            },
+                        ];
+
+                        exits.filter(exit => exit.el).forEach(exit => {
+                            gsap.to(exit.el, {
+                                autoAlpha: 0,
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: exit.el,
+                                    containerAnimation: master,
+                                    start: exit.start,
+                                    end: exit.end,
+                                    scrub: true,
+                                    markers: MARKERS,
+                                }
+                            });
                         });
                     }
 
