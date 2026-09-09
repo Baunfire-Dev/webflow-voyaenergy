@@ -2132,6 +2132,7 @@ const theme = require("../../../config.json");
 
         densePower() {
             const STEP_PX = 600;
+            const FIRST_STEP_PX = 300;
             const STEP_DUR = 0.7;
             const LIFT = 32;
             const WRAPPER_SHIFT = -100;
@@ -2290,11 +2291,18 @@ const theme = require("../../../config.json");
                     ScrollTrigger.create({
                         trigger: body,
                         start: "top top",
-                        end: () => "+=" + cards.length * STEP_PX,
+                        end: () => "+=" + (FIRST_STEP_PX + (cards.length - 1) * STEP_PX),
                         pin: true,
                         pinSpacing: true,
                         invalidateOnRefresh: true,
-                        onUpdate: (st) => goToCard(Math.floor(st.progress * cards.length)),
+                        onUpdate: (st) => {
+                            const scrolled = st.progress * (st.end - st.start);
+                            const index = scrolled < FIRST_STEP_PX
+                                ? 0
+                                : 1 + Math.floor((scrolled - FIRST_STEP_PX) / STEP_PX);
+
+                            goToCard(index);
+                        },
                     });
 
                     return () => {
@@ -2435,6 +2443,14 @@ const theme = require("../../../config.json");
                     dialogInners.forEach(inner => inner.classList.remove("active"));
                 };
 
+                const resetScroll = (dialog) => {
+                    const scrollables = [dialog, ...dialog.querySelectorAll(".sdp-dialog-inner")];
+                    const toTop = () => scrollables.forEach(el => { el.scrollTop = 0; });
+
+                    toTop();
+                    requestAnimationFrame(toTop);
+                };
+
                 const tabs = self.querySelectorAll(".sdp-l-tab");
                 const tabByKey = new Map();
                 tabs.forEach(tab => tabByKey.set(tab.dataset.key, tab));
@@ -2484,6 +2500,7 @@ const theme = require("../../../config.json");
 
                         baunfire.Global.siteScrolling(false);
                         dialog.showModal();
+                        resetScroll(dialog);
                     });
                 });
             };
